@@ -1,0 +1,14 @@
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.commentcount{
+		font-size: 10px; 
+		position:absolute; 
+		float: right;
+		padding-left: 5px;
+	}
+	
+	.textblock{
+		margin-bottom: 0px;
+		padding-bottom: 0px;
+	}
+}
+

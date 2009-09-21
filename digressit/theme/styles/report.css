@@ -1,0 +1,852 @@
+h1 	{
+	font: 1.5em/1.15em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	margin: 0em 0 .6em 0;
+	text-transform: uppercase;
+	}
+h2 	{	
+	font: 1.25em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	margin: .5em 0 .5em 0 ;
+	border: 1px solid #ffffff;
+	color: #000000;
+	}
+h3 	{
+	font: .90em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	text-transform: uppercase;
+	margin: 2em 0px 0px 0px;
+	}
+ol, ul	{
+	font-size: 1em;
+	padding-left: 45px;
+	padding-right: 40px;
+	}
+ol li, ul li 	{
+	line-height: 1.4em;
+	padding: 5px 0px;
+	}
+a	{
+	color: #000000;
+	text-decoration: none;
+	border-bottom: 1px solid #aeaaa9;
+	}
+a:hover	{
+	border-bottom: none;
+	text-decoration: none;
+	background-color: #FEFF7A;
+	cursor: pointer;
+	}
+a:visited	{
+	text-decoration: none;
+	border-bottom: 1px dotted #aeaaa9;
+	}
+br.clear	{
+	clear: both;
+	}
+p {								/* all content should be in this font 				*/
+	font: 1.05em/1.4em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	margin-bottom: 10px;
+	}
+em {
+	font-style: italic;
+	}
+strong {
+	font-weight: bold;
+	}
+
+/* GENERAL STYLES 
+********************************/	
+.selected_block	{
+	background-color: #FEFF7A;
+	color: #000000;
+	padding: 0 2px;
+	}
+.noHighlight {
+	background-color: #FFFFFF;
+/*	border: 1px solid #ffffff; */
+	margin: 0px;
+	}
+.blockHighlight	{
+	background-color: #FEFF7A;
+/*	border: 1px dashed #0097ED; */
+	margin: 0px;
+	}
+.blockHighlightIE {
+	font-weight: bold;
+	}
+
+
+/* TITLE BAR 
+********************************/	
+#titlebarContainer {			/* titlebarContainer holds the title and the presentedyBy line */
+	width: 100%;
+	position: fixed;			/* IE handles this differently.	*/
+	top: 0;
+	left: 0;
+	display: block;
+	background-color: #ffffff;
+	z-index: 20;
+	border-bottom: 1px solid #a9aaae;
+	}
+#logo {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 520px;
+	font: 1.6em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	padding: 12px 10px;
+}
+#presentedBy {
+	float: right;
+	width: 450px;
+	text-align: right;
+	font: .9em Arial, Helvetica, sans-serif;
+	white-space: nowrap;
+	padding: 20px 20px 12px 0px;
+}
+
+/* NAVIGATION & SEARCH  CONTAINER
+********************************/
+#topbarContainer{				/* topbarContainer hold the yui menu and the search */
+	position: fixed;			/* IE handles this differently. 	*/
+	top: 43px;
+	left: 0px;
+	width: 100%;
+	display: block;
+	margin: 0;
+	padding: 0;
+	height: 26px;
+	height: expression(27);
+	z-index: 10;
+	background-color: #E9EADE;
+	border: 1px solid #a9aaae;
+	text-align: left;
+/*	border: 1px solid #FF0000;  for testing */
+}
+
+/* NAVIGATION 
+********************************/
+#navbarContainer {
+	width:760px;
+	border-top: 1px solid #a9aaae;	
+	border-bottom: 1px solid #a9aaae;
+	}
+div.bd {
+	background-color: #E9EADE;
+	}
+/* These styles override YUI/build/menu/menu.css */
+div.yuimenu ul,
+div.yuimenubar ul,
+div.yuimenu li,
+div.yuimenubar li {
+	background-color: #E9EADE;
+	}
+
+/* report specific content nav colors */	
+#menuIntroductionParent,
+#menuIntroductionParent ul, 
+#menuIntroductionParent li, 
+#menuAssessmentParent,
+#menuAssessmentParent ul,
+#menuAssessmentParent li,
+#menuWayforwardParent,
+#menuWayforwardParent ul,
+#menuWayforwardParent li,
+#menuAppendicesParent,
+#menuAppendicesParent ul,
+#menuAppendicesParent li {
+	background-color: #dCdCa9;
+	}
+
+
+div.yuimenu li a,
+div.yuimenubar li a {
+    /*
+        "zoom:1" triggers "haslayout" in IE to ensure that the mouseover and 
+        mouseout events bubble to the parent LI in IE.
+    */
+    zoom:1;
+    color:#000;
+    text-decoration:none;
+	border-bottom: 0px;
+	}
+div.yuimenubar li.selected,
+div.yuimenubar li#menuIntroductionParent.selected,
+div.yuimenubar li#menuAssessmentParent.selected,
+div.yuimenubar li#menuWayforwardParent.selected,
+div.yuimenubar li#menuAppendicesParent.selected,
+div.yuimenu li.selected,
+div.yuimenubar li#menuIntroductionParent.selected div.yuimenu li.selected,
+div.yuimenubar li#menuAssessmentParent.selected div.yuimenu li.selected,
+div.yuimenubar li#menuWayforwardParent.selected div.yuimenu li.selected,
+div.yuimenubar li#menuAppendicesParent.selected div.yuimenu li.selected
+
+ {
+    background-color:#FEFF7A;
+	}
+div.yuimenu li.selected a.selected,
+div.yuimenubar li.selected a.selected {
+    text-decoration:none;
+	border-bottom: 0;
+	}
+div.yuimenu li.selected a.selected,
+div.yuimenu li.selected em.selected, 
+div.yuimenubar li.selected a.selected {
+    color:#000;
+	}
+div.yuimenu li.selected a:visited,
+div.yuimenubar li.selected a:visited {
+	border-bottom: 0;
+	}	
+/* end YUI menu override */
+#reportNav ul li.yuimenubaritem {
+	padding: 5px 22px;
+	}
+#reportNav ul li.firstelement {
+	padding-left: 20px;
+	}
+
+	
+/* SEARCH  
+********************************/
+#searchContainer {
+	position: fixed;
+	top: 46px;
+	left: 790px;
+	height: 24px;
+	width: 200px;
+	padding: 2px 0 1px 0;
+/*	border: 1px solid #0000FF;		for testing */
+	}
+#topbar_search	{				/* search form input field 	*/
+	border: 1px solid #a9aaae; 
+	font-size: 9pt; 
+	width: 130px; 
+	padding-right: 3px;
+}
+#topbar_button	{				/* search form input button	*/
+	font-size: 8pt;
+}
+
+/* MAIN CONTAINER 
+********************************/		
+#mainContainer {				/* mainContainer holds the contentContainer				*/
+								/* and sidebarContainer, which holds commentContainer	*/
+	margin: 35px 0 0 0;					
+	padding: 0;
+	width: 100%;
+	text-align: left;
+	}
+
+/* CONTENT CONTAINER 
+********************************/		
+#contentContainer	{	
+	float: left;
+	width: 465px;
+	padding: 25px 0px 0px 25px;
+	padding-top: expression(60); 
+	text-align: left;
+	min-height: 420px;
+	}
+	
+* html #contentContainer { 		/* ie6 hackery 		*/
+	padding: 67px 0 0 25px;
+	width: 465px;
+	}
+#contentContainer h2 {			
+	font-size: 2.2em;			
+	margin: 0 0 20px 0;
+	padding: 0 0 0 25px;
+	}
+#contentContainer h2 a {
+	border-bottom: none;
+	}
+#contentContainer h2 a:hover {
+	background-color: #FEFF7A;
+	}	
+#contentContainer h3 {
+	margin: 2em 0 1em 25px;
+	}
+#breadcrumbs,
+#breadcrumbs a {
+	color: #000000;
+	font: 7pt/14pt Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	margin: 0 0 5px 25px;
+	}
+.content	{					/* each paragraph of the main content needs this 	*/
+	padding-right: 40px;		/* padding to make room for the comment icons 		*/
+	padding-left:  25px;
+	z-index: 5;
+	}	
+.paragraphNumber {
+	font-size: .9em;
+	color: #a9aaa0;
+	float: left;
+	margin-top: 3px;
+	}
+.mainColumn {
+	width: 425px;
+}
+.mainColumn h2 {
+	font-size: 2.2em;			
+	margin: 40px 0 20px 0;
+	padding: 0 0 0 px;
+}
+.videothumb {
+	float: left;
+	margin: 4px 8px 4px 0;
+}
+
+/* COMMENT ICONS
+********************************/		
+.blockCommentCount,
+.pageCommentCount	{
+	margin: 0px;
+	}	
+.blockCommentCount a,
+.pageCommentCount a{
+	float: right;
+	clear: right;
+	display: block;
+	margin: 0 0 5px 15px;
+	min-width: 16px;
+	width: 25px;
+	text-align: center;
+	padding-top: 1.2em;
+	height: 100%;
+	font: .95em/.8em Verdana, Arial, Helvetica, sans-serif;
+	color: #000000;
+	background: url("images/comment.gif") 5px 0 no-repeat;
+	border: 0;
+	}
+.blockCommentCount a:hover	{	
+	background: url("images/comment_over.gif") 5px 0 no-repeat;
+	}
+.blockCommentCountOn	{	
+	background: url("images/comment_over.gif") 5px 0 no-repeat;
+	}
+.pageCommentCount a {
+	padding-top: 1.6em;
+	background: url("images/pagecomment.gif") 3px 0 no-repeat;
+	}
+.pageCommentCount a:hover {
+	background: url("images/pagecomment_over.gif") 3px 0 no-repeat;
+	}
+
+/* PAGE NAVIGATION 				 (top & bottom of content block) 
+*********************************/
+#topPageNavigation {
+	padding: 0 0 15px 25px;
+	text-transform: uppercase;
+	font-size: 7pt;
+	letter-spacing: .1em;
+	}
+
+#pageNavigation	{
+	background-color: #dCdCa9;
+	margin-top: 40px;
+	height: 20px;
+	font-size: .9em;
+	border: 1px solid #a9aaae;
+	width: 400px;
+	padding: 2px 5px 10px 5px; 
+
+	}
+.pagePrev a, .pageNext a{
+
+	}
+.pagePrev	{
+	display: block;
+	}
+.pageNext	{
+	float: right;
+	text-align: right;
+	width: 200px;
+	display: block;
+	}
+	
+	
+/* COMMENT CONTAINER 
+********************************/
+#commentContainer	{
+	position: fixed;
+	width: 425px;
+	top: 73px;
+	padding-top: 18px;
+	left: 550px;
+	text-align: left;
+	border-bottom: 1px solid #a9aaae; 
+	font: 1.05em/1.4em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	margin-bottom: 10px;
+	}
+* html #commentContainer {
+	left: 540px;
+	}
+#commentContainer h2 {			
+	font-size: 2em;			/* this should be the same size as #contentContainer h2 above 	*/		
+	margin: 0 0 20px 0;		/* but for some reason it's not									*/
+	padding: 0;
+	}
+* html #commentContainer h2 {
+	font-size: 2.1em;
+	}
+#commentContainer h2 a {
+	border-bottom: none;
+	}
+#commentContainer h2 a:hover {
+	background-color: #FEFF7A;
+	}	
+#commentMetaCounts ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0 0 3px 0;
+	}
+#commentMetaCounts li {
+	display: inline;
+	padding-right: 15px;
+	}
+#commentMetaCounts li {
+	color: #000000;
+	font: 7pt/14pt Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0em;
+	}
+#reportCommentLink {
+	position: fixed;
+	top: 498px;
+	left: 550px;
+	width: 425px;
+	text-align: center;
+	font: 8pt/14pt Arial, Helvetica, sans-serif;
+	}
+#reportCommentLink a {
+	display: block;
+	margin: 5px auto;
+	text-align: center;
+	width: 170px;
+	padding: 4px 8px;
+	background-color: #E9EADE;
+	border: 1px solid #a9aaae;
+	}
+#reportCommentLink a:hover {
+	background-color: #FEFF7A;
+	}
+.child {
+	margin-left: 10px;
+	padding-left: 10px;
+	border-left: 1px solid #e9eade;
+	}	
+label,
+#lostPassword {
+	font: 8pt/14pt Arial, Helvetica, sans-serif;
+	color: #a9aaae;
+	float: left;
+	clear: left;
+	}
+input#submit{
+	clear: left;
+	}
+
+/* COMMENT TABS
+********************************/
+ul#commentTabs {
+	font: 8pt/10pt arial, helvetica, sans-serif;
+	list-style-type: none;
+	padding: 0px 0px 19px 0px;
+	padding-bottom: expression(0);
+	border-bottom: 1px solid #a9aaae;
+	margin: 0;
+	width: 425px;
+	}
+* html ul#commentTabs {
+	padding: 0px 0px 0px 0px;
+	}
+ul#commentTabs li {
+	float: left;
+	height: 18px;
+	color: #ffffff;
+	background-color: #E9EADE;
+	margin: 0px 2px 0 2px;
+	padding: 0;
+	border-top: 1px solid #a9aaae;
+	border-left: 1px solid #a9aaae;
+	border-right: 1px solid #a9aaae;
+	}
+#commentTabs li a,
+#commentTabs a {
+	float: left;
+	display: block;
+	color: #000000;
+	background-color: #E9EADE;
+	padding: 2px 8px;
+	border-bottom: 0;
+	}
+#commentTabs li a:hover,
+#commentTabs a:hover {
+	color: #000000;
+	background-color: #FEFF7A;
+	cursor: pointer;
+
+}
+#tab1 li.tab1, #tab2 li.tab2, #tab3 li.tab3, #tab4 li.tab4, #tab5 li.tab5 {
+	border-bottom: 1px solid #fff;
+	background-color: #fff;
+	}
+#tab1 li.tab1 a, #tab2 li.tab2 a, #tab3 li.tab3 a, #tab4 li.tab4 a, #tab5 li.tab5 a{
+	color: #000;
+	background-color: #fff;
+	}
+#tab1 li.tab1 a:hover, #tab2 li.tab2 a:hover, #tab3 li.tab3 a:hover, #tab4 li.tab4 a:hover, #tab5 li.tab5 a:hover {
+	background-color: #fff;
+	}
+
+/* COMMENT BOX
+********************************/
+#commentTextContainer	{
+	padding: 0 20px 0 10px;
+	height: 300px; /* variable if the user can change height of comment window */
+	width: 395px;
+	overflow: scroll;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	border-left: 1px solid #a9aaae;
+	background-color: #ffffff;
+	}
+* html #commentTextContainer {
+	width: 425px;
+	padding: 0 20px 0 10px;
+	margin: 0px;
+	}
+.comment	{
+	margin: 2.5em 0 2.5em 0;
+	/*border: 1px solid #00FF00;*/
+	}
+.commentAuthor,
+.commentDate	{
+	font: 8pt "Times New Roman", "Times New Roman PS MT", Times, serif;
+	text-transform: uppercase;
+	margin-bottom: 8px;
+	/*border: 1px solid #0000FF;*/
+	}
+a.commentToText	{
+	display: block;
+	float: right;
+	margin: -6px 10px 0 0;
+	font: 7pt/10pt Arial, Verdana, Helvetica, sans-serif;
+	font-style: italic;
+	}
+a.commentToText img {
+	border: none;
+	}
+.replyToComment a{
+	float: right;
+	font: 7pt/10pt Arial, Verdana, Helvetica, sans-serif;
+	padding: 1px 8px;
+	background-color: #E9EADE;
+	border: 1px solid #a9aaae;
+	}
+.replyToComment a:hover {
+	background-color: #FEFF7A;
+	}
+blockquote.commentquote {			/* 	Thanks to Natalie Downe for the code and images from
+ 									here: http://notes.natbat.net/2006/11/22/blockquotesagain/ */
+  text-align: left;
+ }
+blockquote.commentquote p {
+  margin: 0 0 2em 0 ;
+  display: list-item;
+  list-style-position: inside;
+  background: url("./images/quotes2.png");
+  background-repeat: no-repeat;
+  background-position: 100% 97.5%;
+  list-style-image: url("./images/quotes1.png")
+ }
+.commentTextContainer h3 {
+	font-size: 1.3em;
+	letter-spacing: .1em;
+	padding-bottom: 10px;
+	display: block;
+	}
+.commentHelpSection {
+	display: block;
+	margin-bottom: 5px;
+	}
+ul.helplist {
+	margin: 0 0 20px 0;
+	padding: 0;
+	}
+.helplist li {
+	margin: 0;
+	padding: 0 0 0 20px;
+	line-height: 1.5em;
+	}
+.readerDisclaimer {
+	font: 8pt/10pt Arial, Verdana, Helvetica, sans-serif;
+	}
+
+/* FOOTER
+********************************/
+#footer	{
+	clear: both;
+	width: 900px;
+	margin: 20px 5px 15px 30px;
+	padding: 10px 20px 0 20px;
+	text-align: left;
+	/*border-top: 1px solid #000000;*/
+	font: 8pt Arial, Helvetica, sans-serif;
+	}
+#footer div	{
+	}
+#footer a	{}
+#footer a:hover	{}
+#footer a:visited	{}
+
+
+/* INDEX PAGE
+********************************/
+#indexContainer {
+	width: 1000px;
+}
+#indexContainer #index_leftCol {
+	float: left;
+	width: 410px;
+	margin-left: 45px;
+}
+* html #indexContainer #index_leftCol { 	/* ie6 hackery */
+	margin-left: 25px;
+	margin-top: 10px;						/* this is to offset the column a little further down from the nav */
+	}
+#indexContainer #index_rightCol {
+	float: left;
+	width: 500px;
+}
+#index_presentedBy {
+	margin: 0 0 0 45px;
+	font-size: 8.5pt;
+	line-height: 2em;
+}
+#index_title {
+	font: 30pt/44pt "Times New Roman PS MT", "Times New Roman", Times, serif;
+	text-transform: uppercase;
+	margin: 0 0 10px 45px;
+	letter-spacing: .05em;
+}
+#index_subtitle {
+	font: 18pt "Times New Roman PS MT", "Times New Roman", Times, serif;
+	text-transform:none; 
+	margin-left: 5px;
+	letter-spacing: 0;
+}
+#index_contributors {
+	font:8.5pt arial, helvetica, sans-serif;
+	line-height: 1.6em;
+	margin-top: 25px;
+	}
+* html #index_contributors ul{  		/* ie6 hackery */
+	margin-top: 25px;
+}	
+#index_contributors ul {
+	list-style-type: none;
+	margin: 15px 0;
+	padding: 0;
+}
+#index_contributors ul li {
+	font: 1.4em/1em "Times New Roman PS MT", "Times New Roman", Times, serif;
+} 
+#index_quote,
+#index_quoteAttr {
+	font: 18pt "Times New Roman PS MT", "Times New Roman", Times, serif;
+}
+#index_intro {
+	width: 425px;
+	margin: 15px 0;
+}
+#index_intro img {
+	margin-left: 15px;
+}
+#index_quoteAttr {
+	float: right;
+}	
+#startReading {
+	font: 18pt "Times New Roman PS MT", "Times New Roman", Times, serif;
+	padding: 15px 0px;
+}
+#index_disclaimer {
+	margin: 20px 50px 0 0;
+	font-size: .9em;
+	font-style: italic;
+	background-color: #FEFF7A;
+	padding: 8px;
+}
+
+/* PAGES
+********************************/
+#pageContainer {
+	margin: 35px 0 0 25px;
+	width: 1000px;
+}
+#pageContainer h2{
+	font-size: 2.2em;			/* this is the same as contentContainer h2 */
+	margin: 0 0 20px 0;
+	padding: 0 0 0 0px;
+	}
+#pageContainer h3 {
+	margin-bottom: 10px;
+	}
+#pages_leftCol {
+	float: left;
+	width: 425px;
+	margin-top: 25px;
+	padding: 25px 40px 25px 25px;
+	}	
+#pages_rightCol {
+	float: left;
+	width: 400px;
+	text-align: left;
+	margin-top: 25px;
+	padding: 25px;
+	}
+
+/* COMMENT INDEX
+********************************/
+
+#indexComments	{
+	border-top: 1px solid #000000;
+	padding-top: 15px;
+	}
+		
+#genCommentsList {
+	width: 450px;
+	float: left;
+}
+#genCommentForm{
+	width: 400px;
+	margin-top: 3em;
+}
+h3#respond {
+	padding-top: 15px;
+}
+#commentform input 	{
+	font: 8pt Arial, Helvetica, sans-serif;
+	}
+#commentform textarea {
+	width: 350px;
+	height: 120px;
+	font-size: 8pt;
+	font-family: Arial, Helvetica, sans-serif;
+	}
+#indexCommentsForm	{
+	float: left;
+	}
+	
+/* DISCUSSION PAGE 
+********************************/
+#menu_assessment{
+  display: none;
+ }
+ 
+ #menu_wayforward{
+  display: none;
+ }
+ 
+ #menu_appendices{
+  display: none;
+ }
+ 
+ #menu_about{
+  display: none;
+ }	
+
+ul.indexCommentsList,
+ul.indexCommentsList li ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;	
+	}
+ul.indexCommentsList li,
+ul.indexCommentsList li ul li {
+	margin: 0;
+	padding: 0px;
+	line-height: 1.75em;
+	font-size: 9pt;
+	}
+ul.indexCommentsList li ul li {
+	padding-left: 20px;
+}	
+ul.indexCommentsList li a,
+ul.indexCommentsList li ul li a {
+	border: none;
+	}
+
+/* CONTRIBUTOR Page
+********************************/
+#contributorList {
+	margin-top: 25px;
+	}
+
+.commentReference {
+	font: 1em "Times New Roman PS MT", "Times New Roman", Times, serif;
+	font-style: italic;
+	margin-bottom: 5px;
+	}
+
+/* Miscellaneous */	
+#moveIcon{
+ cursor: pointer;
+}	
+.text2 {
+	border: none;
+} 
+
+/* Highlighting  */
+.highlightBackgroundColor	{
+	color: #000000;
+	background-color: #C30000;
+}
+strong.search-excerpt {
+   background-color: #FEFF7A;
+ }
+ 
+ 
+.warningMessageBox{
+	border: 2px dashed #C30000;
+	background-color: #FEFF7A;
+	position: relative;
+	top: 75px;
+	padding: 20px;
+	width: 400px;
+}
+
+.warningMessage{
+	font: 1.5em/1.15em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	margin: 0em 0 .6em 0;
+	/*text-transform: uppercase;*/
+	z-index: 100;
+}
+
+ul#helplist{
+	list-style: none;
+	margin-left: 0;
+	text-indent: -2em;
+	padding: 0px;
+	font-size: 1em;
+	padding-left: 45px;
+	padding-right: 40px;
+}
+
+li#helplist 	{
+	line-height: 1em;
+	padding: 0px 0px;
+}
+
+
+em#help{
+	font: .90em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	text-transform: uppercase;
+	margin: 2em 0px 0px 0px;
+}
+
+
+

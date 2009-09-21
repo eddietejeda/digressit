@@ -1,0 +1,14 @@
+html, body {
+	height: 100%;	overflow: hidden; 
+}
+	
+#commentbox {
+ position: absolute !important;
+}
+
+.containerTable{
+	height: 400px !important;
+	
+}
+
+

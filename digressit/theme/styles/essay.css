@@ -1,0 +1,385 @@
+/*
+Theme Name:Marginalia Essay
+Theme URI:http://marginalia.cc
+Description: This is the default theme for CommentPress, a plugin allows readers to comment paragraph by paragraph in the margins of a text.
+Version:2.0
+Author: Eddie Tejeda & Jesse Wilbur
+Author URL: http://www.jdwilbur.org
+Author URL: http://www.visudo.org/
+*/
+
+
+body	{
+	margin: 0;
+	padding: 0;
+	height:100%; 
+	width: 100%;
+	overflow-y:auto;
+	}
+h1 	{
+	font: 2em/1.15em Georgia, "Times New Roman", Times, serif;
+	}
+h2 	{	
+	font: 1.3em Georgia, "Times New Roman", Times, serif;
+	}
+h3 	{
+	font: .9em Georgia, "Times New Roman", Times, serif;
+	text-transform: uppercase;
+	}
+#content	{
+	font: 1em/1.35em Georgia, "Times New Roman", Times, serif;
+	padding-right: 40px;
+	padding-left: 5px;
+	}
+ol.content, ul.content	{
+	padding-left: 45px;
+	}
+ol.content li, ul.content li 	{
+	padding: 4px 0px;
+	}
+a	{
+	color: #000;
+	text-decoration: none;
+	}
+a:hover	{
+	color: #000000;
+	background-color: #FFFC00;
+	}
+a:visited	{
+	color: #000;
+	}
+br.clear	{
+	clear: both;
+	}
+h1 a, a h1, h2 a, a h2, h3 a, a h3 {
+	color: #000000;
+	}
+
+#container {
+	margin: 30px 0px 30px 0px;
+	padding: 0 5px 0 30px;
+	width: 910px;
+	}
+#logo{
+	margin: 50px 35px;
+}	
+
+#logo h1	{
+	text-align: left;
+	color: #000;
+	text-transform: italic;
+	}
+	
+h1{
+	background-color: #FFFC00;
+	
+}	
+	
+	#sidebar ul, #sidebar ul ol {
+		margin: 0;
+		padding: 0;
+		}
+
+	#sidebar ul li {
+		list-style-type: none;
+		list-style-image: none;
+		margin-bottom: 15px;
+		}
+
+	#sidebar ul p, #sidebar ul select {
+		margin: 5px 0 8px;
+		}
+
+	#sidebar ul ul, #sidebar ul ol {
+		margin: 5px 0 0 10px;
+		}
+
+	#sidebar ul ul ul, #sidebar ul ol {
+		margin: 0 0 0 10px;
+		}
+
+	ol li, #sidebar ul ol li {
+		list-style: decimal outside;
+		}
+
+	#sidebar ul ul li, #sidebar ul ol li {
+		margin: 3px 0 0;
+		padding: 0;
+		}
+
+	
+#navContainer	{
+	float: left;
+	width: 325px;
+	margin: 0px 0px 0px 50px;
+	text-align: left;
+	cursor: default;
+	}
+#contentContainer	{	
+	float: left;
+	width: 500px;
+	margin: 0px 0px 0px 0px;
+	text-align: left;
+	}
+* html #contentContainer {
+	margin-top: 15px;
+	}
+#commentContainer	{
+	position: fixed;
+	width: 370px;
+	top: 160px;
+	left: 575px;
+	font: 10pt/13pt Arial, Helvetica, sans-serif;
+	text-align: left;
+	border-bottom: 1px solid #000000; 
+	}
+* html #commentContainer {	/* IE 5+ < 7 Hackery */ 
+	position:absolute;
+	top: 140px;
+	}
+#commentContainer h3 {
+	font: bold 11pt Arial, Helvetica, sans-serif;
+	text-tranform: uppercase;
+	}	
+#footer	{
+	clear: both;
+	width: 900px;
+	margin: 20px 5px 30px 30px;
+	padding: 10px 20px 0 20px;
+	text-align: left;
+	}
+
+..selected_block	{
+	background-color: #fffc00;
+	}
+.blockHighlight	{
+	background-color: #93D8FF;
+	border: 1px dashed #0097ED;
+	}
+.noHighlight {
+	background-color: none;
+	}
+
+/* Navigation */	
+#navContainer	{
+	margin-top: 35px;
+	}
+* html #navContainer { 
+	margin-top: 15px; 
+	}
+ul#contentNav	{
+	margin: 20px 0px;
+	padding: 0px;
+	}
+ul#contentNav li {
+	display: inline;
+	}
+ul#contentNav li.navItem a {
+	background-color: #FFFC00;
+	margin: 1px;
+	padding: 0px 4px;
+	width: 20px;
+	}
+ul#contentNav li.navItem a:hover {
+	color: #000000;
+	}
+#pageNavigation	{
+	background-color: #ccc;
+	margin-top: 40px;
+	padding: 5px;
+	height: 20px;
+	}
+.pagePrev a, .pageNext a{
+	color: #000000;
+	}
+.pagePrev	{
+	width: 275px;
+	}
+.pageNext	{
+	float: right;
+	width: 275px;
+	text-align: right;
+	}
+	
+/* Comment Count Icons */
+.blockCommentCount a{
+	float: right;
+	clear: right;
+	margin: 5px;
+	min-width: 16px;
+	width: 16px;
+	text-align: center;
+	padding-top: .9em;
+	height: 2em;
+	font: .95em/.8em Georgia, "Times New Roman", Times, serif;
+	color: #000000;
+	background: url("images/comment.gif") 0 0 no-repeat;
+	}
+.blockCommentCount a:hover	{	
+	background: url("images/comment_over.gif") 0 0 no-repeat;
+	}
+.blockCommentCountOn	{	
+	background: url("images/comment_over.gif") 0 0 no-repeat;
+	}
+
+/* Comment area */
+ul#commentTabs {
+	font: bold 8pt/10pt arial, verdana, arial, sans-serif;
+	list-style-type: none;
+	padding: 0px 0px 20px 0px;
+	border-bottom: 1px solid #000000;
+	margin: 0;
+	width: 370px;
+	}
+* html ul#commentTabs {
+	padding: 0px 0px 0px 0px;
+	}
+ul#commentTabs li {
+	float: left;
+	height: 18px;
+	background-color: #93D8FF;
+	margin: 1px 1px 0 1px;
+	padding: 0 2px 0 2px;
+	border: 1px solid #000000;
+	}
+#commentTabs a {
+	float: left;
+	display: block;
+	color: #666;
+	text-decoration: none;
+	padding: 2px;
+	}
+#commentTabs a:hover {
+	color: #000000;
+	background-color: #93D8FF;
+	cursor: pointer;
+
+}
+#tab1 li.tab1, #tab2 li.tab2, #tab3 li.tab3, #tab4 li.tab4 {
+	border-bottom: 1px solid #fff;
+	background-color: #fff;
+	}
+#tab1 li.tab1 a, #tab2 li.tab2 a, #tab3 li.tab3 a, #tab4 li.tab4 a {
+	color: #000;
+	}
+#tab1 li.tab1 a:hover, #tab2 li.tab2 a:hover, #tab3 li.tab3 a:hover, #tab4 li.tab4 a:hover {
+	background-color: #fff;
+	}
+#commentTextContainer	{
+	padding: 0px 10px;
+	height: 390px; /* variable if the user can change height of comment window */
+	width: 350px;
+	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	border-left: 1px solid #000000;
+	background-color: #ffffff;
+	}
+.comment	{
+	margin: 1.5em 0;
+	/*border: 1px solid #00FF00;*/
+	}
+.commentDate	{
+	font: 7pt/14pt Arial, Verdana, Helvetica, sans-serif;
+	color: #666666;
+	text-transform: uppercase;
+	/*border: 1px solid #0000FF;*/
+	}
+.commentAuthor	{
+	font-weight: bold;
+	margin: .5em 0px;
+	}
+a.commentToText	{
+	display: block;
+	float: right;
+	margin-right: 0px;
+	}
+a.commentToText img {
+	border: none;
+	}
+
+#footer	{
+	border-top: 1px solid #000000;
+	font: 8pt Arial, Helvetica, sans-serif;
+	}
+#footer a	{}
+#footer a:hover	{}
+#footer a:visited	{}
+
+
+/* Home Page Styles */
+#indexNav 	{
+	float: left;
+	font-size: 13pt;
+	line-height: 18pt;
+	}
+#indexNav h3	{
+	margin: 0px;
+	padding: 0px 0px 10px 0px;
+	}
+#indexNav a	{
+	color: #000000;
+	}
+#indexNote	{
+	float: left;
+	width: 555px;
+	margin-left: 50px;
+	margin-top: -10px;
+	}
+#indexNote h3	{
+	font: bold 10pt Arial, Helvetica, sans-serif;
+	padding-left: 5px;
+	}
+#indexNote p.content	{
+	font: 10pt Arial, Helvetica, sans-serif;
+	}
+#indexByline	{
+	font-size: 1em;
+	margin: 0px 0 40px 0;
+	}
+#indexComments	{
+	border-top: 1px solid #000000;
+	padding-top: 15px;
+	}	
+	
+/* Comment forms */
+#indexCommentsForm	{
+	float: left;
+	}
+#commentform input 	{
+	font: 8pt Arial, Helvetica, sans-serif;
+	}
+#commentform textarea {
+	width: 300px;
+	height: 120px;
+	font-size: 8pt;
+	font-family: Arial, Helvetica, sans-serif;
+	}
+	
+#moveIcon{
+ cursor: pointer;
+}	
+
+
+.highlightBackgroundColor	{
+	color: #000000;
+	background-color: #FFFC00;
+}
+
+
+.selected_block{
+	border-width: 2px;
+	border-style: solid;
+	border-color: #000;
+    background-color: #FFFC00;
+	position: absolute;
+    opacity: .90; 
+	z-index: -1;
+	filter:alpha(opacity=60); 
+	-moz-opacity: .90; 	
+	-moz-border-radius: 0px;
+	-khtml-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
