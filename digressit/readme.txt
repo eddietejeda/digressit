@@ -45,6 +45,7 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 * Removed mu-plugins support. For mu-support use Plugin-Commander
 * FIXED: commentcount and commenticon positioning IE6
 * FIXED: highlight scales properly in IE6/7
+* NEW FEATURE: added the ability to enable Digress.it with different post status for private review.
 
 = 2.1.7 =
 * containerTable is now transparent so that the round edges on commentbox stay round over text

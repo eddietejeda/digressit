@@ -101,7 +101,7 @@ class Digress_It_Post extends Digress_It_Base{
 
 		$browser = $this->browser;
 
-		$base_style = $this->theme_url . '/base.css';
+		$base_style = $this->theme_url . '/style.css';
 
 		wp_enqueue_style( 'digressit.base', $base_style);
 
