@@ -101,13 +101,10 @@ class Digress_It_Post extends Digress_It_Base{
 
 		$browser = $this->browser;
 
-		$base_style = $this->theme_url . 'style.css';
-
-		wp_enqueue_style( 'digressit.base', $base_style);
+		wp_enqueue_style( 'digressit.stylesheet', $this->style_path."style.css");
 
 		if(is_single())
 		{		
-			wp_enqueue_style( 'digressit.stylesheet', $this->style_path."style.css");
 			wp_enqueue_style('jquery.ui.theme',	$this->jquery_path.'themes/smoothness/ui.theme.css');
 			
 			if($browser['name'] == "msie"){				
