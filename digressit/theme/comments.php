@@ -9,10 +9,14 @@
 		die ('Please do not load this page directly. Thanks!');
 
 
-	if ( !function_exists('post_password_required') && post_password_required() ) { ?>
+	if ( !function_exists('post_password_required')  ) {
+		
+		if( post_password_required() ){
+		 ?>
 		<p class="nocomments">This post is password protected. Enter the password to view comments.</p>
-	<?php
+		<?php
 		return;
+		}
 	}
 ?>
 
