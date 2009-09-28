@@ -85,7 +85,7 @@ class Digress_It_Post extends Digress_It_Base{
 		
 
 
-		if(get_template() == $this->plugin_name && $digressit_theme_mode == 'stylesheet'):
+		if(get_template() == $this->plugin_name):
 		?>
 		<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('wpurl'); ?>/wp-content/themes/<?php echo  get_template(); ?>/styles/<?php echo $chosen_style; ?>.css" />		
 		<?php
@@ -101,13 +101,13 @@ class Digress_It_Post extends Digress_It_Base{
 
 		$browser = $this->browser;
 
-		$base_style = $this->theme_url . '/style.css';
+		$base_style = $this->theme_url . 'style.css';
 
 		wp_enqueue_style( 'digressit.base', $base_style);
 
 		if(is_single())
 		{		
-			wp_enqueue_style( 'digressit', $this->style_path."style.css");
+			wp_enqueue_style( 'digressit.stylesheet', $this->style_path."style.css");
 			wp_enqueue_style('jquery.ui.theme',	$this->jquery_path.'themes/smoothness/ui.theme.css');
 			
 			if($browser['name'] == "msie"){				
