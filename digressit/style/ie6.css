@@ -3,12 +3,31 @@ html, body {
 }
 	
 #commentbox {
- position: absolute !important;
+	position: absolute !important;
 }
 
 .containerTable{
-	height: 400px !important;
-	
+	height: 350px !important;	
+}
+
+.postmetadata{
+	margin-top: 50px;
+}
+
+.commentarea{
+	background-color: #E6E6E6 !important;
 }
 
 
+.commenticonbox {
+	position: relative;
+}
+
+.commenticonbox img{
+	position: absolute;
+}
+
+.commenticonbox small{
+	position: absolute;
+	left: 20px;
+}

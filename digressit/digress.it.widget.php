@@ -19,23 +19,36 @@ class Digress_It_Widget extends Digress_It_Base{
 	
 	function metabox() {
 		global $post;
-		$digressitoff = get_post_meta($post_ID, 'digressitoff');
 
-		//var_dump($digressitoff);
+
+		if(!get_option('digressit_enabled_' . $post->ID)){
+			add_option('digressit_enabled_' . $post->ID, 'publish');
+		}
+
+		
+
+
+		$digressit_enabled = get_option('digressit_enabled_' . $post->ID);
+
 		?>
-		<input type="checkbox" name="digressitoff" <?php if ($digressitoff) { echo 'checked="checked"'; } ?>/> <?php _e('Disable digress.it?','digressit') ?>
+		<p><input type="radio" value="publish" <?php echo ($digressit_enabled == 'publish') ? 'checked' : ''; ?> name="digressit_enabled" /> <?php _e('Enabled when published','digressit') ?></p>
+		<p><input type="radio" value="private" <?php echo ($digressit_enabled == 'private') ? 'checked' : ''; ?> name="digressit_enabled" /> <?php _e('Enabled when set to private','digressit') ?></p>
+		<p><input type="radio" value="draft" <?php echo ($digressit_enabled == 'draft') ? 'checked' : ''; ?>  name="digressit_enabled" /> <?php _e('Enabled when set to draft','digressit') ?></p>
 		
 		<?php
 	}
 
 	function load_meta_box() {
-		add_meta_box('digressit','DigressIt',array(&$this, 'metabox'), 'post', 1000);
+		add_meta_box('digressit','Digress.it',array(&$this, 'metabox'), 	'post', 'normal', 'high');
+		
 	}
 
-	function on_insert_post($post_ID) {
-		//var_dump($_POST);
-		delete_post_meta($post_ID, 'digressitoff');
-		update_post_meta($post_ID, 'digressitoff', ($_POST['digressitoff'] ? 'true' : 'false'));
+	function on_insert_post($revisionid) {
+
+		$postid = wp_is_post_revision($revisionid) ? wp_is_post_revision($revisionid) : $revisionid;	
+
+		update_option('digressit_enabled_' . $postid,$_POST['digressit_enabled']);
+
 	}
 	
 

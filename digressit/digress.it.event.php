@@ -25,10 +25,13 @@ class Digress_It_Event extends Digress_It_Base{
 
 		
 				case 'approved_comments':
-					$diff = (int)$digressit_commentbrowser->getAllCommentCount() - (int)$_REQUEST['current-count'];
-					if($diff > 0){
-						$comments= $digressit_commentbrowser->getRecentComments( $diff, $cleaned = true );						
-						echo json_encode($comments);
+					if($_REQUEST['current-count'] != 'null'){
+
+						$diff = (int)$digressit_commentbrowser->getAllCommentCount() - (int)$_REQUEST['current-count'];
+						if($diff > 0){
+							$comments= $digressit_commentbrowser->getRecentComments( $diff, $cleaned = true );						
+							echo json_encode($comments);
+						}
 					}
 				break;
 				

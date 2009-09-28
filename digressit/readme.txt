@@ -30,12 +30,21 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 
 = 2.1.8 =
 * RSS minor switch: change "on paragraph number #9" to "(paragraph no. 9)"
-* The Object code does not load properly when clicked
-* html embed is now a blockquote instead of div
-* easier to filter/label if if carried a "[digress.it]" identifier in
-the subject line
-* easier to pop over to this group to look at all the discussions if it had a link at the bottom (or top) to the discussions page like this:
-
+* FIXED: The embed Object code was not loading properly when clicked. Now it does
+* ENHANCEMENT: html embed is now a blockquote instead of div
+* FIXED: alert would appear when set to classic mode
+* ISSUE#4 FIXED CommentBrowser now much clearer
+* ISSUE#1 FIXED empty tags generate empty selection paragraph
+* ISSUE#12 FIXED typo when outputting xml in embed code
+* NEW: added support for google frame when available
+* NEW: stylized debug mode
+* If simpleXml fails it automatically reverts to regexp parsing
+* ISSUE#3 FIXED comment appearing multiple times fix
+* ISSUE#8 FIXED The Comments by Section page, displays the sections in reverse order
+* Removed debug code to measure function speeds
+* Removed mu-plugins support. For mu-support use Plugin-Commander
+* FIXED: commentcount and commenticon positioning IE6
+* FIXED: highlight scales properly in IE6/7
 
 = 2.1.7 =
 * containerTable is now transparent so that the round edges on commentbox stay round over text

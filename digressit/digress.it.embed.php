@@ -10,7 +10,6 @@ class Digress_It_Embed extends Digress_It_Post{
 	}
 	
 	function Digress_It_Embed(){
-		$start = microtime(true);
 
 		if($_REQUEST['digressit-embed'] == 'stylesheet'):
 		header('Content-type: text/plain'); 
@@ -118,7 +117,7 @@ class Digress_It_Embed extends Digress_It_Post{
 				default:
 					header('Content-type: text/html'); 
 					$paranumber++;
-					echo "<div id='selected_paragraph'>". $paragraph['content'] . '</div>';
+					echo "<blockquote cite='".$paragraph['permalink']."'>". $paragraph['content'] . '</blockquote>';
 				break;
 			
 			
@@ -126,7 +125,6 @@ class Digress_It_Embed extends Digress_It_Post{
 			?>
 			<?php
 
-			$this->debugtime[]['print_embed_code_js'] = microtime(true) - $start;
 			die();
 		endif;
 	

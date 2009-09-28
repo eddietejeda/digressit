@@ -8,14 +8,35 @@ class Digress_It_Admin extends Digress_It_Base{
 		$this->Digress_It_Admin();
 	}
 	
-	function Digress_It_Admin()
-	{
+	function Digress_It_Admin(){
+		
+		
+		if(is_admin() && $_REQUEST['editor'] == 'true'){
+			add_action( 'wp', array( &$this, 'load_preview_editor') );				
+		}
+		
 	}
 	
 	
 
 	
-	
+	function load_preview_editor(){
+?>
+
+<div class="ui-widget debug-message">
+	<div class="ui-state-error ui-corner-all" style="padding: .5em;"> 
+		<p><span class="ui-icon ui-icon-alert" style="margin-right: .3em;"></span> 
+		<strong>dfdfgd<input type="submit"></strong>
+		</p>
+	</div>
+
+</div>
+
+
+<?
+		
+
+	}
 
 	function process_post(){
 		switch($_POST['Submit'])
@@ -39,33 +60,6 @@ class Digress_It_Admin extends Digress_It_Base{
 
 	
 
-
-	function getCustomStyleSheets() 
-	{
-		$results = array();
-		
-		/*TODO: site-wide theme.. disabled for now */ 
-		if(false/* disable */ && $this->hostname == DIGRESSIT_COMMUNITY_HOSTNAME && file_exists( WP_CONTENT_DIR .'/plugins/'.$this->plugin_name.'/theme/styles/' . DIGRESSIT_COMMUNITY . '.css')){
-			$results[] = DIGRESSIT_COMMUNITY;
-		}
-		else{
-			$handler = opendir( WP_CONTENT_DIR .'/plugins/'.$this->plugin_name.'/theme/styles/');
-			while ($file = readdir($handler)) {
-				echo $file;
-				if ($file != '.' && $file != '..'){
-					if(substr($file, -4) == '.css'){
-						$results[] = substr($file, 0, -4);
-					}
-				}
-			}
-
-			closedir($handler);
-		}
-		return $results;
-	}	
-	
-
-
 	
 	/** 
 	 * @description: 
@@ -81,8 +75,11 @@ class Digress_It_Admin extends Digress_It_Base{
 			if($_POST['stylesheet'] == 'classic'){
 				$_POST['default_skin'] = 'none';
 			}
-			
-			
+
+			if($_POST['stylesheet'] == 'default' && $_POST['default_skin'] = 'none'){
+				$_POST['default_skin'] = 'skin1';
+			}
+
 			$this->process_post();
 		}
 
@@ -119,10 +116,15 @@ class Digress_It_Admin extends Digress_It_Base{
 			<table  style="width: 400px; float: left; text-align: left">
 
 
+				<?php
+								
+				if($options['theme_mode'] == 'stylesheet'):
+				
+				?>
 				<tr valign="top">
 					<th scope="row"><label for="stylesheet">Document Skin</label></th>
 					<td><select name="stylesheet">
-							<?php foreach($this->getCustomStyleSheets() as $style): ?>
+							<?php foreach($this->get_available_style_sheets() as $style): ?>
 							<option value="<?php echo $style; ?>" '<?php echo (($options['stylesheet'] == $style) ? " selected " : null); ?>'><?php echo $style ?></option>
 							<?php endforeach; ?>
 						</select>
@@ -130,7 +132,17 @@ class Digress_It_Admin extends Digress_It_Base{
 						<a class="digress_customize" href="<?php echo $this->digressit_server; ?>/developers/#stylesheets">Learn how to customize</a>
 					</td>
 				</tr>
+				<?php
+				
+				endif;
+				
+				?>
 
+				<?php
+				
+			if($options['stylesheet']  != 'classic'):
+				
+				?>
 				<tr valign="top">
 					<th scope="row"><label for="default_skin">CommentBox Skin</label></th>
 					<td><select name="default_skin">
@@ -146,7 +158,7 @@ class Digress_It_Admin extends Digress_It_Base{
 						</select>
 					</td>
 				</tr>
-
+				<?php endif; ?>
 
 
 				<tr valign="top">
@@ -293,6 +305,11 @@ class Digress_It_Admin extends Digress_It_Base{
 				<tr valign="top">
 					<th scope="row"><label for="frontpage_sidebar">Sidebar in Front Page</label></th>
 					<td><input type="hidden"  id="frontpage_sidebar" name="frontpage_sidebar" value='<?php echo ( $options['frontpage_sidebar'] ? "1" : "0"  ) ?>'><input name="frontpage_sidebar_checkbox"  value="1" type="checkbox" class="checkbox_selector" '<?php echo ( $options['frontpage_sidebar'] ? " checked" : ""  ) ?>'></td>
+				</tr>
+				
+				<tr valign="top">
+					<th scope="row"><label for="enable_chrome_frame">Enable Chrome Frame</label></th>
+					<td><input type="hidden"  id="enable_chrome_frame" name="enable_chrome_frame" value='<?php echo ( $options['enable_chrome_frame'] ? "1" : "0"  ) ?>'><input name="enable_chrome_frame"  value="1" type="checkbox" class="checkbox_selector" '<?php echo ( $options['enable_chrome_frame'] ? " checked" : ""  ) ?>'></td>
 				</tr>
 				
 

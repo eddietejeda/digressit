@@ -4,17 +4,14 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 
 	function __construct(){
-		$start = microtime(true);
         parent::__construct();	
 		$this->Digress_It_CommentBrowser();
-		$this->debugtime[]['parse_content'] = microtime(true) - $start;
 		
 	}
 	/**
 	 * create the hooks to wordpress
 	 */
 	function Digress_It_CommentBrowser() {
-		$start = microtime();
 		//register_activation_hook( __FILE__, array( &$this, 'on_activation') );
 		//register_deactivation_hook(__FILE__,  array(&$this,'on_deactivation') );
 
@@ -26,7 +23,6 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 
 
-		$this->debugtime[]['parse_content'] = microtime(true) - $start;
 
 	}
 
@@ -176,8 +172,8 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		<?php echo $before_title . "Comments" . $after_title; ?>
 		
 		<ul>
-			<li><a href="<?php echo $this->wp_path; ?>/?comment-browser=users">Comments by User</a></li>
-			<li><a href="<?php echo $this->wp_path; ?>/?comment-browser=posts">Comments by Section</a></li>
+			<li><a href="<?php echo $this->wp_path; ?>/?comment-browser=users">by Commenter</a></li>
+			<li><a href="<?php echo $this->wp_path; ?>/?comment-browser=posts">by Section</a></li>
 			<!--<li><a href="<?php echo $this->wp_path; ?>/?comment-browser=general">General Comments</a></li>-->
 		</ul>
 		
@@ -207,7 +203,17 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 	?>
 		<ol>
 		<?php
-		$myposts = get_posts('numberposts=-1');
+		$options = get_option('digressit');
+
+		extract($options);
+
+		$myposts = null;
+		if($front_page_post_type){
+			$myposts = get_posts("post_type=$front_page_post_type&numberposts=-1&order=$front_page_order&orderby=$front_page_order_by");
+		}
+		else{
+			$myposts = get_posts();				
+		}
 		$commentbrowser = get_option('commentbrowser');
 		$bysection  = get_post($commentbrowser['bysection']);
 
@@ -260,7 +266,6 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 	function list_general_comments()
 	{
-		$start = microtime();
 		$users = $this->getContributorsWhoHaveCommented();
 
 		echo "<ol>";
@@ -273,13 +278,11 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 		endforeach;
 		echo "</ol>";		
-		$this->debugtime[]['parse_content'] = microtime(true) - $start;
 	}
 
 
 	function print_comments($request_section, $id)
 	{
-		$start = microtime(true);
 		global $in_comment_loop;
 
 		global $comments;
@@ -302,7 +305,6 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		<?php
 
 		wp_list_comments('callback=digressit_list_comments', $comments);
-		$this->debugtime[]['parse_content'] = microtime(true) - $start;
 
 	}
 
@@ -317,19 +319,16 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 	//the following were imported from CP1.4
 	function getCommentCount($title)
 	{
-		$start = microtime();
 		global $wpdb;
 		$title = strip_tags($title);
 		$title = addslashes($title);
 		$sql = "SELECT * FROM $wpdb->comments, $wpdb->posts WHERE comment_post_ID=ID AND post_status='publish' AND comment_approved='1' AND post_name = '$title' AND post_status='publish'";
 		$result = $wpdb->get_results($sql);
-		$this->debugtime[]['parse_content'] = microtime(true) - $start;
 		return ( count($result) );
 	}
 
 	function getCommentCountByCategory($cat)
 	{
-		$start = microtime();
 		global $wpdb;
 		$cat = strip_tags($cat);
 		$cat = addslashes($cat);
@@ -342,7 +341,6 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		{
 			$count += $c->comment_count;
 		}
-		$this->debugtime[]['parse_content'] = microtime(true) - $start;
 		
 		return $count;
 		

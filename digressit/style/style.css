@@ -40,6 +40,24 @@
 
 }
 
+.embed-link{
+	cursor: pointer;
+}
+
+.debug-message{
+	top: 3px;
+	right: 5px;
+	width: 200px;
+	position: fixed; 
+}
+
+.debug-message p{
+	font-size: 60%;
+	padding: 0px;
+	margin: 0px;
+}
+
+
 .commentcount{
 	font-size: 10px; 
 	position:absolute; 

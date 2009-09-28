@@ -15,7 +15,6 @@ class Digress_It_Post extends Digress_It_Base{
 	 * @description: attach the Wordpress hooks to their respective class methods
 	 */
 	function Digress_It_Post(){
-		$start = microtime(true);
 		add_action('init', array(&$this, 'on_init'));
 		add_action('wp_print_scripts', array( &$this, 'on_wp_print_scripts') );
 		add_action('wp_print_styles',  array( &$this, 'on_wp_print_styles') ); 
@@ -28,7 +27,6 @@ class Digress_It_Post extends Digress_It_Base{
 				
 		add_action('admin_menu', array(&$this, 'on_admin_menu'));
 
-		$this->debugtime[]['Digress_It_Post'] = microtime(true) - $start;
 
 	
 	}
@@ -68,13 +66,31 @@ class Digress_It_Post extends Digress_It_Base{
 	}
 
 	function on_wp_head(){
+		
+		
 		$options = get_option('digressit'); 
-		$chosen_style =  $options['stylesheet'];
-		if(get_template() == $this->plugin_name):
+		$digressit_theme_mode = get_option('digressit_theme_mode'); 
+
+
+		if($options['enable_chrome_frame'] == true):
 		?>
-		<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('wpurl'); ?>/wp-content/themes/<?php echo  get_template(); ?>/styles/<?php echo $chosen_style; ?>.css" />
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+
+		<?php 		
+		endif; 
+
+
+		$chosen_style =  $options['stylesheet'];
+		
+
+
+		if(get_template() == $this->plugin_name && $digressit_theme_mode == 'stylesheet'):
+		?>
+		<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('wpurl'); ?>/wp-content/themes/<?php echo  get_template(); ?>/styles/<?php echo $chosen_style; ?>.css" />		
 		<?php
 		endif;
+
 	}
 
 	
@@ -85,9 +101,14 @@ class Digress_It_Post extends Digress_It_Base{
 
 		$browser = $this->browser;
 
+		$base_style = $this->theme_url . '/base.css';
+
+		wp_enqueue_style( 'digressit.base', $base_style);
+
 		if(is_single())
 		{		
 			wp_enqueue_style( 'digressit', $this->style_path."style.css");
+			wp_enqueue_style('jquery.ui.theme',	$this->jquery_path.'themes/smoothness/ui.theme.css');
 			
 			if($browser['name'] == "msie"){				
 				$version = substr($browser['version'], 0, 1);
@@ -105,7 +126,6 @@ class Digress_It_Post extends Digress_It_Base{
 	 * @description: print the javascript code 
 	 */	
 	function on_wp_print_scripts(){
-		$start = microtime(true);
 
 		if(is_single())
 		{
@@ -125,12 +145,32 @@ class Digress_It_Post extends Digress_It_Base{
 			wp_deregister_script( 'jquery' ); 
 			wp_register_script( 'jquery', $this->jquery_path . 'jquery-1.3.2'.$debug.'.js'); 
 			wp_enqueue_script('jquery');
-			print $this->get_settings_js();				
+			echo $this->get_settings_js();				
+			global $digressit_commentbrowser;
+			$js = "<script>var total_comment_count = " . $digressit_commentbrowser->getAllCommentCount() . " ; </script>\n";
+			echo $js;
+
 					
 			if($options['debug_mode'] == 1)
 			{				
 
-				echo '<div style="top: 0px; right: 0px; position: fixed; background-color: red; color: yellow;">debug</div>';
+				if($browser['name'] == "msie"){
+				?>
+			    <script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
+				<?php					
+				}
+
+				?>
+				<div class="ui-widget debug-message">
+					<div class="ui-state-error ui-corner-all" style="padding: .5em;"> 
+						<p><span class="ui-icon ui-icon-alert" style="margin-right: .3em;"></span> 
+						<strong>Alert:</strong> You are in debug mode.</p>
+					</div>
+
+				</div>
+				<?php
+
+
 				wp_enqueue_script('jquery.ui.core',			$this->jquery_path.'ui/ui.core.js', array('jquery'), '1.3.2'); 
 				wp_enqueue_script('jquery.ui.resizable',	$this->jquery_path.'ui/ui.resizable.js', array('jquery.ui.core'), '1.3.2'); 
 				wp_enqueue_script('jquery.ui.draggable',	$this->jquery_path.'ui/ui.draggable.js', array('jquery.ui.core'), '1.3.2'); 
@@ -146,13 +186,14 @@ class Digress_It_Post extends Digress_It_Base{
 				wp_enqueue_script('jquery.scrollto',	$this->jquery_extensions_path.'scrollto/jquery.scrollTo.js', array('jquery'), '1.3.2'); 
 				wp_enqueue_script('jquery.tooltip',		$this->jquery_extensions_path.'tooltip/jquery.tooltip.js', array('jquery'), '1.3.2'); 
 				wp_enqueue_script('jquery.resize',		$this->jquery_extensions_path.'resize/jquery.resize.js', array('jquery'), '1.3.2'); 
-				//wp_enqueue_script('jquery.utils',		$this->jquery_extensions_path.'utils/jquery.utils.js', array('jquery'), '1.3.2'); 
 				wp_enqueue_script('jquery.pulse',		$this->jquery_extensions_path.'pulse/jquery.pulse.js', array('jquery'), '1.3.2'); 
 
 				wp_enqueue_script('digressit',		$this->js_path.'digress.it.src.js', array('jquery'), '1.3.2'); 
 				
 				include('js/compress.js.php');
 				
+
+
 			}
 			else
 			{
@@ -168,7 +209,9 @@ class Digress_It_Post extends Digress_It_Base{
 				wp_enqueue_script('jquery.ui.core',		$this->js_path.'customizer.js', array('jquery'), '1.3.2'); 
 			}			
 		}
-		$this->debugtime[]['on_wp_print_scripts'] = microtime(true) - $start;
+		
+		
+		
 		
 	}
 
@@ -181,24 +224,38 @@ class Digress_It_Post extends Digress_It_Base{
 	 */
 	function on_the_content($content){
 		global $wpdb, $image_path, $post;
-		$start = microtime(true);
-		
 
-		if(is_single())
+
+		$postid = $post->ID;
+
+		$enabled = true; //we assume it enabled for previous versions
+				
+		if(get_option('digressit_enabled_'. $postid)){
+
+			if(get_option('digressit_enabled_'. $postid) == $post->post_status){
+				$enabled = true;
+			}
+			else{
+				$enabled = false;
+			}
+			
+		}
+				
+		if(is_single() && $enabled )
 		{
-			$postid = $post->ID;
 
 			$digressit_content = array();
 			
 			if(!$content){
 
-				$digressit_content[] = '<div id="textblock-1" class="textblock"><span class="paragraphnumber"><span class="embedcode">
-					<b>Embed Code (<a id="embed-object-1" class="embed-link" href="javascript:return false;">object</a> | <a id="embed-html-1" class="embed-link" href="javascript:return false">html</a>)</b><textarea id="textarea-embed-1" rows="5"><object data="'.get_bloginfo('home').'?p='.$postid.'&digressit-embed=1"></object></textarea>
-					<b>Permalink</b>:<br/>
-					</span><a href="javascript:return false">1</a></span>
-					<span class="commenticonbox" title="There is one comment for this paragraph"><img src="'.get_bloginfo('home').'/wp-content/plugins/digressit/theme/images/famfamfam/comment.png" id="paragraph-1" class="commenticon"/><small class="commentcount">'.count(get_approved_comments($postid)).'</small></span>
-					<span class="paragraphtext">This is an empty post</span>
-					</div>';				
+								$digressit_content[] = '<div id="textblock-1" class="textblock"><span class="paragraphnumber"><span class="embedcode" style="display: none;">
+								<b>Embed Code (<a id="embed-object-1" class="embed-link" href="javascript:return false">object</a> | <a id="embed-html-1" class="embed-link" href="javascript:return false">html</a>)</b><textarea id="textarea-embed-1" rows="5">&lt;object style="width: 100%;" onload="this.style.height = (this.contentDocument.body.offsetHeight + 40) + \'px\'" class="digressit-paragraph-embed" id="67dc5a225499cfed3d1d554c4a20d9a2" data="'.get_bloginfo('home').'?p=284&amp;digressit-embed=1"&gt;&lt;/object&gt;&lt;a href="'.get_permalink($postid).'#1"&gt;@&lt;/a&gt;</textarea>
+								<b>Permalink</b>:<br> <input type="text" value="'.get_permalink($postid).'#1">
+								</span><a href="'.get_permalink($postid).'#1">1</a></span>
+				<span class="commenticonbox" title="There are 2 comments for this paragraph"><img src="'.get_bloginfo('home').'/wp-content/plugins/digressit/theme/images/famfamfam/comment.png" id="paragraph-1" class="commenticon"><small class="commentcount">2</small></span>
+				<span class="paragraphtext"></span></div>';
+				
+				
 			}
 			else{
 				$digressit_content = $this->parse_content($content);							
@@ -222,7 +279,6 @@ class Digress_It_Post extends Digress_It_Base{
 			$js = $this->get_approved_comments_js($post->ID);
 			$updated .= $js;
 
-			$this->debugtime[]['on_the_content'] = microtime(true) - $start;
 			return $updated;
 			
 		}
@@ -408,7 +464,6 @@ class Digress_It_Post extends Digress_It_Base{
 		$js = "\n<script type=\"text/javascript\">\n";
 		$js .= "var post_ID = " . $postID . " ; \n";
 		$js .= "var comment_count = " . count($comment_array) . " ; \n";
-		$js .= "var total_comment_count = " . $digressit_commentbrowser->getAllCommentCount() . " ; \n";
 		$js .= "var commment_text_signature = new Array(); \n";
 
 

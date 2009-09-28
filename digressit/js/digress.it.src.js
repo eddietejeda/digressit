@@ -3,7 +3,7 @@ Plugin Name: Digress.it
 Plugin URI: http://digress.it
 Description:  Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
-Version: 2.1.6
+Version: 2.1.8
 Author URI: http://www.visudo.com
 License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
 
@@ -54,37 +54,27 @@ if(!msie){
 	})(jQuery);
 }
 
+
+if(total_comment_count > jQuery.cookie('total_comment_count'))
+{
+
+	$.getJSON(wp_path + '?digressit-event=approved_comments&current-count=' + jQuery.cookie('total_comment_count'),
+		function(new_comments){
+			
+		});
+
+}
+
+
 jQuery(document).ready(function(){
 
 	//recreate comment section
 	jQuery("body").append('<div id="accordion"></div>');
 	
-	/*
-	if(total_comment_count > jQuery.cookie('total_comment_count'))
-	{
-
-		$.getJSON(wp_path + '?digressit-event=approved_comments&current-count=' + jQuery.cookie('total_comment_count'),
-			function(new_comments){
-				
-				//alert(new_comments);
-				//jQuery.cookie('total_comment_count', new_count , { path: '/', expires: 1} );
-				
-				//var new_comments = eval("(" + data + ")");
-				
-				//alert(new_comments.length);
-
-				for(var i = 0; i < new_comments.length; i++){
-					
-									
-					
-					
-				}
-			});
 	
-	}
+
 	
 	jQuery.cookie('total_comment_count', total_comment_count , { path: '/', expires: 1} );	
-	*/
 	jQuery.cookie('comment_count', comment_count , { path: '/', expires: 1} );
 	jQuery.cookie('text_selection', null , { path: '/', expires: 1} );
 
@@ -110,9 +100,14 @@ jQuery(document).ready(function(){
 			
 			//alert(data);
 			var new_count = data;
+			
+			
+			if( jQuery.cookie('total_comment_count') == 'null' ){
+				jQuery.cookie('total_comment_count', total_comment_count);
+			}
+			
 			var current_comment_count = jQuery.cookie('total_comment_count');
 			
-			//alert(new_count + ' ' + current_comment_count );
 			if(new_count > current_comment_count){
 				$.getJSON(wp_path + '?digressit-event=approved_comments&current-count=' + current_comment_count,
 					function(new_comments){
@@ -208,7 +203,7 @@ jQuery(document).ready(function(){
 	}	
 	
 
-	jQuery("#accordion").append('<div id="comment-block-0"><h6 class="commentarea"><a id="comment-0" href="#0">Whole Page (<span class="commentarea_commentcount">'+whole_page_count+'</span>)</a><span class="paragraph_feed"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+',0"><img src="' + image_path + '/rss.png"/></a></span></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-0"></ol></div></div>');
+	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><h6 class="commentarea"><a id="comment-0" href="#0">Whole Page (<span class="commentarea_commentcount">'+whole_page_count+'</span>)</a><span class="paragraph_feed"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+',0"><img src="' + image_path + '/rss.png"/></a></span></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-0"></ol></div></div>');
 	for( var k in comment_ids)
 	{
 		jQuery('#comment-group-0').append( jQuery(comment_ids[k]) );			
@@ -246,7 +241,7 @@ jQuery(document).ready(function(){
 		}
 		
 		var paragraph = i + 1;
-		jQuery("#accordion").append('<div  id="comment-block-' + paragraph + '"><h6 class="commentarea"><a id="comment-'+ paragraph + '" href="#' + paragraph + '">Paragraph '+ paragraph +' (<span class="commentarea_commentcount">'+count+'</span>)</a><span class="paragraph_feed"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a></span></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-'+ paragraph +'"></ol></div></div>');		
+		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><h6 class="commentarea"><a id="comment-'+ paragraph + '" href="#' + paragraph + '">Paragraph '+ paragraph +' (<span class="commentarea_commentcount">'+count+'</span>)</a><span class="paragraph_feed"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a></span></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-'+ paragraph +'"></ol></div></div>');		
 		
 		for( var k in comment_ids)
 		{
@@ -551,7 +546,11 @@ jQuery(document).ready(function(){
 			
 			id = jQuery(this).attr('id').substr(13);
 
-			var data = '<object data="' + wp_path + '?p=' + post_ID + '&digressit-embed='+ id + '"></object>';
+
+
+
+			var data = '<object style="width: 100%;" onload="this.style.height = (this.contentDocument.body.offsetHeight + 40) + \'px\'; this.style.width = (this.contentDocument.body.offsetWidth + 40) + \'px\'" class="digressit-paragraph-embed" data="' + wp_path + '?p='+ post_ID +'&digressit-embed='+ id +'"></object><a href="' + window.location.href + '#'+id+'">@</a>';
+	
 			
 			jQuery("#textarea-embed-" + id).text(data);			
 		}
@@ -763,6 +762,16 @@ jQuery(document).ready(function(){
 	 *
 	 */	
 	function highlightBlock(top, left, width, height) {
+		
+		if(msie7){
+			width = width - 20;
+		}
+
+		if(msie6){
+			width = width - 25;
+			left = left + 5;
+		}
+		
 		var highlite = jQuery.create('div', 
 						{'id':'selected_block', 
 						'class':'selected_block',
@@ -1017,7 +1026,7 @@ jQuery(document).ready(function(){
 		}
 		
 		jQuery('#commentbox').css({position:"fixed"});
-		alert('left4: '+ jQuery("#commentbox").css("left"));
+		//alert('left4: '+ jQuery("#commentbox").css("left"));
 		
 	}
 	else if(jQuery.cookie('left_position_commentbox') && jQuery.cookie('top_position_commentbox'))

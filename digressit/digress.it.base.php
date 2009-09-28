@@ -13,6 +13,7 @@ class Digress_It_Base{
 	var $plugin_url;
 	var $plugin_file;
 
+	var $theme_url;
 	var $js_path;
 	var $jquery_path;
 	var $jquery_extensions_path;
@@ -38,7 +39,6 @@ class Digress_It_Base{
 	
 	function Digress_It_Base()
 	{
-		$start = microtime(true);
 		global $wpdb;
 
 		$this->wpdb = $wpdb;
@@ -61,6 +61,8 @@ class Digress_It_Base{
 			$this->is_multiuser = false;			
 		}
 
+
+		$this->theme_url = $this->plugin_url. 'theme/'; 
 
 		$this->js_path = $this->plugin_url. 'js/'; 
 		$this->jquery_path = $this->js_path . 'jquery/'; 
@@ -126,7 +128,26 @@ class Digress_It_Base{
 			update_option('digressit', $current);
 		}
 		
-		
+
+		if($current['default_left_position'] == '440px'){
+			$current['default_left_position'] = '42%';
+			update_option('digressit', $current);
+		}
+	
+
+		if(!isset($current['enable_chrome_frame'])){
+			$current['enable_chrome_frame'] = true;
+			update_option('digressit', $current);
+		}
+
+		if(!isset($current['theme_mode'])){
+			$current['theme_mode'] = 'stylesheet';
+			update_option('digressit', $current);
+		}
+	
+	
+	
+
 
 
 		$sql = "SHOW COLUMNS FROM $wpdb->comments";	
@@ -204,7 +225,7 @@ class Digress_It_Base{
 			'default_skin' => $default_skin,
 			'stylesheet' => $default_stylesheet,
 			'default_left_position' => '42%',
-			'default_top_position' => '75px',
+			'default_top_position' => '120px',
 			'allow_users_to_minimize' => 0,
 			'allow_users_to_resize' => 0,
 			'server_sync_interval' => $monthly,
@@ -217,8 +238,6 @@ class Digress_It_Base{
 			'front_page_order' => 'ASC',
 			'front_page_order_by' => 'date');
 			
-	//print_r($this->options);
-	$this->debugtime[]['DigressIt_Base'] = microtime(true) - $start;
 
 	}
 	
@@ -234,7 +253,6 @@ class Digress_It_Base{
 	 */
 	function on_init()
 	{
-		$start = microtime(true);
 		
 
 		if($new = preg_replace('/\/(comment-page-\d)/', '', $this->current_url())){
@@ -248,7 +266,6 @@ class Digress_It_Base{
 		
 		$this->translate();
 		$this->browser = $this->browser() ;
-		$this->debugtime[]['on_init'] = microtime(true) - $start;
 		
 		
 	}
@@ -291,7 +308,9 @@ class Digress_It_Base{
 	function on_deactivation()
 	{
 		$this->uninstall();
-		switch_theme('default', 'default');		
+		switch_theme('default', 'default');	
+		update_option($options['theme_mode'], false);
+			
 	}
 	
 	function uninstall(){
@@ -303,6 +322,34 @@ class Digress_It_Base{
 		}
 		delete_option('digressit');
 	}	
+
+	
+
+
+	function get_available_style_sheets() 
+	{
+		$results = array();
+		
+		/*TODO: site-wide theme.. disabled for now */ 
+		if(false/* disable */ && $this->hostname == DIGRESSIT_COMMUNITY_HOSTNAME && file_exists( WP_CONTENT_DIR .'/plugins/'.$this->plugin_name.'/theme/styles/' . DIGRESSIT_COMMUNITY . '.css')){
+			$results[] = DIGRESSIT_COMMUNITY;
+		}
+		else{
+			$handler = opendir( WP_CONTENT_DIR .'/plugins/'.$this->plugin_name.'/theme/styles/');
+			while ($file = readdir($handler)) {
+				if ($file != '.' && $file != '..'){
+					if(substr($file, -4) == '.css'){
+						$results[] = substr($file, 0, -4);
+					}
+				}
+			}
+
+			closedir($handler);
+		}
+		return $results;
+	}	
+	
+
 	
 	function install(){
 		global $wpdb, $post;
@@ -329,24 +376,83 @@ class Digress_It_Base{
 		$this->reset_options();
 
 		$themes_dir = WP_CONTENT_DIR . '/themes/';
-		$theme_link = $themes_dir . $this->plugin_name;
 		$plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $this->plugin_name.'/theme/';
 
+
+
+		$options = get_option('digressit');
+		
 		if(is_writable( $themes_dir)){
-			if(is_link($theme_link)){
-				//i think we're good
+
+			$stylesheets = $this->get_available_style_sheets();
+			
+			//THEME MODE
+			if(is_writable($plugin_theme_link) && false){
+				foreach($stylesheets as $stylesheet){
+
+					$theme_link = $themes_dir . $this->plugin_name."_".$stylesheet;
+
+					$stylesheet_name = $stylesheet;
+					//CREATE THE THEME DIRECTORY
+					if(is_link($theme_link)){
+						//i think we're good
+					}
+					elseif(!file_exists($theme_link)){
+						if(symlink($plugin_theme_link,$theme_link)){
+							//we're good
+							update_option($options['theme_mode'], 'theme');
+						}
+						else{
+							die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. If the server doesn't have write permission try creating it manually");
+						}
+					}
+					else{
+						die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. Maybe a theme named digress.it already exists?");					
+					}
+				
+					//LINK THE STYLESHEET TO THE THEME
+					if(is_link($theme_link . "/style.css" )){
+						//i think we're good
+					}
+					elseif(!file_exists($theme_link . "/style.css")){
+						echo $plugin_theme_link. "styles/" .$stylesheet_name . ".css ----------" . $theme_link."/style.css" ."<br>";
+						if(symlink($plugin_theme_link . "styles/" . $stylesheet . ".css", $theme_link."/style.css")){
+							//we're good
+						}
+						else{
+							die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. If the server doesn't have write permission try creating it manually");
+						}
+					}
+					else{
+						die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. Maybe a theme named Digress.it already exists?");					
+					}	
+				}
 			}
-			elseif(!file_exists($theme_link)){
-				if(symlink($plugin_theme_link,$theme_link)){
-					//we're good
+			//STYLESHEET MODE
+			else{
+				$theme_link = $themes_dir . $this->plugin_name;
+				
+				//CREATE THE THEME DIRECTORY
+				if(is_link($theme_link)){
+					//i think we're good
+				}
+				elseif(!file_exists($theme_link)){
+					if(symlink($plugin_theme_link,$theme_link)){
+						//we're good
+						update_option($options['theme_mode'], 'stylesheet');
+					}
+					else{
+						die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. If the server doesn't have write permission try creating it manually");
+					}
 				}
 				else{
-					die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. If the server doesn't have write permission try creating it manually");
+					die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. Maybe a theme named DigressIt already exists?");					
 				}
+				
 			}
-			else{
-				die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. Maybe a theme named DigressIt already exists?");					
-			}
+			
+			
+			
 		}
 		else{
 			die("no write permission on $themes_dir please give the server write permission on this directory");
@@ -495,7 +601,15 @@ class Digress_It_Base{
 	{
 		
 		$matches = array();
+
+
+		//we need to do this twice in case there are empty tags surrounded by empty p tags
+		$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
+		$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
+
 		$html = force_balance_tags($html);
+
+		
 		
 		switch($technique){
 		
@@ -508,6 +622,7 @@ class Digress_It_Base{
 					break;	
 				}
 			
+			default: 
 			case 'regexp':
 				preg_match_all('#<('.$tags.')>(.*?)</('.$tags.')>#si',$html,$matches_array);
 				$matches = $matches_array[0];
@@ -521,7 +636,6 @@ class Digress_It_Base{
 	}
 	
 	function parse_content($content, $params = array('embed_code' => true)){
-		$start = microtime(true);
 		
 		global $wpdb, $image_path, $post;
 
@@ -582,11 +696,11 @@ class Digress_It_Base{
 			
 				
 							
-				$resizejavascript = "this.style.height = (this.contentDocument.body.offsetHeight + 40) + 'px'";
+				$resizejavascript = "this.style.height = (this.contentDocument.body.offsetHeight + 40) + 'px'; this.style.width = (this.contentDocument.body.offsetWidth + 40) + 'px'";
 				
-				$embedcode = htmlentities('<object style="width: 100%;" onload="'.$resizejavascript.'" class="digressit-paragraph-embed" id="'.$embedid.'" data="'.$dataurl.'"></object><a href="'.get_permalink($post->ID).'#'.$number.'">@</a>');
+				$embedcode = htmlentities('<object style="width: 100%;" onload="'.$resizejavascript.'" class="digressit-paragraph-embed"  data="'.$dataurl.'"></object><a href="'.get_permalink($post->ID).'#'.$number.'">@</a>');
 				$paragraphnumber .= '<span class="embedcode">
-				<b>Embed Code (<a href="javascript:return false" class="embed-link" id="embed-object-'.$number.'">object</a> | <a href="javascript:return false" class="embed-link" id="embed-html-'.$number.'">html</a>)</b><textarea id="textarea-embed-'.$number.'">'.$embedcode.'</textarea>
+				<b>Embed Code (<a class="embed-link" id="embed-object-'.$number.'">object</a> | <a  class="embed-link" id="embed-html-'.$number.'">html</a>)</b><textarea id="textarea-embed-'.$number.'">'.$embedcode.'</textarea>
 				<b>Permalink</b>:<br> <input type="text" value="'.get_permalink($post->ID).'#'.$number.'" />
 				</span><a href="'.get_permalink($post->ID).'#'.$number.'">'.$number.'</a></span>'."\n";
 			}
@@ -616,7 +730,6 @@ class Digress_It_Base{
 			$blocks[$text_signature] = str_replace('</p>', '', preg_replace($pattern, $replace, $paragraph . $closetag));
 	    }
 
-		$this->debugtime[]['parse_content'] = microtime(true) - $start;
 
 		return $blocks;
 		
