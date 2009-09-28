@@ -27,19 +27,23 @@
 	
 	<h3 id="comments"><?php comments_number('No Responses', 'One Response', '% Responses' );?> to &#8220;<?php the_title(); ?>&#8221;</h3>
 
+	<?php if ( function_exists('previous_comments_link')  ):  ?>
 	<div class="navigation">
 		<div class="alignleft"><?php previous_comments_link() ?></div>
 		<div class="alignright"><?php next_comments_link() ?></div>
 	</div>
+	<?php endif; ?>
 
 	<ol class="commentlist">
 	<?php wp_list_comments('callback=digressit_list_comments'); ?>
 	</ol>
 
+	<?php if ( function_exists('previous_comments_link')  ):  ?>
 	<div class="navigation">
 		<div class="alignleft"><?php previous_comments_link() ?></div>
 		<div class="alignright"><?php next_comments_link() ?></div>
 	</div>
+	<?php endif; ?>
  <?php else : // this is displayed if there are no comments so far ?>
 
 	<?php if ( comments_open() ) : ?>
