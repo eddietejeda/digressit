@@ -155,6 +155,7 @@ table tr td {
 	width:100%;
 	height: 100%;
 	min-height: 600px;
+	background: url(images/body-bg-new.gif) repeat-x;
 }
 #header {
 
@@ -795,7 +796,7 @@ a.download-button {
 .container.stiky .c{background: url(images/commentbox/stiky/c.png); padding-top:0px;}
 
 
-.container.stikynote {background:gainsboro;border:1px solid gray;-webkit-border-radius:10px; -moz-border-radius:10px;border-radius:10px;}/**/
+.container.stikynote {border:1px solid gray;-webkit-border-radius:10px; -moz-border-radius:10px;border-radius:10px;}/**/
 .container.stikynote .n{ }
 .container.stikynote .n a{font-size:16px;color:black}
 .container.stikynote .ne{height:25px;width:15px; -khtml-user-select: none; }
@@ -803,5 +804,46 @@ a.download-button {
 .container.stikynote .s{ height:10px}
 .container.stikynote .c{ }
 .container.stikynote .buttonBar{right:5px;top:0px}
+
+/* FRONT MENU */
+
+ul#front_menu{float:left;text-transform:uppercase;position:relative;top:1px;}
+* html .expand{margin-top:-13px;} *+html .expand{margin-top:-13px;}
+#front_menu li{list-style:none;float:left;margin-right:4px;}
+* html #front_menu li{height:25px;display:inline;}
+#front_menu li a{height:24px;display:block;background:url(images/nav2.png) no-repeat left top;padding-left:15px;color:#2C2C29;font:700 .88em/26px Arial, Helvetica, sans-serif;text-decoration:none;cursor:pointer;}
+#front_menu li a span{height:24px;display:block;background:url(images/nav2.png) no-repeat right top;line-height:25px;padding-right:15px;}
+#front_menu li a:hover,#front_menu li a.s{background-position:left bottom;}
+#front_menu li a:hover span,#front_menu li a.s span{background-position:right bottom;}
+* html #front_menu li a,* html #front_menu li a span{width:1%;white-space:nowrap;cursor:pointer;}
+* html #front_menu li a span{position:relative;}
+#front_menu ul {position:relative;z-index:3;}
+#front_menu li {background:none;float:left; position:relative;}
+#front_menu ul {width:200px;position:absolute;display:none; background:#FFF;border-left:1px solid #ACACAB;border-right:1px solid #ACACAB;border-bottom:1px solid #ACACAB;}
+#front_menu ul li a, #front_menu ul li a span{margin:-3px -1px;height:auto;background:none;}
+#front_menu li ul a {width:200px; float:left; white-space:nowrap;}
+#front_menu ul ul {top:auto;}
+#front_menu li ul ul {left:1em; }
+#front_menu li:hover ul ul, #front_menu li:hover ul ul ul, #front_menu li:hover ul ul ul ul {display:none;}
+
+
+/* LAYOUT */
+#wrapper{margin:0 auto;text-align:left;}
+h1#logo,h1#logo a{font-family:Helvetica,Georgia;padding:0;margin-top:7px;font-size:36px;color:#FFF;text-decoration:none;text-transform:uppercase;}
+h1#logo small{color:#FFF;font-size:12px;display:block;margin:-7px 2px 1px;height:20px;}
+h1#logo small a{font-size:12px;border-bottom:1px solid #FFF;}
+#rss-feed{float:right;width:190px;font-weight:700;position:relative;top:35px;left:7px;color:#FFF;text-decoration:none;}
+#header{height:113px;}
+#top{cursor:pointer;display:block;margin-left:5px;position:relative;bottom:-55px;margin-top:-55px;min-height:56px;}
+#top strong{display:none;}
+
+#searchform{float:right;width:191px;height:26px;background:url(images/searchbox.png) no-repeat;position:relative;top:1px;}
+#header #s{border:1px solid #000;float:left;border:0;width:154px;background:none;color:#ACACAB;margin:4px 0 0 4px;}
+#header #go{float:right;width:25px;height:26px;background-color:transparent;border:0px;cursor:pointer;}
+
+
+#header {
+	height:40px;
+}
 
 

@@ -9,7 +9,7 @@ if ( function_exists('register_sidebar') )
     ));
 
 
-$options = get_option('digress');
+$options = get_option('digressit');
 
 
 if($options['collapse_sidebar'] == 1){
@@ -37,12 +37,41 @@ if($options['collapse_sidebar'] == 1){
 }
 
 
+function digressit_wp_list_pages($params = "echo=0&depth=2&title_li=&"){
+	$top_list = wp_list_pages($params);
+	$top_list = str_replace(array('">','</a>','<span><a','current_page_item"><a'),array('"><span>','</span></a>','<a','"><a class="s"'), $top_list);
+	return $top_list;
+}
+
+
+
+
+function digressit_header_image(){
+global $lw_top_header_image, $lw_top_header_image_height, $top_header_image_path;
+if($lw_top_header_image == "" || $lw_top_header_image == "true") {
+?>
+<a name="top" title="<?php bloginfo('name'); ?>" href="<?php bloginfo('url'); ?>"><span id="top" style="background:url('<?php echo $top_header_image_path; ?>') no-repeat;height:<?php echo $lw_top_header_image_height; ?>px"><strong><?php bloginfo('name'); ?></strong></span></a>
+<?php }else{ ?>
+<div id="top"><h1 id="logo"><a name="top" title="<?php bloginfo('name'); ?>" href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a> <small><?php bloginfo('description'); ?></small></h1></div>
+<?php
+}
+}
+
+
+
+function digressit_searchbox(){
+	?>
+	<form method="get" id="searchform" action="<?php bloginfo('url'); ?>"> <input type="text" value="" name="s" id="s" /> <input type="submit" id="go" value="" alt="<?php _e('Search'); ?>" title="<?php _e('Search'); ?>" /></form>
+	<?php
+}
+
+
 function digressit_list_comments($comment, $args, $depth) {
 	$GLOBALS['comment'] = $comment; ?>
 	<li <?php comment_class(); ?> id="comment-<?php comment_ID() ?>">
 		<div id="div-comment-<?php comment_ID(); ?>" class="comment-body">
 			<div class="comment-author vcard">
-		         <?php echo get_avatar($comment,$size='48',$default='<path_to_url>' ); ?>
+		         <?php echo get_avatar($comment,$size='24',$default='<path_to_url>' ); ?>
 		         <?php printf(__('<cite class="fn" title="%1$s at %2$s">%3$s</cite> <span class="says" >says:</span>'), get_comment_date(),  get_comment_time(), get_comment_author_link()) ?>
 			</div>
 

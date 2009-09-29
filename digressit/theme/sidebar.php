@@ -8,7 +8,7 @@
 		
 		<?php 
 		
-		$options = get_option('digress'); 
+		$options = get_option('digressit'); 
 		
 		if($options['collapse_sidebar'] == 1){
 		?>

@@ -576,3 +576,12 @@ ol li, #sidebar ul ol li {
 	width: 100% !important;
 }
 
+
+.page_item_commenters{
+	background: url(http://wordpress.local/wp-content/plugins/digressit/theme/images/famfamfam/book.png);
+}
+
+
+.page_item_comments{
+	
+}
