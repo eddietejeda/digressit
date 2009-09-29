@@ -29,20 +29,18 @@
 
 
 	<div id="header">
-		<?php
-		
-		digressit_header_image();
-		
-		?>
-	<div id="top_bar">
-		<ul id="front_menu">
-		<li class="page_item page_item_table_of_contents"><a href="<?php bloginfo('url'); ?>"><span><img src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/book_open.png"> Table of Contents</span></a></li>
-		<li class="page_item page_item_comments"><a title="Comments By Section" href="?comment-browser=sections"><span><img src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/text_padding_top.png"> Table of Comments</span></a></li>
-		<li class="page_item page_item_commenters"><a title="Comments By Section" href="?comment-browser=users"><span><img src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/user_comment.png">Commenters</span></a></li>
 
-		<?php echo digressit_wp_list_pages();  ?>
-		</ul>
-		<?php echo digressit_searchbox(); ?>
-	</div>
+		<h1 id="logo"><a name="top" title="<?php bloginfo('name'); ?>" href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a> <small><?php bloginfo('description'); ?></small></h1>
+
+		<div id="top_bar">
+			<ul id="front_menu">
+			<li class="page_item page_item_table_of_contents"><a href="<?php bloginfo('url'); ?>"><span><img src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/book_open.png"> Table of Contents</span></a></li>
+			<li class="page_item page_item_comments"><a title="Comments By Section" href="?comment-browser=sections"><span><img src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/text_padding_top.png"> Table of Comments</span></a></li>
+			<li class="page_item page_item_commenters"><a title="Comments By Section" href="?comment-browser=users"><span><img src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/user_comment.png">Commenters</span></a></li>
+
+			<?php echo digressit_wp_list_pages();  ?>
+			</ul>
+			<?php echo digressit_searchbox(); ?>
+		</div>
 
 	</div>

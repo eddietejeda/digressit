@@ -46,16 +46,6 @@ function digressit_wp_list_pages($params = "echo=0&depth=2&title_li=&"){
 
 
 
-function digressit_header_image(){
-global $lw_top_header_image, $lw_top_header_image_height, $top_header_image_path;
-if($lw_top_header_image == "" || $lw_top_header_image == "true") {
-?>
-<a name="top" title="<?php bloginfo('name'); ?>" href="<?php bloginfo('url'); ?>"><span id="top" style="background:url('<?php echo $top_header_image_path; ?>') no-repeat;height:<?php echo $lw_top_header_image_height; ?>px"><strong><?php bloginfo('name'); ?></strong></span></a>
-<?php }else{ ?>
-<div id="top"><h1 id="logo"><a name="top" title="<?php bloginfo('name'); ?>" href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a> <small><?php bloginfo('description'); ?></small></h1></div>
-<?php
-}
-}
 
 
 
