@@ -177,6 +177,7 @@ class Digress_It_Base{
 		
 		
 		//enable widgets
+		/*
 		$sidebars_widgets = get_option('sidebars_widgets');	
 		
 		if(is_array($sidebars_widgets))	{
@@ -213,7 +214,7 @@ class Digress_It_Base{
 
 
 		update_option('sidebars_widgets', $sidebars_widgets);
-
+		*/
 
 		
 		
@@ -696,11 +697,10 @@ class Digress_It_Base{
 			
 				
 							
-				$resizejavascript = "this.style.height = (this.contentDocument.body.offsetHeight + 40) + 'px'; this.style.width = (this.contentDocument.body.offsetWidth + 40) + 'px'";
 				
-				$embedcode = htmlentities('<object style="width: 100%;" onload="'.$resizejavascript.'" class="digressit-paragraph-embed"  data="'.$dataurl.'"></object><a href="'.get_permalink($post->ID).'#'.$number.'">@</a>');
+				$embedcode = htmlentities("<blockquote cite='".get_permalink($post->ID).'#'.$number."'>". strip_tags($paragraph) . '</blockquote>');
 				$paragraphnumber .= '<span class="embedcode">
-				<b>Embed Code (<a class="embed-link" id="embed-object-'.$number.'">object</a> | <a  class="embed-link" id="embed-html-'.$number.'">html</a>)</b><textarea id="textarea-embed-'.$number.'">'.$embedcode.'</textarea>
+				<b>Cite</b> <textarea id="textarea-embed-'.$number.'">'.$embedcode.'</textarea>
 				<b>Permalink</b>:<br> <input type="text" value="'.get_permalink($post->ID).'#'.$number.'" />
 				</span><a href="'.get_permalink($post->ID).'#'.$number.'">'.$number.'</a></span>'."\n";
 			}

@@ -598,6 +598,9 @@ function digressit_pingback_ping($args) {
 	if (preg_match('/[0-9]+/',$urltest['fragment'], $match) ) {
 		$comment_text_signature = $urltest['fragment'];
 	}	
+	
+	mail("eddie@pear.local",'fragment', $comment_text_signature);
+	
 
 	$commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_url', 'comment_content', 'comment_type', 'comment_text_signature');
 

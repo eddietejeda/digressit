@@ -4,7 +4,7 @@ Plugin Name: digress.it
 Plugin URI: http://digress.it
 Description:  digress.it (the evolution of commentpress) allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
-Version: 2.1.8
+Version: 2.2
 Author URI: http://www.visudo.com
 License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
 
@@ -16,7 +16,7 @@ Joss Winn and Tony Hirst @ writetoreply.com
 Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
 */
 
-define("DIGRESSIT_VERSION", '2.1.8');
+define("DIGRESSIT_VERSION", '2.2');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
 

@@ -17,55 +17,35 @@ $options = get_option('digressit');
 
 		<div id="leftcolumn"> 
 
-			<?php get_search_form(); ?>
-
-
 		</div>
 		
-		<div id="middlecolumn">
+		<div id="middlecolumn" style="margin-left: 20px; width: 40%;">
+
+			<div id="blurb">
+					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 
-			<?php if (have_posts()) :  ?>
+						<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
+							<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+							<div class="entry">
+								<?php the_content('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
 
-			<h2 class="pagetitle">Search Results</h2>
+								<?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
+								<?php the_tags( '<p>Tags: ', ', ', '</p>'); ?>
 
-				<?php while (have_posts()) : the_post(); ?>
-
-
-					<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
-						<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-
-						<div class="entry">
-							<?php the_excerpt('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
-							<?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
+							</div>			
 
 						</div>
 
-						<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
-
-							<?php
-
-							$comments = get_approved_comments($post->ID);
-							$user_count;
-							foreach($comments as $comment){
-								$user_count[md5($comment->comment_author_email )] = 1;
-							}
-
-							?>
-
-							| <a title="Comment on Post" href="<?php bloginfo('home'); ?>?post=<?php echo $post->ID; ?>&comment-browser=posts"><?php  echo count($user_count); ?> Commenters »</a>
-						</p>
-
-					</div>
 
 
-				<?php endwhile; else: ?>
+					<?php endwhile; else: ?>
 
-					<p>Sorry, no posts matched your criteria.</p>
+						<p>Sorry, no posts matched your criteria.</p>
 
-			<?php endif; ?>
+				<?php endif; ?>			</div>
 
-		
+
 		</div>
 
 		<div id="rightcolumn">
@@ -78,69 +58,4 @@ $options = get_option('digressit');
 
 
 <?php get_footer(); ?>
-
-
-<?php die(); ?>
-<?php
-/**
- * @package WordPress
- * @subpackage Default_Theme
- */
-
-get_header();
-?>
-
-	<div id="content" class="narrowcolumn searchpage" role="main">
-
-
-	<?php if (have_posts()) :  ?>
-
-	<h2 class="pagetitle">Search Results</h2>
-
-		<div class="navigation">
-			<div class="alignleft"><?php previous_post_link('&laquo; %link') ?></div>
-			<div class="alignright"><?php next_post_link('%link &raquo;') ?></div>
-		</div>
-
-		<?php while (have_posts()) : the_post(); ?>
-
-
-			<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
-				<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-
-				<div class="entry">
-					<?php the_excerpt('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
-					<?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
-
-				</div>
-
-				<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?>
-
-					<?php
-
-					$comments = get_approved_comments($post->ID);
-					$user_count;
-					foreach($comments as $comment){
-						$user_count[md5($comment->comment_author_email )] = 1;
-					}
-
-					?>
-
-					| <a title="Comment on Post" href="<?php bloginfo('home'); ?>?post=<?php echo $post->ID; ?>&comment-browser=posts"><?php  echo count($user_count); ?> Commenters »</a>
-				</p>
-
-			</div>
-
-
-		<?php endwhile; else: ?>
-
-			<p>Sorry, no posts matched your criteria.</p>
-
-	<?php endif; ?>
-
-		</div>
-		<?php get_sidebar(); ?>
-
-<?php get_footer(); ?>
-
 

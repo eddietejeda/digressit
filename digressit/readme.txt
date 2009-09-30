@@ -2,9 +2,9 @@
 Contributors: visudo
 Donate link: http://digress.it
 Tags: comments, annotation, discussion, commenting, documents
-Requires at least: 2.6
+Requires at least: 2.7
 Tested up to: 2.8.4
-Stable tag: 2.1.8
+Stable tag: 2.2
 
 digress.it lets you comment paragraph by paragraph in the margins of a text
 
@@ -28,7 +28,7 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 == Changelog ==
 
 
-= 2.1.8 =
+= 2.2 =
 * RSS minor switch: change "on paragraph number #9" to "(paragraph no. 9)"
 * FIXED: The embed Object code was not loading properly when clicked. Now it does
 * ENHANCEMENT: html embed is now a blockquote instead of div
@@ -47,7 +47,8 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 * FIXED: highlight scales properly in IE6/7
 * NEW FEATURE: added the ability to enable Digress.it with different post status for private review.
 * Smaller gravatar
-* New design based on Lightworld Theme
+* New design based on Lightworld Theme called "Golden"
+* Now works with different themes!!
 
 = 2.1.7 =
 * containerTable is now transparent so that the round edges on commentbox stay round over text

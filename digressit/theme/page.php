@@ -13,66 +13,39 @@ $options = get_option('digressit');
 
 ?>
 
-	<div id="content" class="frontpage">
+	<div class="frontpage">
 
 		<div id="leftcolumn"> 
 
-			<h2>Table of Contents</h2>
-			<h3>Pages</h3>			
-
-			<ol>
-			<?php
-			//global $post;
-
-			extract($options);
-
-			$myposts = null;
-			$myposts = get_posts("post_type=page&numberposts=-1&order=$front_page_order&orderby=$front_page_order_by");
-
-			
-			foreach($myposts as $post) :
-			?>
-	
-				<?php $comment_array = get_approved_comments($post->ID);  ?>
-
-				<li><a href="<?php the_permalink(); ?>"><?php the_title(); ?> (<?php echo count($comment_array); ?>)</a></li>
-			<?php endforeach; ?>
-
-			</ol> 
-
-
 		</div>
 		
-		<div id="middlecolumn">
+		<div id="middlecolumn" style="margin-left: 20px; width: 40%;">
+
+			<div id="blurb">
+					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 
-			<?php if (have_posts()) : ?>
+						<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
+							<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+							<div class="entry">
+								<?php the_content('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
 
-				<?php while (have_posts()) : the_post(); ?>
+								<?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
+								<?php the_tags( '<p>Tags: ', ', ', '</p>'); ?>
 
-				<div class="post">
-					<h1><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h1>
+							</div>			
 
-					<?php the_content('Read the rest of this entry &raquo;'); ?>
-				</div>
 
-				<?php comments_template(); ?>
+					<?php comments_template(); ?>
 
-				<?php endwhile; ?>
 
-				<div class="navigation">
-					<div class="alignleft"><?php next_posts_link('&laquo; Older Entries') ?></div>
-					<div class="alignright"><?php previous_posts_link('Newer Entries &raquo;') ?></div>
-				</div>
+					<?php endwhile; else: ?>
 
-			<?php else : ?>
+						<p>Sorry, no posts matched your criteria.</p>
 
-				<h2 class="center">Not Found</h2>
-				<p class="center">Sorry, but you are looking for something that isn't here.</p>
+				<?php endif; ?>			</div>
 
-			<?php endif; ?>
-
-		
+		</div>
 		</div>
 
 		<div id="rightcolumn">
@@ -85,3 +58,4 @@ $options = get_option('digressit');
 
 
 <?php get_footer(); ?>
+

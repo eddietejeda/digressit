@@ -36,13 +36,21 @@
 	height: 100%;
 }
 
-.containerTable{
-
+tbody, tfoot, thead, tr, th, td{
+	vertical-align:top;
 }
 
 .embed-link{
 	cursor: pointer;
 }
+
+.paragraph_feed{
+	width: 20px; 
+	display: none;
+	float: right;
+}
+
+
 
 .debug-message{
 	top: 3px;
@@ -501,5 +509,143 @@ ol, ul{
 .commentbrowser .tocList{
 	margin-top: 0px;
 }
+
+#commentoverview{
+	display: none;
+}
+
+
+
+.ui-accordion .ui-accordion-header a {
+	padding:0.3em 0.3em 0.3em 2.2em;
+}
+
+.ui-resizable-handle { position: absolute; display: block; font-size: 0.1px; }
+
+.ui-resizable-e { cursor: e-resize; width: 10px; right: -10px; top: 0; height: 100%;  }
+.ui-resizable-w { cursor: w-resize; width: 30px; left: 0; top: 0; height: 100%;  }
+.ui-resizable-s { cursor: s-resize; height: 10px; width: 100%; bottom: 0; left: 0}
+.ui-resizable-se { cursor: se-resize; width: 10px; height: 30px; right:0; bottom: 0; background:transparent url(../images/commentbox/resizable-se.png) no-repeat right bottom} /*resizable-se.png*/
+
+.proxy{border:1px dotted gray;background: url(../images/commentbox/proxy.png)}
+
+.container {width:100%;}
+.container .containerTable{border:0; width:100%}
+.container .containerTable .c{height:100%; .height:auto;}
+.container {font-size:13px}
+.container .n a{ font-size:18px;text-decoration:none; color:black; position:relative;}
+.container .n a:hover{ text-decoration:underline; }
+.container .containerBody{overflow:auto; position:relative; margin-right:-7px; padding-right:15px}
+.container .icon{position:absolute;margin-top:-25px; margin-left:-4px;}
+.container .spacer{padding-top:10px;}
+.container .restoreContainer{width:32px}
+.container .buttonBar{right:10px;top:5px}
+.container .buttonBar img{padding:5px}
+
+/*default interface for containers */
+.container.default .n{ background:url(../images/commentbox/skindef/n.png) repeat-x top; padding-left:22px; padding-bottom:0px; font-size:18px; vertical-align:middle; height:36px;.height:32px; -moz-user-select: none; -khtml-user-select: none}
+.container.default .ne{ background:url(../images/commentbox/skindef/ne.png) no-repeat top right; height:36px;width:22px; -khtml-user-select: none}
+.container.default .no{ background:url(../images/commentbox/skindef/no.png) no-repeat top right; height:36px;width:24px; -khtml-user-select: none}
+.container.default .o{ background: url(../images/commentbox/skindef/o.png) repeat-y top right; height:25px;width:24px}
+.container.default .e{ background: url(../images/commentbox/skindef/e.png) repeat-y top right; height:25px;width:22px}
+.container.default .s{ background: url(../images/commentbox/skindef/s.png) repeat-x bottom; height:22px}
+.container.default .se{ background: url(../images/commentbox/skindef/se.png) no-repeat bottom right; height:22px;width:22px}
+.container.default .so{ background: url(../images/commentbox/skindef/so.png) no-repeat bottom right; height:22px;width:24px}
+.container.default .c{ background: url(../images/commentbox/skindef/c.png); padding-top:0px;}
+
+/* skins */
+.container.skin1 .n{background:url(../images/commentbox/skin1/n.png) repeat-x top; padding-left:22px; padding-bottom:0px; font-size:18px; vertical-align:middle; height:36px;.height:32px; -moz-user-select: none; -khtml-user-select: none}
+.container.skin1 .ne{background:url(../images/commentbox/skin1/ne.png) no-repeat top right; height:36px;width:22px; -khtml-user-select: none}
+.container.skin1 .no{background:url(../images/commentbox/skin1/no.png) no-repeat top right; height:36px;width:24px; -khtml-user-select: none}
+.container.skin1 .o{ background: url(../images/commentbox/skin1/o.png) repeat-y top right; height:25px;width:24px}
+.container.skin1 .e{background: url(../images/commentbox/skin1/e.png) repeat-y top right; height:25px;width:22px}
+.container.skin1 .s{background: url(../images/commentbox/skin1/s.png) repeat-x bottom; height:22px}
+.container.skin1 .se{background: url(../images/commentbox/skin1/se.png) no-repeat bottom right; height:22px;width:22px}
+.container.skin1 .so{ background: url(../images/commentbox/skin1/so.png) no-repeat bottom right; height:22px;width:24px}
+.container.skin1 .c{background: url(../images/commentbox/skin1/c.png); padding-top:0px;}
+
+.container.skinAlert .n{background:url(../images/commentbox/skinAlert/n.png) repeat-x top; padding-left:25px;padding-top:0px;vertical-align:bottom;color: white;}
+.container.skinAlert .n a{color:white}
+.container.skinAlert .ne{background:url(../images/commentbox/skinAlert/ne.png) no-repeat top right; height:36px;width:22px; -khtml-user-select: none}
+.container.skinAlert .no{background:url(../images/commentbox/skinAlert/no.png) no-repeat top right; height:36px;width:24px; -khtml-user-select: none}
+.container.skinAlert .o{ background: url(../images/commentbox/skinAlert/o.png) repeat-y top right; height:25px;width:24px}
+.container.skinAlert .e{background: url(../images/commentbox/skinAlert/e.png) repeat-y top right; height:25px;width:22px}
+.container.skinAlert .s{background: url(../images/commentbox/skinAlert/s.png) repeat-x bottom; height:22px}
+.container.skinAlert .se{background: url(../images/commentbox/skinAlert/se.png) no-repeat bottom right; height:22px;width:22px}
+.container.skinAlert .so{ background: url(../images/commentbox/skinAlert/so.png) no-repeat bottom right; height:22px;width:24px}
+.container.skinAlert .c{background: url(../images/commentbox/skinAlert/c.png); padding-top:0px; color:white;}
+.container.skinAlert .buttonBar{right:15px;top:15px}
+
+.container.skin3 .n{background:url(../images/commentbox/skin3/n.png) repeat-x top; padding-left:22px; padding-bottom:0px; font-size:18px; vertical-align:middle; height:36px;.height:32px; -moz-user-select: none; -khtml-user-select: none}
+.container.skin3 .ne{background:url(../images/commentbox/skin3/ne.png) no-repeat top right; height:36px;width:22px; -khtml-user-select: none}
+.container.skin3 .no{background:url(../images/commentbox/skin3/no.png) no-repeat top right; height:36px;width:24px; -khtml-user-select: none}
+.container.skin3 .o{ background: url(../images/commentbox/skin3/o.png) repeat-y top right; height:25px;width:24px}
+.container.skin3 .e{background: url(../images/commentbox/skin3/e.png) repeat-y top right; height:25px;width:22px}
+.container.skin3 .s{background: url(../images/commentbox/skin3/s.png) repeat-x bottom; height:22px}
+.container.skin3 .se{background: url(../images/commentbox/skin3/se.png) no-repeat bottom right; height:22px;width:22px}
+.container.skin3 .so{ background: url(../images/commentbox/skin3/so.png) no-repeat bottom right; height:22px;width:24px}
+.container.skin3 .c{background: url(../images/commentbox/skin3/c.png); padding-top:0px;}
+
+.container.skin4 .n{background:url(../images/commentbox/skin4/n.png) repeat-x top; padding-left:22px; padding-bottom:0px; font-size:18px; vertical-align:middle; height:36px;.height:32px; -moz-user-select: none; -khtml-user-select: none}
+.container.skin4 .ne{background:url(../images/commentbox/skin4/ne.png) no-repeat top right; height:36px;width:22px; -khtml-user-select: none}
+.container.skin4 .no{background:url(../images/commentbox/skin4/no.png) no-repeat top right; height:36px;width:24px; -khtml-user-select: none}
+.container.skin4 .o{ background: url(../images/commentbox/skin4/o.png) repeat-y top right; height:25px;width:24px}
+.container.skin4 .e{background: url(../images/commentbox/skin4/e.png) repeat-y top right; height:25px;width:22px}
+.container.skin4 .s{background: url(../images/commentbox/skin4/s.png) repeat-x bottom; height:22px}
+.container.skin4 .se{background: url(../images/commentbox/skin4/se.png) no-repeat bottom right; height:22px;width:22px}
+.container.skin4 .so{ background: url(../images/commentbox/skin4/so.png) no-repeat bottom right; height:22px;width:24px}
+.container.skin4 .c{background: url(../images/commentbox/skin4/c.png); padding-top:0px;}
+
+.container.skin5 .n{background:url(../images/commentbox/skin5/n.png) repeat-x top; padding-left:22px; font-size:18px; vertical-align:middle; height:36px;.height:32px; -moz-user-select: none; -khtml-user-select: none; padding-bottom:7px}
+.container.skin5 .ne{background:url(../images/commentbox/skin5/ne.png) no-repeat top right; height:36px;width:22px; -khtml-user-select: none}
+.container.skin5 .no{background:url(../images/commentbox/skin5/no.png) no-repeat top right; height:36px;width:24px; -khtml-user-select: none}
+.container.skin5 .o{ background: url(../images/commentbox/skin5/o.png) repeat-y top right; height:25px;width:24px}
+.container.skin5 .e{background: url(../images/commentbox/skin5/e.png) repeat-y top right; height:25px;width:22px}
+.container.skin5 .s{background: url(../images/commentbox/skin5/s.png) repeat-x bottom; height:22px}
+.container.skin5 .se{background: url(../images/commentbox/skin5/se.png) no-repeat bottom right; height:22px;width:22px}
+.container.skin5 .so{ background: url(../images/commentbox/skin5/so.png) no-repeat bottom right; height:22px;width:24px}
+.container.skin5 .c{background: url(../images/commentbox/skin5/c.png); padding-top:0px;}
+
+.container.skin6 .n{background:url(../images/commentbox/skin6/n.png) repeat-x top; padding-left:22px; padding-bottom:0px; font-size:18px; vertical-align:middle; height:36px;.height:32px; -moz-user-select: none; -khtml-user-select: none}
+.container.skin6 .ne{background:url(../images/commentbox/skin6/ne.png) no-repeat top right; height:36px;width:22px; -khtml-user-select: none}
+.container.skin6 .no{background:url(../images/commentbox/skin6/no.png) no-repeat top right; height:36px;width:24px; -khtml-user-select: none}
+.container.skin6 .o{ background: url(../images/commentbox/skin6/o.png) repeat-y top right; height:25px;width:24px}
+.container.skin6 .e{background: url(../images/commentbox/skin6/e.png) repeat-y top right; height:25px;width:22px}
+.container.skin6 .s{background: url(../images/commentbox/skin6/s.png) repeat-x bottom; height:22px}
+.container.skin6 .se{background: url(../images/commentbox/skin6/se.png) no-repeat bottom right; height:22px;width:22px}
+.container.skin6 .so{ background: url(../images/commentbox/skin6/so.png) no-repeat bottom right; height:22px;width:24px}
+.container.skin6 .c{background: url(../images/commentbox/skin6/c.png); padding-top:0px;}
+
+.container.skin7 .n{background:url(../images/commentbox/skin7/n.png) repeat-x top; padding-left:22px; padding-bottom:0px; font-size:18px; vertical-align:middle; height:36px;.height:32px; -moz-user-select: none; -khtml-user-select: none}
+.container.skin7 .n a{color:white}
+.container.skin7 .ne{background:url(../images/commentbox/skin7/ne.png) no-repeat top right; height:36px;width:22px; -khtml-user-select: none}
+.container.skin7 .no{background:url(../images/commentbox/skin7/no.png) no-repeat top right; height:36px;width:24px; -khtml-user-select: none}
+.container.skin7 .o{ background: url(../images/commentbox/skin7/o.png) repeat-y top right; height:25px;width:24px}
+.container.skin7 .e{background: url(../images/commentbox/skin7/e.png) repeat-y top right; height:25px;width:22px}
+.container.skin7 .s{background: url(../images/commentbox/skin7/s.png) repeat-x bottom; height:22px}
+.container.skin7 .se{background: url(../images/commentbox/skin7/se.png) no-repeat bottom right; height:22px;width:22px}
+.container.skin7 .so{ background: url(../images/commentbox/skin7/so.png) no-repeat bottom right; height:22px;width:24px}
+.container.skin7 .c{background: url(../images/commentbox/skin7/c.png); padding-top:0px;}
+
+.container.stiky .n{background:url(../images/commentbox/stiky/n.png) repeat-x top; padding-left:22px; padding-bottom:0px; font-size:18px; vertical-align:middle; height:36px;.height:32px; -moz-user-select: none; -khtml-user-select: none}
+.container.stiky .ne{background:url(../images/commentbox/stiky/ne.png) no-repeat top right; height:36px;width:22px; -khtml-user-select: none}
+.container.stiky .no{background:url(../images/commentbox/stiky/no.png) no-repeat top right; height:36px;width:24px; -khtml-user-select: none}
+.container.stiky .o{ background: url(../images/commentbox/stiky/o.png) repeat-y top right; height:25px;width:24px}
+.container.stiky .e{background: url(../images/commentbox/stiky/e.png) repeat-y top right; height:25px;width:22px}
+.container.stiky .s{background: url(../images/commentbox/stiky/s.png) repeat-x bottom; height:22px}
+.container.stiky .se{background: url(../images/commentbox/stiky/se.png) no-repeat bottom right; height:22px;width:22px}
+.container.stiky .so{ background: url(../images/commentbox/stiky/so.png) no-repeat bottom right; height:22px;width:24px}
+.container.stiky .c{background: url(../images/commentbox/stiky/c.png); padding-top:0px;}
+
+
+.container.stikynote {border:1px solid gray;-webkit-border-radius:10px; -moz-border-radius:10px;border-radius:10px;}/**/
+.container.stikynote .n{ }
+.container.stikynote .n a{font-size:16px;color:black}
+.container.stikynote .ne{height:25px;width:15px; -khtml-user-select: none; }
+.container.stikynote .no{height:25px;width:15px; -khtml-user-select: none; }
+.container.stikynote .s{ height:10px}
+.container.stikynote .c{ }
+.container.stikynote .buttonBar{right:5px;top:0px}
+
 
 

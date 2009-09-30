@@ -20,6 +20,7 @@ class Digress_It_Post extends Digress_It_Base{
 		add_action('wp_print_styles',  array( &$this, 'on_wp_print_styles') ); 
 
 		add_filter('wp_head', array(&$this, 'on_wp_head'));
+
 		add_filter('the_content', array(&$this, 'on_the_content'));
 		add_action('comment_post',array(&$this, 'on_comment_post'));
 
@@ -31,7 +32,6 @@ class Digress_It_Post extends Digress_It_Base{
 	
 	}
 	
-
 
 
 

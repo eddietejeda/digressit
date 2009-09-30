@@ -30,6 +30,32 @@ h6 a{
 	font-size: 10pt !important;		
 }
 
+.pagetitle{
+
+}
+
+.search-results .post p, 
+.search-results .post h3, 
+.search-results .post,
+.archive .post p, 
+.archive .post h3, 
+.archive .post
+{
+	padding: 0px;
+	margin: 0px;
+}
+
+.archive .post h3, .search-results .post h3{
+	font-size: 12pt;
+}
+.archive .hentry, .search-results .hentry{
+	padding-top: 30px;
+
+}
+
+
+
+
 p {
 	margin:0;
 	padding:0 0 18px 0;
@@ -177,10 +203,6 @@ table tr td {
 	border-bottom:none;
 }
 
-#commentoverview{
-	display: none;
-}
-
 #blurb {
 
 }
@@ -201,13 +223,14 @@ table tr td {
 }
 .post h2 {
 
-	margin:25px 0 13px 19px;
+	margin:25px 0 13px 10px;
 	font-weight:normal;
 }
 
 
 #content {
 	width: 40%;
+	padding: 0 0 50px 20px;
 }
 
 
