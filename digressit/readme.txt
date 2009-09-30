@@ -50,6 +50,8 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 * New design based on Lightworld Theme called "Golden"
 * Now works with different themes!!
 * Scroll issue resolved on IE6
+* The commenticon comment count also increments when comments updated wit ajax
+* Sidebar is dynamically detected and only appears when widgets are enabled
 
 = 2.1.7 =
 * containerTable is now transparent so that the round edges on commentbox stay round over text

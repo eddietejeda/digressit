@@ -193,6 +193,8 @@ table tr td {
 }
 
 
+
+
 .archive .hentry,
 .search-results .hentry{
 	-moz-border-radius-bottomleft:5px;
@@ -212,6 +214,10 @@ table tr td {
 
 .frontpage .entry p{
 	padding: 10px 10px 10px 0;
+}
+
+.page .frontpage .entry p{
+	padding: 10px 10px 20px 10px;
 }
 
 
@@ -265,6 +271,10 @@ table tr td {
 	font-weight:normal;
 }
 
+.page h2 {
+	font-weight:normal;
+	margin:0 0 0 10px;
+}
 
 #content {
 	width: 40%;
@@ -683,7 +693,7 @@ h1#logo small a{font-size:12px;border-bottom:1px solid #000;}
 #top{cursor:pointer;display:block;margin-left:5px;position:relative;bottom:-55px;margin-top:-55px;min-height:56px;}
 #top strong{display:none;}
 
-#searchform{float:right;width:191px;height:26px;background:url(../images/searchbox.png) no-repeat;position:relative;top:1px;}
+#top_bar  > #searchform{float:right;width:191px;height:26px;background:url(../images/searchbox.png) no-repeat;position:relative;top:1px;}
 #header #s{border:1px solid #000;float:left;border:0;width:154px;background:none;color:#ACACAB;margin:4px 0 0 4px;}
 #header #go{float:right;width:25px;height:26px;background-color:transparent;border:0px;cursor:pointer;}
 

@@ -35,7 +35,7 @@ $options = get_option('digressit');
 						<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
 							<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 							<div class="entry">
-								<?php the_content('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
+								<?php the_excerpt('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
 
 								<?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
 								<?php the_tags( '<p>Tags: ', ', ', '</p>'); ?>
@@ -43,19 +43,18 @@ $options = get_option('digressit');
 							</div>			
 
 						</div>
+						<br>
 					<?php endwhile; else: ?>
 
 						<p>Sorry, no posts matched your criteria.</p>
 
 				<?php endif; ?>			
+			</div>
+		</div>
 
-		</div>
-		</div>
 
 		<div id="rightcolumn">
-			<?php if($options['frontpage_sidebar'] == '1'): ?>
 			<?php get_sidebar(); ?>
-			<?php endif; ?>
 		</div>
 		
 	</div>

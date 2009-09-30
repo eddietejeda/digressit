@@ -301,12 +301,12 @@ class Digress_It_Admin extends Digress_It_Base{
 -->
 				<?php endif; ?>
 				
-				
+<!--				
 				<tr valign="top">
 					<th scope="row"><label for="frontpage_sidebar">Sidebar in Front Page</label></th>
 					<td><input type="hidden"  id="frontpage_sidebar" name="frontpage_sidebar" value='<?php echo ( $options['frontpage_sidebar'] ? "1" : "0"  ) ?>'><input name="frontpage_sidebar_checkbox"  value="1" type="checkbox" class="checkbox_selector" '<?php echo ( $options['frontpage_sidebar'] ? " checked" : ""  ) ?>'></td>
 				</tr>
-				
+-->				
 				<tr valign="top">
 					<th scope="row"><label for="enable_chrome_frame">Enable Chrome Frame</label></th>
 					<td><input type="hidden"  id="enable_chrome_frame" name="enable_chrome_frame" value='<?php echo ( $options['enable_chrome_frame'] ? "1" : "0"  ) ?>'><input name="enable_chrome_frame"  value="1" type="checkbox" class="checkbox_selector" '<?php echo ( $options['enable_chrome_frame'] ? " checked" : ""  ) ?>'></td>

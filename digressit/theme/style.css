@@ -162,7 +162,7 @@ table tr td {
 }
 
 .frontpage{
-	min-height: 500px;
+	min-height: 400px;
 	float: left;
 }
 
@@ -477,9 +477,7 @@ color:#fff;
 	font-size: 80%;
 }
 
-.page h2 a:visited{
-	color: black;
-}
+
 .page > #page > #content{
 	float: left;
 	padding: 0 0 50px 10px;
@@ -519,7 +517,7 @@ color:#fff;
 #leftcolumn {
 	float:left;
 	max-width:25%;
-	padding-right:25px;
+	padding-right:50px;
 }
 
 #leftcolumn h2, #leftcolumn h3{

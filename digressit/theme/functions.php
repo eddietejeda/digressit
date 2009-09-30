@@ -65,19 +65,17 @@ function digressit_list_comments($comment, $args, $depth) {
 		         <?php printf(__('<cite class="fn" title="%1$s at %2$s">%3$s</cite> <span class="says" >says:</span>'), get_comment_date(),  get_comment_time(), get_comment_author_link()) ?>
 			</div>
 
+			<?php if ($comment->comment_approved == '0') : ?>
+				<em><?php _e('Your comment is awaiting moderation.') ?></em>
+				<br />
+			<?php endif; ?>
 
 			<?php
 				$post = get_post($comment->comment_post_ID);
 			?>
 
 			<div class="comment-meta commentmetadata"><a href="<?php echo get_permalink($post->ID) ?>#comment-<?php echo $comment->comment_ID; ?>"></a></div>
-
-			<?php if ($comment->comment_approved == '0') : ?>
-				<em><?php _e('Your comment is awaiting moderation.') ?></em>
-			<?php else: ?>
-				<?php comment_text() ?>					
-			<?php endif; ?>
-
+			<?php comment_text() ?>
 			
 			
 			<?php if(is_single()): ?>

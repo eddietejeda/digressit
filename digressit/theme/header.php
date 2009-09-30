@@ -40,9 +40,10 @@
 
 		<div id="top_bar">
 			<ul id="front_menu">
-			<li class="page_item page_item_table_of_contents"><a href="<?php bloginfo('url'); ?>"><span><img  class="cute_menu_icons" src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/book_open.png"> Table of Contents</span></a></li>
-			<li class="page_item page_item_comments"><a title="Comments By Section" href="?comment-browser=posts"><span><img class="cute_menu_icons" src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/text_padding_top.png"> Table of Comments</span></a></li>
-			<li class="page_item page_item_commenters"><a title="Comments By Section" href="?comment-browser=users"><span><img class="cute_menu_icons" src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/user_comment.png">Commenters</span></a></li>
+			<li class="page_item page_item_table_of_contents"><a <?php echo (is_home()) ? ' class="s" ' : '';  ?> href="<?php bloginfo('url'); ?>"><span  ><img  class="cute_menu_icons" src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/book_open.png"> Table of Contents</span></a></li>
+			<li class="page_item page_item_comments"><a <?php echo ($_GET['comment-browser'] == 'posts') ? ' class="s" ' : '';  ?> title="Comments By Section" href="?comment-browser=posts"><span ><img class="cute_menu_icons" src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/text_padding_top.png"> Comments</span></a></li>
+			<li class="page_item page_item_commenters"><a <?php echo ($_GET['comment-browser'] == 'users') ? ' class="s" ' : '';  ?> title="Comments By Section" href="?comment-browser=users"><span ><img class="cute_menu_icons" src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/user_comment.png"> Commenters</span></a></li>
+<!--			<li class="page_item page_item_general"><a title="General" href="?comment-browser=general"><span><img class="cute_menu_icons" src="<?php bloginfo('url'); ?>/wp-content/plugins/digressit/theme/images/famfamfam/user_comment.png"> General</span></a></li> -->
 
 			<?php echo digressit_wp_list_pages();  ?>
 			</ul>

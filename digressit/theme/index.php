@@ -79,9 +79,7 @@ $options = get_option('digressit');
 		</div>
 
 		<div id="rightcolumn">
-			<?php if($options['frontpage_sidebar'] == '1'): ?>
 			<?php get_sidebar(); ?>
-			<?php endif; ?>
 		</div>
 		
 	</div>

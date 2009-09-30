@@ -16,27 +16,27 @@ version 1.0
 GPL (GPL-LICENSE.txt) licenses.
 */
 
-var msie=$.browser.msie;
-var msie6=$.browser.msie && $.browser.version=="6.0";
-var msie7=$.browser.msie && $.browser.version=="7.0";
-var msie8=$.browser.msie && $.browser.version=="8.0";
-var safari=$.browser.safari;
-var mozilla=$.browser.mozilla;
+var msie=jQuery.browser.msie;
+var msie6=jQuery.browser.msie && jQuery.browser.version=="6.0";
+var msie7=jQuery.browser.msie && jQuery.browser.version=="7.0";
+var msie8=jQuery.browser.msie && jQuery.browser.version=="8.0";
+var safari=jQuery.browser.safari;
+var mozilla=jQuery.browser.mozilla;
 var zi=10000;
 var on_load_selected_paragraph;
 
 
 if(!msie){
-	(function($) {
-	    $.fn.poll = function(options){
-	        var $this = $(this);
+	(function(jQuery) {
+	    jQuery.fn.poll = function(options){
+	        var $this = jQuery(this);
 	        // extend our default options with those provided
-	        var opts = $.extend({}, $.fn.poll.defaults, options);
+	        var opts = jQuery.extend({}, jQuery.fn.poll.defaults, options);
 	        setInterval(update, opts.interval);
 
 	        // method used to update element html
 	        function update(){
-	            $.ajax({
+	            jQuery.ajax({
 	                type: opts.type,
 	                url: opts.url,
 	                success: opts.success
@@ -45,7 +45,7 @@ if(!msie){
 	    };
 
 	    // default options
-	    $.fn.poll.defaults = {
+	    jQuery.fn.poll.defaults = {
 	        type: "POST",
 	        url: ".",
 	        success: '',
@@ -58,7 +58,7 @@ if(!msie){
 if(total_comment_count > jQuery.cookie('total_comment_count'))
 {
 
-	$.getJSON(wp_path + '?digressit-event=approved_comments&current-count=' + jQuery.cookie('total_comment_count'),
+	jQuery.getJSON(wp_path + '?digressit-event=approved_comments&current-count=' + jQuery.cookie('total_comment_count'),
 		function(new_comments){
 			
 		});
@@ -92,7 +92,7 @@ jQuery(document).ready(function(){
 	/************************************************/
 	if(!msie){
 	
-	$("#accordion").poll({
+	jQuery("#accordion").poll({
 	    url: wp_path + '?digressit-event=comment_count',
 	    interval: 20000,
 	    type: "GET",
@@ -109,7 +109,7 @@ jQuery(document).ready(function(){
 			var current_comment_count = jQuery.cookie('total_comment_count');
 			
 			if(new_count > current_comment_count){
-				$.getJSON(wp_path + '?digressit-event=approved_comments&current-count=' + current_comment_count,
+				jQuery.getJSON(wp_path + '?digressit-event=approved_comments&current-count=' + current_comment_count,
 					function(new_comments){
 						
 						//alert(new_comments);
@@ -137,17 +137,21 @@ jQuery(document).ready(function(){
 								'</li>';
 							
 								if(new_comment['comment_parent'] > 0){
-									$('#comment-' + new_comment['comment_parent']).append(new_comment_text);
+									jQuery('#comment-' + new_comment['comment_parent']).append(new_comment_text);
 								}
 								else{
-									$('#comment-group-' + new_comment['comment_text_signature']).append(new_comment_text);
+									jQuery('#comment-group-' + new_comment['comment_text_signature']).append(new_comment_text);
 								}
 							
 								var add_count_path = '#comment-block-' + new_comment['comment_text_signature'] + ' > h6 > a > .commentarea_commentcount';
-								var add_count = parseInt($(add_count_path).text()) + 1;
-								$(add_count_path).text(add_count);
+								var add_count = parseInt(jQuery(add_count_path).text()) + 1;
+								jQuery(add_count_path).text(add_count);
 							
 							
+
+								jQuery('.commentcount').eq(new_comment['comment_text_signature'] - 1).text(add_count);
+								
+								
 								var selected_block = '#comment-block-' + new_comment['comment_text_signature'];
 
 								jQuery(selected_block + ' > .commentarea').pulse({
@@ -165,7 +169,7 @@ jQuery(document).ready(function(){
 							*/	
 							}
 							else{
-								$('#new-comment-message').fadeIn();
+								jQuery('#new-comment-message').fadeIn();
 							}
 							
 							
@@ -323,7 +327,7 @@ jQuery(document).ready(function(){
 	}
 
 
-    $(window).scroll(function () { 
+    jQuery(window).scroll(function () { 
 		jQuery('#commentbox').css({position:"fixed"});
 
 		if(safari || msie6){
@@ -333,8 +337,8 @@ jQuery(document).ready(function(){
 			var default_top = parseInt(jQuery.cookie('top_position_commentbox'));
 			var default_left = parseInt(jQuery.cookie('left_position_commentbox'));
 
-			var top =  default_top  + parseInt($(window).scrollTop());
-			var left = default_left +  parseInt($(window).scrollLeft());
+			var top =  default_top  + parseInt(jQuery(window).scrollTop());
+			var left = default_left +  parseInt(jQuery(window).scrollLeft());
 
 
 			jQuery('#commentbox').css({position:"absolute"});
@@ -624,13 +628,13 @@ jQuery(document).ready(function(){
       function () {
 		var selection = '#selection-' + jQuery(this).attr('id').substring(8);
 		jQuery(selection).css('text-decoration', 'none');
-		$(this).recover();
+		jQuery(this).recover();
       }
     );
 */
 
 	jQuery(".comment").hover(function(){
-		$(this).recover();
+		jQuery(this).recover();
 	});
 
     jQuery(".paragraphnumber").hover(
@@ -669,7 +673,7 @@ jQuery(document).ready(function(){
 			jQuery.cookie('text_signature', paragraphnumber, { path: '/', expires: 1} );
 			jQuery('#comment_contents > .containerBody').scrollTo( jQuery('#comment-block-' + (paragraphnumber)), 1000);
 			document.location.hash = "#" +(paragraphnumber);
-			$(this).recover();
+			jQuery(this).recover();
 			
 		}
 	});
@@ -1183,7 +1187,7 @@ jQuery.fn.containerResize = function (){
 		minWidth: 150,
 		minHeight: 150,
 		helper: "proxy",
-		transparent: !$.browser.msie,
+		transparent: !jQuery.browser.msie,
 		autoHide: !msie6,
 		stop:function(e,o){
 			var resCont=msie6 ?o.helper:jQuery(this);
@@ -1211,32 +1215,32 @@ jQuery.fn.setButtons = function (buttons, opt){
 				jQuery(this).find(".close:first").bind("click",function(){container.fadeOut(200)});
 			}
 			if (btn[i]=="m"){
-				$(this).find(".n:first").attr("unselectable","on");
-				$(this).find(".buttonBar:first").append("<img src='"+opt.elementsPath+"min.png' class='minimizeContainer'>");
-				$(this).find(".minimizeContainer:first").bind("click",function(){container.minimize(opt)});
-				$(this).find(".n:first").bind("dblclick",function(){container.minimize(opt)});
+				jQuery(this).find(".n:first").attr("unselectable","on");
+				jQuery(this).find(".buttonBar:first").append("<img src='"+opt.elementsPath+"min.png' class='minimizeContainer'>");
+				jQuery(this).find(".minimizeContainer:first").bind("click",function(){container.minimize(opt)});
+				jQuery(this).find(".n:first").bind("dblclick",function(){container.minimize(opt)});
 			}
 			if (btn[i]=="p"){
-				$(this).find(".buttonBar:first").append("<img src='"+opt.elementsPath+"print.png' class='printContainer'>");
-				$(this).find(".printContainer:first").bind("click",function(){});
+				jQuery(this).find(".buttonBar:first").append("<img src='"+opt.elementsPath+"print.png' class='printContainer'>");
+				jQuery(this).find(".printContainer:first").bind("click",function(){});
 			}
 			if (btn[i]=="i"){
-				$(this).find(".buttonBar:first").append("<img src='"+opt.elementsPath+"iconize.png' class='iconizeContainer'>");
-				$(this).find(".iconizeContainer:first").bind("click",function(){container.iconize(opt)});
+				jQuery(this).find(".buttonBar:first").append("<img src='"+opt.elementsPath+"iconize.png' class='iconizeContainer'>");
+				jQuery(this).find(".iconizeContainer:first").bind("click",function(){container.iconize(opt)});
 			}
 		}
-		var fadeOnClose=$.browser.mozilla || $.browser.safari;
-		$(this).find(".buttonBar:first img").css({opacity:.5, cursor:"pointer"}).mouseover(function(){if (fadeOnClose)$(this).fadeTo(200,1)}).mouseout(function(){if (fadeOnClose)$(this).fadeTo(200,.5)});
+		var fadeOnClose=jQuery.browser.mozilla || jQuery.browser.safari;
+		jQuery(this).find(".buttonBar:first img").css({opacity:.5, cursor:"pointer"}).mouseover(function(){if (fadeOnClose)jQuery(this).fadeTo(200,1)}).mouseout(function(){if (fadeOnClose)jQuery(this).fadeTo(200,.5)});
 	}
 }
 jQuery.fn.minimize = function (opt){
-	var container=$(this);
-	if ($(this).attr("minimized")=="false"){
+	var container=jQuery(this);
+	if (jQuery(this).attr("minimized")=="false"){
 		this.w = container.width();
 		this.h = container.height();
 		container.find(".containerTable:first").css("width","100%");
 		container.find(".middle:first").fadeOut("fast",function(){container.css("height","")});
-		$(this).attr("minimized","true");
+		jQuery(this).attr("minimized","true");
 		container.find(".minimizeContainer:first").attr("src",opt.elementsPath+"max.png");
 		container.resizable("destroy");
 		jQuery.cookie('minimized', true, { path: '/', expires: 1}); 
@@ -1244,7 +1248,7 @@ jQuery.fn.minimize = function (opt){
 	}else{
 		container.find(".middle:first").fadeIn("slow",function(){container.css("height",container.find(".containerTable:first").height())});
 		if (container.hasClass("resizable")) container.containerResize();
-		$(this).attr("minimized","false");
+		jQuery(this).attr("minimized","false");
 		container.find(".minimizeContainer:first").attr("src", opt.elementsPath+"min.png");
 		jQuery.cookie('minimized', false, { path: '/', expires: 1}); 
 	}
@@ -1252,7 +1256,7 @@ jQuery.fn.minimize = function (opt){
 jQuery.fn.iconize = function (opt){
 	return this.each (function ()
 	{
-		var container=$(this);
+		var container=jQuery(this);
 		var browser_width =  jQuery(window).width() ;
 		var browser_height =  jQuery(window).height() ;
 		var marginRight = 0;//= jQuery.cookie('sidebar'); 
@@ -1262,7 +1266,7 @@ jQuery.fn.iconize = function (opt){
 		container.attr("t",container.css("top"));
 		container.attr("l",container.css("left"));
 		container.resizable("destroy");
-		if (!$.browser.msie) {
+		if (!jQuery.browser.msie) {
 			container.find(".containerTable:first").fadeOut("fast");
 			container.animate({ top: jQuery.cookie('top_position_commentbox') ,left: browser_width + marginRight - 31},200);
 		}else{
@@ -1271,7 +1275,7 @@ jQuery.fn.iconize = function (opt){
 		}
 		container.append("<img src='"+opt.elementsPath+(container.attr("icon")?container.attr("icon"):"comments.png")+"' class='restoreContainer'>");
 		container.find(".restoreContainer:first").bind("click",function(){
-			if (!$.browser.msie) {
+			if (!jQuery.browser.msie) {
 				container.find(".containerTable:first").fadeIn("fast");
 				container.animate({height:container.attr("h"), width:container.attr("w"),left:container.attr("l")},200);
 			} else {

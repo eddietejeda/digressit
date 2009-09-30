@@ -154,7 +154,7 @@ class Digress_It_Post extends Digress_It_Base{
 
 				if($browser['name'] == "msie"){
 				?>
-			    <script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
+
 				<?php					
 				}
 
