@@ -318,7 +318,7 @@ else
 function resizing(e){var height=parseInt(jQuery('.containerTable').css('height'));var width=parseInt(jQuery('.containerTable').css('width'));if(height<365){height=365;}
 jQuery('.containerTable').css('height',height+'px');jQuery('#commentbox').css('height',height+'px');jQuery('#commentbox').css('width',width+'px');jQuery.cookie('commentbox_height',height+'px',{path:'/',expires:1});jQuery.cookie('commentbox_width',width+'px',{path:'/',expires:1});jQuery('.ui-resizable-e').css('height',height+'px');jQuery('.ui-resizable-s').css('width',width+'px');}
 jQuery('#commentwindow').mousewheel(function(event,delta){return false;});jQuery('input, textarea').click(function(e){jQuery(this).focus();});function highlightBlock(top,left,width,height){if(msie7){width=width-20;}
-if(msie6){width=width-25;left=left+5;}
+if(msie6){width=width-20;left=left+5;}
 var highlite=jQuery.create('div',{'id':'selected_block','class':'selected_block','style':'top: '+(top)+'px; left: '+(left)+'px; width: '+width+'px; height: '+(height)+'px;'},'');jQuery('#content').append(highlite);}
 function highlightSelection(){if(allow_text_selection){var selection=getSelection();var range;if(range=getRangeObject(selection)){var node=range.commonAncestorContainer;if(node){var html=new XMLSerializer().serializeToString(node);var endnode=null;var endoffset=null;var selectionlength=selection.toString.length;if(selection.anchorOffset<selection.focusOffset){if(selection.anchorNode==selection.focusNode){endnode=selection.focusNode;endoffset=selection.focusOffset;}
 else{endnode=selection.anchorNode;endoffset=selection.anchorNode.textContent.length;}

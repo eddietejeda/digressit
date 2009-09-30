@@ -768,7 +768,7 @@ jQuery(document).ready(function(){
 		}
 
 		if(msie6){
-			width = width - 25;
+			width = width - 20;
 			left = left + 5;
 		}
 		

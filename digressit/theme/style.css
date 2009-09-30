@@ -221,7 +221,8 @@ table tr td {
 }
 
 .navigation{
-	margin-left: 20px;
+	margin-left: -5px;
+	padding-bottom: 5px;
 }
 .post em{
 	font-style:italic;

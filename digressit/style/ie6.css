@@ -46,3 +46,8 @@ ol {
 html{
 	overflow:scroll !important;	
 }
+
+
+#sidebar{
+	max-width: 300px !important;
+}
