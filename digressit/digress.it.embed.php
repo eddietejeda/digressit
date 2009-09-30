@@ -83,7 +83,7 @@ class Digress_It_Embed extends Digress_It_Post{
 						<sy:updateFrequency>1</sy:updateFrequency>
 
 						<item>
-							<title><?php echo htmlentities($thepost->post_title); ?> on paragraph number #<?php echo $paranumber; ?> </title>
+							<title><?php echo htmlentities($thepost->post_title); ?> (paragraph number no. <?php echo $paranumber; ?>) </title>
 							<link><?php echo $pagelinkedto.'#'.$paranumber; ?></link>
 							<dc:creator>admin</dc:creator>
 							<pubDate><?php echo date("D M j G:i:s T Y");   ?></pubDate>

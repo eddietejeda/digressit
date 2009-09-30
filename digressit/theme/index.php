@@ -66,7 +66,7 @@ $options = get_option('digressit');
 						foreach($pages as $key=>$page){ 
 							if( $page->post_name == 'about'){
 		        				$content = $page->post_content;
-		        				$content = apply_filters('the_content', $content);
+		        				$content = force_balance_tags(apply_filters('the_content', $content));
 								echo $content;
 								break;
 							}

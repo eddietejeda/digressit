@@ -45,14 +45,9 @@ tbody, tfoot, thead, tr, th, td{
 }
 
 .paragraph_feed{
-	width: 20px; 
-	display: none;
-	float: right;
-}
+	width: 40px; 
+	visibility: hidden;
 
-
-.comment-body{
-	word-wrap: break-word;
 }
 
 
@@ -446,7 +441,6 @@ ol, ul{
 }
 
 #accordion h6 > a{
-
 	line-height:1.8;
 	list-style-image:none;
 	list-style-position:outside;
@@ -457,7 +451,7 @@ ol, ul{
 	outline-style:none;
 	outline-width:medium;
 	text-decoration:none;	
-	padding:0.3em 0.5em 0.5em 5%;
+	padding:0.3em 0.5em 0.5em 0;
 }
 
 

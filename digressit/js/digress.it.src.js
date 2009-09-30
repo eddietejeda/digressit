@@ -203,7 +203,7 @@ jQuery(document).ready(function(){
 	}	
 	
 
-	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><h6 class="commentarea"><a id="comment-0" href="#0">Whole Page (<span class="commentarea_commentcount">'+whole_page_count+'</span>)</a><span class="paragraph_feed"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+',0"><img src="' + image_path + '/rss.png"/></a></span></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-0"></ol></div></div>');
+	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><h6 class="commentarea"><span class="paragraph_feed"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+',0"><img src="' + image_path + '/rss.png"/></a></span><a id="comment-0" href="#0">Whole Page (<span class="commentarea_commentcount">'+whole_page_count+'</span>)</a></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-0"></ol></div></div>');
 	for( var k in comment_ids)
 	{
 		jQuery('#comment-group-0').append( jQuery(comment_ids[k]) );			
@@ -241,7 +241,7 @@ jQuery(document).ready(function(){
 		}
 		
 		var paragraph = i + 1;
-		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><h6 class="commentarea"><a id="comment-'+ paragraph + '" href="#' + paragraph + '">Paragraph '+ paragraph +' (<span class="commentarea_commentcount">'+count+'</span>)</a><span class="paragraph_feed"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a></span></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-'+ paragraph +'"></ol></div></div>');		
+		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><h6 class="commentarea"><span class="paragraph_feed"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a></span><a id="comment-'+ paragraph + '" href="#' + paragraph + '">Paragraph '+ paragraph +' (<span class="commentarea_commentcount">'+count+'</span>)</a></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-'+ paragraph +'"></ol></div></div>');		
 		
 		for( var k in comment_ids)
 		{
@@ -524,11 +524,11 @@ jQuery(document).ready(function(){
     jQuery(".commentarea").hover(
       function () {
 		var pos = jQuery('.commentarea').index(this);
-		jQuery('.paragraph_feed').eq(pos).show();
+		jQuery('.paragraph_feed').eq(pos).css('visibility', 'visible');
       }, 
       function () {
 		var pos = jQuery('.commentarea').index(this);
-		jQuery('.paragraph_feed').eq(pos).hide();
+		jQuery('.paragraph_feed').eq(pos).css('visibility', 'hidden');
       }
     );
 

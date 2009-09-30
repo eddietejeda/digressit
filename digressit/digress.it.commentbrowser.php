@@ -614,7 +614,7 @@ function attach_new_xmlrpc($methods) {
     $methods['pingback.ping'] = 'digressit_pingback_ping';
     return $methods;
 }
-add_action('xmlrpc_methods', 'attach_new_xmlrpc');
+//add_action('xmlrpc_methods', 'attach_new_xmlrpc');
 
 
 
