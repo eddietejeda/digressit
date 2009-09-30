@@ -49,7 +49,7 @@ h6 a{
 	font-size: 12pt;
 }
 .archive .hentry, .search-results .hentry{
-	padding-top: 30px;
+
 
 }
 
@@ -167,7 +167,7 @@ table tr td {
 }
 #logo {
 
-	margin-left: 10px;
+
 }
 #logo a {
 	color:#ff2b06;
@@ -180,6 +180,37 @@ table tr td {
 	text-transform: uppercase;
 	font-size : 12pt;
 	font-weight : 200;
+}
+
+.frontpage #respond{
+	margin-left: 5px;
+	margin-top: 20px;
+}
+
+
+.page .frontpage h2{
+		padding: 0px 10px 0 0px;
+}
+
+.archive .hentry,
+.search-results .hentry{
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	background-color:white;
+	border:1px solid #DDDDDD;
+	padding: 10px 0px 5px 1px !important;
+}
+
+
+
+.frontpage h2{
+	padding: 0px 10px 0 0px;
+}
+
+.frontpage .entry p{
+	padding: 10px 10px 10px 0;
 }
 
 #logo .description{
@@ -223,7 +254,7 @@ table tr td {
 }
 .post h2 {
 
-	margin:25px 0 13px 10px;
+	margin:0 0 0 10px;
 	font-weight:normal;
 }
 
@@ -454,7 +485,7 @@ color:#fff;
 }
 
 #footer p{
-	padding: 20px;
+	padding: 20px 20px 20px 25px;
 }
 
 /* COLUMNS */
@@ -615,7 +646,7 @@ ol li, #sidebar ul ol li {
 
 /* FRONT MENU */
 
-ul#front_menu{float:left;text-transform:uppercase;position:relative;top:1px; margin-left: 5px; padding-left: 0px;}
+ul#front_menu{float:left;text-transform:uppercase;position:relative;top:1px; margin-left: 0px; padding-left: 0px;}
 * html .expand{margin-top:-13px;} *+html .expand{margin-top:-13px;}
 #front_menu li{list-style:none;float:left;margin-right:4px;}
 * html #front_menu li{height:25px;display:inline;}
@@ -637,7 +668,7 @@ ul#front_menu{float:left;text-transform:uppercase;position:relative;top:1px; mar
 
 /* LAYOUT */
 #wrapper{margin:0 auto;text-align:left;}
-h1#logo,h1#logo a{font-family:Helvetica,Georgia;padding:0;margin-top:7px;font-size:36px;color:#000;text-decoration:none;text-transform:uppercase; height: 58px;}
+h1#logo,h1#logo a{font-family:Helvetica,Georgia;padding:0;font-size:36px;color:#000;text-decoration:none;text-transform:uppercase; height: 65px;}
 h1#logo small{color:#000;font-size:12px;display:block;margin:-7px 2px 1px;height:20px;}
 h1#logo small a{font-size:12px;border-bottom:1px solid #000;}
 #rss-feed{float:right;width:190px;font-weight:700;position:relative;top:35px;left:7px;color:#000;text-decoration:none;}

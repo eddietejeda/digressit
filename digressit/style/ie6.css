@@ -31,3 +31,8 @@ html, body {
 	position: absolute;
 	left: 20px;
 }
+
+
+li.page_item a span img{
+	display: none;
+}

@@ -107,7 +107,7 @@ class Digress_It_Embed extends Digress_It_Post{
 				<paragraph>
 					<permalink><?php echo htmlentities($paragraph['permalink']); ?></permalink>
 					<page_comments><?php echo $paragraph['page_comments']; ?></page_comments>
-					<content><![CDATA[<?php echo $paragraph['page_comments']; ?>]]></content>						
+					<content><![CDATA[<?php echo $paragraph['content']; ?>]]></content>						
 				</paragraph>
 				<?php
 

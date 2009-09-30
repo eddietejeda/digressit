@@ -15,13 +15,11 @@ $options = get_option('digressit');
 
 	<div class="frontpage">
 
-
 		<div id="leftcolumn"> 
 
 		</div>
 		
 		<div id="middlecolumn" style="margin-left: 20px; width: 40%;">
-
 
 			<?php
 
@@ -44,13 +42,13 @@ $options = get_option('digressit');
 				<?php }
 
 			?>
-
+			<br>
 			<div id="blurb">
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 
 						<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
-							<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+							<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 							<div class="entry">
 								<?php the_content('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
 
@@ -59,8 +57,8 @@ $options = get_option('digressit');
 
 							</div>			
 
-						</div>
 
+					<?php comments_template(); ?>
 
 
 					<?php endwhile; else: ?>
@@ -69,7 +67,7 @@ $options = get_option('digressit');
 
 				<?php endif; ?>			</div>
 
-
+		</div>
 		</div>
 
 		<div id="rightcolumn">

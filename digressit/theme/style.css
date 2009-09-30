@@ -2,7 +2,7 @@
 Theme Name: Digress.it Classic
 Theme URI:http://digress.it
 Description: This is the default theme for digress.it, a plugin allows readers to comment paragraph by paragraph in the margins of a text.
-Version: 2.1.8
+Version: 2.2
 Author:Eddie A. Tejeda
 Author URI:http://www.visudo.com
 
@@ -476,7 +476,9 @@ color:#fff;
 	font-size: 80%;
 }
 
-
+.page h2 a:visited{
+	color: black;
+}
 .page > #page > #content{
 	float: left;
 	padding: 0 0 50px 10px;
@@ -515,8 +517,8 @@ color:#fff;
 }
 #leftcolumn {
 	float:left;
-	width: 25%;
-	padding-right: 5px;
+	max-width:25%;
+	padding-right:25px;
 }
 
 #leftcolumn h2, #leftcolumn h3{

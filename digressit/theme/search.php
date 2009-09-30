@@ -21,12 +21,19 @@ $options = get_option('digressit');
 		
 		<div id="middlecolumn" style="margin-left: 20px; width: 40%;">
 
+			<?php
+
+
+			 	$post = $posts[0]; // Hack. Set $post so that the_date() works. ?>
+				<h2 class="pagetitle">Search Results for &#8216;<?php echo $_GET['s']; ?>&#8217;</h2>
+<br>
+
 			<div id="blurb">
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 
 						<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
-							<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+							<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 							<div class="entry">
 								<?php the_content('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
 
@@ -36,16 +43,13 @@ $options = get_option('digressit');
 							</div>			
 
 						</div>
-
-
-
 					<?php endwhile; else: ?>
 
 						<p>Sorry, no posts matched your criteria.</p>
 
-				<?php endif; ?>			</div>
+				<?php endif; ?>			
 
-
+		</div>
 		</div>
 
 		<div id="rightcolumn">

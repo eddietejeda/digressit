@@ -18,8 +18,6 @@ $options = get_option('digressit');
 		<div id="leftcolumn"> 
 
 			<h2>Table of Contents</h2>
-			<h3>Sections</h3>			
-
 			<ol>
 			<?php
 			//global $post;
@@ -76,7 +74,7 @@ $options = get_option('digressit');
 							}
 						}
 				}	
-					?>
+			?>
 			</div>
 
 		

@@ -18,17 +18,17 @@ $request_section = $_GET['comment-browser'];
 
 		<div id="leftcolumn"> 
 
-			<h2>Table of Comments (<?php echo $digressit_commentbrowser->getAllCommentCount(); ?>)</h2>
+			<h2>Table of <?php echo ($request_section == 'posts') ?  'Comments' : 'Commenters'; ?> (<?php echo $digressit_commentbrowser->getAllCommentCount(); ?>)</h2>
 			<?php
 						
 			switch($request_section)
 			{
 				case 'posts':
-					?><h3>Sections</h3><?php
+					?><?php
 					$digressit_commentbrowser->list_posts();				
 				break;
 				default:// 'users':
-					?><h3>Commenters</h3><?php
+					?><?php
 					$digressit_commentbrowser->list_users();				
 				break;/*
 				default:

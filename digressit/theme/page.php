@@ -26,7 +26,7 @@ $options = get_option('digressit');
 
 
 						<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
-							<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+							<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 							<div class="entry">
 								<?php the_content('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
 

@@ -51,6 +51,10 @@ tbody, tfoot, thead, tr, th, td{
 }
 
 
+.comment-body{
+	word-wrap: break-word;
+}
+
 
 .debug-message{
 	top: 3px;
