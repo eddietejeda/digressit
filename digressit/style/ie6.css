@@ -33,6 +33,16 @@ html, body {
 }
 
 
-li.page_item a span img{
-	display: none;
+.cute_menu_icons{
+	display: none;	
+}
+
+
+ol {
+	padding-left: 40px;
+
+}
+
+html{
+	overflow:scroll !important;	
 }

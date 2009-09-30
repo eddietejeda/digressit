@@ -192,6 +192,7 @@ table tr td {
 		padding: 0px 10px 0 0px;
 }
 
+
 .archive .hentry,
 .search-results .hentry{
 	-moz-border-radius-bottomleft:5px;
@@ -211,6 +212,12 @@ table tr td {
 
 .frontpage .entry p{
 	padding: 10px 10px 10px 0;
+}
+
+
+.archive .hentry p,
+.search-results .hentry p{
+	padding-left: 10px;
 }
 
 #logo .description{

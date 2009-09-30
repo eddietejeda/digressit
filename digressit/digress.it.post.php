@@ -107,13 +107,14 @@ class Digress_It_Post extends Digress_It_Base{
 		{		
 			wp_enqueue_style('jquery.ui.theme',	$this->jquery_path.'themes/smoothness/ui.theme.css');
 			
-			if($browser['name'] == "msie"){				
-				$version = substr($browser['version'], 0, 1);
-				wp_enqueue_style( 'digressit.ie', $this->style_path . "ie".$version.".css");
-			}
-			if($browser->browser == "safari"){
-				wp_enqueue_style( 'digressit.webkit', $this->style_path . "webkit.css");
-			}
+		}
+
+		if($browser['name'] == "msie"){				
+			$version = substr($browser['version'], 0, 1);
+			wp_enqueue_style( 'digressit.ie', $this->style_path . "ie".$version.".css");
+		}
+		if($browser->browser == "safari"){
+			wp_enqueue_style( 'digressit.webkit', $this->style_path . "webkit.css");
 		}
 		
 	}

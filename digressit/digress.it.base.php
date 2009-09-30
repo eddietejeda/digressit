@@ -145,6 +145,12 @@ class Digress_It_Base{
 			update_option('digressit', $current);
 		}
 	
+
+		if(!isset($current['version']) ||  $current['version'] < DIGRESSIT_VERSION){
+			$current['version'] = DIGRESSIT_VERSION;
+			$this->reset_options();			
+			update_option('digressit', $current);
+		}
 	
 	
 
@@ -226,7 +232,7 @@ class Digress_It_Base{
 			'default_skin' => $default_skin,
 			'stylesheet' => $default_stylesheet,
 			'default_left_position' => '42%',
-			'default_top_position' => '120px',
+			'default_top_position' => '150px',
 			'allow_users_to_minimize' => 0,
 			'allow_users_to_resize' => 0,
 			'server_sync_interval' => $monthly,
@@ -234,7 +240,7 @@ class Digress_It_Base{
 			'highlight_color' => '#FFFC00',			
 			'front_page_post_type' => 'post',
 			'front_page_numberposts' => 10,
-			'frontpage_sidebar' => 1,
+			'frontpage_sidebar' => 0,
 			'front_page_content' => '',
 			'front_page_order' => 'ASC',
 			'front_page_order_by' => 'date');

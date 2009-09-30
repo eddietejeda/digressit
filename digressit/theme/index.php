@@ -57,7 +57,6 @@ $options = get_option('digressit');
        				$content = $page->post_content;
        				$content = apply_filters('the_content', $content);
 
-					echo "<h3>".$page->post_title."</h3>";
 					echo $content;
 					
 				}
@@ -68,7 +67,6 @@ $options = get_option('digressit');
 							if( $page->post_name == 'about'){
 		        				$content = $page->post_content;
 		        				$content = apply_filters('the_content', $content);
-								echo "<h3>".$page->post_title."</h3>";
 								echo $content;
 								break;
 							}

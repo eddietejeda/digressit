@@ -49,6 +49,7 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 * Smaller gravatar
 * New design based on Lightworld Theme called "Golden"
 * Now works with different themes!!
+* Scroll issue resolved on IE6
 
 = 2.1.7 =
 * containerTable is now transparent so that the round edges on commentbox stay round over text
