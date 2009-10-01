@@ -16,3 +16,8 @@ ol {
 	padding-left: 40px;
 
 }
+
+.commentblock {
+	min-height: 2000px;
+	overflow: visible;
+}
