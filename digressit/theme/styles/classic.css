@@ -28,7 +28,10 @@ p, ul, ol {
 margin:0;
 padding:0 0 18px 0;
 }
- 
+
+#top_bar{
+	display: none;
+} 
 ul, ol {
 /*margin: 0 0 0 15px;
 padding: 0 0 18px 10px;*/
@@ -207,7 +210,6 @@ i, em, .italic{ font-style:italic; }
 
 .frontpage #blurb{
 	margin-top: 0px; 
-	margin-left: 30px
 }
 
 /* 	
@@ -221,6 +223,11 @@ i, em, .italic{ font-style:italic; }
 	/*border: 1px solid #eeeeee;  for testing*/
 	width: 475px;
 	margin-left: 5px;
+}
+
+
+.post #content h2{
+	margin-left: 10px;
 }
 
 .description{
@@ -293,7 +300,6 @@ a.sidebarLink {
 h1, h2, h3, h4 {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	font-weight: normal;
-	line-height: 120%;
 	margin: 0;
 }
 h1 {
@@ -365,7 +371,9 @@ code {
 	text-transform: uppercase;
 }
 
-
+.postmetadata{
+	margin-left: 10px;
+}
 .smLight, .postmetadata {
 	color: #808088;
 	font: 11px Georgia, Times, "Times New Roman", serif;
@@ -471,8 +479,19 @@ td.alignRight {
 	width: 100%;
 }
 
+#logo small{
+	display:block;
+	font-size:9pt;	
+}
+
+.post .entry  p {
+	margin:0 0;
+	padding-bottom:0;
+	padding-left:0px;	
+}
 .post h2{
-	padding: 10px 0 0px 10px;
+	padding: 0px 0 0 0;
+	margin: 0 0 0px 0px	
 }
 
 .entry p{
@@ -566,7 +585,7 @@ td.alignRight {
 	line-height:1.35em;
 	margin:3px 0 0;
 	width: 330px!important;
-	top: 75px;
+	top: 100px;
 	left: 505px;
 }
 
@@ -642,13 +661,14 @@ margin-left: 20px;
 	text-transform:none;
 	position: fixed;
 	font-size: 80%;
-	top: 35px;
+	top: 70px;
 	left: 510px;
 }
 
 
 #commentbox h3{
 	padding: 8px;
+	display: block;
 }
 #commentoverview h3{
 	padding-top: 0px !important;
