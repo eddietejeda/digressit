@@ -694,6 +694,12 @@ margin-left: 20px;
 
 .textblock{
 	text-align: justify;
+	margin-bottom:0;
+	padding:10px 10px 10px 0;
+	position:relative;
+}
+.single .post{
+	padding: 0 30px 0 10px;
 }
 #documentIntro{
 	padding: 25px 50px 0;

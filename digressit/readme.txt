@@ -27,8 +27,23 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 3. Go to the Appearance menu and review the settings. The digress.it theme should have been automatically activated.
 == Changelog ==
 
+= 2.2.2 =
+- page hiarchies
+- paragraph embed
+- padding of UL
+- tags
+- general comments
+- stripping front_page content from menu list
+- commentbrowser breaks when name has a quote mark (apostrophe)
+- The search page only shows a limited number of results. If there are more than 10(?),  how do you navigate to the next page of results?
+- feeds work with permalinks
+* simplexml errors and supressed and html_entity_decode() is called on text to preview xml parse errors
+* Added "Edit this entry" when logged in
+* Home page excluded from menu
+* Ajax polling now only happens when window is in focused
+* resizing window rescales the highlighted area
 
-= 2.2 =
+= 2.2.1 =
 * RSS minor switch: change "on paragraph number #9" to "(paragraph no. 9)"
 * FIXED: The embed Object code was not loading properly when clicked. Now it does
 * ENHANCEMENT: html embed is now a blockquote instead of div

@@ -24,7 +24,7 @@ class Digress_It_Post extends Digress_It_Base{
 		add_filter('the_content', array(&$this, 'on_the_content'));
 		add_action('comment_post',array(&$this, 'on_comment_post'));
 
-		add_action('save_post',array(&$this, 'on_save_post'));		
+		//add_action('save_post',array(&$this, 'on_save_post'));		
 				
 		add_action('admin_menu', array(&$this, 'on_admin_menu'));
 
@@ -43,6 +43,7 @@ class Digress_It_Post extends Digress_It_Base{
 		if($post->post_type == 'post'){
 			$content = apply_filters('the_content', $post->post_content);
 			$content = str_replace(']]>', ']]&gt;', $content);
+
 
 			if(get_option('digressit_content'.$postid)){
 				update_option('digressit_content' . $postid, $this->parse_content($content));

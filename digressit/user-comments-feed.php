@@ -13,16 +13,16 @@ global $digressit_commentbrowser, $wp_rewrite, $matches, $wp_query;
 preg_match('#usercomments/(.+)#', $_SERVER['REQUEST_URI'], $commenter);
 
 $commenter = $commenter[1];
-$comments_from_user = $digressit_commentbrowser->getCommentsFromUser($commenter);
+$comments_from_user = $digressit_commentbrowser->get_comments_from_user($commenter);
 
 $user_print_name = null;
 
 if(is_numeric($commenter)){
-	$userdata = get_userdata($commenter);
-	$user_print_name = $userdata->user_nicename;
+	$userdata = get_userdata($commenter);	
+	$user_print_name = urldecode($userdata->user_nicename);
 }
 else{
-	$user_print_name = $commenter;
+	$user_print_name = urldecode($commenter);
 	
 }
 
@@ -73,7 +73,11 @@ if ( $comments_from_user ) : foreach ( $comments_from_user as $comment ) :
 		<pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', $comment->comment_date_gmt, false); ?></pubDate>
 		<guid isPermaLink="false"><?php echo $comment_post->guid; ?>#<?php echo $comment->comment_text_signature; ?></guid>
 		<description><?php echo strip_tags($comment->comment_content) ?></description>
-		<content:encoded><![CDATA[<?php echo $comment->comment_content ?>]]></content:encoded>
+		<content:encoded><![CDATA[<?php echo $comment->comment_content; ?>
+								<href="<?php echo $comment_post->guid; ?>#<?php echo $comment->comment_text_signature; ?>">Comment here</a>
+		
+		
+		 ?>]]></content:encoded>
 	</item>
 <?php endforeach; endif; ?>
 </channel>

@@ -59,7 +59,7 @@
 
 <?php if ( comments_open() ) : ?>
 
-<li id="respond">
+<li name="respond-form" id="respond">
 
 <h3><?php comment_form_title( 'Leave a Reply', 'Leave a Reply to %s' ); ?></h3>
 

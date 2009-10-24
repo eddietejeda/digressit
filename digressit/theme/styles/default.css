@@ -68,10 +68,10 @@ ul, ol {
 }
 
 blockquote {
-	margin:25px 25px;
+	margin:0 20px;
 	padding:0;
-}
- 
+} 
+
 img {
 	border:0;
 }
@@ -586,7 +586,7 @@ color:#fff;
 	}
 
 #sidebar ul ul, #sidebar ul ol {
-	margin: 5px 0 0 10px;
+	margin: 5px 0 0 0px;
 	}
 
 #sidebar ul ul ul, #sidebar ul ol {

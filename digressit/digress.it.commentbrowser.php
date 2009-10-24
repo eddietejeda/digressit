@@ -63,7 +63,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 	
 	function get_user_feed($user){
 		if(strlen($user)){
-			return $this->wp_path .'/feed/usercomments/'.$user;
+			return $this->wp_path .'/feed/usercomments/'.urlencode($user);
 		}
 		else{
 			return false;
@@ -174,7 +174,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		<ul>
 			<li><a href="<?php echo $this->wp_path; ?>/?comment-browser=users">by Commenter</a></li>
 			<li><a href="<?php echo $this->wp_path; ?>/?comment-browser=posts">by Section</a></li>
-			<!--<li><a href="<?php echo $this->wp_path; ?>/?comment-browser=general">General Comments</a></li>-->
+			<li><a href="<?php echo $this->wp_path; ?>/?comment-browser=general">General Comments</a></li>
 		</ul>
 		
 		<?php echo $after_widget; ?>
@@ -246,7 +246,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 			$path = (strlen($wp_rewrite->permalink_structure)) ? $permalink_name .'' : '?page_id='.$commentbrowser['byusers'];
 
-			$comments = $this->getCommentsFromUser($user->user_id);
+			$comments = $this->get_comments_from_user($user->user_id);
 			$comments_count = $user->comments_per_user; 
 
 			$seperator = (strlen($wp_rewrite->permalink_structure)) ? "?" : "&";
@@ -266,18 +266,34 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 	function list_general_comments()
 	{
-		$users = $this->getContributorsWhoHaveCommented();
+		global $wp_rewrite;
+		$users = $this->getUsersWhoHaveCommented();
 
 		echo "<ol>";
 		foreach($users as $user) :
 
-			$comments = $this->getCommentsFromUser($user->ID);
+			$commentbrowser = get_option('commentbrowser');
+
+			$byusers = get_post($commentbrowser['byusers']);			
+			$permalink_name = $byusers->post_name;
+
+			$path = (strlen($wp_rewrite->permalink_structure)) ? $permalink_name .'' : '?page_id='.$commentbrowser['byusers'];
+
+			$comments = $this->get_approved_general_comments($user->user_id);
 			$comments_count = count($comments);
-			$userdata = get_userdata($user->ID);
-			echo "<li>$userdata->user_login ($comments_count)</li>";
+
+			$seperator = (strlen($wp_rewrite->permalink_structure)) ? "?" : "&";
+
+
+			$userdata = get_userdata($user->user_id);
+
+			$user_display_name = ($user->user_id) ? ($userdata->user_login) : ($user->comment_author);
+			$user_identifier = ($user->user_id) ? ($user->user_id) : ($user->comment_author);
+
+			echo "<li><a href='$this->wp_path/$path".""."$seperator".""."user=".urlencode($user_identifier)."&comment-browser=general'>$user_display_name ($comments_count)</a></li>";
 
 		endforeach;
-		echo "</ol>";		
+		echo "</ol>";
 	}
 
 
@@ -292,13 +308,13 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		{
 
 			case "users":
-				$comments = $this->getCommentsFromUser($id);
+				$comments = $this->get_comments_from_user($id);
 			break;
 			case "posts":
 				$comments = get_approved_comments($id); 
 			break;
 			case "general":
-
+				$comments = $this->get_approved_general_comments($id); 
 			break;			
 		}
 		?>
@@ -317,6 +333,21 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 
 	//the following were imported from CP1.4
+	function get_approved_general_comments($id){
+		$approved_comments = get_approved_comments($id);
+		
+		$general_comments = null;
+
+		foreach($approved_comments as $comment){
+			if(!$comment->comment_text_signature){
+				$general_comments[] = $comment;
+			}
+		}
+		
+		return $general_comments;
+
+	}
+	
 	function getCommentCount($title)
 	{
 		global $wpdb;
@@ -356,19 +387,26 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 
 
-	function getCommentsFromUser($id){
+	function get_comments_from_user($id){
 	 	global $wpdb;	
 		$sql = null;
+		
+		
 		if(is_numeric($id))
 		{
 			$sql = "SELECT c.*, u.*, p.post_name, p.post_title FROM $wpdb->comments c, $wpdb->users u, $wpdb->posts p  WHERE c.comment_approved='1' AND p.post_status='publish' AND c.user_id = u.ID AND u.ID=$id AND c.comment_post_ID = p.ID ORDER BY comment_ID DESC";
 		}
 		else
 		{
-			$sql = "SELECT c.*, p.post_name, p.post_title FROM $wpdb->comments c, $wpdb->posts p  WHERE c.comment_approved='1' AND p.post_status='publish' AND c.comment_post_ID = p.ID AND c.comment_author = '".urldecode(addslashes($id))."' ORDER BY comment_ID DESC";
+			$sql = "SELECT c.*, p.post_name, p.post_title FROM $wpdb->comments c, $wpdb->posts p  WHERE c.comment_approved='1' AND p.post_status='publish' AND c.comment_author = '".urldecode($id)."'  AND c.comment_post_ID = p.ID ORDER BY comment_ID DESC";
+			//$sql = 'SELECT c.*, p.post_name, p.post_title FROM $wpdb->comments c, $wpdb->posts p  WHERE c.comment_approved="1" AND p.post_status="publish" AND c.comment_post_ID = p.ID AND c.comment_author = "'.urldecode($id).'" ORDER BY comment_ID DESC';
+
 		}
 			
-		return $wpdb->get_results($sql);
+
+		$results = $wpdb->get_results($sql);
+
+		return $results;
 		
 	}
 

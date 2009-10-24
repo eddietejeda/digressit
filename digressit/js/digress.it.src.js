@@ -24,33 +24,42 @@ var safari=jQuery.browser.safari;
 var mozilla=jQuery.browser.mozilla;
 var zi=10000;
 var on_load_selected_paragraph;
+var window_has_focus = true;
+
+
+//
 
 
 if(!msie){
 	(function(jQuery) {
 	    jQuery.fn.poll = function(options){
-	        var $this = jQuery(this);
-	        // extend our default options with those provided
-	        var opts = jQuery.extend({}, jQuery.fn.poll.defaults, options);
-	        setInterval(update, opts.interval);
+			
+			var $this = jQuery(this);
+			// extend our default options with those provided
+			var opts = jQuery.extend({}, jQuery.fn.poll.defaults, options);
+			setInterval(update, opts.interval);
 
-	        // method used to update element html
-	        function update(){
-	            jQuery.ajax({
-	                type: opts.type,
-	                url: opts.url,
-	                success: opts.success
-	            });
-	        };
-	    };
+			// method used to update element html
+			function update(){
+				
+				if(window_has_focus){
+				
+					jQuery.ajax({
+						type: opts.type,
+						url: opts.url,
+						success: opts.success
+					});
+				}
+			};
+		};
 
-	    // default options
-	    jQuery.fn.poll.defaults = {
-	        type: "POST",
-	        url: ".",
-	        success: '',
-	        interval: 10000
-	    };
+		// default options
+		jQuery.fn.poll.defaults = {
+			type: "POST",
+			url: ".",
+			success: '',
+			interval: 10000
+		};
 	})(jQuery);
 }
 
@@ -68,8 +77,10 @@ if(total_comment_count > jQuery.cookie('total_comment_count'))
 
 jQuery(document).ready(function(){
 
+
 	//recreate comment section
 	jQuery("body").append('<div id="accordion"></div>');
+	jQuery("#respond").css('display', 'block');
 	
 	
 
@@ -90,6 +101,14 @@ jQuery(document).ready(function(){
 	//               Ajax Polling
 	//  
 	/************************************************/
+	
+
+	jQuery(window).blur(function(){
+		window_has_focus =false;
+	}).focus(function(){
+		window_has_focus =true;
+	});
+	
 	if(!msie){
 	
 	jQuery("#accordion").poll({
@@ -206,8 +225,8 @@ jQuery(document).ready(function(){
 		}		
 	}	
 	
-
-	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><h6 class="commentarea"><span class="paragraph_feed"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+',0"><img src="' + image_path + '/rss.png"/></a></span><a id="comment-0" href="#0">Whole Page (<span class="commentarea_commentcount">'+whole_page_count+'</span>)</a></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-0"></ol></div></div>');
+	var plural = (whole_page_count == 1) ? '' : 's';
+	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><h6 class="commentarea"><a class="read_num_comment_general" id="comment-0" href="#0"><span class="commentarea_commentcount">'+whole_page_count+'</span> general comment'+plural+'</a> <a class="write-comment-action"></a> <span class="paragraph_feed"></span></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-0"></ol></div></div>');
 	for( var k in comment_ids)
 	{
 		jQuery('#comment-group-0').append( jQuery(comment_ids[k]) );			
@@ -245,7 +264,8 @@ jQuery(document).ready(function(){
 		}
 		
 		var paragraph = i + 1;
-		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><h6 class="commentarea"><span class="paragraph_feed"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a></span><a id="comment-'+ paragraph + '" href="#' + paragraph + '">Paragraph '+ paragraph +' (<span class="commentarea_commentcount">'+count+'</span>)</a></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-'+ paragraph +'"></ol></div></div>');		
+		var plural = (count == 1) ? '' : 's';
+		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><h6 class="commentarea"><span class="paragraph_number_large">'+ paragraph +'</span> <a class="read_num_comment" id="comment-'+ paragraph + '" href="#' + paragraph + '">  <span class="commentarea_commentcount">'+count+'</span> comment'+plural+'  </a><a class="write-comment-action"></a><span class="paragraph_feed"></h6><div class="commentblock"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a><ol class="subcommentlist" id="comment-group-'+ paragraph +'"></ol></div></div>');		
 		
 		for( var k in comment_ids)
 		{
@@ -268,6 +288,7 @@ jQuery(document).ready(function(){
 		jQuery('body').append("<div id='comments'></div>");
 		commentstag = '#comments';		
 	}
+
 
 
 
@@ -459,22 +480,27 @@ jQuery(document).ready(function(){
 	
 	function contentResize() 
 	 {
-	 	var text_signature = jQuery.cookie('text_signature');
 
-	 	var paragraphnumber = getParagraphNumberByTextSignature(text_signature);
+	 	var paragraphnumber = jQuery.cookie('text_signature');
 		var textblockname = "#textblock-" + paragraphnumber;
 		var textblock = jQuery(textblockname);
 		
 	 	if(paragraphnumber >= 0){
+			alert(paragraphnumber);
 	 		var top = jQuery( '.textblock' ).eq(paragraphnumber).position().top;
-			var width = textblock.width() + parseInt(jQuery(textblockname).css('padding-left').substr(0, (jQuery(textblockname).css('padding-left').length - 2) )) + parseInt(jQuery(textblockname).css('padding-right').substr(0, (jQuery(textblockname).css('padding-right').length - 2) ));
-			var height = textblock.height() + parseInt(jQuery(textblockname).css('padding-top').substr(0, (jQuery(textblockname).css('padding-top').length - 2) )) + parseInt(jQuery(textblockname).css('padding-right').substr(0, (jQuery(textblockname).css('padding-right').length - 2) ));
+			var padding_left = jQuery(textblockname).css('padding-left') ? parseInt(jQuery(textblockname).css('padding-left').substr(0, (jQuery(textblockname).css('padding-left').length - 2) )) : 0;
+			var padding_right = jQuery(textblockname).css('padding-right') ? parseInt(jQuery(textblockname).css('padding-right').substr(0, (jQuery(textblockname).css('padding-right').length - 2) )) : 0;
+			var padding_top = jQuery(textblockname).css('padding-top') ? parseInt(jQuery(textblockname).css('padding-top').substr(0, (jQuery(textblockname).css('padding-top').length - 2) )) : 0;
+			var padding_bottom = jQuery(textblockname).css('padding-bottom') ? parseInt(jQuery(textblockname).css('padding-bottom').substr(0, (jQuery(textblockname).css('padding-bottom').length - 2) )) : 0;
+			
+			var width = textblock.width() + padding_left + padding_right;
+			var height = textblock.height() +  padding_top + padding_bottom;
 
 	 		jQuery( '#selected_block' ).css( {top: top, width: width, height: height} );
 	 	}
 	 }
 
-	//jQuery( window ).wresize( contentResize );
+	jQuery( window ).wresize( contentResize );
 	
 	/*
 	jQuery('.paragraphtext').mouseup(function(event){
@@ -671,7 +697,15 @@ jQuery(document).ready(function(){
 			highlightParagraph(paragraphnumber);
 			jQuery('#comment-group-'+ paragraphnumber).append( jQuery('#respond'));
 			jQuery.cookie('text_signature', paragraphnumber, { path: '/', expires: 1} );
-			jQuery('#comment_contents > .containerBody').scrollTo( jQuery('#comment-block-' + (paragraphnumber)), 1000);
+			
+			
+			
+			if(jQuery(e.target).attr('class') == 'write-comment-action'){
+				jQuery('#comment_contents > .containerBody').scrollTo( jQuery('#respond'), 1000);								
+			}
+			else{
+				jQuery('#comment_contents > .containerBody').scrollTo( jQuery('#comment-block-' + (paragraphnumber)), 1000);				
+			}
 			document.location.hash = "#" +(paragraphnumber);
 			jQuery(this).recover();
 			

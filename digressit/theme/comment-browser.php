@@ -24,17 +24,15 @@ $request_section = $_GET['comment-browser'];
 			switch($request_section)
 			{
 				case 'posts':
-					?><?php
 					$digressit_commentbrowser->list_posts();				
 				break;
-				default:// 'users':
-					?><?php
+				case 'users':
+
 					$digressit_commentbrowser->list_users();				
-				break;/*
-				default:
-					?><h3>by commenter</h3><?php
+				break;
+				case 'general':
 					$digressit_commentbrowser->list_general_comments();				
-				break;*/
+				break;
 			}
 			
 			
@@ -70,11 +68,11 @@ $request_section = $_GET['comment-browser'];
 					
 					<?php if(is_numeric($request_user) ): ?>						
 					<?php $userdata = get_userdata((int)strip_tags($request_user)); ?>
-					<h2><?php echo apply_filters('the_title', $userdata->user_nicename); ?> <a href="<?php echo $this->get_user_feed($request_user); ?>"><img src="<?php echo $this->image_path; ?>rss.png"></a></h2>
+					<h2><?php echo apply_filters('the_title', stripslashes($userdata->user_nicename)); ?> <a href="<?php echo stripslashes($digressit_commentbrowser->get_user_feed($request_user)); ?>"><img src="<?php echo $this->image_path; ?>rss.png"></a></h2>
 					<?php else: ?>
-						<?php //lets make this comment really exists and we're not injecting funny names to print in the form ?>
-						<?php if( $digressit_commentbrowser->getCommentsFromUser($request_user) ):?>
-							<h2><?php echo html_entity_decode($request_user); ?> <a href="<?php echo $this->get_user_feed($request_user); ?>"><img src="<?php echo $this->image_path; ?>rss.png"></a></h2>							
+						<?php //lets make sure this comment really exists and we're not injecting funny names to print in the form ?>
+						<?php if( $digressit_commentbrowser->get_comments_from_user($request_user) ):?>
+							<h2><?php echo stripslashes(html_entity_decode($request_user)); ?> <a href="<?php echo stripslashes($digressit_commentbrowser->get_user_feed($request_user)); ?>"><img src="<?php echo $this->image_path; ?>rss.png"></a></h2>							
 						<?php endif; ?>
 					<?php endif; ?>
 

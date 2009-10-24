@@ -614,14 +614,12 @@ class Digress_It_Base{
 		$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 		$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 
-		$html = force_balance_tags($html);
+		$html = html_entity_decode(force_balance_tags($html));
 
-		
-		
 		switch($technique){
 		
 			case 'simplexml':
-				if($result = simplexml_load_string(trim('<content>'.$html.'</content>'))){
+				if($result = @simplexml_load_string(trim('<content>'.$html.'</content>'))){
 					$xml = $result->xpath('/content/'. $tags);
 					foreach($xml as $match){
 						$matches[] = $match->asXML();
@@ -631,7 +629,7 @@ class Digress_It_Base{
 			
 			default: 
 			case 'regexp':
-				preg_match_all('#<('.$tags.')>(.*?)</('.$tags.')>#si',$html,$matches_array);
+				@preg_match_all('#<('.$tags.')>(.*?)</('.$tags.')>#si',$html,$matches_array);
 				$matches = $matches_array[0];
 			
 			break;

@@ -58,7 +58,6 @@ $options = get_option('digressit');
        				$content = apply_filters('the_content', $content);
 
 					echo $content;
-					
 				}
 				else{
 
@@ -71,7 +70,11 @@ $options = get_option('digressit');
 								break;
 							}
 						}
-				}	
+				}
+				if(is_admin()){
+					echo "<a href=''>Edit this text</a>";
+				}
+				
 			?>
 			</div>
 

@@ -10,6 +10,7 @@ if ( function_exists('register_sidebar') )
 
 
 $options = get_option('digressit');
+extract($options);
 
 
 if($options['collapse_sidebar'] == 1){
@@ -38,6 +39,22 @@ if($options['collapse_sidebar'] == 1){
 
 
 function digressit_wp_list_pages($params = "echo=0&depth=2&title_li=&"){
+	$options = get_option('digressit');
+	extract($options);
+
+
+	if(!$front_page_content){
+		$pages = get_pages(); 					
+			foreach($pages as $key=>$page){ 
+				if( $page->post_name == 'about'){
+					$front_page_content = $page->ID;
+					break;
+				}
+			}
+		
+	}
+	$params = $params . 'exclude=' . $front_page_content;
+
 	$top_list = wp_list_pages($params);
 	$top_list = str_replace(array('">','</a>','<span><a','current_page_item"><a'),array('"><span>','</span></a>','<a','"><a class="s"'), $top_list);
 	return $top_list;

@@ -62,7 +62,9 @@ if ( $approved_comments ) : foreach ( $approved_comments as $comment ) :
 		<pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', $comment->comment_date_gmt, false); ?></pubDate>
 		<guid isPermaLink="false"><?php echo $comment_post->guid; ?>#<?php echo $comment->comment_text_signature; ?></guid>
 		<description><?php echo strip_tags($comment->comment_content) ?></description>
-		<content:encoded><![CDATA[<?php echo $comment->comment_content ?>]]></content:encoded>
+		<content:encoded><![CDATA[<?php echo $comment->comment_content; ?>
+							<href="<?php echo $comment_post->guid; ?>#<?php echo $comment->comment_text_signature; ?>">Comment here</a>
+							?>]]></content:encoded>
 	</item>
 <?php endforeach; endif; ?>
 </channel>
