@@ -485,8 +485,7 @@ jQuery(document).ready(function(){
 		var textblockname = "#textblock-" + paragraphnumber;
 		var textblock = jQuery(textblockname);
 		
-	 	if(paragraphnumber >= 0){
-			alert(paragraphnumber);
+	 	if(paragraphnumber > 0){
 	 		var top = jQuery( '.textblock' ).eq(paragraphnumber).position().top;
 			var padding_left = jQuery(textblockname).css('padding-left') ? parseInt(jQuery(textblockname).css('padding-left').substr(0, (jQuery(textblockname).css('padding-left').length - 2) )) : 0;
 			var padding_right = jQuery(textblockname).css('padding-right') ? parseInt(jQuery(textblockname).css('padding-right').substr(0, (jQuery(textblockname).css('padding-right').length - 2) )) : 0;
