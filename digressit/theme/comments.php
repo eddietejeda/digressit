@@ -34,9 +34,9 @@
 	</div>
 	<?php endif; ?>
 
-	<ol class="commentlist">
+	<div class="commentlist">
 	<?php wp_list_comments('callback=digressit_list_comments'); ?>
-	</ol>
+	</div>
 
 	<?php if ( function_exists('previous_comments_link')  ):  ?>
 	<div class="navigation">

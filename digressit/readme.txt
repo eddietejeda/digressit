@@ -28,20 +28,23 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 == Changelog ==
 
 = 2.2.2 =
-- page hiarchies
-- paragraph embed
-- padding of UL
-- tags
-- general comments
-- stripping front_page content from menu list
-- commentbrowser breaks when name has a quote mark (apostrophe)
-- The search page only shows a limited number of results. If there are more than 10(?),  how do you navigate to the next page of results?
-- feeds work with permalinks
+* feeds work with permalinks
 * simplexml errors and supressed and html_entity_decode() is called on text to preview xml parse errors
 * Added "Edit this entry" when logged in
 * Home page excluded from menu
 * Ajax polling now only happens when window is in focused
 * resizing window rescales the highlighted area
+* minimize icons work again
+* comments don't blink-appear on page load when its lots of comments
+* disabling theming... instead using stylesheets
+* FIXED: editing posts was not working
+* ENHANCEMENT: added support for "general comments" page
+* ENHANCEMENT: The search page only shows a limited number of results. If there are more than 10(?),  how do you navigate to the next page of results?
+* FIXED: commentbrowser breaks when name has a quote mark (apostrophe)
+* FIXED: when there are no comments in the block, scrolling to comment area was wonkey
+* ENHANCEMENT: we support parsing lists. Currently only works with OL.
+* ENHANCEMENT: clearer commentbox design. New icon that gives ability to go directly to comment form
+* FIXED: Trackbacks should be working now
 
 = 2.2.1 =
 * RSS minor switch: change "on paragraph number #9" to "(paragraph no. 9)"

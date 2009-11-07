@@ -81,6 +81,7 @@ jQuery(document).ready(function(){
 	//recreate comment section
 	jQuery("body").append('<div id="accordion"></div>');
 	jQuery("#respond").css('display', 'block');
+	jQuery(".commentlist").css('display', 'block');
 	
 	
 
@@ -249,16 +250,19 @@ jQuery(document).ready(function(){
 				comments[count] = commment_text_signature[j];
 				
 				var commentname = '#comment-' + j;
-				
-				var classes = jQuery(commentname).attr('class').split(' ');
-				if( classes ){
-					for(var z in classes){
-						if(classes[z] == 'depth-1'){
-							comment_ids[count] = commentname;							
+				var classes;
+				if(jQuery(commentname).length > 0){
+
+					classes = jQuery(commentname).attr('class').split(' ');
+					if( classes ){
+						for(var z in classes){
+							if(classes[z] == 'depth-1'){
+								comment_ids[count] = commentname;							
+							}
 						}
 					}
+					count++;
 				}
-				count++;
 			}
 			text_signature = commment_text_signature[j];
 		}
@@ -306,7 +310,7 @@ jQuery(document).ready(function(){
 	}
 
 
-	var user_buttons, resizable, draggable, minimized, iconized;
+	var user_buttons = resizable = draggable = minimized = iconized = '';
 	//if(allow_users_to_iconize){ user_buttons = 'i,'; } //i
 	if(allow_users_to_minimize && !msie6){ user_buttons += 'm';	}
 	if(allow_users_to_resize && false){ resizable = 'resizable'; }
@@ -481,11 +485,11 @@ jQuery(document).ready(function(){
 	function contentResize() 
 	 {
 
-	 	var paragraphnumber = jQuery.cookie('text_signature');
+	 	var paragraphnumber = parseInt(jQuery.cookie('text_signature')) -1;
 		var textblockname = "#textblock-" + paragraphnumber;
 		var textblock = jQuery(textblockname);
 		
-	 	if(paragraphnumber > 0){
+	 	if(paragraphnumber > 0 && jQuery( '.textblock' ).eq(paragraphnumber).length) {
 	 		var top = jQuery( '.textblock' ).eq(paragraphnumber).position().top;
 			var padding_left = jQuery(textblockname).css('padding-left') ? parseInt(jQuery(textblockname).css('padding-left').substr(0, (jQuery(textblockname).css('padding-left').length - 2) )) : 0;
 			var padding_right = jQuery(textblockname).css('padding-right') ? parseInt(jQuery(textblockname).css('padding-right').substr(0, (jQuery(textblockname).css('padding-right').length - 2) )) : 0;
@@ -633,7 +637,7 @@ jQuery(document).ready(function(){
 		var scrollto = (top > 200)  ? (top - 100) : 0;
 		
 		jQuery('html, body').scrollTo(scrollto, 200);
-		jQuery('#comment_contents .containerBody').scrollTo( jQuery('#comment-block-' + paragraphnumber), 200);
+		jQuery('#comment_contents .subcommentlist').scrollTo( jQuery('#comment-block-' + paragraphnumber), 200);
 		
 		highlightBlock(top, left, width, height) ;
 		

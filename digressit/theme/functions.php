@@ -75,24 +75,25 @@ function digressit_searchbox(){
 
 function digressit_list_comments($comment, $args, $depth) {
 	$GLOBALS['comment'] = $comment; ?>
-	<li <?php comment_class(); ?> id="comment-<?php comment_ID() ?>">
+	<div <?php comment_class(); ?> id="comment-<?php comment_ID() ?>">
 		<div id="div-comment-<?php comment_ID(); ?>" class="comment-body">
 			<div class="comment-author vcard">
 		         <?php echo get_avatar($comment,$size='24',$default='<path_to_url>' ); ?>
 		         <?php printf(__('<cite class="fn" title="%1$s at %2$s">%3$s</cite> <span class="says" >says:</span>'), get_comment_date(),  get_comment_time(), get_comment_author_link()) ?>
 			</div>
 
-			<?php if ($comment->comment_approved == '0') : ?>
-				<em><?php _e('Your comment is awaiting moderation.') ?></em>
-				<br />
-			<?php endif; ?>
-
 			<?php
 				$post = get_post($comment->comment_post_ID);
 			?>
 
 			<div class="comment-meta commentmetadata"><a href="<?php echo get_permalink($post->ID) ?>#comment-<?php echo $comment->comment_ID; ?>"></a></div>
-			<?php comment_text() ?>
+
+			<?php if ($comment->comment_approved == '0') : ?>
+				<p>This comment is not approved</p>
+			<?php else: ?>
+				<?php comment_text() ?>
+			<?php endif; ?>
+
 			
 			
 			<?php if(is_single()): ?>
@@ -105,6 +106,7 @@ function digressit_list_comments($comment, $args, $depth) {
 				<br style="clear:both;"/>				
 			<?php endif; ?>
 		</div>
+	</div>
 	<?php
 }
 

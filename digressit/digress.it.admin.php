@@ -70,16 +70,8 @@ class Digress_It_Admin extends Digress_It_Base{
 	{		
 		echo '<div class="wrap">';
 
-		if($_POST)
+		if($_POST['digressit'] == 'update')
 		{
-			if($_POST['stylesheet'] == 'classic'){
-				$_POST['default_skin'] = 'none';
-			}
-
-			if($_POST['stylesheet'] == 'default' && $_POST['default_skin'] = 'none'){
-				$_POST['default_skin'] = 'skin1';
-			}
-
 			$this->process_post();
 		}
 
@@ -114,52 +106,6 @@ class Digress_It_Admin extends Digress_It_Base{
 			<form method="post" target="_self">
 
 			<table  style="width: 400px; float: left; text-align: left">
-
-
-				<?php
-								
-				if($options['theme_mode'] == 'stylesheet'):
-				
-				?>
-				<tr valign="top">
-					<th scope="row"><label for="stylesheet">Document Skin</label></th>
-					<td><select name="stylesheet">
-							<?php foreach($this->get_available_style_sheets() as $style): ?>
-							<option value="<?php echo $style; ?>" '<?php echo (($options['stylesheet'] == $style) ? " selected " : null); ?>'><?php echo $style ?></option>
-							<?php endforeach; ?>
-						</select>
-						
-						<a class="digress_customize" href="<?php echo $this->digressit_server; ?>/developers/#stylesheets">Learn how to customize</a>
-					</td>
-				</tr>
-				<?php
-				
-				endif;
-				
-				?>
-
-				<?php
-				
-			if($options['stylesheet']  != 'classic'):
-				
-				?>
-				<tr valign="top">
-					<th scope="row"><label for="default_skin">CommentBox Skin</label></th>
-					<td><select name="default_skin">
-							<option value="none" '<?php echo (($options['default_skin'] == 'none') ? " selected " : null); ?>'>None</option>
-							<option value="skin1"  '<?php echo (($options['default_skin'] == 'skin1') ? " selected " : null); ?>'>Simple White</option>
-							<option value="skin3"  '<?php echo (($options['default_skin'] == 'skin3') ? " selected " : null); ?>'>Shiny</option>
-							<option value="skin4"  '<?php echo (($options['default_skin'] == 'skin4') ? " selected " : null); ?>'>Greenish</option>
-							<option value="skin5"  '<?php echo (($options['default_skin'] == 'skin5') ? " selected " : null); ?>'>Solid Blue</option>
-							<option value="skin6"  '<?php echo (($options['default_skin'] == 'skin6') ? " selected " : null); ?>'>Flat Grey</option>
-							<option value="skin7"  '<?php echo (($options['default_skin'] == 'skin7') ? " selected " : null); ?>'>Flat Black</option>
-							<option value="skinAlert"  '<?php echo (($options['default_skin'] == 'skinAlert') ? " selected " : null); ?>'>Alert Red</option>
-							<option value="stiky"  '<?php echo (($options['default_skin'] == 'stiky') ? " selected " : null); ?>'>Sticky Graph</option>
-						</select>
-					</td>
-				</tr>
-				<?php endif; ?>
-
 
 				<tr valign="top">
 					<th scope="row"><label for="front_page_post_type">Table of Contents</label></th>
@@ -314,6 +260,11 @@ class Digress_It_Admin extends Digress_It_Base{
 				
 
 
+				<tr valign="top">
+					<th scope="row"><label for="parse_list_items">Parse list items</label></th>
+					<td><input type="hidden"  id="parse_list_items" name="parse_list_items" value='<?php echo ( $options['parse_list_items'] ? "1" : "0"  ) ?>'><input name="parse_list_items_checkbox"  value="1" type="checkbox" class="checkbox_selector" '<?php echo ( $options['parse_list_items'] ? " checked" : ""  ) ?>'></td>
+				</tr>
+
 
 				<?php if(is_admin()): ?>
 				<tr valign="top">
@@ -327,7 +278,7 @@ class Digress_It_Admin extends Digress_It_Base{
 			</table>
 			
 			<p class="submit" style="clear: both;">
-				<input type="hidden" name="action" value="update" />
+				<input type="hidden" name="digressit" value="update" />
 				<input type="submit" name="Submit" value="Save Changes" class="button" />
 				<input type="submit" name="Submit" value="Reset Settings" class="button" />
 			</p>

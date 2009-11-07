@@ -70,7 +70,7 @@ class Digress_It_Widget extends Digress_It_Base{
 
 	// Register this widget -- we use a hook/function to make the widget a dashboard-only widget
 	function register_widget() {
-		wp_register_sidebar_widget( 'digressit_posts', __( 'DigressIt Posts', 'digressit-posts' ), array(&$this, 'widget'), array( 'all_link' => 'http://digressit.org/', 'feed_link' => 'http://digressit.org/feed/', 'edit_link' => 'options.php' ) );
+		//wp_register_sidebar_widget( 'digressit_posts', __( 'DigressIt Posts', 'digressit-posts' ), array(&$this, 'widget'), array( 'all_link' => 'http://digressit.org/', 'feed_link' => 'http://digressit.org/feed/', 'edit_link' => 'options.php' ) );
 	}
 
 	// Modifies the array of dashboard widgets and adds this plugin's

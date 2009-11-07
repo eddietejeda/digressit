@@ -320,7 +320,12 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		?>
 		<?php
 
-		wp_list_comments('callback=digressit_list_comments', $comments);
+		if(function_exists('digressit_list_comments')){
+			wp_list_comments('callback=digressit_list_comments', $comments);
+		}
+		else{
+			wp_list_comments();			
+		}
 
 	}
 
@@ -428,7 +433,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 	/* this might be useless */
 	function getAllCommentCount(){
 		global $wpdb;
-		$sql = "SELECT * FROM $wpdb->comments, $wpdb->posts WHERE comment_post_ID=ID AND post_type='post' AND post_status='publish' AND comment_approved='1'";
+		$sql = "SELECT * FROM $wpdb->comments, $wpdb->posts WHERE comment_post_ID=ID AND post_type='post' AND post_status='publish'";
 		$result = $wpdb->get_results($sql);
 		return (count($result));
 	}
@@ -480,179 +485,176 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 
 function digressit_pingback_ping($args) {
-	global $wpdb;
+		global $wpdb;
 
-	do_action('xmlrpc_call', 'pingback.ping');
+		do_action('xmlrpc_call', 'pingback.ping');
 
-	$this->escape($args);
+		$this->escape($args);
 
-	$pagelinkedfrom = $args[0];
-	$pagelinkedto   = $args[1];
+		$pagelinkedfrom = $args[0];
+		$pagelinkedto   = $args[1];
 
-	$title = '';
+		$title = '';
 
-	$pagelinkedfrom = str_replace('&amp;', '&', $pagelinkedfrom);
-	$pagelinkedto = str_replace('&amp;', '&', $pagelinkedto);
-	$pagelinkedto = str_replace('&', '&amp;', $pagelinkedto);
+		$pagelinkedfrom = str_replace('&amp;', '&', $pagelinkedfrom);
+		$pagelinkedto = str_replace('&amp;', '&', $pagelinkedto);
+		$pagelinkedto = str_replace('&', '&amp;', $pagelinkedto);
 
-	// Check if the page linked to is in our site
-	$pos1 = strpos($pagelinkedto, str_replace(array('http://www.','http://','https://www.','https://'), '', get_option('home')));
-	if( !$pos1 )
-		return new IXR_Error(0, __('Is there no link to us?'));
+		// Check if the page linked to is in our site
+		$pos1 = strpos($pagelinkedto, str_replace(array('http://www.','http://','https://www.','https://'), '', get_option('home')));
+		if( !$pos1 )
+			return new IXR_Error(0, __('Is there no link to us?'));
 
-	// let's find which post is linked to
-	// FIXME: does url_to_postid() cover all these cases already?
-	//        if so, then let's use it and drop the old code.
-	$urltest = parse_url($pagelinkedto);
-	if ($post_ID = url_to_postid($pagelinkedto)) {
-		$way = 'url_to_postid()';
-	} elseif (preg_match('#p/[0-9]{1,}#', $urltest['path'], $match)) {
-		// the path defines the post_ID (archives/p/XXXX)
-		$blah = explode('/', $match[0]);
-		$post_ID = (int) $blah[1];
-		$way = 'from the path';
-	} elseif (preg_match('#p=[0-9]{1,}#', $urltest['query'], $match)) {
-		// the querystring defines the post_ID (?p=XXXX)
-		$blah = explode('=', $match[0]);
-		$post_ID = (int) $blah[1];
-		$way = 'from the querystring';
-	} elseif (isset($urltest['fragment'])) {
-		// an #anchor is there, it's either...
-		if (intval($urltest['fragment'])) {
-			// ...an integer #XXXX (simpliest case)
-			$post_ID = (int) $urltest['fragment'];
-			$way = 'from the fragment (numeric)';
-		} elseif (preg_match('/post-[0-9]+/',$urltest['fragment'])) {
-			// ...a post id in the form 'post-###'
-			$post_ID = preg_replace('/[^0-9]+/', '', $urltest['fragment']);
-			$way = 'from the fragment (post-###)';
-		} elseif (is_string($urltest['fragment'])) {
-			// ...or a string #title, a little more complicated
-			$title = preg_replace('/[^a-z0-9]/i', '.', $urltest['fragment']);
-			$sql = $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_title RLIKE %s", $title);
-			if (! ($post_ID = $wpdb->get_var($sql)) ) {
-				// returning unknown error '0' is better than die()ing
-		  		return new IXR_Error(0, '');
+		// let's find which post is linked to
+		// FIXME: does url_to_postid() cover all these cases already?
+		//        if so, then let's use it and drop the old code.
+		$urltest = parse_url($pagelinkedto);
+		if ($post_ID = url_to_postid($pagelinkedto)) {
+			$way = 'url_to_postid()';
+		} elseif (preg_match('#p/[0-9]{1,}#', $urltest['path'], $match)) {
+			// the path defines the post_ID (archives/p/XXXX)
+			$blah = explode('/', $match[0]);
+			$post_ID = (int) $blah[1];
+			$way = 'from the path';
+		} elseif (preg_match('#p=[0-9]{1,}#', $urltest['query'], $match)) {
+			// the querystring defines the post_ID (?p=XXXX)
+			$blah = explode('=', $match[0]);
+			$post_ID = (int) $blah[1];
+			$way = 'from the querystring';
+		} elseif (isset($urltest['fragment'])) {
+			// an #anchor is there, it's either...
+			if (intval($urltest['fragment'])) {
+				// ...an integer #XXXX (simpliest case)
+				$post_ID = (int) $urltest['fragment'];
+				$way = 'from the fragment (numeric)';
+			} elseif (preg_match('/post-[0-9]+/',$urltest['fragment'])) {
+				// ...a post id in the form 'post-###'
+				$post_ID = preg_replace('/[^0-9]+/', '', $urltest['fragment']);
+				$way = 'from the fragment (post-###)';
+			} elseif (is_string($urltest['fragment'])) {
+				// ...or a string #title, a little more complicated
+				$title = preg_replace('/[^a-z0-9]/i', '.', $urltest['fragment']);
+				$sql = $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_title RLIKE %s", $title);
+				if (! ($post_ID = $wpdb->get_var($sql)) ) {
+					// returning unknown error '0' is better than die()ing
+			  		return new IXR_Error(0, '');
+				}
+				$way = 'from the fragment (title)';
 			}
-			$way = 'from the fragment (title)';
+		} else {
+			// TODO: Attempt to extract a post ID from the given URL
+	  		return new IXR_Error(33, __('The specified target URL cannot be used as a target. It either doesn&#8217;t exist, or it is not a pingback-enabled resource.'));
 		}
-	} else {
-		// TODO: Attempt to extract a post ID from the given URL
-  		return new IXR_Error(33, __('The specified target URL cannot be used as a target. It either doesn&#8217;t exist, or it is not a pingback-enabled resource.'));
-	}
-	$post_ID = (int) $post_ID;
+		$post_ID = (int) $post_ID;
 
 
-	logIO("O","(PB) URL='$pagelinkedto' ID='$post_ID' Found='$way'");
+		logIO("O","(PB) URL='$pagelinkedto' ID='$post_ID' Found='$way'");
 
-	$post = get_post($post_ID);
+		$post = get_post($post_ID);
 
-	if ( !$post ) // Post_ID not found
-  		return new IXR_Error(33, __('The specified target URL cannot be used as a target. It either doesn&#8217;t exist, or it is not a pingback-enabled resource.'));
+		if ( !$post ) // Post_ID not found
+	  		return new IXR_Error(33, __('The specified target URL cannot be used as a target. It either doesn&#8217;t exist, or it is not a pingback-enabled resource.'));
 
-	if ( $post_ID == url_to_postid($pagelinkedfrom) )
-		return new IXR_Error(0, __('The source URL and the target URL cannot both point to the same resource.'));
+		if ( $post_ID == url_to_postid($pagelinkedfrom) )
+			return new IXR_Error(0, __('The source URL and the target URL cannot both point to the same resource.'));
 
-	// Check if pings are on
-	if ( !pings_open($post) )
-  		return new IXR_Error(33, __('The specified target URL cannot be used as a target. It either doesn&#8217;t exist, or it is not a pingback-enabled resource.'));
+		// Check if pings are on
+		if ( !pings_open($post) )
+	  		return new IXR_Error(33, __('The specified target URL cannot be used as a target. It either doesn&#8217;t exist, or it is not a pingback-enabled resource.'));
 
-	// Let's check that the remote site didn't already pingback this entry
-	$wpdb->get_results( $wpdb->prepare("SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_author_url = %s", $post_ID, $pagelinkedfrom) );
+		// Let's check that the remote site didn't already pingback this entry
+		$wpdb->get_results( $wpdb->prepare("SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_author_url = %s", $post_ID, $pagelinkedfrom) );
 
-	if ( $wpdb->num_rows ) // We already have a Pingback from this URL
-  		return new IXR_Error(48, __('The pingback has already been registered.'));
+		if ( $wpdb->num_rows ) // We already have a Pingback from this URL
+	  		return new IXR_Error(48, __('The pingback has already been registered.'));
 
-	// very stupid, but gives time to the 'from' server to publish !
-	sleep(1);
+		// very stupid, but gives time to the 'from' server to publish !
+		sleep(1);
 
-	// Let's check the remote site
-	$linea = wp_remote_fopen( $pagelinkedfrom );
-	if ( !$linea )
-  		return new IXR_Error(16, __('The source URL does not exist.'));
+		// Let's check the remote site
+		$linea = wp_remote_fopen( $pagelinkedfrom );
+		if ( !$linea )
+	  		return new IXR_Error(16, __('The source URL does not exist.'));
 
-	$linea = apply_filters('pre_remote_source', $linea, $pagelinkedto);
+		$linea = apply_filters('pre_remote_source', $linea, $pagelinkedto);
 
-	// Work around bug in strip_tags():
-	$linea = str_replace('<!DOC', '<DOC', $linea);
-	$linea = preg_replace( '/[\s\r\n\t]+/', ' ', $linea ); // normalize spaces
-	$linea = preg_replace( "/ <(h1|h2|h3|h4|h5|h6|p|th|td|li|dt|dd|pre|caption|input|textarea|button|body)[^>]*>/", "\n\n", $linea );
+		// Work around bug in strip_tags():
+		$linea = str_replace('<!DOC', '<DOC', $linea);
+		$linea = preg_replace( '/[\s\r\n\t]+/', ' ', $linea ); // normalize spaces
+		$linea = preg_replace( "/ <(h1|h2|h3|h4|h5|h6|p|th|td|li|dt|dd|pre|caption|input|textarea|button|body)[^>]*>/", "\n\n", $linea );
 
-	preg_match('|<title>([^<]*?)</title>|is', $linea, $matchtitle);
-	$title = $matchtitle[1];
-	if ( empty( $title ) )
-		return new IXR_Error(32, __('We cannot find a title on that page.'));
+		preg_match('|<title>([^<]*?)</title>|is', $linea, $matchtitle);
+		$title = $matchtitle[1];
+		if ( empty( $title ) )
+			return new IXR_Error(32, __('We cannot find a title on that page.'));
 
-	$linea = strip_tags( $linea, '<a>' ); // just keep the tag we need
+		$linea = strip_tags( $linea, '<a>' ); // just keep the tag we need
 
-	$p = explode( "\n\n", $linea );
+		$p = explode( "\n\n", $linea );
 
-	$preg_target = preg_quote($pagelinkedto, '|');
+		$preg_target = preg_quote($pagelinkedto, '|');
 
-	foreach ( $p as $para ) {
-		if ( strpos($para, $pagelinkedto) !== false ) { // it exists, but is it a link?
-			preg_match("|<a[^>]+?".$preg_target."[^>]*>([^>]+?)</a>|", $para, $context);
+		foreach ( $p as $para ) {
+			if ( strpos($para, $pagelinkedto) !== false ) { // it exists, but is it a link?
+				preg_match("|<a[^>]+?".$preg_target."[^>]*>([^>]+?)</a>|", $para, $context);
 
-			// If the URL isn't in a link context, keep looking
-			if ( empty($context) )
-				continue;
+				// If the URL isn't in a link context, keep looking
+				if ( empty($context) )
+					continue;
 
-			// We're going to use this fake tag to mark the context in a bit
-			// the marker is needed in case the link text appears more than once in the paragraph
-			$excerpt = preg_replace('|\</?wpcontext\>|', '', $para);
+				// We're going to use this fake tag to mark the context in a bit
+				// the marker is needed in case the link text appears more than once in the paragraph
+				$excerpt = preg_replace('|\</?wpcontext\>|', '', $para);
 
-			// prevent really long link text
-			if ( strlen($context[1]) > 100 )
-				$context[1] = substr($context[1], 0, 100) . '...';
+				// prevent really long link text
+				if ( strlen($context[1]) > 100 )
+					$context[1] = substr($context[1], 0, 100) . '...';
 
-			$marker = '<wpcontext>'.$context[1].'</wpcontext>';    // set up our marker
-			$excerpt= str_replace($context[0], $marker, $excerpt); // swap out the link for our marker
-			$excerpt = strip_tags($excerpt, '<wpcontext>');        // strip all tags but our context marker
-			$excerpt = trim($excerpt);
-			$preg_marker = preg_quote($marker, '|');
-			$excerpt = preg_replace("|.*?\s(.{0,100}$preg_marker.{0,100})\s.*|s", '$1', $excerpt);
-			$excerpt = strip_tags($excerpt); // YES, again, to remove the marker wrapper
-			break;
+				$marker = '<wpcontext>'.$context[1].'</wpcontext>';    // set up our marker
+				$excerpt= str_replace($context[0], $marker, $excerpt); // swap out the link for our marker
+				$excerpt = strip_tags($excerpt, '<wpcontext>');        // strip all tags but our context marker
+				$excerpt = trim($excerpt);
+				$preg_marker = preg_quote($marker, '|');
+				$excerpt = preg_replace("|.*?\s(.{0,100}$preg_marker.{0,100})\s.*|s", '$1', $excerpt);
+				$excerpt = strip_tags($excerpt); // YES, again, to remove the marker wrapper
+				break;
+			}
 		}
+
+		if ( empty($context) ) // Link to target not found
+			return new IXR_Error(17, __('The source URL does not contain a link to the target URL, and so cannot be used as a source.'));
+
+		$pagelinkedfrom = str_replace('&', '&amp;', $pagelinkedfrom);
+
+		$context = '[...] ' . esc_html( $excerpt ) . ' [...]';
+		$pagelinkedfrom = $wpdb->escape( $pagelinkedfrom );
+
+		$comment_post_ID = (int) $post_ID;
+		$comment_author = $title;
+		$this->escape($comment_author);
+		$comment_author_url = $pagelinkedfrom;
+		$comment_content = $context;
+		$this->escape($comment_content);
+		$comment_type = 'pingback';
+
+		$commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_url', 'comment_content', 'comment_type');
+
+		$comment_ID = wp_new_comment($commentdata);
+		do_action('pingback_post', $comment_ID);
+
+
+		$comment_text_signature = $_GET['paragraph'];
+		$wpdb->query( $wpdb->prepare("UPDATE $wpdb->comments SET comment_text_signature = %s WHERE comment_ID = %d", $comment_text_signature, $comment_ID) );
+
+
+		return sprintf(__('Pingback from %1$s to %2$s registered. Keep the web talking! :-)'), $pagelinkedfrom, $pagelinkedto);
 	}
-
-	if ( empty($context) ) // Link to target not found
-		return new IXR_Error(17, __('The source URL does not contain a link to the target URL, and so cannot be used as a source.'));
-
-	$pagelinkedfrom = str_replace('&', '&amp;', $pagelinkedfrom);
-
-	$context = '[...] ' . esc_html( $excerpt ) . ' [...]';
-	$pagelinkedfrom = $wpdb->escape( $pagelinkedfrom );
-
-	$comment_post_ID = (int) $post_ID;
-	$comment_author = $title;
-	$this->escape($comment_author);
-	$comment_author_url = $pagelinkedfrom;
-	$comment_content = $context;
-	$this->escape($comment_content);
-	$comment_type = 'pingback';
-
-	$comment_text_signature = null;
-	if (preg_match('/[0-9]+/',$urltest['fragment'], $match) ) {
-		$comment_text_signature = $urltest['fragment'];
-	}	
-	
-	mail("eddie@pear.local",'fragment', $comment_text_signature);
-	
-
-	$commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_url', 'comment_content', 'comment_type', 'comment_text_signature');
-
-	$comment_ID = wp_new_comment($commentdata);
-	do_action('pingback_post', $comment_ID);
-
-	return sprintf(__('Pingback from %1$s to %2$s registered. Keep the web talking! :-)'), $pagelinkedfrom, $pagelinkedto);
-}
 
 function attach_new_xmlrpc($methods) {
     $methods['pingback.ping'] = 'digressit_pingback_ping';
     return $methods;
 }
-//add_action('xmlrpc_methods', 'attach_new_xmlrpc');
+add_action('xmlrpc_methods', 'attach_new_xmlrpc');
 
 
 

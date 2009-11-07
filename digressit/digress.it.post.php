@@ -16,8 +16,6 @@ class Digress_It_Post extends Digress_It_Base{
 	 */
 	function Digress_It_Post(){
 		add_action('init', array(&$this, 'on_init'));
-		add_action('wp_print_scripts', array( &$this, 'on_wp_print_scripts') );
-		add_action('wp_print_styles',  array( &$this, 'on_wp_print_styles') ); 
 
 		add_filter('wp_head', array(&$this, 'on_wp_head'));
 
@@ -28,12 +26,15 @@ class Digress_It_Post extends Digress_It_Base{
 				
 		add_action('admin_menu', array(&$this, 'on_admin_menu'));
 
-
+		add_action('wp', array(&$this, 'print_styles_and_js'));
 	
 	}
 	
 
-
+	function print_styles_and_js(){
+		add_action('wp_print_scripts', array( &$this, 'on_wp_print_scripts') );
+		add_action('wp_print_styles',  array( &$this, 'on_wp_print_styles') ); 		
+	}
 
 	function on_save_post($revisionid){
 		
@@ -43,7 +44,6 @@ class Digress_It_Post extends Digress_It_Base{
 		if($post->post_type == 'post'){
 			$content = apply_filters('the_content', $post->post_content);
 			$content = str_replace(']]>', ']]&gt;', $content);
-
 
 			if(get_option('digressit_content'.$postid)){
 				update_option('digressit_content' . $postid, $this->parse_content($content));
@@ -63,7 +63,7 @@ class Digress_It_Post extends Digress_It_Base{
 	function on_admin_menu() 
 	{
 		global $digressit_admin;
-		add_submenu_page('themes.php', 'Digress.it Options', 'Digress.it Options', 8, 'digress.it.admin.php', array($digressit_admin, 'on_options_menu') ); 
+		add_submenu_page('themes.php', 'Digress.it', 'Digress.it', 8, 'digress.it.admin.php', array($digressit_admin, 'on_options_menu') ); 
 	}
 
 	function on_wp_head(){
@@ -141,8 +141,8 @@ class Digress_It_Post extends Digress_It_Base{
 			}	
 
 
-			wp_deregister_script( 'jquery' ); 
-			wp_register_script( 'jquery', $this->jquery_path . 'jquery-1.3.2'.$debug.'.js'); 
+			//wp_deregister_script( 'jquery' ); 
+			//wp_register_script( 'jquery', $this->jquery_path . 'jquery-1.3.2'.$debug.'.js'); 
 			wp_enqueue_script('jquery');
 			echo $this->get_settings_js();				
 			global $digressit_commentbrowser;
@@ -251,7 +251,7 @@ class Digress_It_Post extends Digress_It_Base{
 								<b>Embed Code (<a id="embed-object-1" class="embed-link" href="javascript:return false">object</a> | <a id="embed-html-1" class="embed-link" href="javascript:return false">html</a>)</b><textarea id="textarea-embed-1" rows="5">&lt;object style="width: 100%;" onload="this.style.height = (this.contentDocument.body.offsetHeight + 40) + \'px\'" class="digressit-paragraph-embed" id="67dc5a225499cfed3d1d554c4a20d9a2" data="'.get_bloginfo('home').'?p=284&amp;digressit-embed=1"&gt;&lt;/object&gt;&lt;a href="'.get_permalink($postid).'#1"&gt;@&lt;/a&gt;</textarea>
 								<b>Permalink</b>:<br> <input type="text" value="'.get_permalink($postid).'#1">
 								</span><a href="'.get_permalink($postid).'#1">1</a></span>
-				<span class="commenticonbox" title="There are 2 comments for this paragraph"><img src="'.get_bloginfo('home').'/wp-content/plugins/digressit/theme/images/famfamfam/comment.png" id="paragraph-1" class="commenticon"><small class="commentcount">2</small></span>
+				<span class="commenticonbox" title="There are 0 comments for this paragraph"><img src="'.get_bloginfo('home').'/wp-content/plugins/digressit/theme/images/famfamfam/comment.png" id="paragraph-1" class="commenticon"><small class="commentcount">2</small></span>
 				<span class="paragraphtext"></span></div>';
 				
 				
@@ -457,7 +457,7 @@ class Digress_It_Post extends Digress_It_Base{
 	 */
 	function get_approved_comments_js($postID)
 	{
-		$comment_array = get_approved_comments($postID);
+		$comment_array = get_comments($postID);
 		global $digressit_commentbrowser, $post;
 		
 		$js = "\n<script type=\"text/javascript\">\n";

@@ -41,7 +41,7 @@
 }
 
 .paragraph_number_large{
-	font-size: 20px;
+	font-size: 15px;
 	padding-right: 5px;
 }
 .containerBody{
@@ -335,7 +335,7 @@ ol, ul{
 	width: 16px;
 	height: 16px;
 	float: right;
-	padding-top: 3px;
+	margin-right: 3px;
 }
 
 .read_num_comment{
@@ -426,7 +426,8 @@ ol, ul{
 	font-weight:normal;
 	outline-style:none;
 	outline-width:medium;
-	height: 25px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 	-moz-border-radius: 5px;
 	-khtml-border-radius: 5px;
 	-webkit-border-radius: 5px;	
@@ -439,7 +440,7 @@ ol, ul{
 	height: 100% ! important; 
 	display: block;
 	border: solid #DDD 1px;
-	padding: 0 5px 0 5px;
+	padding: 5px;
 	-moz-border-radius: 5px;
 	-khtml-border-radius: 5px;
 	-webkit-border-radius: 5px;	
@@ -475,7 +476,6 @@ ol, ul{
 	outline-style:none;
 	outline-width:medium;
 	text-decoration:none;	
-	padding:0.1em 0.5em 0.5em 0;
 }
 
 

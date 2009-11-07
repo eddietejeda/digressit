@@ -146,6 +146,11 @@ class Digress_It_Base{
 		}
 	
 
+		if(!isset($current['parse_list_items'])){
+			$current['parse_list_items'] = false;
+			update_option('digressit', $current);
+		}
+
 		if(!isset($current['version']) ||  $current['version'] < DIGRESSIT_VERSION){
 			$current['version'] = DIGRESSIT_VERSION;
 			$this->reset_options();			
@@ -238,6 +243,8 @@ class Digress_It_Base{
 			'server_sync_interval' => $monthly,
 			'allow_users_to_drag' => 1,
 			'highlight_color' => '#FFFC00',			
+			'parse_list_items' => 0,	
+			'enable_chrome_frame'	=> 1,
 			'front_page_post_type' => 'post',
 			'front_page_numberposts' => 10,
 			'frontpage_sidebar' => 0,
@@ -614,6 +621,11 @@ class Digress_It_Base{
 		$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 		$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 
+		$options = get_option('digressit');
+		if($options['parse_list_items'] == 1){
+			$html = preg_replace('/<(\/?ul|ol)>/', '', $html);
+			$html = preg_replace('/<li>/', '<p>&bull;   ', $html);
+		}
 		$html = html_entity_decode(force_balance_tags($html));
 
 		switch($technique){
@@ -644,7 +656,16 @@ class Digress_It_Base{
 		
 		global $wpdb, $image_path, $post;
 
-		$valid_paragraph_tags = 'object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8|table';
+		$options = get_option('digressit');
+		
+		$valid_paragraph_tags = 'object|p|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8|table';
+		if($options['parse_list_items'] == 1){
+			$valid_paragraph_tags .= "|li";
+		}
+		else{
+			$valid_paragraph_tags .= "|ul|ol";
+		}
+		
 	
 		$password_protected = (strlen($post->post_password) && strstr($content, 'wp-pass.php')) ? true : false;
 		if($password_protected){
@@ -661,7 +682,7 @@ class Digress_It_Base{
 		$blocks = null;
 		$text_signatures = null;
 		$permalink = get_permalink($post->ID);
-		$total_approved = get_approved_comments($post->ID);
+		$total_approved = get_comments($post->ID);
 
 	
 		foreach($returned as $key=>$paragraph)
@@ -705,7 +726,7 @@ class Digress_It_Base{
 				$embedcode = "<blockquote cite='".get_permalink($post->ID).'#'.$number."'>". strip_tags($paragraph) . '</blockquote>';
 				$paragraphnumber .= '<span class="embedcode">
 				<b>Cite</b> <textarea id="textarea-embed-'.$number.'">'.$embedcode.'</textarea>
-				<b>Permalink</b>:<br> <input type="text" value="'.get_permalink($post->ID).'#'.$number.'" />
+				<b>Permalink</b>:<br> <input type="text" value="'.get_permalink($post->ID).'?paragraph='.$number.'#'.$number.'" />
 				</span><a href="'.get_permalink($post->ID).'#'.$number.'">'.$number.'</a></span>'."\n";
 			}
 			
