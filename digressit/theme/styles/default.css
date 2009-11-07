@@ -662,7 +662,10 @@ ol li, #sidebar ul ol li {
 
 /* FRONT MENU */
 
-ul#front_menu{float:left;text-transform:uppercase;position:relative;top:1px; margin-left: 0px; padding-left: 0px;}
+ul#front_menu a img{float:left;text-transform:uppercase;position:relative;top:1px; margin-left: 0px; margin-right: 2px; padding-left: 0px; margin-top: 0px;}
+
+
+ul#front_menu{float:left;text-transform:uppercase;position:relative;top:1px; margin-left: 0px; padding-left: 0px; margin-top: 0px;}
 * html .expand{margin-top:-13px;} *+html .expand{margin-top:-13px;}
 #front_menu li{list-style:none;float:left;margin-right:4px;}
 * html #front_menu li{height:25px;display:inline;}
