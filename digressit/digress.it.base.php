@@ -611,7 +611,7 @@ class Digress_It_Base{
 	}
 
 
-	function get_tags($html, $tags = 'table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8', $technique = 'regexp')
+	function get_tags($html, $tags = 'div|table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8', $technique = 'regexp')
 	{
 		
 		$matches = array();
@@ -658,7 +658,7 @@ class Digress_It_Base{
 
 		$options = get_option('digressit');
 		
-		$valid_paragraph_tags = 'object|p|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8|table';
+		$valid_paragraph_tags = 'div|object|p|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8|table';
 		if($options['parse_list_items'] == 1){
 			$valid_paragraph_tags .= "|li";
 		}
@@ -682,7 +682,7 @@ class Digress_It_Base{
 		$blocks = null;
 		$text_signatures = null;
 		$permalink = get_permalink($post->ID);
-		$total_approved = get_comments($post->ID);
+		$total_approved = get_approved_comments($post->ID);
 
 	
 		foreach($returned as $key=>$paragraph)

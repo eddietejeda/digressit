@@ -145,7 +145,7 @@ jQuery(document).ready(function(){
 							
 							if(new_comment['comment_post_ID'] == post_ID){
 								var new_comment_text;
-								new_comment_text= '<li id="comment-' + new_comment['comment_ID'] + '" class="comment byuser comment-author-admin bypostauthor odd alt thread-even depth-1 parent"> ' +
+								new_comment_text= '<div id="comment-' + new_comment['comment_ID'] + '" class="comment byuser comment-author-admin bypostauthor odd alt thread-even depth-1 parent"> ' +
 									'<div class="comment-body" id="div-comment-' + new_comment['comment_ID'] + '"> ' +
 									'<div class="comment-author vcard">' +
 									'<cite class="fn">' + new_comment['comment_author'] + '</cite> <span class="says">says:</span>		</div>' +
@@ -154,7 +154,7 @@ jQuery(document).ready(function(){
 									'<div class="reply">' +
 									'<a onclick=\'return addComment.moveForm("div-comment-'+ new_comment['comment_ID'] +'", "'+ new_comment['comment_ID'] +'", "respond", "'+ new_comment['comment_parent'] +'")\' href="'+ window.location.href +'?replytocom='+ new_comment['comment_ID'] +'#respond" class="comment-reply-link" rel="nofollow">Reply</a></div>' +
 									'</div>' +
-								'</li>';
+								'</div>';
 							
 								if(new_comment['comment_parent'] > 0){
 									jQuery('#comment-' + new_comment['comment_parent']).append(new_comment_text);

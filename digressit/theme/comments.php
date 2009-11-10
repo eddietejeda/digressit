@@ -59,7 +59,7 @@
 
 <?php if ( comments_open() ) : ?>
 
-<li name="respond-form" id="respond">
+<div name="respond-form" id="respond">
 
 <h3><?php comment_form_title( 'Leave a Reply', 'Leave a Reply to %s' ); ?></h3>
 
@@ -102,6 +102,6 @@
 </form>
 
 <?php endif; // If registration required and not logged in ?>
-</li>
+</div>
 
 <?php endif; // if you delete this the sky will fall on your head ?>

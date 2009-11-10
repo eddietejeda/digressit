@@ -254,22 +254,23 @@ class Digress_It_Admin extends Digress_It_Base{
 				</tr>
 -->				
 				<tr valign="top">
-					<th scope="row"><label for="enable_chrome_frame">Enable Chrome Frame</label></th>
-					<td><input type="hidden"  id="enable_chrome_frame" name="enable_chrome_frame" value='<?php echo ( $options['enable_chrome_frame'] ? "1" : "0"  ) ?>'><input name="enable_chrome_frame"  value="1" type="checkbox" class="checkbox_selector" '<?php echo ( $options['enable_chrome_frame'] ? " checked" : ""  ) ?>'></td>
+					<th scope="row"><label>Enable Chrome Frame</label></th>
+					<td><input type="hidden" id="enable_chrome_frame"  name="enable_chrome_frame" value='<?php echo ( $options['enable_chrome_frame'] ? "1" : "0"  ) ?>'><input name="enable_chrome_frame_checkbox" class="checkbox_selector" value="1" type="checkbox" '<?php echo (($options['allow_users_to_resize']) ? " checked " : null); ?>'></td>
 				</tr>
 				
 
 
 				<tr valign="top">
-					<th scope="row"><label for="parse_list_items">Parse list items</label></th>
-					<td><input type="hidden"  id="parse_list_items" name="parse_list_items" value='<?php echo ( $options['parse_list_items'] ? "1" : "0"  ) ?>'><input name="parse_list_items_checkbox"  value="1" type="checkbox" class="checkbox_selector" '<?php echo ( $options['parse_list_items'] ? " checked" : ""  ) ?>'></td>
+					<th scope="row"><label >Parse list items</label></th>
+					<td><input type="hidden" id="parse_list_items"  name="parse_list_items" value='<?php echo ( $options['parse_list_items'] ? "1" : "0"  ) ?>'><input name="parse_list_items_checkbox" class="checkbox_selector" value="1" type="checkbox" '<?php echo (($options['parse_list_items']) ? " checked " : null); ?>'></td>
+					
 				</tr>
 
 
 				<?php if(is_admin()): ?>
 				<tr valign="top">
-					<th scope="row"><label for="debug_mode">Debug Mode</label></th>
-					<td><input type="hidden"  id="debug_mode" name="debug_mode" value='<?php echo ( $options['debug_mode'] ? "1" : "0"  ) ?>'><input name="debug_mode_checkbox"  value="1" type="checkbox" class="checkbox_selector" '<?php echo ( $options['debug_mode'] ? " checked" : ""  ) ?>'></td>
+					<th scope="row"><label >Debug Mode</label></th>
+					<td><input type="hidden" id="debug_mode"  name="debug_mode" value='<?php echo ( $options['debug_mode'] ? "1" : "0"  ) ?>'><input name="debug_mode_checkbox" class="checkbox_selector" value="1" type="checkbox" '<?php echo (($options['debug_mode']) ? " checked " : null); ?>'></td>
 				</tr>
 				<?php endif; ?>
 

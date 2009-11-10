@@ -19,10 +19,10 @@ class Digress_It_Post extends Digress_It_Base{
 
 		add_filter('wp_head', array(&$this, 'on_wp_head'));
 
-		add_filter('the_content', array(&$this, 'on_the_content'));
+		add_filter('the_content', array(&$this, 'on_the_content'), 100);
 		add_action('comment_post',array(&$this, 'on_comment_post'));
 
-		//add_action('save_post',array(&$this, 'on_save_post'));		
+		add_action('save_post',array(&$this, 'on_save_post'));		
 				
 		add_action('admin_menu', array(&$this, 'on_admin_menu'));
 
@@ -457,7 +457,7 @@ class Digress_It_Post extends Digress_It_Base{
 	 */
 	function get_approved_comments_js($postID)
 	{
-		$comment_array = get_comments($postID);
+		$comment_array = get_approved_comments($postID);
 		global $digressit_commentbrowser, $post;
 		
 		$js = "\n<script type=\"text/javascript\">\n";
