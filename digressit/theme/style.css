@@ -236,6 +236,11 @@ table tr td {
 	margin:25px 0 10px 10px;
 	font-weight:normal;
 }
+
+#content h2{
+	margin-left: 10px;
+}
+
 .post h1, .post h1 a{
 	font-size:28px;
 	margin:0px 0 10px 0;

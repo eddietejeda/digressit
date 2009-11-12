@@ -7,7 +7,7 @@
 get_header();
 ?>
 
-	<div id="content" class="narrowcolumn" role="main">
+	<div id="content" class="narrowcolumn single" role="main">
 
 	<div class="navigation">
 		<div class="alignleft"><?php previous_post_link('&laquo; %link') ?></div>

@@ -227,7 +227,7 @@ jQuery(document).ready(function(){
 	}	
 	
 	var plural = (whole_page_count == 1) ? '' : 's';
-	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><h6 class="commentarea"><a class="read_num_comment_general" id="comment-0" href="#0"><span class="commentarea_commentcount">'+whole_page_count+'</span> general comment'+plural+'</a> <a class="write-comment-action"></a> <span class="paragraph_feed"></span></h6><div class="commentblock"><ol class="subcommentlist" id="comment-group-0"></ol></div></div>');
+	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><h6 class="commentarea"><a class="read_num_comment_general" id="comment-0" href="#0"><span class="commentarea_commentcount">'+whole_page_count+'</span> general comment'+plural+'</a> <a class="write-comment-action"></a> <span class="paragraph_feed"></span></h6><div class="commentblock"><div class="subcommentlist" id="comment-group-0"></div></div></div>');
 	for( var k in comment_ids)
 	{
 		jQuery('#comment-group-0').append( jQuery(comment_ids[k]) );			
@@ -269,7 +269,7 @@ jQuery(document).ready(function(){
 		
 		var paragraph = i + 1;
 		var plural = (count == 1) ? '' : 's';
-		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><h6 class="commentarea"><span class="paragraph_number_large">'+ paragraph +'</span> <a class="read_num_comment" id="comment-'+ paragraph + '" href="#' + paragraph + '">  <span class="commentarea_commentcount">'+count+'</span> comment'+plural+'  </a><a class="write-comment-action"></a><span class="paragraph_feed"></h6><div class="commentblock"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a><ol class="subcommentlist" id="comment-group-'+ paragraph +'"></ol></div></div>');		
+		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><h6 class="commentarea"><span class="paragraph_number_large">'+ paragraph +'</span> <a class="read_num_comment" id="comment-'+ paragraph + '" href="#' + paragraph + '">  <span class="commentarea_commentcount">'+count+'</span> comment'+plural+'  </a><a class="write-comment-action"></a><span class="paragraph_feed"></h6><div class="commentblock"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a><div class="subcommentlist" id="comment-group-'+ paragraph +'"></div></div></div>');		
 		
 		for( var k in comment_ids)
 		{
@@ -312,7 +312,7 @@ jQuery(document).ready(function(){
 
 	var user_buttons = resizable = draggable = minimized = iconized = '';
 	//if(allow_users_to_iconize){ user_buttons = 'i,'; } //i
-	if(allow_users_to_minimize && !msie6){ user_buttons += 'm';	}
+	if(allow_users_to_minimize && !msie6){ /* user_buttons += 'm'; */	}
 	if(allow_users_to_resize && false){ resizable = 'resizable'; }
 	if(allow_users_to_drag && !msie6){ draggable = 'draggable'; }
 
@@ -468,9 +468,9 @@ jQuery(document).ready(function(){
 		var target = event.target;		
 		var $kids = jQuery('.containerTable').children();
 		
-		//alert(jQuery(target).name);
-		if(  !$kids.find( jQuery(target).attr('id') ) ||  jQuery(target).attr('id') == 'page' ||  jQuery(target).attr('id') == 'content' ||  jQuery(target).attr('class') == 'paragraphtext'  ){
-			unhighlightText();
+		//alert(  jQuery(target).attr('id')  );
+		if(  !$kids.find( jQuery(target).attr('id') ) ||  jQuery(target).attr('id') == 'page' ){
+			jQuery('.textblock').unhighlightText();
 			cancelComment();
 		}
 	});
@@ -480,30 +480,11 @@ jQuery(document).ready(function(){
 		jQuery('input#comment_parent').val('0');
 		jQuery('#cancel-comment-reply-link').css('display' , 'none');
 		jQuery('#comment-group-').append( jQuery('#respond') );
+		document.location.hash  = "0";
+
 	}
-	
-	function contentResize() 
-	 {
 
-	 	var paragraphnumber = parseInt(jQuery.cookie('text_signature')) -1;
-		var textblockname = "#textblock-" + paragraphnumber;
-		var textblock = jQuery(textblockname);
-		
-	 	if(paragraphnumber > 0 && jQuery( '.textblock' ).eq(paragraphnumber).length) {
-	 		var top = jQuery( '.textblock' ).eq(paragraphnumber).position().top;
-			var padding_left = jQuery(textblockname).css('padding-left') ? parseInt(jQuery(textblockname).css('padding-left').substr(0, (jQuery(textblockname).css('padding-left').length - 2) )) : 0;
-			var padding_right = jQuery(textblockname).css('padding-right') ? parseInt(jQuery(textblockname).css('padding-right').substr(0, (jQuery(textblockname).css('padding-right').length - 2) )) : 0;
-			var padding_top = jQuery(textblockname).css('padding-top') ? parseInt(jQuery(textblockname).css('padding-top').substr(0, (jQuery(textblockname).css('padding-top').length - 2) )) : 0;
-			var padding_bottom = jQuery(textblockname).css('padding-bottom') ? parseInt(jQuery(textblockname).css('padding-bottom').substr(0, (jQuery(textblockname).css('padding-bottom').length - 2) )) : 0;
-			
-			var width = textblock.width() + padding_left + padding_right;
-			var height = textblock.height() +  padding_top + padding_bottom;
 
-	 		jQuery( '#selected_block' ).css( {top: top, width: width, height: height} );
-	 	}
-	 }
-
-	jQuery( window ).wresize( contentResize );
 	
 	/*
 	jQuery('.paragraphtext').mouseup(function(event){
@@ -544,10 +525,10 @@ jQuery(document).ready(function(){
 		var paragraphnumber = jQuery('.commenticon').index(this) + 1; //getTextSignatureByParagraphNumber();
 
 		if(jQuery.cookie('text_signature') == paragraphnumber){
-			unhighlightText();
+			jQuery('.textblock').unhighlightText();
 		}
 		else{		
-			selectParagraph(paragraphnumber);
+			jQuery('.textblock').selectParagraph(paragraphnumber);
 			document.location.hash = "#" + paragraphnumber;		
 		}
 	});
@@ -597,57 +578,6 @@ jQuery(document).ready(function(){
 
 	});	
 	
-	function selectParagraph(paragraphnumber){
-		//var paragraphnumber = getParagraphNumberByTextSignature(text_signature);
-		highlightParagraph(paragraphnumber);
-		jQuery('#comment-group-'+ paragraphnumber).append( jQuery('#respond'));
-		jQuery.cookie('text_signature', paragraphnumber, { path: '/', expires: 1} );				
-		//jQuery('#accordion').accordion('activate',  parseInt(text_signature) );
-	}
-
-
-	function highlightParagraph(paragraphnumber){
-	
-		unhighlightText();
-	
-		jQuery('#comment-block-' + paragraphnumber + ' > div').show();
-
-		if(paragraphnumber == 0){
-			return;
-		}
-	
-		//var paragraphnumber = getParagraphNumberByTextSignature(text_signature);
-		
-		var textblockname = "#textblock-" + paragraphnumber;
-		var textblock = jQuery(textblockname);
-		var commentbox = jQuery("#commentbox");
-
-		var left = textblock.position().left;
-		var top = textblock.position().top;
-
-
-		var width = textblock.width() + parseInt(jQuery(textblockname).css('padding-left').substr(0, (jQuery(textblockname).css('padding-left').length - 2) )) + parseInt(jQuery(textblockname).css('padding-right').substr(0, (jQuery(textblockname).css('padding-right').length - 2) ));
-		var height = textblock.height() + parseInt(jQuery(textblockname).css('padding-top').substr(0, (jQuery(textblockname).css('padding-top').length - 2) )) + parseInt(jQuery(textblockname).css('padding-right').substr(0, (jQuery(textblockname).css('padding-right').length - 2) ));
-
-
-		if(safari){
-			//top = top + 135;
-		}
-
-		var scrollto = (top > 200)  ? (top - 100) : 0;
-		
-		jQuery('html, body').scrollTo(scrollto, 200);
-		jQuery('#comment_contents .subcommentlist').scrollTo( jQuery('#comment-block-' + paragraphnumber), 200);
-		
-		highlightBlock(top, left, width, height) ;
-		
-		
-		//var textblock_xpath = getElementXPath(this);
-		//console.log(textblock_xpath);
-
-		
-		
-	}
 /*	
     jQuery(".comment").hover(
       function () {
@@ -693,11 +623,14 @@ jQuery(document).ready(function(){
 
  		if( paragraphnumber == jQuery.cookie('text_signature'))
 		{
-			unhighlightText();
+			jQuery('.textblock').unhighlightText();
 		}		
 		else
 		{
-			highlightParagraph(paragraphnumber);
+			
+			//alert(paragraphnumber);
+			
+			jQuery('.textblock').highlightParagraph(paragraphnumber);
 			jQuery('#comment-group-'+ paragraphnumber).append( jQuery('#respond'));
 			jQuery.cookie('text_signature', paragraphnumber, { path: '/', expires: 1} );
 			
@@ -766,20 +699,24 @@ jQuery(document).ready(function(){
 		if(height < 365){
 			height = 365;
 		}
-		jQuery('.containerTable').css('height', height + 'px');
 		
 
-		
+
+		jQuery('.containerBody').css('height', (height) + 'px');
+		jQuery('.containerBody').css('width', width + 'px');
+
+
 		jQuery('#commentbox').css('height', height + 'px');
 		jQuery('#commentbox').css('width', width + 'px');
 
 
-		jQuery.cookie('commentbox_height', height + 'px',  { path: '/', expires: 1} );	
-		jQuery.cookie('commentbox_width', width + 'px',  { path: '/', expires: 1} );	
 
 		jQuery('.ui-resizable-e').css('height', height + 'px');
 		jQuery('.ui-resizable-s').css('width', width + 'px');
 
+
+		//jQuery.cookie('commentbox_height', height + 'px',  { path: '/', expires: 1} );	
+		//jQuery.cookie('commentbox_width', width + 'px',  { path: '/', expires: 1} );	
 
 
 	}
@@ -797,153 +734,6 @@ jQuery(document).ready(function(){
 
 
 
-	/** 
-	 * @description: highlight the current text
-	 * @todo: implement this function using the jquery extend/fn plugin system. make all objects highliteable
-	 *
-	 */	
-	function highlightBlock(top, left, width, height) {
-		
-		if(msie7){
-			width = width - 20;
-		}
-
-		if(msie6){
-			width = width - 20;
-			left = left + 5;
-		}
-		
-		var highlite = jQuery.create('div', 
-						{'id':'selected_block', 
-						'class':'selected_block',
-						'style':'top: '+(top)+'px; left: '+(left)+'px; width: ' +width+'px; height: '+ (height) +'px;' 
-						}, '');
-
-		jQuery('#content').append(highlite);	
-	}
-	
-	
-	function highlightSelection(){
-		
-		if(allow_text_selection){
-			var selection = getSelection();
-			var range;
-		
-			if(range = getRangeObject(selection)){
-				var node = range.commonAncestorContainer;
-				
-				if(node){
-					var html = new XMLSerializer().serializeToString(node);
-					var endnode = null;
-					var endoffset = null;
-					var selectionlength = selection.toString.length;
-					
-					if(selection.anchorOffset < selection.focusOffset) {
-					
-						if(selection.anchorNode == selection.focusNode){
-							endnode = selection.focusNode;
-							endoffset = selection.focusOffset;
-						}
-						else {
-							endnode = selection.anchorNode;						
-							endoffset = selection.anchorNode.textContent.length;	
-						}
-					
-						range.setStart(selection.anchorNode,selection.anchorOffset);
-						range.setEnd(endnode, endoffset);
-					
-						// this should be below else , but now we are going to ignore 
-						// backwards selection					
-						var newNode = document.createElement("span");
-						newNode.id = 'selected_text';
-
-						range.surroundContents(newNode);
-
-						var selection_paragraph = jQuery(node.parentNode.parentNode).attr('id').substring(10);
-						jQuery.cookie('selection_paragraph', selection_paragraph, { path: '/', expires: 1} );
-					
-					}
-					else{
-					}				
-				}
-			}
-			else{
-				return false;
-			}
-		}
-		else{
-			return false;			
-		}
-		
-	}	
-
-	/** 
-	 * @description: unhighlight all text
-	 * @todo: implement this function using the jquery extend/fn plugin system
-	 *
-	 */	
-	function unhighlightText(speed){	
-		speed = typeof(speed) != 'undefined' ? speed : '';		
-		var value = jQuery.cookie('text_signature');		
-		jQuery('#accordion > div > div').hide(speed);
-		jQuery('#selected_block').fadeOut('fast', function(e){ jQuery('#selected_block').remove() } );		
-		jQuery.cookie('text_signature', null, { path: '/', expires: 1} );
-		
-	}
-	
-	function unhighlightSelection(){
-		if(allow_text_selection){	
-			jQuery.cookie('text_selection', 0, { path: '/', expires: 1} );
-			jQuery('#selected_text').replaceWith( jQuery('#selected_text').text() );		
-			jQuery('#selected_text').remove();	
-		}	
-		else{
-			return false;
-		}
-	}
-
-
-
-	function getSelection(){		
-		if (window.getSelection && allow_text_selection) {
- 			return window.getSelection();
-		}
-		else{
-			return false;
-		}
-		
-	}
-
-	function getRangeObject(selectionObject) {
-		if (selectionObject.getRangeAt && allow_text_selection){
-			ranges = [];
-			for(var i = 0; i < selectionObject.rangeCount; i++) {
-				if( i > 0){
- 					selectionObject.getRangeAt(i).collapse();
-				}
-			}
-
-			return selectionObject.getRangeAt(0);
-		}
-		else{
-			return false;
-		}
-	}
-
-
-	
-	function similarString (str1, str2){		
-
-		if(str1 == str2){
-			return true;
-		}
-		return false;
-		//we're going to go back to exact matches
- 		//var percent = 1 - levenshtein(str1, str2) / Math.max(str1.length, str2.length);
-		//return percent;
-
-	}
-	
 	
     // http://kevin.vanzonneveld.net
 	function levenshtein (a, b)
@@ -1015,7 +805,7 @@ jQuery(document).ready(function(){
 
 	    return count;
 	}
-	unhighlightText();
+	jQuery('.textblock').unhighlightText();
 
 	
 	//if there is an anchor, scroll to it, nicely.
@@ -1047,7 +837,7 @@ jQuery(document).ready(function(){
 		
 		if(signature !== false)
 		{
-			selectParagraph(signature);	
+			jQuery('.textblock').selectParagraph(signature);	
 			jQuery('#comment-group-'+ signature).append( jQuery('#respond'));
 			
 			if(commentId !== false)
@@ -1125,6 +915,7 @@ jQuery(document).ready(function(){
 	{		
 		jQuery("#commentbox").css("height", jQuery.cookie('commentbox_height'));
 		jQuery("#commentbox").css("width", jQuery.cookie('commentbox_width'));
+
 	}
 	
 	
@@ -1135,24 +926,188 @@ jQuery(document).ready(function(){
 });
 
 
-function savePosition(){
+
+
+jQuery.fn.unhighlightText = function (speed){
+	return this.each (function ()
+	{
+		var container=jQuery(this);		
+		//speed = typeof(speed) != 'undefined' ? speed : '';		
+		var value = jQuery.cookie('text_signature');		
+		jQuery('#accordion > div > div').hide();
+		//jQuery('#selected_block').fadeOut('fast', function(e){ jQuery('#selected_block').remove() } );		
+		jQuery.cookie('text_signature', null, { path: '/', expires: 1} );
+		jQuery(container).removeClass('selected_block');	
+	});
 	
-	var browser_width =  parseInt(jQuery(window).width());
-	var browser_height =  parseInt(jQuery(window).height());
-	var browser_scroll_top = parseInt(jQuery(window).scrollTop());
-	var commentbox_height = parseInt(jQuery(this).height());
-	var commentbox_top = parseInt(jQuery('#commentbox').position().top);
-	var commentbox_left = parseInt(jQuery('#commentbox').position().left);
-	var commentbox_relative_top = (commentbox_top - browser_scroll_top);
-
-	commentbox_left = (commentbox_left > 0) ? commentbox_left : 1;
-	commentbox_relative_top = (commentbox_relative_top > 0) ? commentbox_relative_top : 1;
-
-
-	
-	jQuery.cookie('left_position_commentbox', commentbox_left , { path: '/', expires: 1} );
-	jQuery.cookie('top_position_commentbox', commentbox_relative_top , { path: '/', expires: 1});		
 }
+
+jQuery.fn.unhighlightSelection = function (){
+	
+	return this.each (function ()
+	{
+		var container=jQuery(this);
+		
+		if(allow_text_selection){	
+			jQuery.cookie('text_selection', 0, { path: '/', expires: 1} );
+			jQuery('#selected_text').replaceWith( jQuery('#selected_text').text() );		
+			jQuery('#selected_text').remove();	
+		}	
+		else{
+			return false;
+		}
+	});
+	
+}
+
+
+
+jQuery.fn.getSelection = function (){
+	
+	return this.each (function ()
+	{
+		var container=jQuery(this);
+		
+		if (window.getSelection && allow_text_selection) {
+			return window.getSelection();
+		}
+		else{
+			return false;
+		}
+	});	
+}
+
+jQuery.fn.getRangeObject = function (selectionObject) {
+
+	return this.each (function ()
+	{
+		var container=jQuery(this);
+		
+		if (selectionObject.getRangeAt && allow_text_selection){
+			ranges = [];
+			for(var i = 0; i < selectionObject.rangeCount; i++) {
+				if( i > 0){
+					selectionObject.getRangeAt(i).collapse();
+				}
+			}
+
+			return selectionObject.getRangeAt(0);
+		}
+		else{
+			return false;
+		}
+		
+	});
+}
+
+
+
+var similarString = function (str1, str2){		
+
+
+	if( str1 == str2){
+		return true;
+	}
+	return false;
+}
+
+
+jQuery.fn.selectParagraph = function (paragraphnumber){
+	var container=jQuery(this);
+	
+	jQuery(container).highlightParagraph(paragraphnumber);
+	jQuery('#comment-group-'+ paragraphnumber).append( jQuery('#respond'));
+	jQuery.cookie('text_signature', paragraphnumber, { path: '/', expires: 1} );				
+	//jQuery('#accordion').accordion('activate',  parseInt(text_signature) );
+}
+
+
+
+jQuery.fn.highlightParagraph = function (paragraphnumber){
+	//return this.each (function ()
+	//{
+		var container=jQuery(this);
+
+		jQuery(container).unhighlightText();
+
+		jQuery('#comment-block-' + paragraphnumber + ' > div').show();
+
+		if(paragraphnumber == 0){
+			return;
+		}
+
+		//var paragraphnumber = getParagraphNumberByTextSignature(text_signature);
+	
+		var textblockname = "#textblock-" + paragraphnumber;
+		var textblock = jQuery(textblockname);
+		var commentbox = jQuery("#commentbox");
+
+		var left = textblock.position().left;
+		var top = textblock.position().top;
+
+
+		var width = textblock.width() + parseInt(jQuery(textblockname).css('padding-left').substr(0, (jQuery(textblockname).css('padding-left').length - 2) )) + parseInt(jQuery(textblockname).css('padding-right').substr(0, (jQuery(textblockname).css('padding-right').length - 2) ));
+		var height = textblock.height() + parseInt(jQuery(textblockname).css('padding-top').substr(0, (jQuery(textblockname).css('padding-top').length - 2) )) + parseInt(jQuery(textblockname).css('padding-right').substr(0, (jQuery(textblockname).css('padding-right').length - 2) ));
+
+
+		if(safari){
+			//top = top + 135;
+		}
+
+		var scrollto = (top > 200)  ? (top - 100) : 0;
+	
+		jQuery('html, body').scrollTo(scrollto, 200);
+		//alert(paragraphnumber);
+		jQuery('.containerBody').scrollTo( jQuery('#comment-block-' + paragraphnumber), 200);
+	
+		jQuery(textblock).highlightBlock(paragraphnumber) ;
+
+	//});
+}
+
+
+jQuery.fn.highlightBlock = function(paragraphnumber) {
+
+	return this.each (function ()
+	{
+		var container=jQuery(this);		
+		jQuery(container).addClass('selected_block');
+	});
+
+}
+
+
+
+
+
+
+
+jQuery.fn.savePosition = function (opt){
+	return this.each (function ()
+	{
+		
+		var container=jQuery(this);
+		var browser_width =  parseInt(jQuery(window).width());
+		var browser_height =  parseInt(jQuery(window).height());
+		var browser_scroll_top = parseInt(jQuery(window).scrollTop());
+		var commentbox_height = parseInt(jQuery(this).height());
+		var commentbox_top = parseInt(jQuery(container).position().top);
+		var commentbox_left = parseInt(jQuery(container).position().left);
+		var commentbox_relative_top = (commentbox_top - browser_scroll_top);
+
+		commentbox_left = (commentbox_left > 0) ? commentbox_left : 1;
+		commentbox_relative_top = (commentbox_relative_top > 0) ? commentbox_relative_top : 1;
+
+
+
+		jQuery.cookie('left_position_commentbox', commentbox_left , { path: '/', expires: 1} );
+		jQuery.cookie('top_position_commentbox', commentbox_relative_top , { path: '/', expires: 1});
+	});
+}
+
+
+//function savePosition(){
+//}
 
 
 jQuery.fn.buildContainers = function (){
@@ -1190,7 +1145,7 @@ jQuery.fn.buildContainers = function (){
 				
 			}
 			else{
-				container.draggable({handle:".n:first",cancel:".c",delay:0, containment:"document", stop: function(){ savePosition();  } });				
+				container.draggable({handle:".n:first",cancel:".c",delay:0, containment:"document", stop: function(){ container.savePosition();  } });				
 			}
 			
 			
@@ -1229,18 +1184,19 @@ jQuery.fn.containerResize = function (){
 		stop:function(e,o){
 			var resCont=msie6 ?o.helper:jQuery(this);
 			this.elHeight= resCont.outerHeight()-jQuery(this).find(".n:first").outerHeight()-jQuery(this).find(".s:first").outerHeight();
-			jQuery(this).find(".containerBody:first",".c:first").css({height: this.elHeight});
+			//jQuery(this).find(".containerBody:first",".c:first").css({height: this.elHeight});
 		}
 	});
 }
 jQuery.fn.setIcon = function (icon, opt){
 	if (icon !="" ){
 		jQuery(this).find(".no:first").append("<img class='icon' src='"+opt.elementsPath+icon+"' style='position:absolute'>");
-
-	}else{
+	}
+	else{
 		jQuery(this).find(".n:first").css({paddingLeft:"0"});
 	}
 }
+
 jQuery.fn.setButtons = function (buttons, opt){
 	var container=jQuery(this);
 	if (buttons !=""){

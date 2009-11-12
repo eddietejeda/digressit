@@ -659,6 +659,9 @@ ol li, #sidebar ul ol li {
 	
 }
 
+.footnotes{
+	margin-top : 10px !important;
+}
 
 /* FRONT MENU */
 
@@ -688,7 +691,14 @@ ul#front_menu{float:left;text-transform:uppercase;position:relative;top:1px; mar
 /* LAYOUT */
 #wrapper{margin:0 auto;text-align:left;}
 h1#logo,h1#logo a{font-family:Helvetica,Georgia;padding:0;font-size:36px;color:#000;text-decoration:none;text-transform:uppercase; height: 65px;}
-h1#logo small{color:#000;font-size:12px;display:block;margin:-7px 2px 1px;height:20px;}
+h1#logo small{
+	
+	color:#000000;
+	display:block;
+	font-size:13px;
+	height:20px;
+	margin:-3px 2px 1px;	
+	}
 h1#logo small a{font-size:12px;border-bottom:1px solid #000;}
 #rss-feed{float:right;width:190px;font-weight:700;position:relative;top:35px;left:7px;color:#000;text-decoration:none;}
 #header{height:113px;}

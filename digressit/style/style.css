@@ -295,15 +295,10 @@ p{
 
 
 .selected_block{
-	border-width: 2px;
+	border-width: 0px;
 	border-style: solid;
-	border-color: #000;
-    background-color: #FFFC00;
-	position: absolute;
-    opacity: 0.15; 
+    background-color: #ffffdf;
 	z-index: 500;
-	filter:alpha(opacity=60); 
-	-moz-opacity: 0.15; 	
 	-moz-border-radius: 10px;
 	-khtml-border-radius: 10px;
 	-webkit-border-radius: 10px;
@@ -355,6 +350,8 @@ ol, ul{
 #respond h3{
 	font-size: 10pt;
 	padding-bottom: 0px;
+	margin-top: 0px;
+	padding-top: 0px;
 }
 
 #commentbox h3{

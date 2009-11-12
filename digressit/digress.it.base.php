@@ -652,6 +652,8 @@ class Digress_It_Base{
 
 	}
 	
+	var $footnotes;
+	
 	function parse_content($content, $params = array('embed_code' => true)){
 		
 		global $wpdb, $image_path, $post;
@@ -666,6 +668,7 @@ class Digress_It_Base{
 			$valid_paragraph_tags .= "|ul|ol";
 		}
 		
+		//var_dump($content);
 	
 		$password_protected = (strlen($post->post_password) && strstr($content, 'wp-pass.php')) ? true : false;
 		if($password_protected){
@@ -699,7 +702,8 @@ class Digress_It_Base{
 			$paranumber = $number = ( $key+1 );
 			$paragraphnumber = '<span class="paragraphnumber">';
 			
-					
+			$footnotes_content = $content;
+			$content = @preg_replace('#(<footnote>.*?</footnote>)#si',$content);
 			
 			
 			if($params['embed_code']){
@@ -752,10 +756,16 @@ class Digress_It_Base{
 			}
 			*/
 
-			$blocks[$text_signature] = str_replace('</p>', '', preg_replace($pattern, $replace, $paragraph . $closetag));
+			$block_content = str_replace('</p>', '', preg_replace($pattern, $replace, $paragraph . $closetag));
+
+			$blocks[$text_signature] = $block_content;
 	    }
 
-
+		@preg_match_all('#\(\((.*?)\)\)#si',$footnotes_content,$footnotes);
+		
+		
+		$this->footnotes = $footnotes[0];
+		
 		return $blocks;
 		
 	}	
