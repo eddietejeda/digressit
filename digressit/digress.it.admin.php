@@ -39,7 +39,7 @@ class Digress_It_Admin extends Digress_It_Base{
 	}
 
 	function process_post(){
-		switch($_POST['Submit'])
+		switch($_POST['Submit'] && $_POST['digressit'] == 'update')
 		{
 			case 'Save Changes':
 				$this->save_options($_POST);
