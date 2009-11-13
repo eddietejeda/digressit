@@ -285,6 +285,8 @@ class Digress_It_Post extends Digress_It_Base{
 			if(is_array($this->footnotes)){
 				$updated = $updated. implode("\n",$this->footnotes);
 			}
+			
+			var_dump($footnotes);
 			return $updated;
 		
 			
