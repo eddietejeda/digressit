@@ -20,7 +20,7 @@ class Digress_It_Post extends Digress_It_Base{
 		add_filter('wp_head', array(&$this, 'on_wp_head'));
 
 		add_filter('the_content', array(&$this, 'on_the_content'), 10000);
-		add_filter('the_content_rss', array(&$this, 'on_the_content'), 10000);
+		//add_filter('the_content_rss', array(&$this, 'on_the_content'), 10000);
 
 		add_action('comment_post',array(&$this, 'on_comment_post'));
 
@@ -310,11 +310,7 @@ class Digress_It_Post extends Digress_It_Base{
 			$js = $this->get_approved_comments_js($post->ID);
 			$updated .= $js;
 
-			//var_dump($footnotes);
-			if(is_array($this->footnotes)){
-				$updated = $updated. implode("\n",$this->footnotes);
-			}
-			
+
 
 			return $updated;
 		
