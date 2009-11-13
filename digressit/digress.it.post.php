@@ -282,11 +282,12 @@ class Digress_It_Post extends Digress_It_Base{
 			$js = $this->get_approved_comments_js($post->ID);
 			$updated .= $js;
 
+			var_dump($footnotes);
 			if(is_array($this->footnotes)){
 				$updated = $updated. implode("\n",$this->footnotes);
 			}
 			
-			var_dump($footnotes);
+
 			return $updated;
 		
 			
