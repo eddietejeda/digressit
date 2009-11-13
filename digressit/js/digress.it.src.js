@@ -163,7 +163,7 @@ jQuery(document).ready(function(){
 									jQuery('#comment-group-' + new_comment['comment_text_signature']).append(new_comment_text);
 								}
 							
-								var add_count_path = '#comment-block-' + new_comment['comment_text_signature'] + ' > h6 > a > .commentarea_commentcount';
+								var add_count_path = '#comment-block-' + new_comment['comment_text_signature'] + ' > div > a > .commentarea_commentcount';
 								var add_count = parseInt(jQuery(add_count_path).text()) + 1;
 								jQuery(add_count_path).text(add_count);
 							
@@ -227,7 +227,7 @@ jQuery(document).ready(function(){
 	}	
 	
 	var plural = (whole_page_count == 1) ? '' : 's';
-	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><h6 class="commentarea"><a class="read_num_comment_general" id="comment-0" href="#0"><span class="commentarea_commentcount">'+whole_page_count+'</span> general comment'+plural+'</a> <a class="write-comment-action"></a> <span class="paragraph_feed"></span></h6><div class="commentblock"><div class="subcommentlist" id="comment-group-0"></div></div></div>');
+	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><div class="commentarea"><a class="read_num_comment_general" id="comment-0" ><span class="commentarea_commentcount">'+whole_page_count+'</span> general comment'+plural+'</a> <a class="write-comment-action"></a> <span class="paragraph_feed"></span></div><div class="commentblock"><div class="subcommentlist" id="comment-group-0"></div></div></div>');
 	for( var k in comment_ids)
 	{
 		jQuery('#comment-group-0').append( jQuery(comment_ids[k]) );			
@@ -269,7 +269,7 @@ jQuery(document).ready(function(){
 		
 		var paragraph = i + 1;
 		var plural = (count == 1) ? '' : 's';
-		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><h6 class="commentarea"><span class="paragraph_number_large">'+ paragraph +'</span> <a class="read_num_comment" id="comment-'+ paragraph + '" href="#' + paragraph + '">  <span class="commentarea_commentcount">'+count+'</span> comment'+plural+'  </a><a class="write-comment-action"></a><span class="paragraph_feed"></h6><div class="commentblock"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a><div class="subcommentlist" id="comment-group-'+ paragraph +'"></div></div></div>');		
+		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><div class="commentarea"><span class="paragraph_number_large">'+ paragraph +'</span> <a class="read_num_comment" id="comment-'+ paragraph + '">  <span class="commentarea_commentcount">'+count+'</span> comment'+plural+'  </a><a class="write-comment-action"></a><span class="paragraph_feed"></div><div class="commentblock"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a><div class="subcommentlist" id="comment-group-'+ paragraph +'"></div></div></div>');		
 		
 		for( var k in comment_ids)
 		{
@@ -935,7 +935,7 @@ jQuery.fn.unhighlightText = function (speed){
 		var container=jQuery(this);		
 		//speed = typeof(speed) != 'undefined' ? speed : '';		
 		var value = jQuery.cookie('text_signature');		
-		jQuery('#accordion > div > div').hide();
+		jQuery('#accordion .commentblock').hide();
 		//jQuery('#selected_block').fadeOut('fast', function(e){ jQuery('#selected_block').remove() } );		
 		jQuery.cookie('text_signature', null, { path: '/', expires: 1} );
 		jQuery(container).removeClass('selected_block');	

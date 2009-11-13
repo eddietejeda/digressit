@@ -159,6 +159,8 @@ class Digress_It_Post extends Digress_It_Base{
 				}
 
 				?>
+			    <script type='text/javascript' 
+			        src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>				
 				<div class="ui-widget debug-message">
 					<div class="ui-state-error ui-corner-all" style="padding: .5em;"> 
 						<p><span class="ui-icon ui-icon-alert" style="margin-right: .3em;"></span> 
