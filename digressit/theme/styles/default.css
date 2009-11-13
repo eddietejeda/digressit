@@ -697,7 +697,7 @@ h1#logo small{
 	display:block;
 	font-size:13px;
 	height:20px;
-	margin:-3px 2px 1px;	
+	margin:-5px 2px 1px;	
 	}
 h1#logo small a{font-size:12px;border-bottom:1px solid #000;}
 #rss-feed{float:right;width:190px;font-weight:700;position:relative;top:35px;left:7px;color:#000;text-decoration:none;}
