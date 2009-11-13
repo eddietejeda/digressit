@@ -68,7 +68,7 @@ $userdata = get_userdata($post->post_author);;
 	<item>
 		<title><?php echo $post->post_title; ?></title>
 		<link><?php echo get_permalink($post->ID) ?></link>
-		<dc:creator><?php echo strlen($userdata->user_nicename) ? $userdata->user_nicename : $userdata->user_login; ?></dc:creator>
+		<dc:creator><?php echo strlen($userdata->display_name) ? $userdata->display_name : $userdata->user_login; ?></dc:creator>
 		<pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', $post->post_date_gmt, false); ?></pubDate>
 		<guid isPermaLink="false"><?php echo get_permalink($post->ID) ?>#<?php echo $key; ?></guid>
 		<description><![CDATA[<?php echo $paragraph; ?>]]></description>
