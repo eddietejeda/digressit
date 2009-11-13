@@ -726,12 +726,16 @@ class Digress_It_Base{
 			
 				
 							
-				
+				if(!is_feed()){
+
 				$embedcode = "<blockquote cite='".get_permalink($post->ID).'#'.$number."'>". strip_tags($paragraph) . '</blockquote>';
 				$paragraphnumber .= '<span class="embedcode">
 				<b>Cite</b> <textarea id="textarea-embed-'.$number.'">'.$embedcode.'</textarea>
 				<b>Permalink</b>:<br> <input type="text" value="'.get_permalink($post->ID).'?paragraph='.$number.'#'.$number.'" />
-				</span><a href="'.get_permalink($post->ID).'#'.$number.'">'.$number.'</a></span>'."\n";
+				</span>';
+				
+				}
+				$paragraphnumber .='<a href="'.get_permalink($post->ID).'#'.$number.'">'.$number.'</a></span>'."\n";
 			}
 			
 		 	$numbertext = ($comment_count == 1) ?  'is one comment' : 'are '.$comment_count.' comments';

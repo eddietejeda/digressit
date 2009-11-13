@@ -225,9 +225,6 @@ class Digress_It_Post extends Digress_It_Base{
 	function on_the_content($content){
 		global $wpdb, $image_path, $post;
 
-		if(is_feed()){
-			return $content;
-		}
 		
 		$postid = $post->ID;
 
@@ -282,7 +279,7 @@ class Digress_It_Post extends Digress_It_Base{
 			$js = $this->get_approved_comments_js($post->ID);
 			$updated .= $js;
 
-			var_dump($footnotes);
+			//var_dump($footnotes);
 			if(is_array($this->footnotes)){
 				$updated = $updated. implode("\n",$this->footnotes);
 			}
