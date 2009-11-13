@@ -163,7 +163,7 @@ jQuery(document).ready(function(){
 									jQuery('#comment-group-' + new_comment['comment_text_signature']).append(new_comment_text);
 								}
 							
-								var add_count_path = '#comment-block-' + new_comment['comment_text_signature'] + ' > div > a > .commentarea_commentcount';
+								var add_count_path = '#comment-block-' + new_comment['comment_text_signature'] + ' .commentarea_commentcount';
 								var add_count = parseInt(jQuery(add_count_path).text()) + 1;
 								jQuery(add_count_path).text(add_count);
 							
@@ -174,7 +174,7 @@ jQuery(document).ready(function(){
 								
 								var selected_block = '#comment-block-' + new_comment['comment_text_signature'];
 
-								jQuery(selected_block + ' > .commentarea').pulse({
+								jQuery(selected_block + ' .commentarea').pulse({
 								    speed: 800,
 	    							backgroundColors: ['#AAA', '#FFF'],
 								    opacityRange: [0.3,0.8]
@@ -227,7 +227,7 @@ jQuery(document).ready(function(){
 	}	
 	
 	var plural = (whole_page_count == 1) ? '' : 's';
-	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><div class="commentarea"><a class="read_num_comment_general" id="comment-0" ><span class="commentarea_commentcount">'+whole_page_count+'</span> general comment'+plural+'</a> <a class="write-comment-action"></a> <span class="paragraph_feed"></span></div><div class="commentblock"><div class="subcommentlist" id="comment-group-0"></div></div></div>');
+	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><div class="commentarea"><span class="read_num_comment_general" id="comment-0" ><span class="commentarea_commentcount">'+whole_page_count+'</span> general comment'+plural+'</span> <span class="write-comment-action"></span> <span class="paragraph_feed"></span></div><div class="commentblock"><div class="subcommentlist" id="comment-group-0"></div></div></div>');
 	for( var k in comment_ids)
 	{
 		jQuery('#comment-group-0').append( jQuery(comment_ids[k]) );			
@@ -269,7 +269,7 @@ jQuery(document).ready(function(){
 		
 		var paragraph = i + 1;
 		var plural = (count == 1) ? '' : 's';
-		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><div class="commentarea"><span class="paragraph_number_large">'+ paragraph +'</span> <a class="read_num_comment" id="comment-'+ paragraph + '">  <span class="commentarea_commentcount">'+count+'</span> comment'+plural+'  </a><a class="write-comment-action"></a><span class="paragraph_feed"></div><div class="commentblock"><a href="' + wp_path + '/feed/paragraphcomments/'+post_ID+','+ paragraph +'"><img src="' + image_path + '/rss.png"/></a><div class="subcommentlist" id="comment-group-'+ paragraph +'"></div></div></div>');		
+		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><div class="commentarea"><span class="paragraph_number_large">'+ paragraph +'</span> <span class="read_num_comment" id="comment-'+ paragraph + '">  <span class="commentarea_commentcount">'+count+'</span> comment'+plural+'  </span><span class="write-comment-action"></span><span class="paragraph_feed"></span></div><div class="commentblock"><div class="subcommentlist" id="comment-group-'+ paragraph +'"></div></div></div>');		
 		
 		for( var k in comment_ids)
 		{
@@ -622,6 +622,7 @@ jQuery(document).ready(function(){
 
 		var paragraphnumber = jQuery(this).parent().attr('id').substring(14);
 
+		//alert(paragraphnumber);
  		if( paragraphnumber == jQuery.cookie('text_signature'))
 		{
 			jQuery('.textblock').unhighlightText();
