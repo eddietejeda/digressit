@@ -13,7 +13,7 @@ class Digress_It_Widget extends Digress_It_Base{
 	function Digress_It_Widget()
 	{
 		add_action('wp_insert_post', array(&$this, 'on_insert_post'));
-		add_action('plugins_loaded', array(&$this, 'dashboard_widget'));		
+		//add_action('plugins_loaded', array(&$this, 'dashboard_widget'));		
 		add_action('admin_menu', array(&$this, 'load_meta_box'));		
 	}
 	
@@ -30,6 +30,7 @@ class Digress_It_Widget extends Digress_It_Base{
 
 		$digressit_enabled = get_option('digressit_enabled_' . $post->ID);
 
+		$digressit_enabled = strlen($digressit_enabled) > 0 ?  $digressit_enabled : 'publish';
 		?>
 		<p><input type="radio" value="publish" <?php echo ($digressit_enabled == 'publish') ? 'checked' : ''; ?> name="digressit_enabled" /> <?php _e('Enabled when published','digressit') ?></p>
 		<p><input type="radio" value="private" <?php echo ($digressit_enabled == 'private') ? 'checked' : ''; ?> name="digressit_enabled" /> <?php _e('Enabled when set to private','digressit') ?></p>

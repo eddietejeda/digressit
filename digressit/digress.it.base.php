@@ -265,7 +265,7 @@ class Digress_It_Base{
 	/*
 	 * @description: create the variables we're going to need throughout out little app
 	 */
-	function on_init()
+	function on_wp()
 	{
 		
 
@@ -277,6 +277,9 @@ class Digress_It_Base{
 			}
 		}
 
+		if(!get_option('digressit')){
+			add_option('digressit', $this->options);	
+		}
 		
 		$this->translate();
 		$this->browser = $this->browser() ;

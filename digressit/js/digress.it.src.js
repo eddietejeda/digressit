@@ -530,6 +530,7 @@ jQuery(document).ready(function(){
 		else{		
 			jQuery('.textblock').selectParagraph(paragraphnumber);
 			document.location.hash = "#" + paragraphnumber;		
+			jQuery('.containerBody').scrollTo( jQuery('#comment-block-' + paragraphnumber), 200);			
 		}
 	});
 	

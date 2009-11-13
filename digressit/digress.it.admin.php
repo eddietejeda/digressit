@@ -12,7 +12,7 @@ class Digress_It_Admin extends Digress_It_Base{
 		
 		
 		if(is_admin() && $_REQUEST['editor'] == 'true'){
-			add_action( 'wp', array( &$this, 'load_preview_editor') );				
+			//add_action( 'wp', array( &$this, 'load_preview_editor') );				
 		}
 		
 	}
@@ -39,18 +39,16 @@ class Digress_It_Admin extends Digress_It_Base{
 	}
 
 	function process_post(){
-		switch($_POST['Submit'] && $_POST['digressit'] == 'update')
-		{
-			case 'Save Changes':
-				$this->save_options($_POST);
-				echo '<div id="message" class="updated fade"><p>Settings saved.</p></div>';            		
-			break;
 
-			case 'Reset Settings':
-				$this->reset_options();
-				echo '<div id="message" class="updated fade"><p>Settings reset.</p></div>';            
-			break;
-		}		
+		if($_POST['Save'] == 'Save Changes'){
+			$this->save_options($_POST);
+			echo '<div id="message" class="updated fade"><p>Settings saved.</p></div>';            		
+		}
+		
+		if($_POST['Reset'] == 'Reset Settings'){
+			$this->reset_options();
+			echo '<div id="message" class="updated fade"><p>Settings reset.</p></div>';            
+		}
 	}
 
 
@@ -280,8 +278,8 @@ class Digress_It_Admin extends Digress_It_Base{
 			
 			<p class="submit" style="clear: both;">
 				<input type="hidden" name="digressit" value="update" />
-				<input type="submit" name="Submit" value="Save Changes" class="button" />
-				<input type="submit" name="Submit" value="Reset Settings" class="button" />
+				<input type="submit" name="Save" value="Save Changes" class="button" />
+				<input type="submit" name="Reset" value="Reset Settings" class="button" />
 			</p>
 			
 			<iframe style="clear:both" border="1" name="iframe" id="iframe" src ="<?php echo bloginfo('wpurl'); ?>/?p=<? echo $options['testing_page']; ?>&editor=true" width="90%" height="400px">

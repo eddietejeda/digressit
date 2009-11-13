@@ -30,6 +30,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 	  global $wp_rewrite;
 	  add_feed('usercomments', array( &$this, 'create_user_feed'));
 	  add_feed('paragraphcomments', array( &$this, 'create_paragraph_feed'));
+	  add_feed('paragraphlevel', array( &$this, 'create_paragraph_level_feed'));
 	  add_action('generate_rewrite_rules', array( &$this, 'rewrite_rules') );
 	  $wp_rewrite->flush_rules();
 	}
@@ -41,6 +42,13 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 	  $wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
 	}
 
+
+
+
+	function create_paragraph_level_feed(){
+		include('paragraph-level-feed.php');
+	}
+	
 	function create_paragraph_feed(){
 		include('paragraph-comments-feed.php');
 	}

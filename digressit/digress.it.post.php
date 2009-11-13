@@ -15,7 +15,7 @@ class Digress_It_Post extends Digress_It_Base{
 	 * @description: attach the Wordpress hooks to their respective class methods
 	 */
 	function Digress_It_Post(){
-		add_action('init', array(&$this, 'on_init'));
+		add_action('wp', array(&$this, 'on_wp'));
 
 		add_filter('wp_head', array(&$this, 'on_wp_head'));
 
