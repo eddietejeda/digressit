@@ -764,7 +764,7 @@ class Digress_It_Base{
 			$blocks[$text_signature] = $block_content;
 	    }
 
-		@preg_match_all('#\(\((.*?)\)\)#si',$footnotes_content,$footnotes);
+		@preg_match_all('#\(\((^[)]+)\)\)#si',$footnotes_content,$footnotes);
 		
 		
 		$this->footnotes = $footnotes[0];

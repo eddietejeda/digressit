@@ -281,7 +281,7 @@ class Digress_It_Post extends Digress_It_Base{
 			$updated .= $js;
 
 			if(is_array($this->footnotes)){
-				$updated = $updated. implode(' ',$this->footnotes);
+				$updated = $updated. implode("\n",$this->footnotes);
 			}
 			return $updated;
 		
