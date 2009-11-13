@@ -651,8 +651,8 @@ function digressit_pingback_ping($args) {
 		do_action('pingback_post', $comment_ID);
 
 
-		$comment_text_signature = $_GET['paragraph'];
-		$wpdb->query( $wpdb->prepare("UPDATE $wpdb->comments SET comment_text_signature = %s WHERE comment_ID = %d", $comment_text_signature, $comment_ID) );
+		parse_str($urltest['query'], $getparams);
+		$wpdb->query( $wpdb->prepare("UPDATE $wpdb->comments SET comment_text_signature = %s WHERE comment_ID = %d", $getparams['paragraph'], $comment_ID) );
 
 
 		return sprintf(__('Pingback from %1$s to %2$s registered. Keep the web talking! :-)'), $pagelinkedfrom, $pagelinkedto);

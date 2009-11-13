@@ -27,8 +27,36 @@ class Digress_It_Post extends Digress_It_Base{
 		add_action('admin_menu', array(&$this, 'on_admin_menu'));
 
 		add_action('wp', array(&$this, 'print_styles_and_js'));
+
+		add_action('admin_head-post.php', array(&$this, 'add_comment_change_notice') );
+	
 	}
 	
+
+
+	
+
+	function add_comment_change_notice() {	
+		
+		$comments= get_approved_comments($_GET['post']);
+		
+		if(count($comments)){
+			add_action('admin_notices', array(&$this, 'change_content_warning') );
+		}
+	}
+	
+
+	function change_content_warning(){
+		?>
+		
+		<div id="register-form" class="updated error" style="padding: 5px; width: 50% <?php echo $hidethis;?>" >
+			Warning: There are comments attached to the structure of this page. Changing the structure
+			of this post will break the alignment of comments to their paragraphs
+		</div>
+		
+		<?php
+		
+	}
 
 	function print_styles_and_js(){
 		add_action('wp_print_scripts', array( &$this, 'on_wp_print_scripts') );
