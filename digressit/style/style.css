@@ -42,7 +42,7 @@
 
 .paragraph_number_large{
 	font-size: 15px;
-	padding-right: 5px;
+	padding: 0 5px 0 10px;
 }
 .containerBody{
 	height: 100%;
@@ -335,10 +335,21 @@ ol, ul{
 	background: url(../images/commentbox/add.png) no-repeat;
 	width: 16px;
 	height: 16px;
-	float: right;
-	margin-right: 3px;
+/*	float: right; */
+	height:16px;
+	margin-right:3px;
+	position:absolute;
+	right:5px;
+	width:16px;
 }
 
+.read_num_comment a{
+	color: #000;
+}
+
+.read_num_comment a:hover{
+	color: #000;
+}
 .read_num_comment{
 	position: absolute;
 	left: 35px;
@@ -408,8 +419,8 @@ ol, ul{
 
 
 
-#accordion  .commentblock {
-	border:0 none;
+#accordion .commentblock {
+	border:1px solid #EEEEEE;
 	font-size:12px;
 	list-style-image:none;
 	list-style-position:outside;
@@ -418,9 +429,8 @@ ol, ul{
 	outline-color:-moz-use-text-color;
 	outline-style:none;
 	outline-width:0;
-	padding:0;
+	padding:4px;
 	text-decoration:none;
-	padding-left: 8px;
 
 }
 
@@ -454,26 +464,26 @@ ol, ul{
 	border-radius: 5px;
 	
 }
-#accordion > .commentarea {
+#accordion .commentarea {
 	-moz-border-radius-bottomleft:4px;
 	-moz-border-radius-bottomright:4px;
 	-moz-border-radius-topleft:4px;
 	-moz-border-radius-topright:4px;
 }
 
-#accordion > .commentarea{
+#accordion .commentarea{
 	cursor:pointer;
 	margin-top:1px;
 	position:relative;
 }
 
-#accordion > .commentarea {
+#accordion .commentarea {
 	cursor:pointer;
 	margin-top:1px;
 	position:relative;
 }
 
-#accordion > .commentblock > a{
+#accordion .commentblock  a{
 	list-style-image:none;
 	list-style-position:outside;
 	list-style-type:none;
