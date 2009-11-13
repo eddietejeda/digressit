@@ -480,7 +480,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 	function get_approved_comments_for_paragraph($post_id, $paragraph){
 		$approved_comments = get_approved_comments($post_id);		
-		$filtered = array();
+		$filtered = null;
 		foreach($approved_comments as $comment){
 			if($comment->comment_text_signature == $paragraph){
 				$filtered[] = $comment;

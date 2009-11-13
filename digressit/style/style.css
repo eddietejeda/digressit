@@ -57,12 +57,20 @@ tbody, tfoot, thead, tr, th, td{
 }
 
 .paragraph_feed{
-	width: 40px; 
-	visibility: hidden;
-
+	width: 5px; 
+/*	visibility: hidden; */
+	position: absolute;
+	top: 15px;
+	padding: 8px;
+	right: 5px;
+	background: url(../theme/images/rss.png) no-repeat;
+	
+	
 }
 
-
+.paragraph_feed:hover{
+	cursor: pointer;
+}
 .debug-message{
 	top: 3px;
 	right: 5px;
@@ -107,7 +115,7 @@ h6{
 
 a img {
 	border:0 none;
-	float:right;
+/*	float:right; */
 	padding:4px;
 }
 
@@ -420,6 +428,7 @@ ol, ul{
 
 
 #accordion .commentblock {
+	position: relative;
 	border:1px solid #EEEEEE;
 	font-size:12px;
 	list-style-image:none;

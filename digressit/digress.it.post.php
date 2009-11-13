@@ -497,6 +497,7 @@ class Digress_It_Post extends Digress_It_Base{
 		
 		$js = "\n<script type=\"text/javascript\">\n";
 		$js .= "var post_ID = " . $postID . " ; \n";
+		$js .= "var post_name = '" . $post->post_name . "' ; \n";		
 		$js .= "var comment_count = " . count($comment_array) . " ; \n";
 		$js .= "var commment_text_signature = new Array(); \n";
 

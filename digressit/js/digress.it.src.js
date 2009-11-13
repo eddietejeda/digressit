@@ -227,7 +227,7 @@ jQuery(document).ready(function(){
 	}	
 	
 	var plural = (whole_page_count == 1) ? '' : 's';
-	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><div class="commentarea"><span class="read_num_comment_general" id="comment-0" ><span class="commentarea_commentcount">'+whole_page_count+'</span> general comment'+plural+'</span> <span class="write-comment-action"></span> <span class="paragraph_feed"></span></div><div class="commentblock"><div class="subcommentlist" id="comment-group-0"></div></div></div>');
+	jQuery("#accordion").append('<div class="comment-block-class" id="comment-block-0"><div class="commentarea"><span class="read_num_comment_general" id="comment-0" ><span class="commentarea_commentcount">'+whole_page_count+'</span> general comment'+plural+'</span> <span class="write-comment-action"></span> </div><div class="commentblock"><span class="paragraph_feed"></span><div class="subcommentlist" id="comment-group-0"></div></div></div>');
 	for( var k in comment_ids)
 	{
 		jQuery('#comment-group-0').append( jQuery(comment_ids[k]) );			
@@ -269,7 +269,7 @@ jQuery(document).ready(function(){
 		
 		var paragraph = i + 1;
 		var plural = (count == 1) ? '' : 's';
-		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><div class="commentarea"><span class="paragraph_number_large">'+ paragraph +'</span> <span class="read_num_comment" id="comment-'+ paragraph + '">  <span class="commentarea_commentcount">'+count+'</span> comment'+plural+'  </span><span class="write-comment-action"></span><span class="paragraph_feed"></span></div><div class="commentblock"><div class="subcommentlist" id="comment-group-'+ paragraph +'"></div></div></div>');		
+		jQuery("#accordion").append('<div  class="comment-block-class" id="comment-block-' + paragraph + '"><div class="commentarea"><span class="paragraph_number_large">'+ paragraph +'</span> <span class="read_num_comment" id="comment-'+ paragraph + '">  <span class="commentarea_commentcount">'+count+'</span> comment'+plural+'  </span><span class="write-comment-action"></span></div><div class="commentblock"><span class="paragraph_feed"></span><div class="subcommentlist" id="comment-group-'+ paragraph +'"></div></div></div>');		
 		
 		for( var k in comment_ids)
 		{
@@ -539,16 +539,20 @@ jQuery(document).ready(function(){
     jQuery(".commentarea").hover(
       function () {
 		var pos = jQuery('.commentarea').index(this);
-		jQuery('.paragraph_feed').eq(pos).css('visibility', 'visible');
+		//jQuery('.paragraph_feed').eq(pos).css('visibility', 'visible');
       }, 
       function () {
 		var pos = jQuery('.commentarea').index(this);
-		jQuery('.paragraph_feed').eq(pos).css('visibility', 'hidden');
+		//jQuery('.paragraph_feed').eq(pos).css('visibility', 'hidden');
       }
     );
 
 
-
+    jQuery(".paragraph_feed").click(function () {
+		var paragraph = jQuery('.paragraph_feed').index(this);
+		window.location.href = '/feed/paragraphcomments/'+post_name+','+paragraph;
+      }
+    );
 
 	jQuery(".embed-link").click(function (e) {
 
