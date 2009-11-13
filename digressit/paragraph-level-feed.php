@@ -5,10 +5,10 @@
  * @package WordPress
  */
 
-//header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_option('blog_charset'), true);
-header('Content-Type: text/plain');
-global $digressit_commentbrowser, $wp_rewrite, $matches, $wp_query;
-//echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
+header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_option('blog_charset'), true);
+//header('Content-Type: text/plain');
+global $digressit_commentbrowser, $wp_rewrite, $matches, $wp_query, $wpdb;
+echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
 ?>
 <rss version="2.0"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -41,10 +41,19 @@ global $digressit_commentbrowser, $wp_rewrite, $matches, $wp_query;
 /* FIXME: I can't find a way to get the user var from GET this is a temp hack */
 preg_match('#paragraphlevel/(.+)#', $_SERVER['REQUEST_URI'], $gets);
 
-$post = get_post($post_id);
+//var_dump($gets);
+if($post = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID=".$gets[1] )){
+//	echo "using post id";
+}
+elseif($post = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE post_name='".$gets[1]."'")){
+//	echo "using post name";	
+}
+
 
 //var_dump($post);
+$post = $post[0];
 $valid_paragraph_tags = 'div|object|p|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8|table';
+$options = get_option('digressit');
 if($options['parse_list_items'] == 1){
 	$valid_paragraph_tags .= "|li";
 }
@@ -66,8 +75,8 @@ if ( $paragraphs ) : foreach ( $paragraphs as $key => $paragraph ) :
 		<title><?php echo $post->post_title; ?></title>
 		<link><?php echo get_permalink($post->ID) ?></link>
 		<dc:creator><?php echo $post->post_author; ?></dc:creator>
-		<pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', $comment->comment_date_gmt, false); ?></pubDate>
-		<guid isPermaLink="false"><?php echo $comment_post->guid; ?>#<?php echo $comment->comment_text_signature; ?></guid>
+		<pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', $post->post_date_gmt, false); ?></pubDate>
+		<guid isPermaLink="false"><?php echo get_permalink($post->ID) ?>#<?php echo $key; ?></guid>
 		<description>Paragraph <?php echo $key; ?></description>
 		<content:encoded><![CDATA[<?php echo $paragraph; ?>]]></content:encoded>
 	</item>

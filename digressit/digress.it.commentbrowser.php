@@ -15,7 +15,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		//register_activation_hook( __FILE__, array( &$this, 'on_activation') );
 		//register_deactivation_hook(__FILE__,  array(&$this,'on_deactivation') );
 
-		add_action( 'init', array( &$this, 'on_init') );				
+		add_action( 'init', array( &$this, 'on_wp') );				
 		add_action( 'widgets_init', array( &$this, 'on_widget_init') );
 		add_action( 'template_redirect', array( &$this, 'on_template_redirect') );
 		add_action( 'wp_print_styles', array( &$this, 'on_wp_print_styles') );		
@@ -78,7 +78,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		}
 	}		
 	
-	function on_init(){
+	function on_wp(){
 
 		$this->wp_path = get_bloginfo('wpurl');
 		$this->plugin_path = $this->wp_path.'/wp-content/plugins/'.dirname(plugin_basename(__FILE__)); 		

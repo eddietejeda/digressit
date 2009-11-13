@@ -153,10 +153,14 @@ a img {
 }
 
 .paragraphtext img{
-	width: 100%;
+	max-width: 100%;
 }
 
 
+.wp-caption-text{
+	padding-top: 5px;
+	font-size: 65%;
+}
 #page{
 
 

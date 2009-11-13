@@ -27,7 +27,6 @@ class Digress_It_Post extends Digress_It_Base{
 		add_action('admin_menu', array(&$this, 'on_admin_menu'));
 
 		add_action('wp', array(&$this, 'print_styles_and_js'));
-	
 	}
 	
 
@@ -224,7 +223,10 @@ class Digress_It_Post extends Digress_It_Base{
 	function on_the_content($content){
 		global $wpdb, $image_path, $post;
 
-
+		if(is_feed()){
+			return $content;
+		}
+		
 		$postid = $post->ID;
 
 		$enabled = true; //we assume it enabled for previous versions
@@ -240,7 +242,7 @@ class Digress_It_Post extends Digress_It_Base{
 			
 		}
 				
-		if(is_single() && $enabled )
+		if( is_single() && $enabled )
 		{
 
 			$digressit_content = array();
