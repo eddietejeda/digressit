@@ -229,7 +229,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		 ?>
 
 			<?php $permalink_name = $bysection->post_name; ?>
- 			<?php $comment_array = get_approved_comments($post->ID);  ?>
+ 			<?php $comment_array = get_approved_comments_and_pingbacks($post->ID);  ?>
 			<?php $seperator = (strlen($wp_rewrite->permalink_structure)) ? "?" : "&"; ?>
 			<?php $path = (strlen($wp_rewrite->permalink_structure)) ? $permalink_name .'' : '?page_id='.$commentbrowser['bysection']; ?>
 
@@ -319,7 +319,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 				$comments = $this->get_comments_from_user($id);
 			break;
 			case "posts":
-				$comments = get_approved_comments($id); 
+				$comments = get_approved_comments_and_pingbacks($id); 
 			break;
 			case "general":
 				$comments = $this->get_approved_general_comments($id); 
@@ -347,7 +347,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 	//the following were imported from CP1.4
 	function get_approved_general_comments($id){
-		$approved_comments = get_approved_comments($id);
+		$approved_comments = get_approved_comments_and_pingbacks($id);
 		
 		$general_comments = null;
 
@@ -479,7 +479,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 
 	function get_approved_comments_for_paragraph($post_id, $paragraph){
-		$approved_comments = get_approved_comments($post_id);		
+		$approved_comments = get_approved_comments_and_pingbacks($post_id);		
 		$filtered = null;
 		foreach($approved_comments as $comment){
 			if($comment->comment_text_signature == $paragraph){
@@ -491,6 +491,14 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 }
 
 
+function get_approved_comments_and_pingbacks($post_id){
+	global $wpdb;
+	$sql = "SELECT * FROM $wpdb->comments, $wpdb->posts WHERE ID=$post_id AND ID = comment_post_ID AND post_status='publish' AND comment_approved='1'";
+	$results = $wpdb->get_results($sql);
+
+	return $results;
+	
+}
 
 function digressit_pingback_ping($args) {
 		global $wpdb;

@@ -4,7 +4,7 @@ Donate link: http://digress.it
 Tags: comments, annotation, discussion, commenting, documents
 Requires at least: 2.7
 Tested up to: 2.8.4
-Stable tag: 2.2
+Stable tag: 2.2.2
 
 digress.it lets you comment paragraph by paragraph in the margins of a text
 
