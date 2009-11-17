@@ -349,6 +349,11 @@ ol, ul{
 	position:absolute;
 	right:5px;
 	width:16px;
+	z-index: 1000;
+}
+
+.write-comment-action:hover{
+	cursor:  pointer;
 }
 
 .read_num_comment a{
@@ -366,7 +371,7 @@ ol, ul{
 
 .read_num_comment_general{
 	padding-top: 1px;
-	margin-left: 25px;
+	margin-left: 33px;
 }
 #respond h3{
 	font-size: 10pt;

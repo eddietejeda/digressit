@@ -236,7 +236,7 @@ class Digress_It_Base{
 			'allow_text_selection' => 0,
 			'default_skin' => $default_skin,
 			'stylesheet' => $default_stylesheet,
-			'default_left_position' => '43%',
+			'default_left_position' => '400px',
 			'default_top_position' => '175px',
 			'allow_users_to_minimize' => 0,
 			'allow_users_to_resize' => 0,

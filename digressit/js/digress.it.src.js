@@ -91,11 +91,12 @@ jQuery(document).ready(function(){
 	jQuery.cookie('text_selection', null , { path: '/', expires: 1} );
 
 	
-
+/*
 	if(default_skin == 'none'){
 		jQuery.cookie('top_position_commentbox', null,  { path: '/', expires: 1} );	
 		jQuery.cookie('left_position_commentbox', null,  { path: '/', expires: 1} );	
 	}
+	*
 	
 	/************************************************/
 	//
@@ -312,9 +313,9 @@ jQuery(document).ready(function(){
 
 	var user_buttons = resizable = draggable = minimized = iconized = '';
 	//if(allow_users_to_iconize){ user_buttons = 'i,'; } //i
-	if(allow_users_to_minimize && !msie6){ /* user_buttons += 'm'; */	}
-	if(allow_users_to_resize && false){ resizable = 'resizable'; }
-	if(allow_users_to_drag && !msie6){ draggable = 'draggable'; }
+	//if(allow_users_to_minimize && !msie6){ /* user_buttons += 'm'; */	}
+	if(allow_users_to_resize){ resizable = 'resizable'; }
+	if(allow_users_to_drag){ draggable = 'draggable'; }
 
 	if(jQuery.cookie('minimized') == true){ minimized = "minimized = 'true' "; }
 	//if(jQuery.cookie('iconized')){ iconized = "iconized = 'true' "; }
@@ -856,41 +857,28 @@ jQuery(document).ready(function(){
 		}
 	}
 
-	if(default_skin == 'none'){
 
-		if(default_skin == 'none'){
-			default_left_position = parseInt(jQuery('#page').css('padding-left')) +  parseInt(jQuery('#content').css('width')) + parseInt(jQuery('#content').css('padding-left')) + parseInt(jQuery('#content').css('padding-right')) + parseInt(jQuery('#content').css('margin-left')) + parseInt(jQuery('#content').css('margin-right'))  -  parseInt(10);
-		}
-		
-		jQuery('#commentbox').css({position:"fixed"});
-		//alert('left4: '+ jQuery("#commentbox").css("left"));
-		
-	}
-	else if(jQuery.cookie('left_position_commentbox') && jQuery.cookie('top_position_commentbox'))
+
+
+	if(jQuery.cookie('left_position_commentbox') && jQuery.cookie('top_position_commentbox') )
 	{
+
 
 		var left = parseInt(jQuery.cookie('left_position_commentbox'));
 		var top = parseInt(jQuery.cookie('top_position_commentbox'));
 		
-		jQuery("#commentbox").css("left", left + 'px');
 		jQuery("#commentbox").css("top", top + 'px');
+		jQuery("#commentbox").css("left", left + 'px');
 
 
 	}
-	else if(msie6)
-	{
-		jQuery("#commentbox").css("top", '75px');
-		jQuery("#commentbox").css("left", '50%');
-	}		
 	else
 	{	
+		/*		
 		var browser_width =  parseInt(jQuery(window).width()) ;
 		var browser_height =  parseInt(jQuery(window).height()) ;
 
 
-
-
-		
 		if(default_skin == 'none'){
 			default_left_position = parseInt(jQuery('#page').css('padding-left')) +  parseInt(jQuery('#content').css('width')) + parseInt(jQuery('#content').css('padding-left')) + parseInt(jQuery('#content').css('padding-right')) + parseInt(jQuery('#content').css('margin-left')) + parseInt(jQuery('#content').css('margin-right')) -  parseInt(10);
 		}
@@ -898,18 +886,21 @@ jQuery(document).ready(function(){
 		if( default_left_position.indexOf('%')){
 			default_left_position = browser_width *  parseFloat('0.' + parseInt(default_left_position));
 		}
-		/*
+
 		if( default_top_position.indexOf('%')){
 			default_top_position = browser_height * parseFloat('0.' +  parseInt(default_top_position));
 		}
 		*/
 		
-		jQuery.cookie('top_position_commentbox', parseInt(default_top_position),  { path: '/', expires: 1} );	
-		jQuery.cookie('left_position_commentbox',parseInt(default_left_position),  { path: '/', expires: 1} );	
+		var content_width = parseInt(jQuery('#content').width()) + parseInt(jQuery('#content').css('padding-left')) + parseInt(jQuery('#content').css('padding-right')) + parseInt(jQuery('#content').css('margin-left')) + parseInt(jQuery('#content').css('margin-right')) + 20;
+		//alert(content_width);
+		
+		jQuery.cookie('top_position_commentbox', 200,  { path: '/', expires: 1} );	
+		jQuery.cookie('left_position_commentbox',parseInt(content_width),  { path: '/', expires: 1} );	
 		
 		
-		jQuery("#commentbox").css("top", parseInt(default_top_position) + 'px');
-		jQuery("#commentbox").css("left", parseInt(default_left_position)+ 'px');
+		jQuery("#commentbox").css("top", 200 + 'px');
+		jQuery("#commentbox").css("left", parseInt(content_width) + 'px');
 		
 
 		
@@ -1147,12 +1138,12 @@ jQuery.fn.buildContainers = function (){
 			container.find(".n:first").css('cursor', 'move');
 			container.css({zIndex:zi++});
 			
-			if(msie6 || msie7){
+			//if(msie6 || msie7){
 				
-			}
-			else{
+			//}
+			//else{
 				container.draggable({handle:".n:first",cancel:".c",delay:0, containment:"document", stop: function(){ container.savePosition();  } });				
-			}
+			//}
 			
 			
 			container.bind("mousedown",function(){

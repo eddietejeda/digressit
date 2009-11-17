@@ -275,7 +275,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 	function list_general_comments()
 	{
 		global $wp_rewrite;
-		$users = $this->getUsersWhoHaveCommented();
+		$users = $this->get_users_who_have_general_comments();
 
 		echo "<ol>";
 		foreach($users as $user) :
@@ -287,8 +287,6 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 
 			$path = (strlen($wp_rewrite->permalink_structure)) ? $permalink_name .'' : '?page_id='.$commentbrowser['byusers'];
 
-			$comments = $this->get_approved_general_comments($user->user_id);
-			$comments_count = count($comments);
 
 			$seperator = (strlen($wp_rewrite->permalink_structure)) ? "?" : "&";
 
@@ -298,7 +296,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 			$user_display_name = ($user->user_id) ? ($userdata->user_login) : ($user->comment_author);
 			$user_identifier = ($user->user_id) ? ($user->user_id) : ($user->comment_author);
 
-			echo "<li><a href='$this->wp_path/$path".""."$seperator".""."user=".urlencode($user_identifier)."&comment-browser=general'>$user_display_name ($comments_count)</a></li>";
+			echo "<li><a href='$this->wp_path/$path".""."$seperator".""."user=".urlencode($user_identifier)."&comment-browser=general'>$user_display_name ($user->user_comment_count)</a></li>";
 
 		endforeach;
 		echo "</ol>";
@@ -322,7 +320,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 				$comments = get_approved_comments_and_pingbacks($id); 
 			break;
 			case "general":
-				$comments = $this->get_approved_general_comments($id); 
+				$comments = $this->get_user_general_comments($id); 
 			break;			
 		}
 		?>
@@ -390,11 +388,58 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		
 	}
 
+
+	function get_users_who_have_general_comments()
+	{
+		global $wpdb;
+		$sql = "SELECT *, COUNT(*) as user_comment_count FROM wp_comments c WHERE c.comment_approved = 1 AND c.comment_text_signature = 0 GROUP BY comment_author";
+		$results = $wpdb->get_results($sql);
+		
+		return $results;
+	}
+
+
+	function get_user_general_comments($user_id)
+	{
+		global $wpdb;
+		$sql = null;
+		if(is_numeric($user_id)){
+			$sql = "SELECT * FROM $wpdb->comments c, $wpdb->posts p, $wpdb->users u
+					WHERE c.comment_text_signature = NULL OR c.comment_text_signature = 0 
+					AND u.ID = $user_id 
+					AND c.comment_author = u.user_login 
+					AND p.ID = c.comment_post_ID
+					AND p.post_status='publish' 
+					AND c.comment_approved = 1";
+		}
+		else{
+			$sql = "SELECT * FROM $wpdb->comments c, $wpdb->posts p
+					WHERE c.comment_text_signature = NULL OR c.comment_text_signature = 0 
+					AND c.comment_author = '$user_id' 
+					AND c.comment_post_ID = p.ID AND c.comment_approved = 1";
+			
+		}
+		//echo $sql;
+		$results = $wpdb->get_results($sql);
+		return $results;
+	}
+
+
 	function getUsersWhoHaveCommented()
 	{
 		global $wpdb;
-		$sql = "SELECT * , COUNT( * ) AS comments_per_user FROM $wpdb->comments c, $wpdb->posts p WHERE  p.ID = c.comment_post_ID  AND p.post_status='publish' AND c.comment_approved = 1 GROUP BY c.comment_author ORDER BY c.comment_author";
-		return $wpdb->get_results($sql);
+		$sql = "SELECT * , COUNT( * ) AS comments_per_user FROM $wpdb->comments c, $wpdb->posts p 
+		WHERE  p.ID = c.comment_post_ID  AND p.post_status='publish' 
+		AND c.comment_approved = 1 GROUP BY c.comment_author ORDER BY c.comment_author";
+		$results = $wpdb->get_results($sql);
+		
+		//TODO: do in SQL
+		$filtered = array();
+		foreach($results as $result){
+			$filtered[] = $result;
+		}
+
+		return $filtered;
 	}
 
 

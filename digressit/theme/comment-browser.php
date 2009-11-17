@@ -18,7 +18,7 @@ $request_section = $_GET['comment-browser'];
 
 		<div id="leftcolumn"> 
 
-			<h2>Table of <?php echo ($request_section == 'posts') ?  'Comments' : 'Commenters'; ?> (<?php echo $digressit_commentbrowser->getAllCommentCount(); ?>)</h2>
+			<h2>Table of <?php echo ($request_section == 'posts') ?  'Comments' : 'Commenters'; ?></h2>
 			<?php
 						
 			switch($request_section)

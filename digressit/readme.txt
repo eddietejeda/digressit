@@ -27,7 +27,7 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 3. Go to the Appearance menu and review the settings. The digress.it theme should have been automatically activated.
 == Changelog ==
 
-= 2.2.2 =
+= 2.3 =
 * feeds work with permalinks
 * simplexml errors and supressed and html_entity_decode() is called on text to preview xml parse errors
 * Added "Edit this entry" when logged in
@@ -45,8 +45,11 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 * ENHANCEMENT: we support parsing lists. Currently only works with OL.
 * ENHANCEMENT: clearer commentbox design. New icon that gives ability to go directly to comment form
 * FIXED: Trackbacks should be working now
+* permalinks work in commentbrowser
+* new,simpler, commentbox interface
 
-= 2.2.1 =
+
+= 2.2 =
 * RSS minor switch: change "on paragraph number #9" to "(paragraph no. 9)"
 * FIXED: The embed Object code was not loading properly when clicked. Now it does
 * ENHANCEMENT: html embed is now a blockquote instead of div

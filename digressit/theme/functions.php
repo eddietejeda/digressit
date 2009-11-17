@@ -42,12 +42,17 @@ add_action('wp_head', 'add_bp_head_on_commentbrowser');
 function add_bp_head_on_commentbrowser(){
 	if(isset($_GET['commentbrowser'])){
 		if(defined('BP_PLUGIN_URL')){
-			wp_enqueue_style( 'bp-admin-bar', apply_filters( 'bp_core_admin_bar_css', $admin_bar_css ) );
-			wp_enqueue_script( 'bp-admin-bar-js', BP_PLUGIN_URL . '/bp-core/js/admin-bar.js', array( 'jquery' ) );
+			?>
+			<link rel='stylesheet' id='bp-admin-bar-css'  href='/wp-content/plugins/buddypress/bp-core/deprecated/css/admin-bar.css?ver=2.8.5.2' type='text/css' media='' />
+			<script type='text/javascript' src='/wp-content/plugins/buddypress/bp-core/js/admin-bar.js?ver=2.8.5.2'></script>
+			<?php
 		}
 	}
 	
 }
+
+
+
 
 function digressit_wp_list_pages($params = "echo=0&depth=2&title_li=&"){
 	$options = get_option('digressit');
