@@ -6,7 +6,7 @@
 
 get_header();
 
-if(isset($_GET['commentbrowser'])){
+if(isset($_GET['comment-browser'])){
 	
 	if(file_exists(ABSPATH . '/wp-content/plugins/buddypress/bp-core/deprecated/css/admin-bar.css')): ?>
 		<script type='text/javascript' src='/wp-includes/js/jquery/jquery.js?ver=1.3.2'></script>		
