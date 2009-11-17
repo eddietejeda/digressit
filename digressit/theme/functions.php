@@ -40,14 +40,6 @@ if($options['collapse_sidebar'] == 1){
 add_action('wp_head', 'add_bp_head_on_commentbrowser');
 
 function add_bp_head_on_commentbrowser(){
-	if(isset($_GET['commentbrowser'])){
-		if(defined('BP_PLUGIN_URL')){
-			?>
-			<link rel='stylesheet' id='bp-admin-bar-css'  href='/wp-content/plugins/buddypress/bp-core/deprecated/css/admin-bar.css?ver=2.8.5.2' type='text/css' media='' />
-			<script type='text/javascript' src='/wp-content/plugins/buddypress/bp-core/js/admin-bar.js?ver=2.8.5.2'></script>
-			<?php
-		}
-	}
 	
 }
 

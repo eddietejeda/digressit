@@ -356,7 +356,7 @@ jQuery(document).ready(function(){
     jQuery(window).scroll(function () { 
 		jQuery('#commentbox').css({position:"fixed"});
 
-		if(safari || msie6){
+		if(safari || msie6 ){
 
 			//alert(jQuery.cookie('top_position_commentbox'));
 			//alert(jQuery.cookie('left_position_commentbox'));
