@@ -4,7 +4,6 @@
  * @subpackage Default_Theme
  */
 
-get_header();
 
 if(isset($_GET['comment-browser'])){
 	
@@ -15,6 +14,8 @@ if(isset($_GET['comment-browser'])){
 	<?php
 	endif;
 }
+
+get_header();
 
 global $digressit_commentbrowser, $post;
 
