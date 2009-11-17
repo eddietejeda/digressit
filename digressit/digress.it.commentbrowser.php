@@ -392,7 +392,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 	function get_users_who_have_general_comments()
 	{
 		global $wpdb;
-		$sql = "SELECT *, COUNT(*) as user_comment_count FROM $wpdb->comments c WHERE c.comment_approved = 1 AND c.comment_text_signature = 0 OR c.comment_text_signature = NULL GROUP BY comment_author";
+		$sql = "SELECT *, COUNT(*) as user_comment_count FROM $wpdb->comments c, $wpdb->comments p WHERE c.comment_approved = 1 AND c.comment_text_signature = 0 OR c.comment_text_signature = NULL AND c.comment_post_ID = p.ID AND p.post_status = 'publish' GROUP BY comment_author";
 		$results = $wpdb->get_results($sql);
 		
 		return $results;
@@ -406,7 +406,7 @@ class Digress_It_CommentBrowser extends Digress_It_Base{
 		if(is_numeric($user_id)){
 			$sql = "SELECT * FROM $wpdb->comments c, $wpdb->posts p, $wpdb->users u
 					WHERE c.comment_text_signature = NULL OR c.comment_text_signature = 0 
-					AND u.ID = $user_id 
+					AND u.ID = '$user_id' 
 					AND c.comment_author = u.user_login 
 					AND p.ID = c.comment_post_ID
 					AND p.post_status='publish' 
