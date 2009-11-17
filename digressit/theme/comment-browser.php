@@ -7,13 +7,13 @@
 get_header();
 
 if(isset($_GET['commentbrowser'])){
-	if(defined('BP_PLUGIN_URL')){
-		?>
+	
+	if(file_exists(ABSPATH . '/wp-content/plugins/buddypress/bp-core/deprecated/css/admin-bar.css')): ?>
 		<script type='text/javascript' src='/wp-includes/js/jquery/jquery.js?ver=1.3.2'></script>		
-		<link rel='stylesheet' id='bp-admin-bar-css'  href='/wp-content/plugins/buddypress/bp-core/deprecated/css/admin-bar.css?ver=2.8.5.2' type='text/css' media='' />
-		<script type='text/javascript' src='/wp-content/plugins/buddypress/bp-core/js/admin-bar.js?ver=2.8.5.2'></script>
-		<?php
-	}
+		<link rel='stylesheet' id='bp-admin-bar-css'  href='/wp-content/plugins/buddypress/bp-core/deprecated/css/admin-bar.css' type='text/css' media='' />
+		<script type='text/javascript' src='/wp-content/plugins/buddypress/bp-core/js/admin-bar.js'></script>	
+	<?php
+	endif;
 }
 
 global $digressit_commentbrowser, $post;
