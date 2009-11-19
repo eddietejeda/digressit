@@ -4,7 +4,7 @@ Donate link: http://digress.it
 Tags: comments, annotation, discussion, commenting, documents
 Requires at least: 2.7
 Tested up to: 2.8.4
-Stable tag: 2.2.2
+Stable tag: 2.3.1
 
 digress.it lets you comment paragraph by paragraph in the margins of a text
 
@@ -27,26 +27,37 @@ digress.it lets you comment paragraph by paragraph in the margins of a text
 3. Go to the Appearance menu and review the settings. The digress.it theme should have been automatically activated.
 == Changelog ==
 
+= 2.3.1 =
+* FIXED: issue with fixed position boxes not appearing before scrolling
+
 = 2.3 =
 * feeds work with permalinks
 * simplexml errors and supressed and html_entity_decode() is called on text to preview xml parse errors
 * Added "Edit this entry" when logged in
 * Home page excluded from menu
 * Ajax polling now only happens when window is in focused
-* resizing window rescales the highlighted area
+* Subtler highlight...text selection of highlighted text works
 * minimize icons work again
 * comments don't blink-appear on page load when its lots of comments
 * disabling theming... instead using stylesheets
 * FIXED: editing posts was not working
 * ENHANCEMENT: added support for "general comments" page
-* ENHANCEMENT: The search page only shows a limited number of results. If there are more than 10(?),  how do you navigate to the next page of results?
+* ENHANCEMENT: The search page only shows a limited number of results. 
 * FIXED: commentbrowser breaks when name has a quote mark (apostrophe)
 * FIXED: when there are no comments in the block, scrolling to comment area was wonkey
 * ENHANCEMENT: we support parsing lists. Currently only works with OL.
 * ENHANCEMENT: clearer commentbox design. New icon that gives ability to go directly to comment form
-* FIXED: Trackbacks should be working now
-* permalinks work in commentbrowser
-* new,simpler, commentbox interface
+* Permalinks work in commentbrowser
+* commentbrowser supports buddypress
+* FIXED: issue 11 (Add paragraph and 'Comment here' links to the content RSS fe...)
+* FIXED: issue 41  (Problems parsing images?) Status changed by josswinn     
+* FIXED: issue 47  (BuddyPress admin bar breaks on comment view pages) 
+* FIXED: issue 38  (Remove the page title from the page)
+* FIXED: issue 21  (Provide a notice when comments are moderated) 
+* FIXED: issue 26  (Section level feeds are cluttered with cite text) 
+* FIXED: issue 32  (List items mapping to paragraphs) 
+* ENHANCEMENT: adding warning when you change content and also attempt to d...) 
+* ENHANCEMENT: Paragraph level feeds of post
 
 
 = 2.2 =

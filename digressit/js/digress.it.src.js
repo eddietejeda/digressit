@@ -315,7 +315,9 @@ jQuery(document).ready(function(){
 	//if(allow_users_to_iconize){ user_buttons = 'i,'; } //i
 	//if(allow_users_to_minimize && !msie6){ /* user_buttons += 'm'; */	}
 	if(allow_users_to_resize){ resizable = 'resizable'; }
-	if(allow_users_to_drag){ draggable = 'draggable'; }
+	if(allow_users_to_drag){ 
+		draggable = 'draggable'; 
+	}
 
 	if(jQuery.cookie('minimized') == true){ minimized = "minimized = 'true' "; }
 	//if(jQuery.cookie('iconized')){ iconized = "iconized = 'true' "; }
@@ -895,11 +897,11 @@ jQuery(document).ready(function(){
 		var content_width = parseInt(jQuery('#content').width()) + parseInt(jQuery('#content').css('padding-left')) + parseInt(jQuery('#content').css('padding-right')) + parseInt(jQuery('#content').css('margin-left')) + parseInt(jQuery('#content').css('margin-right')) + 20;
 		//alert(content_width);
 		
-		jQuery.cookie('top_position_commentbox', 200,  { path: '/', expires: 1} );	
+		jQuery.cookie('top_position_commentbox', default_top_position,  { path: '/', expires: 1} );	
 		jQuery.cookie('left_position_commentbox',parseInt(content_width),  { path: '/', expires: 1} );	
 		
 		
-		jQuery("#commentbox").css("top", 200 + 'px');
+		jQuery("#commentbox").css("top", default_top_position);
 		jQuery("#commentbox").css("left", parseInt(content_width) + 'px');
 		
 
@@ -916,6 +918,12 @@ jQuery(document).ready(function(){
 	}
 	
 	
+	if(!allow_users_to_drag){ 
+		jQuery('#commentbox').css({position:"fixed"});
+		jQuery("#commentbox").css('top',  default_top_position);
+		jQuery("#commentbox").css("left", parseInt(content_width) + 'px');
+		
+	}
 
 	
 
