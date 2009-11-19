@@ -10,7 +10,7 @@ Template Name: Archives
 
 <?php get_header(); ?>
 
-<div id="content" class="widecolumn">
+<div id="-content" class="-widecolumn">
 
 <?php get_search_form(); ?>
 

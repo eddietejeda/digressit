@@ -13,13 +13,13 @@ $options = get_option('digressit');
 
 ?>
 
-	<div class="frontpage">
+	<div class="-frontpage">
 
-		<div id="leftcolumn"> 
+		<div id="-leftcolumn"> 
 
 		</div>
 		
-		<div id="middlecolumn" style="margin-left: 20px; width: 40%;">
+		<div id="-middlecolumn">
 
 			<?php
 
@@ -28,13 +28,13 @@ $options = get_option('digressit');
 				<h2 class="pagetitle">Search Results for &#8216;<?php echo $_GET['s']; ?>&#8217;</h2>
 <br>
 
-			<div id="blurb">
+			<div id="-blurb">
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 
 						<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
 							<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-							<div class="entry">
+							<div class="-entry">
 								<?php the_excerpt('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
 
 								<?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
@@ -59,8 +59,8 @@ $options = get_option('digressit');
 		</div>
 
 
-		<div id="rightcolumn">
-			<?php get_sidebar(); ?>
+		<div id="-rightcolumn">
+			<?php //get_sidebar(); ?>
 		</div>
 		
 	</div>

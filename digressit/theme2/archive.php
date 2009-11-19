@@ -13,13 +13,13 @@ $options = get_option('digressit');
 
 ?>
 
-	<div class="frontpage">
+	<div class="-frontpage">
 
-		<div id="leftcolumn"> 
+		<div id="-leftcolumn"> 
 
 		</div>
 		
-		<div id="middlecolumn" style="margin-left: 20px; width: 40%;">
+		<div id="-middlecolumn">
 
 			<?php
 
@@ -43,7 +43,7 @@ $options = get_option('digressit');
 
 			?>
 			<br>
-			<div id="blurb">
+			<div id="-blurb">
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 
@@ -67,8 +67,8 @@ $options = get_option('digressit');
 			</div>
 		</div>
 
-		<div id="rightcolumn">
-			<?php get_sidebar(); ?>
+		<div id="-rightcolumn">
+			<?php //get_sidebar(); ?>
 		</div>
 		
 	</div>

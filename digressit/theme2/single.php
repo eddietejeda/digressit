@@ -7,9 +7,9 @@
 get_header();
 ?>
 
-	<div id="content" class="narrowcolumn single" role="main">
+	<div id="-content" class="narrowcolumn single" role="main">
 
-	<div class="navigation">
+	<div class="-navigation">
 		<div class="alignleft"><?php previous_post_link('&laquo; %link') ?></div>
 		<div class="alignright"><?php next_post_link('%link &raquo;') ?></div>
 	</div>
@@ -20,13 +20,13 @@ get_header();
 
 
 		<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
-			<div class="entry">
+			<div class="-entry">
 				<?php the_content('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
 
 				<?php wp_link_pages(array('before' => '<p><strong>Pages:</strong> ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
 				<?php the_tags( '<p>Tags: ', ', ', '</p>'); ?>
 
-				<p class="postmetadata alt">
+				<p class="-postmetadata -alt">
 					<small>
 						This entry was posted
 						<?php /* This is commented, because it requires a little adjusting sometimes.
@@ -72,13 +72,13 @@ get_header();
 
 		</div>
 
-		<div class="navigation">
+		<div class="-navigation">
 			<div class="alignleft"><?php previous_post_link('&laquo; %link') ?></div>
 			<div class="alignright"><?php next_post_link('%link &raquo;') ?></div>
 		</div>
 
 	</div>
-	<?php get_sidebar(); ?>
+	<?php //get_sidebar(); ?>
 
 <?php get_footer(); ?>
 

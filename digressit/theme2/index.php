@@ -12,10 +12,11 @@ $options = get_option('digressit');
 
 
 ?>
+	<!-- Start of index.php -->
+	
+	<div class="-frontpage">
 
-	<div class="frontpage">
-
-		<div id="leftcolumn"> 
+		<div id="-leftcolumn"> 
 
 			<h2>Table of Contents</h2>
 			<ol>
@@ -45,9 +46,9 @@ $options = get_option('digressit');
 
 		</div>
 		
-		<div id="middlecolumn">
+		<div id="-middlecolumn">
 
-			<div id="blurb">
+			<div id="-blurb">
 
 			<?php 	
 
@@ -81,8 +82,8 @@ $options = get_option('digressit');
 		
 		</div>
 
-		<div id="rightcolumn">
-			<?php get_sidebar(); ?>
+		<div id="-rightcolumn">
+			<?php //get_sidebar(); ?>
 		</div>
 		
 	</div>
