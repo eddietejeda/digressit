@@ -142,9 +142,11 @@ function add_comment_ajax($request_params){
 		die(json_encode(array('status' => 0, "message" => 'Your comment is too short.')));				
 	}
 	
+	/*
 	if(digressit_live_spam_check_comment( $data )){
 		die(json_encode(array('status' => 0, "message" => 'Your comment looks like spam. You might want to try again with out links')));						
 	}
+	*/
 
 
 	
