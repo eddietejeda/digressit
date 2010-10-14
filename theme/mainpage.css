@@ -1,0 +1,78 @@
+#mainpage {
+	position: relative;
+}
+#mainpage .preview{
+
+	background-color:white;
+	display:none;
+	height:100%;
+	min-height:200px;
+	padding:0;
+	position:relative;
+	top:0;
+
+}
+
+#mainpage .navigation{
+	float:left;
+	max-width:30%;
+	min-height:800px;
+	padding-left:25px;
+	padding-right:15px;
+	top:0;
+}
+
+#mainpage .default{
+	display: block;
+}
+
+
+
+.toc{
+
+}
+
+.navigation li{
+	list-style: decimal;
+}
+
+
+
+#mainpage .menu-frontpage-container{
+	float: left;
+	width: 30%;
+	min-height: 800px;
+}
+
+#mainpage .widget_text,
+#mainpage .widget_links, 
+#mainpage .widget_meta, 
+#mainpage .widget_calendar, 
+#mainpage .widget_pages, 
+#mainpage .widget_tag_cloud, 
+#mainpage .widget_search,
+#mainpage .previews
+{
+	border:1px solid;
+	float:right;
+	margin:10px;
+	padding:5px 10px 20px 15px;
+	width:60%;
+	-moz-box-shadow:3px 3px 7px #AAAAAA;
+	
+}
+
+
+#content #digress-it-list-posts{
+	width: 50%;
+	position: relative;
+}
+
+#content #digress-it-list-posts .commentcount1,
+#content #digress-it-list-posts .commentcount2,
+#content #digress-it-list-posts .commentcount3{
+	right: 0;
+	position: relative;
+	padding-top: 3px;
+}
+
