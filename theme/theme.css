@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6{
 	box-shadow: 1px 2px 3px #AAAAAA;
 	border: 1px solid #eee;	
 	overflow-y: auto;
-	left:-220px;
+	left:-240px;
 	padding:10px 20px;
 	width:220px;
 	z-index: 100;
@@ -281,14 +281,14 @@ h4 {
 }
 
 .commentcount2 {
-	background:url("images/comment_blue_2digit.png") no-repeat scroll 3px 2px transparent;
+	background:url("images/comment_blue_2digit.png") no-repeat scroll 1px 2px transparent;
 	color:white;
 	font-size:10px;
 	font-weight:bold;
 	height:18px;
-	padding:0 8px;
+	padding:0 1px 0 7px;
 	position:absolute;
-	width:15px;
+	width:17px;
 }
 
 .commentcount3 {
@@ -517,7 +517,7 @@ h4 {
 .site-title h1{
 	font-size:45px;
 	font-weight:bold;
-	padding:30px 10px 15px;
+	padding:30px 10px 15px 25px;
 	position: relative;
 }
 
@@ -791,6 +791,7 @@ h2{
 
 #menu-primary ul{
 	margin: 0;
+	padding: 0 25px;
 }
 #menu-primary li {
 	display:inline;

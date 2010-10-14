@@ -97,6 +97,103 @@ function comments_wp_print_scripts(){
 
 
 
+
+
+
+function add_comment_ajax($request_params){
+	extract($request_params);
+	global $wpdb, $current_user;
+
+	switch_to_blog($request_params['blog_id']);
+	$time = current_time('mysql', $gmt = get_option('gmt_offset')); 
+	$time_gmt = current_time('mysql', $gmt = 0); 
+	
+	$display_name = isset($request_params['display_name']) ? $request_params['display_name'] : $current_user->display_name;
+	$user_email = isset($request_params['user_email']) ? $request_params['user_email'] : $current_user->user_email;
+	$user_ID = isset($current_user->ID) ? $current_user->ID : '';
+
+//	var_dump($display_name);
+	$data = array(
+	    'comment_post_ID' => $request_params['comment_post_ID'],
+	    'comment_author' => $display_name,
+	    'comment_author_email' => $user_email,
+	    'comment_content' => $request_params['comment'],
+	    'comment_parent' => $request_params['comment_parent'],
+	    'user_id' => $user_ID,
+	    'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
+	    'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
+	    'comment_date' => $time,
+	    'comment_date_gmt' => $time_gmt,
+	    'comment_approved' => 1, //TODO: we kinda have to approve automatically. because we don't have a way to notify user of approval yet
+	);
+	
+	
+	
+
+	if(strlen($display_name) < 2){
+		die(json_encode(array('status' => 0, "message" => 'Please enter a valid name.')));				
+	}
+
+	if(!is_email($user_email)){
+		die(json_encode(array('status' => 0, "message" => 'Not a valid email.')));				
+	}
+
+	if(strlen($request_params['comment']) < 2){
+		die(json_encode(array('status' => 0, "message" => 'Your comment is too short.')));				
+	}
+	
+	if(digressit_live_spam_check_comment( $comment )){
+		die(json_encode(array('status' => 0, "message" => 'Your comment looks like spam. You might want to try again with out links')));						
+	}
+
+
+	
+	if($wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) as comment_exists FROM $wpdb->comments WHERE user_id = $current_user->ID AND $comment_content = %s " , $comment_ID, $request_params['comment']) ) > 0){
+		die(json_encode(array('status' => 0, "message" => 'This comment already exists')));		
+	}
+
+	
+	
+	
+	$comment_ID = wp_insert_comment($data);					
+	
+	$request_params['comment_ID'] = $comment_ID;
+	
+	
+	//TODO: we are moving away from the extra column
+	$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->comments SET comment_text_signature = %s WHERE comment_ID = %d", $request_params['selected_paragraph_number'], $comment_ID) );
+
+
+	//TODO: FOR FUTURE VERSIONS we will just use comment meta
+	add_metadata('post', $request_params['comment_post_ID'], 'comment_text_signature', $request_params['selected_paragraph_number'], true);
+
+	$comment_date = date('m/d/y');
+	
+	$message['comment_ID'] = $comment_ID;
+	$message['comment_parent'] = $request_params['comment_parent'];
+	$message['comment_date'] = $comment_date;
+	$message['comment_author'] = $display_name;
+	
+	$status = 1;
+
+	//an extra hook
+	do_action('add_comment_ajax_metadata', $request_params);
+	
+	$commentcount = count(get_approved_comments($request_params['comment_post_ID']));
+	delete_metadata('post', $request_params['comment_post_ID'], 'comment_count');
+	add_metadata('post', $request_params['comment_post_ID'], 'comment_count', $commentcount, true);
+	$message['comment_count'] = $commentcount;
+
+	
+	
+	restore_current_blog();
+	
+	die(json_encode(array('status' => $status, "message" => $message)));
+	
+	
+	
+}
+
 function standard_digressit_comment_parser($comment, $args, $depth) {
  	global $current_page_template, $blog_id, $current_user; 
 
@@ -219,109 +316,13 @@ global $blog_id;
 
 	<div id="submit-wrapper">
 		<div name="cancel-response" id="cancel-response" class="button link">Cancel</div>
-		<div name="submit" id="submit-comment"  class="submit ajax" tabindex="5"><div class="loading-bars"></div>Submit</div>
+		<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div>Submit</div>
 	</div>
 	<?php comment_id_fields(); ?>
 	<?php do_action('comment_form', $post->ID); ?>
 
 </form>
 <?php
-}
-
-
-
-function add_comment_ajax($request_params){
-	extract($request_params);
-	global $wpdb, $current_user;
-
-	switch_to_blog($request_params['blog_id']);
-	$time = current_time('mysql', $gmt = get_option('gmt_offset')); 
-	$time_gmt = current_time('mysql', $gmt = 0); 
-	
-	$display_name = isset($display_name) ? $display_name : $current_user->display_name;
-	$user_email = isset($user_email) ? $user_email : $current_user->user_email;
-	$user_ID = isset($current_user->ID) ? $current_user->ID : '';
-
-//	var_dump($user_email);
-	$data = array(
-	    'comment_post_ID' => $request_params['comment_post_ID'],
-	    'comment_author' => $display_name,
-	    'comment_author_email' => $user_email,
-	    'comment_content' => $request_params['comment'],
-	    'comment_parent' => $request_params['comment_parent'],
-	    'user_id' => $user_ID,
-	    'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
-	    'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
-	    'comment_date' => $time,
-	    'comment_date_gmt' => $time_gmt,
-	    'comment_approved' => 1, //TODO: we kinda have to approve automatically. because we don't have a way to notify user of approval yet
-	);
-	
-	
-	
-
-	if(strlen($display_name) < 2){
-		die(json_encode(array('status' => 0, "message" => 'Please enter a valid name.')));				
-	}
-
-	if(!is_email($user_email)){
-		die(json_encode(array('status' => 0, "message" => 'Not a valid email.')));				
-	}
-
-	if(strlen($request_params['comment']) < 2){
-		die(json_encode(array('status' => 0, "message" => 'Your comment is too short.')));				
-	}
-	
-	if(digressit_live_spam_check_comment( $comment )){
-		die(json_encode(array('status' => 0, "message" => 'Your comment looks like spam. You might want to try again with out links')));						
-	}
-
-
-	
-	if($wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) as comment_exists FROM $wpdb->comments WHERE user_id = $current_user->ID AND $comment_content = %s " , $comment_ID, $request_params['comment']) ) > 0){
-		die(json_encode(array('status' => 0, "message" => 'This comment already exists')));		
-	}
-
-	
-	
-	
-	$comment_ID = wp_insert_comment($data);					
-	
-	$request_params['comment_ID'] = $comment_ID;
-	
-	
-	//TODO: we are moving away from the extra column
-	$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->comments SET comment_text_signature = %s WHERE comment_ID = %d", $request_params['selected_paragraph_number'], $comment_ID) );
-
-
-	//TODO: FOR FUTURE VERSIONS we will just use comment meta
-	add_metadata('post', $request_params['comment_post_ID'], 'comment_text_signature', $request_params['selected_paragraph_number'], true);
-
-	$comment_date = date('m/d/y');
-	
-	$message['comment_ID'] = $comment_ID;
-	$message['comment_parent'] = $request_params['comment_parent'];
-	$message['comment_date'] = $comment_date;
-	$message['comment_author'] = $display_name;
-	
-	$status = 1;
-
-	//an extra hook
-	do_action('add_comment_ajax_metadata', $request_params);
-	
-	$commentcount = count(get_approved_comments($request_params['comment_post_ID']));
-	delete_metadata('post', $request_params['comment_post_ID'], 'comment_count');
-	add_metadata('post', $request_params['comment_post_ID'], 'comment_count', $commentcount, true);
-	$message['comment_count'] = $commentcount;
-
-	
-	
-	restore_current_blog();
-	
-	die(json_encode(array('status' => $status, "message" => $message)));
-	
-	
-	
 }
 
 

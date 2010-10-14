@@ -2,6 +2,10 @@
 global $commentbrowser, $blog_id, $current_user, $current_user_comments, $development_mode, $testing_mode, $production_mode;
 global $digressit_content_function, $digressit_comments_function, $digressit_commentbox_function;
 
+global $browser;
+
+$browser = current_browser();
+
 
 get_currentuserinfo();
 
@@ -558,7 +562,7 @@ function current_browser() {
 
 
 function functions_wp_print_styles(){
-	global $current_user, $override_default_theme;
+	global $current_user, $override_default_theme, $browser;
 	
 	wp_register_style('digressit.frontpage', get_template_directory_uri().'/frontpage.css'); 
 	wp_register_style('digressit.author', get_template_directory_uri().'/author.css'); 
@@ -569,6 +573,9 @@ function functions_wp_print_styles(){
 	wp_register_style('digressit.search', get_template_directory_uri().'/search.css'); 
 	wp_register_style('digressit.single', get_template_directory_uri().'/single.css');
 	wp_register_style('digressit.theme', get_template_directory_uri().'/theme.css');
+
+	wp_register_style('digressit.ie7', get_template_directory_uri().'/ie7.css');
+	wp_register_style('digressit.ie8', get_template_directory_uri().'/ie8.css');
 	
 
 	
@@ -595,6 +602,15 @@ function functions_wp_print_styles(){
 
 	if(!$override_default_theme):
 	wp_enqueue_style('digressit.theme');		
+	endif;
+
+
+	if($browser['name'] =='msie' && $browser['version'] == '7.0'):
+	wp_enqueue_style('digressit.ie7');				
+	endif;
+
+	if($browser['name'] =='msie' && $browser['version'] == '8.0'):
+	wp_enqueue_style('digressit.ie8');				
 	endif;
 
 	
@@ -664,7 +680,7 @@ function functions_wp_print_scripts(){
 
 
 
-
+/*
 function browser() {
     $userAgent = strtolower($_SERVER['HTTP_USER_AGENT']);
 
@@ -715,11 +731,10 @@ function browser() {
     );
 }
 
+*/
 
 
 
-
-$browser = browser();
 //if($browser['name'] =='msie' && $browser['version'] == '6.0'):
 	//add_action('template_redirect', 'browser_not_supported' );
 	//function browser_not_supported(){

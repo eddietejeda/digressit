@@ -50,7 +50,7 @@ jQuery(document).ready(function() {
 		var item = jQuery('#dynamic-sidebar').get(index);			
 
 		jQuery(item).animate({ 
-			left: "-220px"
+			left: "-240px"
 		}, 100 );
 	});
 	
@@ -91,11 +91,12 @@ jQuery(document).ready(function() {
 		
 		jQuery.post( siteurl + "/ajax/" + form_id +'/',	jQuery("#"+form_id).serialize(),
 			function( data ) {	
+				
 				function_name = function_name.replace(/-/g, '_');// + "_ajax_result";
 
 				var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
 
-				//console.log(AjaxResult);
+
 				if(eval(dynamic_call)){
 					eval('AjaxResult.' + function_name + '(data);');
 				}
