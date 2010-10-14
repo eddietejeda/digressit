@@ -57,14 +57,14 @@ else{
 
 		<div id="menu-primary">
 		<?php wp_nav_menu(array('depth'=> 3, 'fallback_cb'=> 'header_default_top_menu', 'echo' => true, 'theme_location' => 'Top Menu', 'menu_class' => 'navigation')); ?>
-		<ul>
+
 		<?php if(is_user_logged_in()): ?>
 			<li><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout">Logout</a></li>			
 		<?php else: ?>
 			<li><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account">Create Account</a></li>
 			<li><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login">Login</a></li>
 		<?php endif;?>
-		</ul>
+
 		</div>
 
 		<?php do_action('optional_menu_item'); ?>

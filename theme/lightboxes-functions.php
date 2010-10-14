@@ -10,7 +10,7 @@ function lightboxes_wp_print_styles(){
 }
 
 function lightboxes_wp_print_scripts(){	
-	wp_enqueue_script('digressit.lightbubbles', get_template_directory_uri().'/lightboxes.js', 'jquery', false, true );
+	wp_enqueue_script('digressit.lightboxes', get_template_directory_uri().'/lightboxes.js', 'jquery', false, true );
 }
 
 
