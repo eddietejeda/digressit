@@ -150,7 +150,7 @@ function add_comment_ajax($request_params){
 
 
 	
-	if($wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) as comment_exists FROM $wpdb->comments WHERE user_id = $current_user->ID AND $comment_content = %s " , $comment_ID, $request_params['comment']) ) > 0){
+	if($wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) as comment_exists FROM $wpdb->comments WHERE comment_author_email = $user_email AND $comment_content = %s " , $user_email, $request_params['comment']) ) > 0){
 		die(json_encode(array('status' => 0, "message" => 'This comment already exists')));		
 	}
 
@@ -276,8 +276,7 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 			</div>
 			
 			
-			
-			<?php if(($comment->comment_parent == 0 || is_null($comment->comment_parent)) && (is_user_logged_in() || !get_option('comment_registration')) && is_single()): ?>
+			<?php if(($depth < get_option('thread_comments_depth') || is_null($comment->comment_parent)) && (is_user_logged_in() || !get_option('comment_registration')) && is_single()): ?>
 			<div class="comment-reply comment-hover small-button" title="<?php comment_ID(); ?>">reply</div>
 			<?php endif; ?>
 
@@ -309,7 +308,7 @@ global $blog_id;
 	<div id="textarea-wrapper">
 		<div class="left"></div>
 		<div class="right">
-		<textarea name="comment" class="comment-textarea comment-collapsed" id="comment" tabindex="1">Click here add a new comment...</textarea>
+		<textarea name="comment" class="comment-textarea comment-collapsed" id="comment">Click here add a new comment...</textarea>
 		</div>
 	</div>
 

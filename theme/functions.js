@@ -103,7 +103,7 @@ jQuery(document).ready(function() {
 				else{
 					
 				}
-				
+
 				jQuery('input[type=button]').attr('disabled', false);
 				jQuery('input[type=submit]').attr('disabled', false);
 				jQuery('.lightbox-submit').removeClass('disabled');
@@ -422,7 +422,6 @@ function commentbox_closed_state(){
 }
 
 function commentbox_reply_state(){
-	jQuery('#comment').css('height', '100px');
 	
 	//alert(selected_comment_id);
 	var selected_comment_id = jQuery.cookie('selected_comment_id');				

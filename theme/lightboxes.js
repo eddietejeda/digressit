@@ -61,8 +61,7 @@ jQuery.fn.displayerrorslightbox = function (data){
 	if(data.status == 0){
 		var lightbox = '#lightbox-generic-response';
 		jQuery(lightbox + ' > p').html(data.message);
-		jQuery('body').openlightbox(lightbox);
-		
+		jQuery('body').openlightbox(lightbox);	
 	}
 }
 

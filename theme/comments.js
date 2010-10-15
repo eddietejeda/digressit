@@ -39,7 +39,7 @@ jQuery(document).ready(function() {
 					'</div>'+
 					'<div class="comment-text"><p>'+ jQuery('#comment').val() + '</p>' +
 					'</div>' +
-					'<div title="'+result_id+'" class="comment-reply" ></div>'+
+					'<div title="'+result_id+'" class="comment-reply comment-hover small-button" ></div>'+
 					'<div class="comment-respond"></div>' +
 				'</div>' +
 			'</div>';
@@ -49,8 +49,11 @@ jQuery(document).ready(function() {
 		if(comment_parent > 0){
 			//we are grouping comments
 			if(jQuery('#paragraph-block-' + selected_paragraph_number).length){
-				jQuery('#respond').prependTo('#paragraph-block-' + selected_paragraph_number);			
-				jQuery('#commentbox').scrollTo('#'+comment_id , 200);
+				jQuery('#respond').appendTo('#paragraph-block-' + selected_paragraph_number + ' .toplevel-respond');			
+
+				jQuery('#' + parent_id).append(new_comment);			
+
+				//jQuery('#commentbox').scrollTo('#'+comment_id , 200);
 				jQuery('.comment-reply').html('reply');
 			}
 			else{
@@ -68,7 +71,7 @@ jQuery(document).ready(function() {
 		else{
 			//we are grouping comments
 			if(jQuery('#paragraph-block-' + selected_paragraph_number).length){
-				jQuery('#respond').prepend(new_comment);			
+				jQuery('#respond').append(new_comment);			
 				jQuery('#commentbox').scrollTo('#'+comment_id , 200);
 			}
 			else{
@@ -85,6 +88,7 @@ jQuery(document).ready(function() {
 		jQuery(jQuery('.commentcount').get((selected_paragraph_number ))).fadeIn('slow');
 		jQuery('#comment').val('');		
 		jQuery('#comment_parent').val(0);
+		return;
 	}
 
 
@@ -336,6 +340,7 @@ jQuery(document).ready(function() {
 
 	jQuery('.comment-reply').toggle(function (e) {
 
+		var top = 0;
 		var comment_id = jQuery(this).attr('title');
 		
 		var current_comment_id = '#comment-'+ blog_ID +'-'+comment_id;
@@ -353,9 +358,6 @@ jQuery(document).ready(function() {
 		jQuery.cookie('text_signature', paragraphnumber, { path: '/' , expires: 1} );				
 		jQuery.cookie('selected_comment_id', comment_id, { path: '/' , expires: 1} );				
 		
-		jQuery('#commentbox').scrollTo( jQuery(current_comment_id), 1000)
-		
-		jQuery('#submit-comment').hide();
 		
 		
 	
@@ -368,7 +370,6 @@ jQuery(document).ready(function() {
 		//alert('.textblock-' + paragraphnumber);
 		
 		
-		var top = 0;
 		if(paragraphnumber > 0){
 			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 			jQuery('#textblock-' + paragraphnumber + ' .commenticonbox').addClass('selected-paragraph');
@@ -382,17 +383,18 @@ jQuery(document).ready(function() {
 		}			
 		var commentbox = jQuery("#commentbox");
 
-
 		var scrollto = top;
+		jQuery('#respond').appendTo(current_comment_id + ' .comment-respond');		
+		
 		jQuery(window).scrollTo(scrollto, 200);
+		jQuery('#commentbox').scrollTo( jQuery(current_comment_id + ' .comment-header'), 0)
 	
 		document.location.hash = '#' + paragraphnumber;
 		
 				
-		
-		commentbox_reply_state();
-		jQuery('.comment-reply').html('reply');
+		jQuery('.comment .comment-reply').html('reply');
 		jQuery(current_comment_id + ' .comment-reply').html('cancel response');
+
 
 		
 	}, function(){

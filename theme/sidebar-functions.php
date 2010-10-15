@@ -38,7 +38,7 @@ class ListPosts extends WP_Widget {
 		<div class="sidebar-pullout"></div>
 		
 		<div id="searchform">
-			<input id="live-post-search" class="ajax-live live-post-search" type="text" value="Search">
+			<input id="live-post-search" class="ajax-live live-post-search comment-field-area" type="text" value="Search">
 		</div>
 
 		<?php

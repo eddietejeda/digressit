@@ -69,8 +69,8 @@ function lightbox_login(){ ?>
 			<?php if(has_action('custom_register_links')) :?>
 				<?php do_action('custom_register_links'); ?>
 			<?php else: ?>
-				<div class="login"><a href="<?php echo wp_login_url(); ?>">Register new account</a></div>
-				<div class="login"><a href="<?php echo wp_login_url(); ?>">Reset your password</a></div>
+				<div class="login"><a href="<?php echo wp_login_url(); ?>?action=register">Register account</a></div>
+				<div class="login"><a href="<?php echo wp_login_url(); ?>?action=lostpassword">Lost Password?</a></div>
 				
 			<?php endif; ?>
 
@@ -80,7 +80,6 @@ function lightbox_login(){ ?>
 			<input type="hidden" name="redirect_to" value="<?php echo 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]; ?>?#login-success" />
 			<input type="hidden" name="testcookie" value="1" />
 
-			<span class="lightbox-close lightbox-close-icon" tabindex="100" ></span>
 			<span class="lightbox-submit" tabindex="100" >Login</span>
 			<span class="lightbox-close"></span>
 		

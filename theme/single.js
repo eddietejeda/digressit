@@ -23,6 +23,7 @@ jQuery(document).ready(function() {
 
 
 	function standard_digressit_commentbox_parser(){
+
 		jQuery('.textblock').each(function(i){
 			var paragraphnumber = (i == 0) ? '&nbsp;'  : i;
 			var commentlabel = (i == 0) ? ' general comment'  : ' comment';
@@ -30,7 +31,7 @@ jQuery(document).ready(function() {
 			
 			commentlabel = (commentcount == 1) ? commentlabel  : commentlabel + 's';
 			
-			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><div class="paragraph-block-button"><span class="paragraph-label">'+(paragraphnumber)+'</span>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div></div>');
+			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><div class="paragraph-block-button"><span class="paragraph-label">'+(paragraphnumber)+'</span>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></div>');
 			
 			jQuery('.paragraph-' + (i)).appendTo('#paragraph-block-'+(i));				
 			
@@ -45,88 +46,6 @@ jQuery(document).ready(function() {
 
 
 	var comment_linked;
-	if ( document.location.hash.substr(1, 7) == 'comment') {
-		var commentname = document.location.hash.substr(1);
-
-		var paragraphnumber = jQuery('#'+ commentname).attr("class").match(/paragraph-(\d+)/)[1];
-				
-		var item = jQuery('.commenticonbox').get((paragraphnumber));
-
-		jQuery('#respond').show();
-		jQuery('.comment').hide();
-		jQuery('.paragraph-' + paragraphnumber).show();
-
-		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
-
-		if(jQuery('.paragraph-' + paragraphnumber).length == 0){
-			jQuery('#no-comments').show();			
-		}
-		else{
-			jQuery('#no-comments').hide();
-		}
-
-		var top = jQuery('#textblock-' + paragraphnumber).offset().top;
-
-		jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
-
-		var scrollto = (top > 200)  ? (top - 30) : 0;
-
-		jQuery(window).scrollTo(scrollto , 200);
-		jQuery('#commentbox ').scrollTo('#'+commentname , 200);
-
-		if( jQuery('.paragraph-' + paragraphnumber).length > 0 ){
-			jQuery("#no-comments").hide();			
-		}
-		jQuery("#comments-sort-all").css('display', 'inline');			
-	}
-	else if ( document.location.hash.substr(1, 13) == 'search-result') {
-		
-		jQuery(window).scrollTo( jQuery('.search-result:first'), 1000);
-		
-	}
-	else if (isNumber(document.location.hash.substr(1))) {
-		var paragraphnumber = document.location.hash.substr(1);
-
-		if(paragraphnumber > jQuery('.textblock').length){
-			return;
-		}
-		
-		var item = jQuery('.commenticonbox').get((paragraphnumber));
-
-		jQuery('#respond').show();
-		jQuery('.comment').hide();
-		jQuery('.paragraph-' + paragraphnumber).show();
-
-		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
-
-		if(jQuery('.paragraph-' + paragraphnumber).length == 0){
-			jQuery('#no-comments').show();			
-		}
-		else{
-			jQuery('#no-comments').hide();
-		}
-		
-		if(paragraphnumber > 0){
-			var top = jQuery('#textblock-' + paragraphnumber).offset().top;
-			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
-			var scrollto = (top > 200)  ? (top - 30) : 0;
-
-			jQuery(window).scrollTo(scrollto , 200);
-		}
-
-		if( jQuery('.paragraph-' + paragraphnumber).length > 0 ){
-			jQuery("#no-comments").hide();			
-		}
-	}
-	else{
-		if( parseInt(jQuery('.comment').length) == 0){
-			jQuery("#no-comments").show();			
-		}
-		else{
-			jQuery("#no-comments").hide();	
-		}
-		
-	}
 
 	jQuery('.comment').click(function(e){
 		var index = jQuery('.comment').index(this);
@@ -189,13 +108,6 @@ jQuery(document).ready(function() {
 		jQuery("#cancel-response").click(function (e) {
 			//jQuery('#comment_parent').val(0);
 			jQuery('#comment').val('Click here add a new comment...');
-
-			jQuery('#submit-comment').hide();
-			jQuery('#cancel-response').hide();
-			//jQuery('.textblock').removeClass('selected-textblock');
-			//jQuery('.comment'  ).hide();
-			//jQuery('#respond').hide();						
-			//jQuery('#selected_paragraph_number').val(0);
 		});
 
 
@@ -218,9 +130,9 @@ jQuery(document).ready(function() {
 				jQuery('#respond').hide();			
 				var paragraphnumber = parseInt(jQuery('.textblock').index(this)) +1 ;
 
-				jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber));
+				jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
 				jQuery('#respond').show();			
-				jQuery('.comment'  ).hide();
+				jQuery('.comment' ).hide();
 				jQuery('.paragraph-' + paragraphnumber ).show();
 
 				jQuery('.textblock').removeClass('selected-textblock');
@@ -256,7 +168,7 @@ jQuery(document).ready(function() {
 			var paragraphnumber = parseInt(jQuery('.paragraph-block-button').index(this));
 			jQuery('#selected_paragraph_number').val(paragraphnumber);
 			jQuery('.paragraph-' + paragraphnumber).show();
-			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber));
+			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
 			jQuery('#respond').show();			
 
 			jQuery('.textblock').removeClass('selected-textblock');
@@ -282,5 +194,92 @@ jQuery(document).ready(function() {
 
 
 
+	if ( document.location.hash.substr(1, 7) == 'comment') {
+		var commentname = document.location.hash.substr(1);
+
+		var paragraphnumber = jQuery('#'+ commentname).attr("class").match(/paragraph-(\d+)/)[1];
+				
+		var item = jQuery('.commenticonbox').get((paragraphnumber));
+
+
+		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+		jQuery('#respond').show();
+		jQuery('.comment').hide();
+		jQuery('.paragraph-' + paragraphnumber).show();
+
+		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
+
+		if(jQuery('.paragraph-' + paragraphnumber).length == 0){
+			jQuery('#no-comments').show();			
+		}
+		else{
+			jQuery('#no-comments').hide();
+		}
+
+		var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+
+		jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+
+		var scrollto = (top > 200)  ? (top - 30) : 0;
+
+		jQuery(window).scrollTo(scrollto , 200);
+		jQuery('#commentbox ').scrollTo('#'+commentname , 200);
+
+		if( jQuery('.paragraph-' + paragraphnumber).length > 0 ){
+			jQuery("#no-comments").hide();			
+		}
+	}
+	else if ( document.location.hash.substr(1, 13) == 'search-result') {
+		
+		jQuery(window).scrollTo( jQuery('.search-result:first'), 1000);
+		
+	}
+	else if (isNumber(document.location.hash.substr(1))) {
+		var paragraphnumber = document.location.hash.substr(1);
+
+		if(paragraphnumber > jQuery('.textblock').length){
+			return;
+		}
+		
+		var item = jQuery('.commenticonbox').get((paragraphnumber));
+
+		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+		jQuery('#respond').show();
+		jQuery('.comment').hide();
+		jQuery('.paragraph-' + paragraphnumber).show();
+
+		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
+
+		if(jQuery('.paragraph-' + paragraphnumber).length == 0){
+			jQuery('#no-comments').show();			
+		}
+		else{
+			jQuery('#no-comments').hide();
+		}
+		
+		if(paragraphnumber > 0){
+			var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+			var scrollto = (top > 200)  ? (top - 30) : 0;
+
+			jQuery(window).scrollTo(scrollto , 200);
+		}
+		
+		if(jQuery('#paragraph-block-' + paragraphnumber).length){
+			jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 200);
+		}
+
+		if( jQuery('.paragraph-' + paragraphnumber).length > 0 ){
+			jQuery("#no-comments").hide();			
+		}
+	}
+	else{
+		if( parseInt(jQuery('.comment').length) == 0){
+			jQuery("#no-comments").show();			
+		}
+		else{
+			jQuery("#no-comments").hide();	
+		}	
+	}
 	
 });

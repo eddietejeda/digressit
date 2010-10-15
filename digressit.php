@@ -123,6 +123,8 @@ function activate_digressit(){
 	delete_option('digressit');
 	add_option('digressit', $options);	
 	
+
+	update_option('thread_comments_depth', 2);
 	
 	$sql = "SHOW COLUMNS FROM $wpdb->comments";	
 	$columns = $wpdb->get_results($sql);

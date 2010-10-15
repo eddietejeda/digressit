@@ -48,27 +48,31 @@ else{
 		<?php endif; ?>
 	</div>
 		
+
+	<div id="menu-primary">
 	<?php if(has_action('primary_menu')): ?>
-		<div id="menu-primary">
 			<?php do_action('primary_menu'); ?>
 			<?php do_action('optional_menu_item'); ?>
 		</div>
 	<?php else: ?>
-
-		<div id="menu-primary">
 		<?php wp_nav_menu(array('depth'=> 3, 'fallback_cb'=> 'header_default_top_menu', 'echo' => true, 'theme_location' => 'Top Menu', 'menu_class' => 'navigation')); ?>
-
-		<?php if(is_user_logged_in()): ?>
-			<li><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout">Logout</a></li>			
-		<?php else: ?>
-			<li><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account">Create Account</a></li>
-			<li><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login">Login</a></li>
-		<?php endif;?>
-
-		</div>
-
 		<?php do_action('optional_menu_item'); ?>
 	<?php endif; ?>
+
+	<!-- this is some login stuff that should always be here -->
+	<ul>
+	<?php if(is_user_logged_in()): ?>
+		<li><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout">Logout</a></li>			
+	<?php else: ?>
+		<?php if(get_option('users_can_register')): ?>
+		<li><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account">Create Account</a></li>
+		<?php endif; ?>
+		<li><a class="lightbox lightbox-login" title="Login">Login</a></li>
+	<?php endif;?>
+	</ul>
+	
+	</div>
+	
 </div> 
 <?php
 do_action('secondary_menu');
@@ -83,16 +87,6 @@ function header_default_top_menu(){
 
 	<ul>
 		<?php do_action('custom_default_top_menu'); ?>
-
-		<li><a href="<?php bloginfo('home') ?>/comments-by-section/1" title="Comments">Comments</a></li>
-		<li><a href="<?php bloginfo('home') ?>/comments-by-user/1" title="Commenters">Commenters</a></li>
-		<?php if(is_user_logged_in()): ?>
-			<li><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout">Logout</a></li>			
-		<?php else: ?>
-			<li><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account">Create Account</a></li>
-			<li><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login">Login</a></li>
-		<?php endif;?>
-
 	</ul>
 
 <?php
