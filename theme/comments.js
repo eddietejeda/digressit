@@ -117,6 +117,7 @@ jQuery(document).ready(function() {
 		if(jQuery('body').hasClass('single')){
 			return;
 		}
+		alert('sdf');
 		
 		var index = jQuery('.comment').index(this);		
 		if(jQuery('.comment-goto').length){
@@ -210,29 +211,11 @@ jQuery(document).ready(function() {
 		var item = jQuery('.comment-reply').get(current);
 
 
-/*			
-		jQuery(jQuery('.comment-reply').get(current)).show();
-		jQuery(jQuery('.comment-date').get(current)).hide();		
-*/	
-/*
-		jQuery(item).addClass('comment-hover');	
-		if(!jQuery(item).hasClass('comment-selected')){
-			jQuery(item).addClass('comment-hover');	
-		}
-*/
-
 	}, function(e){
 
 		var selected_comment = parseInt(jQuery('#comment_parent').val());
 		var current = parseInt(jQuery('.comment').index(this));	
 		var item = jQuery('.comment-reply').get(current);
-/*
-		jQuery(jQuery('.comment-date').get(current)).show();		
-		jQuery(jQuery('.comment-reply').get(current)).hide();
-*/
-
-		//jQuery(item).removeClass('comment-hover');	
-
 
 
 

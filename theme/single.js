@@ -197,42 +197,49 @@ jQuery(document).ready(function() {
 	if ( document.location.hash.substr(1, 7) == 'comment') {
 		var commentname = document.location.hash.substr(1);
 
-		var paragraphnumber = jQuery('#'+ commentname).attr("class").match(/paragraph-(\d+)/)[1];
-				
-		var item = jQuery('.commenticonbox').get((paragraphnumber));
+		
+		var comment_info = commentname.split('-');
 
-
+		if(comment_info.length == 2){
+			commentname = 'comment-' + blog_ID + '-'+ comment_info.pop(); 
+		}
+		
+		var paragraphnumber = jQuery('#'+commentname).attr('class').match( /paragraph-([\d.]+)/ )[1];
+		
 		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
 		jQuery('#respond').show();
 		jQuery('.comment').hide();
 		jQuery('.paragraph-' + paragraphnumber).show();
-
+		
 		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
-
+		
+		
 		if(jQuery('.paragraph-' + paragraphnumber).length == 0){
 			jQuery('#no-comments').show();			
 		}
 		else{
 			jQuery('#no-comments').hide();
 		}
+		
+		
+		//alert('#'+commentname);
+		
+		jQuery('#commentbox').scrollTo('#'+commentname , 200);
+		
+		if(paragraphnumber > 0){
+			//alert('sdf2');		
+				
+			var item = jQuery('.commenticonbox').get((paragraphnumber));
+			var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 
-		var top = jQuery('#textblock-' + paragraphnumber).offset().top;
-
-		jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
-
-		var scrollto = (top > 200)  ? (top - 30) : 0;
-
-		jQuery(window).scrollTo(scrollto , 200);
-		jQuery('#commentbox ').scrollTo('#'+commentname , 200);
-
-		if( jQuery('.paragraph-' + paragraphnumber).length > 0 ){
-			jQuery("#no-comments").hide();			
+			var scrollto = (top > 200)  ? (top - 30) : 0;
+			jQuery(window).scrollTo(scrollto , 200);
 		}
+
 	}
 	else if ( document.location.hash.substr(1, 13) == 'search-result') {
-		
 		jQuery(window).scrollTo( jQuery('.search-result:first'), 1000);
-		
 	}
 	else if (isNumber(document.location.hash.substr(1))) {
 		var paragraphnumber = document.location.hash.substr(1);
@@ -281,5 +288,6 @@ jQuery(document).ready(function() {
 			jQuery("#no-comments").hide();	
 		}	
 	}
+	
 	
 });

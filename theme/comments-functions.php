@@ -5,9 +5,12 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments-functions.php' == basename(
 endif;
 
 add_action('init', 'commentbrowser_flush_rewrite_rules' );
+
+
 add_filter('query_vars', 'commentbrowser_query_vars' );
 add_action('generate_rewrite_rules', 'commentbrowser_add_rewrite_rules' );
 add_action('template_redirect', 'commentbrowser_template_redirect' );
+
 
 
 add_action('wp_print_styles', 'comments_wp_print_styles');
@@ -16,63 +19,58 @@ add_action('public_ajax_function', 'add_comment_ajax');
 
 add_action('widgets_init', create_function('', 'return register_widget("CommentBrowserLinks");'));
 
+add_action('add_commentbrowser', 'commentbrowser_comments_by_section');
+add_action('add_commentbrowser', 'commentbrowser_comments_by_user');
+add_action('add_commentbrowser', 'commentbrowser_general_comments');
+
+
+
 // Flush your rewrite rules if you want pretty permalinks
 function commentbrowser_flush_rewrite_rules() {
     global $wp_rewrite;
+
     $wp_rewrite->flush_rules();
 }
 
 
 // Create some extra variables to accept when passed through the url
 function commentbrowser_query_vars( $query_vars ) {
-    $myvars = array( 'comments_by_section', 'comments_by_user',  'general_comments');
+    $myvars = array('commentbrowser_function', 'commentbrowser_params');
     $query_vars = array_merge( $query_vars, $myvars );
     return $query_vars;
 }
 
 
+
+
 // Create a rewrite rule if you want pretty permalinks
 function commentbrowser_add_rewrite_rules( $wp_rewrite ) {
-    $wp_rewrite->add_rewrite_tag( "%comments_by_section%", "(.+?)", "comments_by_section=" );
-    $wp_rewrite->add_rewrite_tag( "%comments_by_user%", "(.+?)", "comments_by_user=" );
-    $wp_rewrite->add_rewrite_tag( "%general_comments%", "(.+?)", "general_comments=" );
 
 
-    $urls = array( 'comments-by-section/%comments_by_section%', 'comments-by-user/%comments_by_user%','general-comments/%general_comments%');
-    foreach( $urls as $url ) {
-        $rule = $wp_rewrite->generate_rewrite_rules($url, EP_NONE, false, false, false, false, false);
-        $wp_rewrite->rules = array_merge( $rule, $wp_rewrite->rules );
-    }
-    return $wp_rewrite;
+	$wp_rewrite->add_rewrite_tag( "%commentbrowser_function%", "(general-comments|comments-by-user|comments-by-section|comments-by-tag)", "commentbrowser_function=" );
+	$wp_rewrite->add_rewrite_tag( "%commentbrowser_params%", "(.+?)", "commentbrowser_params=" );
+
+	$urls = array('%commentbrowser_function%', '%commentbrowser_function%/%commentbrowser_params%');
+	foreach( $urls as $url ) {
+		$rule = $wp_rewrite->generate_rewrite_rules($url, EP_NONE, false, false, false, false, false);
+		$wp_rewrite->rules = array_merge( $rule, $wp_rewrite->rules );
+	}
+	return $wp_rewrite;
 }
-
 
 // Let's echo out the content we are looking to dynamically grab before we load any template files
 function commentbrowser_template_redirect() {
     global $wp, $wpdb, $current_user, $current_browser_section;
 
 	//var_dump($wp->query_vars);
-
-
-	if( isset( $wp->query_vars['comments_by_section'] ) && !empty($wp->query_vars['comments_by_section'] ) || 
-		isset( $wp->query_vars['comments_by_user'] ) && !empty($wp->query_vars['comments_by_user'] ) ||
-		isset( $wp->query_vars['general_comments'] ) && !empty($wp->query_vars['general_comments'] )):
-
-
-
-		if(isset($wp->query_vars['comments_by_section'] )){
-			$current_browser_section = 'comments-by-section';
-		} 
-		elseif(isset($wp->query_vars['comments_by_user'] )){
-			$current_browser_section = 'comments-by-user';			
-		} 
-		elseif(isset($wp->query_vars['general_comments'] )){
-			$current_browser_section = 'general-comments';
-		} 
-
-		include('comments-browser.php');
+	$commentbrowser_function = "commentbrowser_" . str_replace('-','_',$wp->query_vars['commentbrowser_function']);
+	$commentbrowser_params =  $wp->query_vars['commentbrowser_params'];
+	
+	if( has_action('add_commentbrowser', $commentbrowser_function) && function_exists($commentbrowser_function)) :
+		include(TEMPLATEPATH . '/comments-browser.php');
 		exit;
 	endif;
+	
 }
 
 
@@ -101,14 +99,14 @@ function comments_wp_print_scripts(){
 
 
 function add_comment_ajax($request_params){
-	extract($request_params);
+	//extract($request_params);
 	global $wpdb, $current_user;
 
 	switch_to_blog($request_params['blog_id']);
 	$time = current_time('mysql', $gmt = get_option('gmt_offset')); 
 	$time_gmt = current_time('mysql', $gmt = 0); 
 	
-	$display_name = isset($request_params['display_name']) ? $request_params['display_name'] : $current_user->display_name;
+	$display_name = isset($current_user->display_name) ? $current_user->display_name : $request_params['display_name'];
 	$user_email = isset($request_params['user_email']) ? $request_params['user_email'] : $current_user->user_email;
 	$user_ID = isset($current_user->ID) ? $current_user->ID : '';
 
@@ -188,7 +186,7 @@ function add_comment_ajax($request_params){
 
 	
 	
-	restore_current_blog();
+	//restore_current_blog();
 	
 	die(json_encode(array('status' => $status, "message" => $message)));
 	
@@ -378,7 +376,7 @@ function indexOf($needle, $haystack)
 
 function list_posts()
 {
-	global $current_browser_section;
+	global $wp;
 	
 	$myposts = get_posts('numberposts=-1');
 	
@@ -388,7 +386,7 @@ function list_posts()
 	<?php
 	foreach($myposts as $post): ?>
 	<?php
-	$permalink = get_bloginfo('siteurl')."/".$current_browser_section.'/'.$post->ID;
+	$permalink = get_bloginfo('siteurl')."/".$wp->query_vars['commentbrowser_function'].'/'.$post->ID;
 	?>
 	<li><a href="<?php echo $permalink; ?>"><?php echo get_the_title($post->ID); ?> (<?php echo get_post_comment_count($post->ID); ?>)</a></li>
 	<?php endforeach;
@@ -401,14 +399,15 @@ function list_posts()
 
 function list_users()
 {
-	global $current_browser_section;
+	global $wp;
 	$users = get_users_who_have_commented();
 	//var_dump($users);
+	
 	?>
 	<ol class="navigation">
 	<?php
 	foreach($users as $user) :
-		$permalink = get_bloginfo('siteurl')."/".$current_browser_section.'/'.$user->ID;
+		$permalink = get_bloginfo('siteurl')."/".$wp->query_vars['commentbrowser_function'].'/'.$user->ID;
 		?>
 		<li><a href="<?php echo $permalink; ?>"><?php echo $user->user_login; ?> (<?php echo $user->comments_per_user; ?>)</a></li>
 	<?php endforeach; 
@@ -422,26 +421,23 @@ function list_users()
 
 function list_general_comments()
 {
-	global $wp_rewrite, $post;
-
-?>
-	<ol>
-	<?php
-	$options = get_option('digressit');
-
-	extract($options);
-	global $post;
+	global $wp;
+	
 	$myposts = get_posts('numberposts=-1');
-	return $myposts;
-	/*
-	foreach($myposts as $post) :
-	 	setup_postdata($post);
-		$permalink = get_permalink($post->ID);
-		$permalink = str_replace(get_bloginfo('siteurl'),get_bloginfo('siteurl')."/".$current_browser_section,$permalink);
-		?>
-		<li><a href="<?php echo $permalink; ?>"><?php the_title(); ?> (<?php echo get_post_comment_count($post->ID); ?>)</a></li>
-	<?php endforeach; 
-	*/
+	
+	?>
+	
+	<ol class="navigation">
+	<?php
+	foreach($myposts as $post): ?>
+	<?php
+	$permalink = get_bloginfo('siteurl')."/".$wp->query_vars['commentbrowser_function'].'/'.$post->ID;
+	?>
+	<li><a href="<?php echo $permalink; ?>"><?php echo get_the_title($post->ID); ?> (<?php echo count(get_approved_general_comments($post->ID)); ?>)</a></li>
+	<?php endforeach;
+	?>
+	</ol>
+	<?php
 }
 
 
@@ -449,7 +445,7 @@ function list_general_comments()
 
 //the following were imported from CP1.4
 function get_approved_general_comments($id){
-	$approved_comments = get_approved_comments_and_pingbacks($id);
+	$approved_comments = get_approved_comments($id);
 	
 	$general_comments = null;
 
@@ -574,9 +570,9 @@ function getParentPosts(){
 /* this might be useless */
 function getAllCommentCount(){
 	global $wpdb;
-	$sql = "SELECT * FROM $wpdb->comments, $wpdb->posts WHERE comment_approved <> 'spam' AND comment_post_ID=ID AND post_type='post' AND post_status='publish'";
-	$result = $wpdb->get_results($sql);
-	return (count($result));
+	$sql = "SELECT COUNT(*) as count FROM $wpdb->comments, $wpdb->posts WHERE comment_approved = '1' AND comment_post_ID=ID AND post_type='post' AND post_status='publish'";
+	$result = $wpdb->get_var($sql);
+	return $result;
 }
 
 function get_all_comments($only_approved = true){
@@ -609,7 +605,7 @@ function getRecentComments($limit = 5, $cleaned = false){
 
 
 function get_approved_comments_for_paragraph($post_id, $paragraph){
-	$approved_comments = get_approved_comments_and_pingbacks($post_id);		
+	$approved_comments = get_approved_comments($post_id);		
 	$filtered = null;
 	foreach($approved_comments as $comment){
 		if($comment->comment_text_signature == $paragraph){
@@ -685,9 +681,9 @@ class CommentBrowserLinks extends WP_Widget {
 		?>
 		<h4>Comment Browser</h4>
 		<ul>
-			<li><a href="<?php bloginfo('home'); ?>/comments-by-section/1">Comments by Section</a></li>
-			<li><a href="<?php bloginfo('home'); ?>/comments-by-user/1">Comments by Users</a></li>
-			<li><a href="<?php bloginfo('home'); ?>/general-comments/1">General Comments</a></li>
+			<li><a href="<?php bloginfo('home'); ?>/comments-by-section">Comments by Section</a></li>
+			<li><a href="<?php bloginfo('home'); ?>/comments-by-user">Comments by Users</a></li>
+			<li><a href="<?php bloginfo('home'); ?>/general-comments">General Comments</a></li>
 			<?php do_action('add_commentbrowser_link'); ?>
 		</ul>
 		<?php
@@ -707,6 +703,39 @@ class CommentBrowserLinks extends WP_Widget {
 		return $instance;
 	}
 
+}
+
+
+
+
+function commentbrowser_comments_by_section(){
+	global $wp;
+	echo "<h3>Browse Comments by Section</h3>";
+	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this book</div>";
+	list_posts();
+	return isset($wp->query_vars['commentbrowser_params']) ? get_comments('post_id='.$wp->query_vars['commentbrowser_params']) : array();
+}
+
+function commentbrowser_comments_by_user(){
+	global $wp;
+	//var_dump($wp->query_vars);
+	echo "<h3>Browse Comments by Users</h3>";
+	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this book</div>";
+    if(is_numeric($wp->query_vars['commentbrowser_params'])) :
+        $curauth = get_user_by('id', $wp->query_vars['commentbrowser_params']);
+    else :
+    	$curauth = get_user_by('login', $wp->query_vars['commentbrowser_params']);
+    endif;
+	list_users();
+
+	return get_comments_from_user($curauth->ID);
+}
+function commentbrowser_general_comments(){
+	global $wp;
+	echo "<h3>Browser General Comments</h3>";
+	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this book</div>";
+	list_general_comments();
+	return get_approved_general_comments($wp->query_vars['commentbrowser_params']);
 }
 
 

@@ -32,6 +32,17 @@ h1, h2, h3, h4, h5, h6{
 	text-decoration: none;
 	border-bottom: 1px dashed #00a6dc;
 }
+.comment-browser .comment-goto{
+	display:block;
+	font-size:10px;
+	font-weight:bold;
+}
+
+.comment-browser .comment-goto a{
+	border: 0 !important;
+	text-decoration:none;
+}
+
 
 
 
@@ -710,7 +721,7 @@ h2{
 
 .preview .comment-count{
 	bottom:0;
-	padding:20px;
+	padding:0 10px;
 	position:absolute;
 	right:10px;
 }
@@ -800,13 +811,22 @@ h2{
 	z-index:0;
 	position: relative;
 	clear: both;
-	padding-left: 30px;
+	font-size: 80%;
 }
 
 .container{
 	position: relative;
 }
 
+.comment-count-in-book{
+	font-size: 80%;
+}
+.comment-browser{
+	padding-top: 0 !important;
+}
+#menu-primary ul:first-child{
+	margin-left: 20px;
+}
 #menu-primary ul{
 	margin: 0;
 	padding: 0;

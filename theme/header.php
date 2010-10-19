@@ -83,9 +83,10 @@ do_action('secondary_menu');
 function header_default_top_menu(){
 
 ?>
-
-
 	<ul>
+		<li><a href="<?php bloginfo('home') ?>/comments-by-section/" title="Comments by Section">Comments by Section</a></li>
+		<li><a href="<?php bloginfo('home') ?>/comments-by-user/" title="Users">Comments by Users</a></li>		
+		<li><a href="<?php bloginfo('home') ?>/general-comments/" title="General Comments">General Comments</a></li>		
 		<?php do_action('custom_default_top_menu'); ?>
 	</ul>
 

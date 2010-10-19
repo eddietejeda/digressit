@@ -1,10 +1,11 @@
 <?php 
 global $commentbrowser, $blog_id, $current_user, $current_user_comments, $development_mode, $testing_mode, $production_mode;
-global $digressit_content_function, $digressit_comments_function, $digressit_commentbox_function;
+global $digressit_content_function, $digressit_comments_function, $digressit_commentbox_function,$is_commentbrowser;
 
 global $browser;
 
 $browser = current_browser();
+$is_commentbrowser= false;
 
 
 get_currentuserinfo();
@@ -560,6 +561,10 @@ function current_browser() {
     );
 }
 
+function is_commentbrowser(){
+	global $is_commentbrowser;
+	return $is_commentbrowser;
+}
 
 function functions_wp_print_styles(){
 	global $current_user, $override_default_theme, $browser;
@@ -593,12 +598,14 @@ function functions_wp_print_styles(){
 	wp_enqueue_style('digressit.comments');
 	wp_enqueue_style('digressit.lightboxes');
 
+
+	//var_dump(is_commentbrowser());
 	
 	if(is_single()):
 	wp_enqueue_style('digressit.single');
 	endif;
+	
 	wp_enqueue_style('digressit.sidebar');
-
 
 	if(!$override_default_theme):
 	wp_enqueue_style('digressit.theme');		

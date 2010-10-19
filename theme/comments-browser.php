@@ -7,7 +7,7 @@
 Template Name: CommentsBrowser
 */
 
-global $current_browser_section, $wp ;
+global $current_browser_section, $wp, $blog_id ;
 
 //var_dump($current_browser_section);
 ?>
@@ -21,35 +21,19 @@ global $current_browser_section, $wp ;
 <div id="content">
 	<div id="mainpage"  class="comment-browser">
 		<?php 
-		
-		//var_dump($current_browser_section);
-		if($current_browser_section == "comments-by-section"){
-			echo "<h3>Comments by Section</h3>";
-			list_posts();
-			$comment_list = get_comments('post_id='.$wp->query_vars['comments_by_section']);
-		}
-		else if($current_browser_section == "comments-by-user"){
-			echo "<h3>Comments by Users</h3>";
-		    if(is_numeric($wp->query_vars['comments_by_user'])) :
-		        $curauth = get_user_by('id', $wp->query_vars['comments_by_user']);
-		    else :
-	        	$curauth = get_user_by('login', $wp->query_vars['comments_by_user']);
-		    endif;
-			list_users();
 
-			$comment_list = get_comments_from_user($curauth->ID);
-		}
-		else if($current_browser_section == "general-comments"){
-			echo "<h3>General Comments</h3>";
-			list_general_comments();
-			$comment_list = get_comments_from_user($curauth->ID);
-		}
-		else if($current_browser_section == "comments-by-tag"){
-			echo "<h3>Comments by Tags</h3>";
-			comments_by_tag_list();
-			$comment_list = get_comments_by_tag($wp->query_vars['comments_by_tag']);
-		}
+		$commentbrowser_function = "commentbrowser_" . str_replace('-','_',$wp->query_vars['commentbrowser_function']);
+		$commentbrowser_params =  $wp->query_vars['commentbrowser_params'];
+		
+		//var_dump($wp->query_vars);
+		
+		
+		if(has_action('add_commentbrowser', $commentbrowser_function) && function_exists($commentbrowser_function)){
 			
+			$comment_list = call_user_func($commentbrowser_function, $commentbrowser_params);
+		}
+
+		
 		?>		
 		
 	
@@ -60,7 +44,7 @@ global $current_browser_section, $wp ;
 		<?php foreach($comment_list as $comment): ?>
 
 	
-		<div <?php comment_class($classes); ?> id="comment-<?php echo (int)$comment->blog_id ?>-<?php echo $comment->comment_ID; ?>">
+		<div <?php comment_class($classes); ?> id="comment-<?php echo (int)$blog_id ?>-<?php echo $comment->comment_ID; ?>">
 			<div id="div-comment-<?php echo (int)$comment->blog_id; ?>-<?php echo $comment->comment_ID;; ?>" class="comment-body">
 			
 				<div class="comment-header">
@@ -91,16 +75,10 @@ global $current_browser_section, $wp ;
 					
 
 					
-						<?if (function_exists('switch_to_blog')):?>
-						<?php switch_to_blog( (int)$comment->blog_id); ?>
-						<?php endif; ?>
 						<div class="comment-goto">
-							<a href="<?php echo get_permalink($comment->comment_post_ID); ?>#<?php echo $comment->comment_text_signature; ?>">GO TO TEXT</a>
+							<a href="<?php echo get_permalink($comment->comment_post_ID); ?>#comment-<?php echo (int)$blog_id ?>-<?php echo $comment->comment_ID; ?>">Go to thread</a>
 						</div>
 
-						<?if (function_exists('switch_to_blog')):?>
-						<?php restore_current_blog(); ?>
-						<?php endif; ?>
 					
 						<?php do_action('digressit_custom_meta_data'); ?>
 
@@ -120,8 +98,20 @@ global $current_browser_section, $wp ;
 		<?php endforeach; ?>
 		<?php else: ?>
 			<div class="comment">
-				<br>
-			No comments
+				<div class="no-comment-browser">
+					<?php
+					
+					if(isset($commentbrowser_params)){
+						?>No comments<?php
+					}
+					else{
+						?>This page contains a running transcript of all conversations taking place in <?php bloginfo('name') ?>  
+							organized by section. Click through the menu on the left to view the comments in each section of the book. 
+							Click “Go to thread” to see the comment in context.<?php						
+					}
+					
+					?>
+				</div>
 			</div>
 		<?php endif; ?>
 		</div>

@@ -11,29 +11,17 @@ window.onload = function () {
 */
 
 jQuery(document).ready(function() {
-
-    jQuery("#mainpage .navigation a").hover(function (e) {
-
+	
+	jQuery("#mainpage .navigation a").hover(function (e) {
 		jQuery('#mainpage .preview').hide();
 		var index = jQuery('#mainpage .navigation a').index(this) + 1;
 		var item = jQuery('#mainpage .preview').get(index);			
-
 		jQuery(item).show();
 	});
-
-
+	
     jQuery("#mainpage").not('.navigation a').hover(function (e) {
 		jQuery('#mainpage .preview').hide();
 		jQuery('#mainpage .default').show();
 	});
-
 	
-	
-	
-	
-
-	
-	
-	
-
 });

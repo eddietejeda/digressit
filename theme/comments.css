@@ -38,11 +38,9 @@
 }
 
 .comment-goto  {
-	background-color:black;
-	color:white;
 	cursor:pointer;
 	display:none;
-	padding:0 9px;
+	padding:0 10px;
 	position:absolute;
 	right:0;
 	top:0;
