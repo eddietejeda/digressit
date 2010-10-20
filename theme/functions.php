@@ -47,7 +47,7 @@ add_action('wp', 'digressit_init_beta');
 
 function digressit_init_beta(){
 
-	if(strtotime('now') > strtotime("20 October 2010")){
+	if(strtotime('now') > strtotime("30 October 2010")){
 		die('This is BETA testing period has expired. Please install official release');
 	}
 }
