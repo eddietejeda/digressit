@@ -323,11 +323,18 @@ h4 {
 .textblock p{
 	padding: 0px;
 	margin:0px;
+	line-height: 20px;
 }
 
 
 
-
+.paragraphnumber{
+	font-size:60%;
+	left:-11px;
+	position:absolute;
+	top:10px;
+	display: block;	
+}
 .textblock {
 	min-height: 0;
 	border-color: white;

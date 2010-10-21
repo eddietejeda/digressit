@@ -36,6 +36,21 @@ jQuery(document).ready(function() {
 			jQuery('.paragraph-' + (i)).appendTo('#paragraph-block-'+(i));				
 			
 		});
+		
+		if(jQuery('.textblock').length > 1){
+
+			var i = jQuery('.textblock').length;
+			var paragraphnumber = (i == 0) ? '&nbsp;'  : i;
+			var commentlabel = (i == 0) ? ' general comment'  : ' comment';
+			var commentcount = jQuery('.paragraph-' + (i)).length;
+			
+			commentlabel = (commentcount == 1) ? commentlabel  : commentlabel + 's';
+			
+			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><div class="paragraph-block-button"><span class="paragraph-label">'+(paragraphnumber)+'</span>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></div>');
+			
+			jQuery('.paragraph-' + (i)).appendTo('#paragraph-block-'+(i));				
+
+		}
 	}
 
 	var dynamic_call = 'typeof(' + commentbox_function + ') != "undefined"';

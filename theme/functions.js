@@ -54,6 +54,13 @@ jQuery(document).ready(function() {
 		}, 100 );
 	});
 	
+	
+
+	//jQuery('#dynamic-sidebar').effect("bounce", { direction: 'right', times:1 }, 1500);
+
+
+
+	
 	jQuery('.submit, .lightbox-submit').click(function(e){
 		if(jQuery(e.target).hasClass('ajax')){
 			//return false;

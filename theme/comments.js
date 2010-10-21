@@ -77,15 +77,18 @@ jQuery(document).ready(function() {
 			else{
 				//alert('nogrouping');
 				jQuery('.commentlist').prepend(new_comment);			
-				
 			}
 			jQuery('#'+comment_id).fadeIn("#"+comment_id);
 		}
 		
 		var current_count = parseInt(jQuery(jQuery('.commentcount').get((selected_paragraph_number ))).html()) + 1;
 		
-		jQuery(jQuery('.commentcount').get((selected_paragraph_number ))).html(current_count);
-		jQuery(jQuery('.commentcount').get((selected_paragraph_number ))).fadeIn('slow');
+		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).html(current_count);
+		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).fadeIn('slow');
+		
+		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).html(current_count);
+		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).fadeIn('slow');
+		
 		jQuery('#comment').val('');		
 		jQuery('#comment_parent').val(0);
 		return;
