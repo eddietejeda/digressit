@@ -815,11 +815,14 @@ h2{
 
 
 #menu-primary {
-	clear:both;
-	right:35px;
-	text-align:right;
+	display:block;
+	left:0;
+	text-align:left;
 	width:100%;
 	z-index:0;
+	position: relative;
+	clear: both;
+	font-size: 80%;
 }
 
 .container{
