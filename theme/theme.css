@@ -539,8 +539,9 @@ h4 {
 .site-title h1{
 	font-size:45px;
 	font-weight:bold;
-	padding:30px 10px 15px 25px;
-	position: relative;
+	line-height:45px;
+	padding:15px 10px 0 20px;
+	position:relative;
 }
 
 .site-title a{
