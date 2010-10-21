@@ -50,8 +50,9 @@ function mainpage_default_menu(){
 	 $myposts = get_posts('numberposts=-1');
 	 foreach($myposts as $post) :
 	   setup_postdata($post);
+		$comment_count = get_post_comment_count($post->ID);
 	 ?>
-	    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+	    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?> (<?php echo $comment_count;  ?>)</a></li>
 	 <?php endforeach; ?>
 	 </ol> 
 
