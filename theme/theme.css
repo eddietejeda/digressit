@@ -336,7 +336,7 @@ h4 {
 	display: block;	
 }
 
-#menu-primary .menu-menu-container{
+#menu-primary > div{
 	display: inline;
 }
 .textblock {
