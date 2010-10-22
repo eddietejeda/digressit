@@ -1192,6 +1192,11 @@ img{
 	position: relative !important;
 }
 
+.mu_register input[type=submit]{
+	width: 50% !important;
+	position: relative !important;
+}
+
 
 .mu_register .submit {
 	background: none !important;
@@ -1204,7 +1209,7 @@ img{
 	right: auto !important;
 	left: 0 !important;
 	text-align: left !important;
-	-moz-box-shadow: none;
+	-moz-box-shadow: none!important;
 }
 
 .widecolumn{
