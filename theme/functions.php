@@ -271,6 +271,9 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 		$html = preg_replace('/<(\/?ul|ol)>/', '', $html);
 		$html = preg_replace('/<li>/', '<p>&bull;   ', $html);
 	}
+	
+	$html = str_replace(' & ','&amp;',$html);
+	
 	$html = html_entity_decode(wpautop(force_balance_tags($html)));
 
 	if($result = @simplexml_load_string(trim('<content>'.$html.'</content>'))){
