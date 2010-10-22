@@ -1187,6 +1187,19 @@ img{
 	position: relative !important;
 }
 
+
+.mu_register .submit {
+	background: auto !important;
+	color: auto !important;
+	font-size: auto !important;
+	font-weight: auto !important;
+	letter-spacing: auto !important;
+	padding: auto !important;
+	position:relative; !important;
+	right: auto !important;
+	text-align: auto !important;
+}
+
 .widecolumn{
 	-moz-box-shadow:0 25px 30px #AAAAAA !important;
 }
