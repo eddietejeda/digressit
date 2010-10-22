@@ -1178,12 +1178,17 @@ img{
 }
 
 
+.mu_register{
+	line-height: 45px;
+
+}
+
 .mu_register h2{
 	padding-left : 0;
 }
 
 .mu_register input{
-	width: 20% !important;
+	width: 50% !important;
 	position: relative !important;
 }
 
@@ -1199,6 +1204,7 @@ img{
 	right: auto !important;
 	left: 0 !important;
 	text-align: left !important;
+	-moz-box-shadow: none;
 }
 
 .widecolumn{
