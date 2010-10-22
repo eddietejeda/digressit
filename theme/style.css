@@ -1177,3 +1177,12 @@ img{
 	color:#EEEEEE;
 }
 
+
+.mu_register input{
+	width: 20% !important;
+	position: relative;
+}
+
+.widecolumn{
+	-moz-box-shadow:0 25px 30px #AAAAAA;
+}

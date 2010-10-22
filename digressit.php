@@ -125,6 +125,13 @@ function activate_digressit(){
 	
 
 	update_option('thread_comments_depth', 2);
+
+	$sidebars_widgets = get_option('sidebars_widgets');
+	
+	$sidebars_widgets['single-sidebar'] = null;
+	$sidebars_widgets['single-sidebar'][] = 'listposts-1';
+	
+	update_option('sidebars_widgets', $sidebars_widgets);
 	
 	$sql = "SHOW COLUMNS FROM $wpdb->comments";	
 	$columns = $wpdb->get_results($sql);

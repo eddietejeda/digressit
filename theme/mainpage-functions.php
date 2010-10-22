@@ -47,7 +47,7 @@ function mainpage_default_menu(){
 
 	 <?php
 	 global $post;
-	 $myposts = get_posts('numberposts=-1');
+	 $myposts = get_posts('numberposts=-1&orderby=ID&order=DESC');
 	 foreach($myposts as $post) :
 	   setup_postdata($post);
 		$comment_count = get_post_comment_count($post->ID);

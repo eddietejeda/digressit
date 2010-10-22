@@ -248,17 +248,11 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 					
 
 					
-					<?if (function_exists('switch_to_blog')):?>
-					<?php switch_to_blog( (int)$comment->blog_id); ?>
-					<?php endif; ?>
 					<div class="comment-goto">
 						<a href="<?php echo get_permalink($comment->comment_post_ID); ?>#<?php echo $comment->comment_text_signature; ?>">GO TO TEXT</a>
 					</div>
 
-					<?if (function_exists('switch_to_blog')):?>
-					<?php restore_current_blog(); ?>
-					<?php endif; ?>
-					
+
 					<?php do_action('digressit_custom_meta_data'); ?>
 
 										

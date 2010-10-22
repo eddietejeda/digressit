@@ -27,9 +27,14 @@ function add_digressit_parsing_function();
 
 add_action( 'after_setup_theme', 'digressit_setup' );
 
-add_digressit_content_function('standard_digressit_content_parser');
-add_digressit_comments_function('standard_digressit_comment_parser');
-add_digressit_commentbox_function('standard_digressit_commentbox_parser');
+register_digressit_content_function('standard_digressit_content_parser');
+register_digressit_content_function('discrete_digressit_content_parser');
+register_digressit_content_function('regexp_digressit_content_parser');
+
+
+
+register_digressit_comments_function('standard_digressit_comment_parser');
+register_digressit_commentbox_function('standard_digressit_commentbox_parser');
 
 
 if(file_exists(TEMPLATEPATH . '/extensions.php')){
@@ -231,7 +236,7 @@ function regexp_digressit_content_parser($html){
 	$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 	$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 
-	$options = get_site_option('digressit');
+	$options = get_option('digressit');
 	if($options['parse_list_items'] == 1){
 		$html = preg_replace('/<(\/?ul|ol)>/', '', $html);
 		$html = preg_replace('/<li>/', '<p>&bull;   ', $html);
@@ -246,6 +251,74 @@ function regexp_digressit_content_parser($html){
 	return  $matches;
 }
 
+
+function discrete_digressit_content_parser($content){
+	global $wpdb, $image_path, $post;
+
+	$matches = array();
+	$paragraph_blocks = explode('[break]', $content);
+
+
+	$blocks = null;
+	$text_signatures = null;
+	$permalink = get_permalink($post->ID);
+
+
+
+	$defaults = array('post_id' => $post->ID);
+	$total_comments = get_comments($defaults);
+	$total_count = count($total_comments);
+
+	foreach($paragraph_blocks as $key=>$paragraph)
+	{
+ 
+		$text_signature = $key+1;
+		$text_signatures[] = $text_signature;
+		$paranumber = $number = ( $key+1 );
+
+
+		$comment_count = 0;
+
+		foreach($total_comments as $c){
+			if($c->comment_text_signature == $paranumber){
+				$comment_count++;
+			}
+		}
+		
+				
+		$paragraphnumber = '<span class="paragraphnumber">';
+		
+		
+		
+	 	$numbertext = ($comment_count == 1) ?  'is one comment' : 'are '.$comment_count.' comments';
+	 	$numbertext = ($comment_count == 0) ?  'are no comments' : $numbertext;
+		
+		$digit_count = strlen($comment_count);
+		$commenticon =	'<span  title="There '.$numbertext.' for this paragraph" class="commenticonbox"><small class="commentcount fff commentcount'.$digit_count.'">'.$comment_count.'</small></span>'."\n";
+
+
+		if($number == 1){
+			//$morelink = '<span class="morelink"></span>';
+		}
+		else{
+			$morelink = null;
+		}
+
+
+		$block_content = "<div id='textblock-$number' class='textblock'>
+			<span class='paragraphnumber'><a href='$permalink#$number'>$number</a></span>
+			<span  title='There $numbertext for this paragraph' class='commenticonbox'><small class='commentcount commentcount".$digit_count."'>".$comment_count."</small></span>
+			<span class='paragraphtext'>".force_balance_tags($paragraph)."</span>
+		</div>" .  $morelink;
+		
+		$blocks[$paranumber] = $block_content;
+    }
+
+	
+	return $blocks;
+	
+}
+
 function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8'){
 	global $post;
 	$matches = array();
@@ -254,7 +327,7 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 	$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 
-	$options = get_site_option('digressit');
+	$options = get_option('digressit');
 	
 	$blocks = null;
 	$text_signatures = null;
@@ -272,10 +345,10 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 		$html = preg_replace('/<li>/', '<p>&bull;   ', $html);
 	}
 	
-	$html = str_replace(' & ',' and ',$html);
 	
-	$html = html_entity_decode(wpautop(force_balance_tags($html)));
+	$html = wpautop(force_balance_tags($html));
 
+	//var_dump($html);
 	if($result = @simplexml_load_string(trim('<content>'.$html.'</content>'))){
 		$xml = $result->xpath('/content/'. $tags);
 		foreach($xml as $match){
@@ -355,16 +428,16 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 
 
 
-function add_digressit_content_function($function_name){
+function register_digressit_content_function($function_name){
 	global $digressit_content_function;
 	$digressit_content_function[$function_name] = $function_name;
 }
-function add_digressit_comments_function($function_name){
+function register_digressit_comments_function($function_name){
 	global $digressit_comments_function;
 	$digressit_comments_function[$function_name] = $function_name;
 }
 
-function add_digressit_commentbox_function($function_name){
+function register_digressit_commentbox_function($function_name){
 	global $digressit_commentbox_function;
 	$digressit_commentbox_function[$function_name] = $function_name;
 }
@@ -400,7 +473,7 @@ function get_the_paragraph($number){
 
 
 function get_digressit_comments_function(){
-	$options = get_site_option('digressit');
+	$options = get_option('digressit');
 
 	if( isset($options['comments_function']) || function_exists($options['comments_function']) ){
 		return $options['comments_function'];
@@ -411,7 +484,7 @@ function get_digressit_comments_function(){
 }
 
 function get_digressit_content_parser_function(){
-	$options = get_site_option('digressit');
+	$options = get_option('digressit');
 
 
 	if( isset($options['content_parser']) || function_exists($options['content_parser']) ){
@@ -623,6 +696,8 @@ function functions_wp_print_styles(){
 	wp_enqueue_style('digressit.ie8');				
 	endif;
 
+
+	//var_dump(get_option('sidebars_widgets'));
 	
 }
 
@@ -643,7 +718,7 @@ function functions_wp_print_scripts(){
 	wp_deregister_script('autosave');
 	wp_enqueue_script('jquery');		
 	
-	$options = get_site_option('digressit');
+	$options = get_option('digressit');
 	
 	
 	$url = parse_url(get_root_domain(). $_SERVER["REQUEST_URI"]);
