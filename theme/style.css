@@ -1210,3 +1210,8 @@ img{
 .widecolumn{
 	-moz-box-shadow:0 25px 30px #AAAAAA !important;
 }
+
+
+#signup-welcome, .mu_register .view{
+	padding-left: 20px;
+}
