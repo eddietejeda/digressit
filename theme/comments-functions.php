@@ -217,7 +217,7 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
  					<?php $comment_user = get_userdata($comment->user_id); ?> 
 
 					<?php
-					$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment_user->user_login	;					
+					$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment_user->comment_author	;					
 
 					echo "<a href='$profile_url'>$comment_user->display_name</a>";
 					?>
