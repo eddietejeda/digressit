@@ -1178,11 +1178,15 @@ img{
 }
 
 
+.mu_register h2{
+	padding-left : 0;
+}
+
 .mu_register input{
 	width: 20% !important;
-	position: relative;
+	position: relative !important;
 }
 
 .widecolumn{
-	-moz-box-shadow:0 25px 30px #AAAAAA;
+	-moz-box-shadow:0 25px 30px #AAAAAA !important;
 }
