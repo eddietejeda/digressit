@@ -1187,7 +1187,7 @@ img{
 	padding-left : 0;
 }
 
-.mu_register input{
+.mu_register input[type=text]{
 	width: 50% !important;
 	position: relative !important;
 }
