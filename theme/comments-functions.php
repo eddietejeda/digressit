@@ -214,12 +214,18 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 
 					<?php echo get_avatar( $comment, 15 ); ?>
 
- 					<?php $comment_user = get_userdata($comment->user_id); ?> 
 
 					<?php
-					$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment_user->comment_author	;					
 
-					echo "<a href='$profile_url'>$comment_user->display_name</a>";
+					if($comment->user_id){
+						$comment_user = get_userdata($comment->user_id); 
+						$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment_user->user_login;
+						echo "<a href='$profile_url'>$comment_user->display_name</a>";
+					}
+					else{
+						$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment->comment_author;						
+						echo "<a href='$profile_url'>$comment->comment_author</a>";						
+					}
 					?>
 					
 
