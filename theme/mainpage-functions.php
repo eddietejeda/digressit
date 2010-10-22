@@ -56,7 +56,6 @@ function mainpage_default_menu(){
 	 <?php endforeach; ?>
 	 </ol> 
 
-
 	<div class="previews">
 
 		<div class="preview default">

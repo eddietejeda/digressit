@@ -345,7 +345,7 @@ h4 {
 }
 
 .entry{
-	padding: 15px;
+	padding:25px;
 }
 
 .small-button{
@@ -356,6 +356,12 @@ h4 {
 	font-weight:bold;
 	margin-right:5px;
 	padding:0 3px 0 2px;
+}
+
+.previews img{
+	border:0 none;
+	height:auto;
+	max-width:570px;
 }
 
 .comment-browser .comment{
