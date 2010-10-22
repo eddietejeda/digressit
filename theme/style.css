@@ -1189,15 +1189,16 @@ img{
 
 
 .mu_register .submit {
-	background: auto !important;
-	color: auto !important;
+	background: none !important;
+	color: black !important;
 	font-size: auto !important;
-	font-weight: auto !important;
+	font-weight: normal !important;
 	letter-spacing: auto !important;
 	padding: auto !important;
 	position:relative; !important;
 	right: auto !important;
-	text-align: auto !important;
+	left: 0 !important;
+	text-align: left !important;
 }
 
 .widecolumn{
