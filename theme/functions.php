@@ -708,8 +708,7 @@ function get_root_domain(){
 	$testing_mode = false;
 	$production_mode = false;
 
-	//var_dump(DOMAIN_CURRENT_SITE);
-	return ($_SERVER['HTTPS']) ? "https://". DOMAIN_CURRENT_SITE : "http://" . DOMAIN_CURRENT_SITE;
+	return isset($_SERVER['HTTPS']) ? "https://". DOMAIN_CURRENT_SITE : "http://" . DOMAIN_CURRENT_SITE;
 }
 
 

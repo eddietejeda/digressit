@@ -104,6 +104,12 @@ function activate_digressit(){
 	$options['front_page_order_by'] = 'date';
 	$options['allow_general_comments'] = 1;
 	$options['allow_comments_search'] = 0;
+
+
+	$options['table_of_contents_label'] = 'Table of Contents';
+	$options['comments_by_section_label'] = 'Comments of Section';
+	$options['comments_by_users_label'] = 'Comments by Users';
+	$options['general_comments_label'] = 'General Comments';
 	
 	
 	
@@ -302,6 +308,29 @@ function digressit_theme_options_page() {
 
 
 	<tr>
+		<td style="width: 200px"><b>Table of Contents Label</b></td>
+		<td><?php print_input_text('table_of_contents_label', $options['table_of_contents_label']); ?></td>
+	</tr>
+
+	<tr>
+		<td style="width: 200px"><b>Comments by Section Label</b></td>
+		<td><?php print_input_text('comments_by_section_label', $options['comments_by_section_label']); ?></td>
+	</tr>
+
+	<tr>
+		<td style="width: 200px"><b>Comments by Users Label</b></td>
+		<td><?php print_input_text('comments_by_section_label', $options['comments_by_users_label']); ?></td>
+	</tr>
+
+
+	<tr>
+		<td style="width: 200px"><b>General Comments Label</b></td>
+		<td><?php print_input_text('general_comments_label', $options['general_comments_label']); ?></td>
+	</tr>
+
+
+
+	<tr>
 		<td style="width: 200px"><b>Allow General Comments</b></td>
 		<td><?php print_dropdown('allow_general_comments', array('no' => 0, 'yes' => '1'), $options['allow_general_comments']); ?></td>
 	</tr>
@@ -332,6 +361,10 @@ function digressit_theme_options_page() {
 
 
 
+
+function print_input_text($name, $value){
+	echo "<input type='text' name='$name' value='$value'>";
+}
 
 
 function print_dropdown($form, $options = array(), $selected){
