@@ -566,7 +566,7 @@ function get_comments_from_user($id){
 	
 	if(count($results) == 0){
 		$sql = "SELECT c.*, p.post_name, p.post_title FROM $wpdb->comments c, $wpdb->posts p  WHERE p.post_status='publish' AND c.comment_author = '$id' AND c.comment_post_ID = p.ID ORDER BY comment_ID DESC";
-		echo $sql;
+		//echo $sql;
 		$results = $wpdb->get_results($sql);
 		
 	}
