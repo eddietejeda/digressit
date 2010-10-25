@@ -62,10 +62,11 @@ else{
 	<!-- this is some login stuff that should always be here -->
 	<ul>
 	<?php if(is_user_logged_in()): ?>
+		<li><a href="<?php echo get_bloginfo('url'); ?>/wp-admin/" title="You Account">Your Account</a></li>			
 		<li><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout">Logout</a></li>			
 	<?php else: ?>
 		<?php if(get_option('users_can_register')): ?>
-		<li><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account">Create Account</a></li>
+		<li><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Register">Register</a></li>
 		<?php endif; ?>
 		<li><a class="lightbox lightbox-login" title="Login">Login</a></li>
 	<?php endif;?>

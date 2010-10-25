@@ -885,3 +885,8 @@ div#item-header{
 	color: #333;
 	font-style: italic;
 }
+
+
+#lightbox-login{
+	padding: 25px 50px 0;
+}

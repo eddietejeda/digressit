@@ -401,21 +401,37 @@ function list_users()
 {
 	global $wp;
 	$users = get_users_who_have_commented();
-	//var_dump($users);
-	
+
+
+
 	?>
 	<ol class="navigation">
 	<?php
 	foreach($users as $user) :
 		$permalink = get_bloginfo('siteurl')."/".$wp->query_vars['commentbrowser_function'].'/'.$user->ID;
 		?>
-		<li><a href="<?php echo $permalink; ?>"><?php echo $user->user_login; ?> (<?php echo $user->comments_per_user; ?>)</a></li>
+		<li>
+			<?php
+
+			if($user->user_id){
+				$comment_user = get_userdata($user->ID); 
+				$profile_url = get_bloginfo('home')."/comments-by-user/" . $user->user_login;
+				echo "<a href='$profile_url'>$user->display_name ($user->comments_per_user)</a> ";						
+			}
+			else{
+				$profile_url = get_bloginfo('home')."/comments-by-user/" . $user->comment_author;						
+				echo "<a href='$profile_url'>$user->comment_author ($user->comments_per_user)</a> ";						
+			}
+			?>			
+		
+		</li>
 	<?php endforeach; 
 	?>
 	</ol>
 	<?php
 
 }
+
 
 
 
@@ -520,23 +536,19 @@ function getCommentCountByCategory($cat)
 function get_users_who_have_commented()
 {
 	global $wpdb;
-	$sql = "SELECT * , COUNT( * ) AS comments_per_user FROM $wpdb->comments c, $wpdb->posts p,  $wpdb->users u
-	WHERE  p.ID = c.comment_post_ID  
-	AND p.post_status='publish' 
-	AND c.comment_approved = 1 
-	AND c.user_id = u.ID
-	GROUP BY c.comment_author 
-	ORDER BY c.comment_author";
+	$sql = "SELECT *, COUNT( * ) AS comments_per_user  FROM $wpdb->users u RIGHT JOIN $wpdb->comments c ON u.ID=c.user_id
+					LEFT JOIN $wpdb->posts p ON p.ID=c.comment_post_ID
+					WHERE c.comment_approved = 1 
+					GROUP BY c.comment_author
+					ORDER BY c.comment_author";
 	
+	
+	//echo $sql;
 	$results = $wpdb->get_results($sql);
 	
-	//TODO: do in SQL
-	$filtered = array();
-	foreach($results as $result){
-		$filtered[] = $result;
-	}
+	//var_dump($results);
 
-	return $filtered;
+	return $results;
 }
 
 
@@ -544,10 +556,24 @@ function get_users_who_have_commented()
 function get_comments_from_user($id){
  	global $wpdb;	
 
-	$sql = "SELECT c.*, u.*, p.post_name, p.post_title FROM $wpdb->comments c, $wpdb->users u, $wpdb->posts p  WHERE p.post_status='publish' AND c.user_id = u.ID AND u.ID=$id AND c.comment_post_ID = p.ID ORDER BY comment_ID DESC";
-	$results = $wpdb->get_results($sql);
 
-	//var_dump($results);
+	$results = null;
+	if(is_numeric($id)){
+		$sql = "SELECT c.*, u.*, p.post_name, p.post_title FROM $wpdb->comments c, $wpdb->users u, $wpdb->posts p  WHERE p.post_status='publish' AND c.user_id = u.ID AND u.ID=$id AND c.comment_post_ID = p.ID ORDER BY comment_ID DESC";
+		$results = $wpdb->get_results($sql);
+		
+	}
+	
+	if(count($results) == 0){
+		$sql = "SELECT c.*, p.post_name, p.post_title FROM $wpdb->comments c, $wpdb->posts p  WHERE p.post_status='publish' AND c.comment_author = '$id' AND c.comment_post_ID = p.ID ORDER BY comment_ID DESC";
+		echo $sql;
+		$results = $wpdb->get_results($sql);
+		
+	}
+
+
+
+
 	return $results;
 	
 }
@@ -726,9 +752,20 @@ function commentbrowser_comments_by_user(){
     else :
     	$curauth = get_user_by('login', $wp->query_vars['commentbrowser_params']);
     endif;
+
+
+	if(isset($curauth->ID)){
+		$identifier = $curauth->ID;
+	}
+	else{
+		$identifier = substr($wp->query_vars['commentbrowser_params'], 0 , 50); //lets limit the length of this string to limit funny url stuff.
+	}
+	
+	//var_dump($identifier);
+
 	list_users();
 
-	return get_comments_from_user($curauth->ID);
+	return get_comments_from_user($identifier);
 }
 function commentbrowser_general_comments(){
 	global $wp;

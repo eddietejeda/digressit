@@ -31,6 +31,7 @@ global $current_browser_section, $wp, $blog_id ;
 		if(has_action('add_commentbrowser', $commentbrowser_function) && function_exists($commentbrowser_function)){
 			
 			$comment_list = call_user_func($commentbrowser_function, $commentbrowser_params);
+
 		}
 
 		
@@ -51,14 +52,21 @@ global $current_browser_section, $wp, $blog_id ;
 				
 					<div class="comment-author vcard">
 
+
 						<?php echo get_avatar( $comment, 15 ); ?>
 
-	 					<?php $comment_user = get_userdata($comment->user_id); ?> 
 
 						<?php
-						$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment_user->user_login	;					
 
-						echo "<a href='$profile_url'>$comment_user->display_name</a>";
+						if($comment->user_id){
+							$comment_user = get_userdata($comment->user_id); 
+							$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment_user->user_login;
+							echo "<a href='$profile_url'>$comment_user->display_name</a>";
+						}
+						else{
+							$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment->comment_author;						
+							echo "<a href='$profile_url'>$comment->comment_author</a>";						
+						}
 						?>
 					
 
