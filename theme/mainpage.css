@@ -15,7 +15,7 @@
 
 #mainpage .navigation{
 	float:left;
-	max-width:30%;
+	width:30%;
 	min-height:800px;
 	padding-left:25px;
 	padding-right:15px;
@@ -53,8 +53,8 @@
 #mainpage .widget_search,
 #mainpage .previews
 {
-	-moz-box-shadow:3px 3px 7px #AAAAAA;
-	border:1px solid;
+	-moz-box-shadow:3px 3px 7px #BBBCBD;
+	border:1px solid #BBBCBD;
 	float:right;
 	margin:10px;
 	min-width:265px;
@@ -62,7 +62,8 @@
 	
 }
 #mainpage .previews{
-	width: 60%;
+	margin-right:5%;
+	width:50%;
 }
 
 #content #digress-it-list-posts{

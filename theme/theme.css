@@ -1,8 +1,10 @@
 body{
-	font-family: "Bookman Old Style",Georgia,"Times New Roman",serif;
-	font-size: 15px;
+	font-family: "Times New Roman PS MT","Times New Roman",Times,serif;
+	font-size: 90%;
 	background-color:#E6E6E6;
 }
+
+
 
 
 #header{
@@ -21,9 +23,9 @@ body{
 }
 
 h1, h2, h3, h4, h5, h6{
-	text-transform: capitalize;
+	text-transform: uppercase;
 	padding-bottom: 10px;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 
@@ -32,6 +34,23 @@ h1, h2, h3, h4, h5, h6{
 	text-decoration: none;
 	border-bottom: 1px dashed #00a6dc;
 }
+
+.home #content {
+	background-color: white;
+}
+
+.previews{
+	position: relative;
+}
+.bubblearrow {
+	background:url("./images/bubblearrow.png") no-repeat scroll 0 0 transparent;
+	height:22px;
+	left:-8px;
+	position:absolute;
+	top:20px;
+	width:10px;
+}
+
 .comment-browser .comment-goto{
 	display:block;
 	font-size:10px;
@@ -44,6 +63,9 @@ h1, h2, h3, h4, h5, h6{
 }
 
 
+.navigation li {
+	line-height: 130%;
+}
 
 
 .lightbox-submit, .lightbox-button, .button, .submit {
@@ -104,7 +126,28 @@ h1, h2, h3, h4, h5, h6{
 
 .selected-textblock .commenticonbox{
 	background-color: transparent;
-	border: 0px;
+	border: 0px
+}
+
+.selected-textblock {
+	border: 1px dashed #aaa !important;
+	background-color: #feff9b;
+}
+
+.site-home .description{
+	float:right;
+	font-size:200%;
+	padding:15px;
+	width:580px;
+
+}
+
+
+.site-home .description{
+	float:right;
+	font-size:200%;
+	padding:15px;
+	width:538px;
 }
 
 
@@ -184,7 +227,6 @@ h4 {
 	margin-left:0;
 	padding:10px;
 	width: 95%;
-	font-family: "Bookman Old Style",Georgia,"Times New Roman",serif;
 }
 
 .lightbox-close{
@@ -194,6 +236,9 @@ h4 {
 	padding: 17px;
 }
 
+#menu-primary {
+	padding: 5px 0 0px;
+}
 #respond{
 	border-top: 1px solid #B4BDBD;
 }
@@ -209,6 +254,15 @@ h4 {
 	top: 0px;
 	padding: 0;
 	margin-bottom: 10px;
+}
+
+#mainpage .toc{
+	float: left;
+	padding-top: 0;
+}
+
+#mainpage{
+	padding-top: 50px;
 }
 
 #footer div {
@@ -283,7 +337,7 @@ h4 {
 .commentcount1 {
 	background:url("images/comment_blue_1digit.png") no-repeat scroll 2px 2px transparent;
 	color:white;
-	font-size:10px;
+	font-size:12px;
 	font-weight:bold;
 	height:18px;
 	padding:0 9px;
@@ -294,7 +348,7 @@ h4 {
 .commentcount2 {
 	background:url("images/comment_blue_2digit.png") no-repeat scroll 1px 2px transparent;
 	color:white;
-	font-size:10px;
+	font-size:12px;
 	font-weight:bold;
 	height:18px;
 	padding:0 1px 0 7px;
@@ -305,7 +359,7 @@ h4 {
 .commentcount3 {
 	background:url("images/comment_blue_3digit.png") no-repeat scroll 1px 1px transparent;
 	color:white;
-	font-size:10px;
+	font-size:12px;
 	font-weight:bold;
 	height:15px;
 	padding:0 10px 0 8px;
@@ -366,6 +420,7 @@ h4 {
 
 .comment-browser .comment{
 	display: block;
+	border: 1px solid #bbbcbd;
 }
 /* DIGRESS IT WEBSITE */
 
@@ -543,11 +598,12 @@ h4 {
 }
 
 .site-title h1{
-	font-size:45px;
-	font-weight:bold;
+	font-size:275%;
 	line-height:45px;
 	padding:15px 10px 0 20px;
 	position:relative;
+	line-height: 1.22em;
+	letter-spacing:0.07em;
 }
 
 .site-title a{
@@ -603,7 +659,7 @@ a{
 	padding:10px;	
 }
 .paragraph-label{
-	font-size: 20px;
+	font-size: 150%;
 }
 .comment{
 	display: none;
@@ -655,6 +711,10 @@ a{
 	border: 0 !important;
 }
 
+
+a:hover{
+	background-color: #FEFF9B;
+}
 #searchform{
 	padding:2px 7px 5px 0;
 }
@@ -770,12 +830,13 @@ h2{
 }
 
 .comment-browser .comment{
-	-moz-box-shadow:3px 3px 7px #AAAAAA;
-	border:1px solid;
+	border:0px;
 	float:left;
 	margin:10px;
 	padding:5px 10px 20px 15px;
 	width:100%;
+	-moz-box-shadow:3px 3px 7px #bbbcbd;
+	border:1px solid #bbbcbd;	
 }
 
 
@@ -829,7 +890,7 @@ h2{
 	z-index:0;
 	position: relative;
 	clear: both;
-	font-size: 80%;
+	font-size: 90%;
 }
 
 .container{
@@ -838,6 +899,7 @@ h2{
 
 .comment-count-in-book{
 	font-size: 80%;
+	clear: left;
 }
 .comment-browser{
 	padding-top: 0 !important;

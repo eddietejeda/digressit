@@ -22,7 +22,7 @@ jQuery(document).ready(function() {
 	}
 
 
-	function standard_digressit_commentbox_parser(){
+	function grouping_digressit_commentbox_parser(){
 
 		jQuery('.textblock').each(function(i){
 			var paragraphnumber = (i == 0) ? '&nbsp;'  : i;

@@ -14,7 +14,7 @@ function page_wp_print_scripts(){
 }
 
 function page_sidebar_widgets(){
-	if(is_active_sidebar(1)){
+	if(is_active_sidebar('page-sidebar')){
 		?>
 		<div class="sidebar-widgets">
 		<div id="dynamic-sidebar" class="sidebar">		

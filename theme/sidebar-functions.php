@@ -1,14 +1,36 @@
 <?php
 
 
-add_action('widgets_init', create_function('', 'return register_widget("ListPosts");'));
+add_action('widgets_init', create_function('', 'return register_widget("ListPostsWithCommentCount");'));
+//add_action('widgets_init', create_function('', 'return register_widget("ListUsersWithCommentCount");'));
+add_action('widgets_init', create_function('', 'return register_widget("LiveContentSearch");'));
 
 
 
-class ListPosts extends WP_Widget {
+class LiveContentSearch extends WP_Widget {
 	/** constructor */
-	function ListPosts() {
-		parent::WP_Widget(false, $name = 'Sidebar List Posts');	
+	function LiveContentSearch() {
+		parent::WP_Widget(false, $name = 'Live Content Search');	
+	}
+
+	function widget($args = array(), $defaults) {		
+		extract( $args );
+		global $post;
+		?>
+		<div id="searchform">
+			<input id="live-post-search" class="ajax-live live-post-search comment-field-area" type="text" value="Search">
+		</div>
+		<?php
+	}
+
+}
+
+
+
+class ListPostsWithCommentCount extends WP_Widget {
+	/** constructor */
+	function ListPostsWithCommentCount() {
+		parent::WP_Widget(false, $name = 'List Posts with Comment Count');	
 	}
 
 	function widget($args = array(), $defaults) {		
@@ -36,10 +58,6 @@ class ListPosts extends WP_Widget {
 		
 		<div class="sidebar-optional-graphic"></div>
 		<div class="sidebar-pullout"></div>
-		
-		<div id="searchform">
-			<input id="live-post-search" class="ajax-live live-post-search comment-field-area" type="text" value="Search">
-		</div>
 
 		<?php
 		foreach ($categories as $key => $cat) {
@@ -62,6 +80,8 @@ class ListPosts extends WP_Widget {
 				'post_type' => 'post',
 				'post_status' => 'publish',
 				'post_type' => 'post',
+				'order_by' => 'ID',
+				'order' => 'ASC',
 				'category' => $cat_id,
 				);
 			$posts = get_posts($args);
@@ -88,13 +108,13 @@ class ListPosts extends WP_Widget {
 			$commentbubblecolor = ($rule_discussion_status == 'current') ? '-dark' : '-grey';
 			
 			if($commentcount < 10){
-				$commentcountclass  = 'commentcount1 sidebar-comment-count-single'.$commentbubblecolor;
+				$commentcountclass  = 'commentcount commentcount1 sidebar-comment-count-single'.$commentbubblecolor;
 			}
 			else if($commentcount < 100 && $commentcount > 9){
-				$commentcountclass  = 'commentcount2 sidebar-comment-count-double'.$commentbubblecolor;
+				$commentcountclass  = 'commentcount commentcount2 sidebar-comment-count-double'.$commentbubblecolor;
 			}
 			else{
-				$commentcountclass  = 'commentcount3 sidebar-comment-count-triple'.$commentbubblecolor;					
+				$commentcountclass  = 'commentcount commentcount3 sidebar-comment-count-triple'.$commentbubblecolor;					
 			}
 			
 			?>

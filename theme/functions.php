@@ -32,9 +32,11 @@ register_digressit_content_function('discrete_digressit_content_parser');
 register_digressit_content_function('regexp_digressit_content_parser');
 
 
-
 register_digressit_comments_function('standard_digressit_comment_parser');
-register_digressit_commentbox_function('standard_digressit_commentbox_parser');
+
+
+register_digressit_commentbox_js('grouping_digressit_commentbox_parser');
+register_digressit_commentbox_js('nogrouping_digressit_commentbox_parser');	
 
 
 if(file_exists(TEMPLATEPATH . '/extensions.php')){
@@ -52,7 +54,7 @@ add_action('wp', 'digressit_init_beta');
 
 function digressit_init_beta(){
 
-	if(strtotime('now') > strtotime("30 October 2010")){
+	if(strtotime('now') > strtotime("15 Nov 2010")){
 		die('This is BETA testing period has expired. Please install official release');
 	}
 }
@@ -84,17 +86,6 @@ function digressit_setup(){
 
 	// Add default posts and comments RSS feed links to head
 	add_theme_support( 'automatic-feed-links' );
-
-	// Make theme available for translation
-	// Translations can be filed in the /languages/ directory
-	load_theme_textdomain( 'digressit', TEMPLATEPATH . '/languages' );
-
-	$locale = get_locale();
-	$locale_file = TEMPLATEPATH . "/languages/$locale.php";
-	if ( is_readable( $locale_file ) ){
-		require_once( $locale_file );
-	}
-
 
 	
 	$sql = "SHOW COLUMNS FROM $wpdb->comments";	
@@ -188,18 +179,21 @@ function standard_stylized_title($title){
 function is_frontpage(){
 	global $is_frontpage, $is_mainpage, $blog_id;
 	
-	if(WP_ALLOW_MULTISITE && file_exists(get_template_directory(). '/frontpage.php')){
-		if(is_home()){
-			if($blog_id == 1):			
-				return true;
-			else:
-				return false;
-			endif;
-		}
-	}
-	else{
+	if(!function_exists('is_multisite')){
 		return false;
 	}
+
+	//die(var_dump(is_frontpage()));
+	
+	if(is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
+		if(is_home()){
+			if($blog_id == 1){		
+				return true;
+			}
+		}
+	}
+	
+	return false;
 }
 
 
@@ -437,7 +431,7 @@ function register_digressit_comments_function($function_name){
 	$digressit_comments_function[$function_name] = $function_name;
 }
 
-function register_digressit_commentbox_function($function_name){
+function register_digressit_commentbox_js($function_name){
 	global $digressit_commentbox_function;
 	$digressit_commentbox_function[$function_name] = $function_name;
 }
@@ -545,10 +539,6 @@ function json_remote_call($webservice, $parameters = null){
 
 
 
-function collaborate_page($content){
-	$blocks[] = $content;
-	return $blocks;
-}
 
 
 
@@ -655,46 +645,59 @@ function functions_wp_print_styles(){
 	wp_register_style('digressit.single', get_template_directory_uri().'/single.css');
 	wp_register_style('digressit.theme', get_template_directory_uri().'/theme.css');
 
+	//hacks for IE
 	wp_register_style('digressit.ie7', get_template_directory_uri().'/ie7.css');
 	wp_register_style('digressit.ie8', get_template_directory_uri().'/ie8.css');
 	
 
 	
-	if(is_page() || is_search()):		
+	if(is_page() || is_search()){	
 		wp_enqueue_style('digressit.page');
-	endif;
+	}
 
 
-	if(is_search()):
+	if(is_search()){
 		wp_enqueue_style('digressit.search');			
-	endif;
+	}
 
-	wp_enqueue_style('digressit.frontpage');
-	wp_enqueue_style('digressit.author');
-	wp_enqueue_style('digressit.comments');
-	wp_enqueue_style('digressit.lightboxes');
+	if(is_frontpage()){
+		wp_enqueue_style('digressit.frontpage');
+	}
 
-
-	//var_dump(is_commentbrowser());
 	
-	if(is_single()):
-	wp_enqueue_style('digressit.single');
-	endif;
+	if(is_author()){
+		wp_enqueue_style('digressit.author');
+	}
 	
-	wp_enqueue_style('digressit.sidebar');
+	if(is_single() || is_commentbrowser() || is_author()){
+		wp_enqueue_style('digressit.comments');
+	}
 
-	if(!$override_default_theme):
-	wp_enqueue_style('digressit.theme');		
-	endif;
+	if(is_single() || is_page() || is_archive() || is_author() || is_search()){
+		wp_enqueue_style('digressit.lightboxes');
+	}
+
+	
+	if(is_single()){
+		wp_enqueue_style('digressit.single');
+	}
+	
+	if(is_single() || is_page() || is_archive() || is_author() || is_search()){	
+		wp_enqueue_style('digressit.sidebar');
+	}
+
+	if(!$override_default_theme){
+		wp_enqueue_style('digressit.theme');		
+	}
 
 
-	if($browser['name'] =='msie' && $browser['version'] == '7.0'):
-	wp_enqueue_style('digressit.ie7');				
-	endif;
+	if($browser['name'] =='msie' && $browser['version'] == '7.0'){
+		wp_enqueue_style('digressit.ie7');				
+	}
 
-	if($browser['name'] =='msie' && $browser['version'] == '8.0'):
-	wp_enqueue_style('digressit.ie8');				
-	endif;
+	if($browser['name'] =='msie' && $browser['version'] == '8.0'){
+		wp_enqueue_style('digressit.ie8');				
+	}
 
 
 	//var_dump(get_option('sidebars_widgets'));
@@ -738,11 +741,9 @@ function functions_wp_print_scripts(){
 			var post_name = '<?php echo $post->post_name; ?>';
 			var allow_general_comments = <?php echo !is_null($options["allow_general_comments"]) ? $options["allow_general_comments"] : 0; ?>;
 			var allow_comments_search = <?php echo !is_null($options["allow_comments_search"]) ? $options["allow_comments_search"] : 0; ?>;
-		
-		
 			var comment_count = <?php echo count($comment_array); ?>;
 			var commment_text_signature = new Array(); 
-			var commentbox_function = '<?php echo strlen($options['commentbox_parser']) ? $options['commentbox_parser'] : 'standard_digressit_commentbox_parser'; ?>';
+			var commentbox_function = '<?php echo strlen($options['commentbox_parser']) ? $options['commentbox_parser'] : 'grouping_digressit_commentbox_parser'; ?>';
 		<?php else: ?>
 			var is_single = false;
 		<?php endif; ?>
@@ -766,77 +767,5 @@ function functions_wp_print_scripts(){
 	wp_enqueue_script('jquery.ui','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js', 'jquery', false, true );	
 
 }
-
-
-
-/*
-function browser() {
-    $userAgent = strtolower($_SERVER['HTTP_USER_AGENT']);
-
-    // Identify the browser. Check Opera and Safari first in case of spoof. Let Google Chrome be identified as Safari.
-    if (preg_match('/opera/', $userAgent)) {
-        $name = 'opera';
-    }
-    elseif (preg_match('/webkit/', $userAgent)) {
-        $name = 'safari';
-    }
-    elseif (preg_match('/msie/', $userAgent)) {
-        $name = 'msie';
-    }
-    elseif (preg_match('/mozilla/', $userAgent) && !preg_match('/compatible/', $userAgent)) {
-        $name = 'mozilla';
-    }
-    else {
-        $name = 'unrecognized';
-    }
-
-    // What version?
-    if (preg_match('/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches)) {
-        $version = $matches[1];
-    }
-    else {
-        $version = 'unknown';
-    }
-
-    // Running on what platform?
-    if (preg_match('/linux/', $userAgent)) {
-        $platform = 'linux';
-    }
-    elseif (preg_match('/macintosh|mac os x/', $userAgent)) {
-        $platform = 'mac';
-    }
-    elseif (preg_match('/windows|win32/', $userAgent)) {
-        $platform = 'windows';
-    }
-    else {
-        $platform = 'unrecognized';
-    }
-
-    return array(
-        'name'      => $name,
-        'version'   => $version,
-        'platform'  => $platform,
-        'userAgent' => $userAgent
-    );
-}
-
-*/
-
-
-
-//if($browser['name'] =='msie' && $browser['version'] == '6.0'):
-	//add_action('template_redirect', 'browser_not_supported' );
-	//function browser_not_supported(){
-	//	include(get_template_directory() . '/browser-not-supported.php');
-	//	die();
-	//}
-//endif;
-
-
-
-
-if( !is_user_logged_in()):
-	//$_SESSION['captcha'] = md5((time() * rand()). "cAptcHaKey");
-endif;
 
 ?>

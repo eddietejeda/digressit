@@ -46,6 +46,7 @@ global $current_browser_section, $wp, $blog_id ;
 
 	
 		<div <?php comment_class($classes); ?> id="comment-<?php echo (int)$blog_id ?>-<?php echo $comment->comment_ID; ?>">
+			<div class="bubblearrow"></div>
 			<div id="div-comment-<?php echo (int)$comment->blog_id; ?>-<?php echo $comment->comment_ID;; ?>" class="comment-body">
 			
 				<div class="comment-header">
@@ -60,11 +61,11 @@ global $current_browser_section, $wp, $blog_id ;
 
 						if($comment->user_id){
 							$comment_user = get_userdata($comment->user_id); 
-							$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment_user->user_login;
+							$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $comment_user->user_login;
 							echo "<a href='$profile_url'>$comment_user->display_name</a>";
 						}
 						else{
-							$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment->comment_author;						
+							$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $comment->comment_author;						
 							echo "<a href='$profile_url'>$comment->comment_author</a>";						
 						}
 						?>
@@ -114,7 +115,7 @@ global $current_browser_section, $wp, $blog_id ;
 					}
 					else{
 						?>This page contains a running transcript of all conversations taking place in <?php bloginfo('name') ?>  
-							organized by section. Click through the menu on the left to view the comments in each section of the book. 
+							organized by section. Click through the menu on the left to view the comments in each section of the document. 
 							Click “Go to thread” to see the comment in context.<?php						
 					}
 					

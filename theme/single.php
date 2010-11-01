@@ -3,7 +3,7 @@
 <div class="container">
 
 <?php 
-	if ( !is_active_sidebar(1) ) : 
+	if ( !is_active_sidebar('single-sidebar') ) : 
 		
 		?>
 		
@@ -11,11 +11,11 @@
 		<div id="dynamic-sidebar" class="sidebar">		
 		<?php
 	
-		ListPosts::widget($args =array(), array('title' => 'Posts', 
+		ListPostsWithCommentCount::widget($args =array(), array('title' => 'Posts', 
 															'auto_hide' => true, 
 															'position' => 'left', 
 															'order_by' => 'ID', 
-															'order_type' => 'DESC', 
+															'order_type' => 'ASC', 
 															'categorize' => false, 
 															'categories' => null, 
 															'show_category_titles' => false));
@@ -24,7 +24,8 @@
 		</div>
 		<?php
 	else:
-		get_dynamic_widgets();
+		do_action('add_dynamic_widget');
+
 	endif;
 ?>
 

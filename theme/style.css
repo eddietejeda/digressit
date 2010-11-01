@@ -248,10 +248,32 @@ img{
 /*	width:1024px; */
 	width: 1000px; 
 	position: relative;	
-	font-size: 20px;
+	font-size:115%;
 	background-color:white;
 /*	padding: 20px 0; */
 	
+}
+
+
+
+.menu-frontpage-container .sub-menu{
+	margin-left:0;
+	padding-left:30%;
+}
+
+.menu-frontpage-container .sub-menu li{
+	list-style: outside;
+}
+
+#menu-primary .sub-menu{
+	position: absolute;
+	border: 1px solid;
+	left: 0;
+	top: 10px;
+}
+
+#menu-primary > div > ul > li{
+	position: relative;
 }
 
 .entry{
@@ -1162,9 +1184,6 @@ img{
 	position: relative;
 }
 
-.sub-menu{
-	display: none;
-}
 
 #wp-admin-bar{
 	width: 100% !important;
@@ -1217,6 +1236,8 @@ img{
 }
 
 
+
 #signup-welcome, .mu_register .view{
 	padding-left: 20px;
 }
+

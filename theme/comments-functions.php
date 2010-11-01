@@ -20,7 +20,8 @@ add_action('public_ajax_function', 'add_comment_ajax');
 add_action('widgets_init', create_function('', 'return register_widget("CommentBrowserLinks");'));
 
 add_action('add_commentbrowser', 'commentbrowser_comments_by_section');
-add_action('add_commentbrowser', 'commentbrowser_comments_by_user');
+add_action('add_commentbrowser', 'commentbrowser_comments_by_user'); //DEPRECATED
+add_action('add_commentbrowser', 'commentbrowser_comments_by_contributor');
 add_action('add_commentbrowser', 'commentbrowser_general_comments');
 
 
@@ -47,7 +48,7 @@ function commentbrowser_query_vars( $query_vars ) {
 function commentbrowser_add_rewrite_rules( $wp_rewrite ) {
 
 
-	$wp_rewrite->add_rewrite_tag( "%commentbrowser_function%", "(general-comments|comments-by-user|comments-by-section|comments-by-tag)", "commentbrowser_function=" );
+	$wp_rewrite->add_rewrite_tag( "%commentbrowser_function%", "(general-comments|comments-by-user|comments-by-contributor|comments-by-section|comments-by-tag)", "commentbrowser_function=" );
 	$wp_rewrite->add_rewrite_tag( "%commentbrowser_params%", "(.+?)", "commentbrowser_params=" );
 
 	$urls = array('%commentbrowser_function%', '%commentbrowser_function%/%commentbrowser_params%');
@@ -60,13 +61,14 @@ function commentbrowser_add_rewrite_rules( $wp_rewrite ) {
 
 // Let's echo out the content we are looking to dynamically grab before we load any template files
 function commentbrowser_template_redirect() {
-    global $wp, $wpdb, $current_user, $current_browser_section;
+    global $wp, $wpdb, $current_user, $current_browser_section, $is_commentbrowser;
 
 	//var_dump($wp->query_vars);
 	$commentbrowser_function = "commentbrowser_" . str_replace('-','_',$wp->query_vars['commentbrowser_function']);
 	$commentbrowser_params =  $wp->query_vars['commentbrowser_params'];
 	
 	if( has_action('add_commentbrowser', $commentbrowser_function) && function_exists($commentbrowser_function)) :
+		$is_commentbrowser = true;
 		include(TEMPLATEPATH . '/comments-browser.php');
 		exit;
 	endif;
@@ -183,6 +185,7 @@ function add_comment_ajax($request_params){
 	delete_metadata('post', $request_params['comment_post_ID'], 'comment_count');
 	add_metadata('post', $request_params['comment_post_ID'], 'comment_count', $commentcount, true);
 	$message['comment_count'] = $commentcount;
+	$message['paragraph_comment_count'] = count(get_approved_comments_for_paragraph($request_params['comment_post_ID'],  $request_params['selected_paragraph_number']));
 
 	
 	
@@ -219,11 +222,11 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 
 					if($comment->user_id){
 						$comment_user = get_userdata($comment->user_id); 
-						$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment_user->user_login;
+						$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $comment_user->user_login;
 						echo "<a href='$profile_url'>$comment_user->display_name</a>";
 					}
 					else{
-						$profile_url = get_bloginfo('home')."/comments-by-user/" . $comment->comment_author;						
+						$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $comment->comment_author;						
 						echo "<a href='$profile_url'>$comment->comment_author</a>";						
 					}
 					?>
@@ -415,11 +418,11 @@ function list_users()
 
 			if($user->user_id){
 				$comment_user = get_userdata($user->ID); 
-				$profile_url = get_bloginfo('home')."/comments-by-user/" . $user->user_login;
+				$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $user->user_login;
 				echo "<a href='$profile_url'>$user->display_name ($user->comments_per_user)</a> ";						
 			}
 			else{
-				$profile_url = get_bloginfo('home')."/comments-by-user/" . $user->comment_author;						
+				$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $user->comment_author;						
 				echo "<a href='$profile_url'>$user->comment_author ($user->comments_per_user)</a> ";						
 			}
 			?>			
@@ -708,7 +711,7 @@ class CommentBrowserLinks extends WP_Widget {
 		<h4>Comment Browser</h4>
 		<ul>
 			<li><a href="<?php bloginfo('home'); ?>/comments-by-section">Comments by Section</a></li>
-			<li><a href="<?php bloginfo('home'); ?>/comments-by-user">Comments by Users</a></li>
+			<li><a href="<?php bloginfo('home'); ?>/comments-by-contributor">Comments by Contributor</a></li>
 			<li><a href="<?php bloginfo('home'); ?>/general-comments">General Comments</a></li>
 			<?php do_action('add_commentbrowser_link'); ?>
 		</ul>
@@ -736,17 +739,21 @@ class CommentBrowserLinks extends WP_Widget {
 
 function commentbrowser_comments_by_section(){
 	global $wp;
-	echo "<h3>Browse Comments by Section</h3>";
-	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this book</div>";
+	echo "<h3>Comments by Section</h3>";
+	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
 	list_posts();
 	return isset($wp->query_vars['commentbrowser_params']) ? get_comments('post_id='.$wp->query_vars['commentbrowser_params']) : array();
 }
 
 function commentbrowser_comments_by_user(){
+	commentbrowser_comments_by_contributor();
+}
+
+function commentbrowser_comments_by_contributor(){
 	global $wp;
 	//var_dump($wp->query_vars);
-	echo "<h3>Browse Comments by Users</h3>";
-	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this book</div>";
+	echo "<h3>Comments by Contributor</h3>";
+	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
     if(is_numeric($wp->query_vars['commentbrowser_params'])) :
         $curauth = get_user_by('id', $wp->query_vars['commentbrowser_params']);
     else :
@@ -769,8 +776,8 @@ function commentbrowser_comments_by_user(){
 }
 function commentbrowser_general_comments(){
 	global $wp;
-	echo "<h3>Browser General Comments</h3>";
-	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this book</div>";
+	echo "<h3>General Comments</h3>";
+	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
 	list_general_comments();
 	return get_approved_general_comments($wp->query_vars['commentbrowser_params']);
 }

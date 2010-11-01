@@ -81,13 +81,21 @@ jQuery(document).ready(function() {
 			jQuery('#'+comment_id).fadeIn("#"+comment_id);
 		}
 		
-		var current_count = parseInt(jQuery(jQuery('.commentcount').get((selected_paragraph_number ))).html()) + 1;
+		//var current_count = parseInt(jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).html());
 		
-		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).html(current_count);
-		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).fadeIn('slow');
+
+		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1 ))).html(data.message.paragraph_comment_count);
+		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1))).fadeIn('slow');
+
 		
-		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).html(current_count);
+		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).html(data.message.paragraph_comment_count);
 		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).fadeIn('slow');
+
+		jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).html(data.message.comment_count);
+		jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).fadeIn('slow');
+
+
+
 		
 		jQuery('#comment').val('');		
 		jQuery('#comment_parent').val(0);

@@ -61,12 +61,12 @@ function single_wp_print_scripts(){
 function single_sidebar_widgets(){
 	
 	//var_dump(is_active_sidebar('Single Sidebar'));
-	if(is_active_sidebar(1)){
+	if(is_active_sidebar('single-sidebar')){
 		?>
 		<div class="sidebar-widgets">
 		<div id="dynamic-sidebar" class="sidebar">		
 		<?php
-		get_widgets('Single Sidebar');
+		dynamic_sidebar('Single Sidebar');
 		?>
 		</div>
 		</div>

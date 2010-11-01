@@ -151,3 +151,7 @@ background:  none;
 #comment-browser .comment-goto {
 	display: block;
 }
+
+.comment-browser h3{
+	padding-top: 50px;
+}

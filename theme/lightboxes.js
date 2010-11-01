@@ -34,6 +34,15 @@ jQuery.fn.openlightbox = function (lightbox){
 		jQuery('textarea').attr('readonly', '');
 		
 
+		//alert(jQuery(lightbox + ' .lightbox-slot').length);
+		if(jQuery(lightbox + ' .lightbox-slot').length > 1){
+			//jQuery(lightbox + ' .lightbox-slot').hide();
+
+			//jQuery(jQuery(lightbox + ' .lightbox-slot').get(0)).css('position','relative');
+			//jQuery(lightbox + ' .lightbox-slot').hide();
+			//jQuery(jQuery(lightbox + ' .lightbox-slot').get(0)).show();
+			
+		}
 		if(jQuery(lightbox + ' .lightbox-delay-close').length){
 			var t = setTimeout(function() {
 				jQuery("body").closelightbox();
@@ -200,7 +209,32 @@ jQuery(document).ready(function() {
 				
 			}, 'json' );	
 	});
+	
+	
+	
+
+
+    jQuery(".lightbox-next").click(function (e) {
+
+
+      	jQuery('.lightbox-slot').hide("slide", { direction: "left" }, 200);
+
+
+
+	});
+
+
+
+    jQuery(".lightbox-previous").click(function (e) {
+
+      	jQuery('.lightbox-slot').hide("slide", { direction: "right" }, 200);
+
+	});
+
+	
 
 });
+
+
 
 

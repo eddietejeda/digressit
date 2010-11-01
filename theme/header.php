@@ -18,14 +18,21 @@
 <?php get_currentuserinfo(); ?>
 <?php wp_head(); ?>
 <?php
-if (!($_SERVER['REQUEST_URI'] == "/")){
+
+$request_root = parse_url($_SERVER['REQUEST_URI']);
+
+//var_dump(is_commentbrowser());
+if(is_commentbrowser()){
+	$current_page_name .= ' comment-browser ';	
+}
+elseif (!($request_root['path'] == '/')){
 	$current_page_name .= basename(get_bloginfo('home'));
 	if(is_home()){
-		$current_page_name .= " site-home";
+		$current_page_name .= ' site-home ';
 	}
 }
 else{
-	$current_page_name = 'frontpage';
+	$current_page_name = ' frontpage ';
 }
 
 ?>
@@ -44,7 +51,6 @@ else{
 			<div class="description"><?php bloginfo('description'); ?></div>
 		<?php else: ?>
 			<a href="<?php bloginfo('home') ?>"><h1><?php bloginfo('name'); ?></h1></a>
-			<div class="description"><?php bloginfo('description'); ?></div>
 		<?php endif; ?>
 	</div>
 		
@@ -62,13 +68,13 @@ else{
 	<!-- this is some login stuff that should always be here -->
 	<ul>
 	<?php if(is_user_logged_in()): ?>
-		<li><a href="<?php echo get_bloginfo('url'); ?>/wp-admin/" title="You Account">Your Account</a></li>			
-		<li><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout">Logout</a></li>			
+		<li><a href="<?php echo get_bloginfo('home'); ?>/wp-admin/" title="You Account"><?php _e('Your Account'); ?></a></li>			
+		<li><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout"><?php _e('Logout'); ?></a></li>			
 	<?php else: ?>
 		<?php if(get_option('users_can_register')): ?>
-		<li><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Register">Register</a></li>
+		<li><a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="Register"><?php _e('Register'); ?></a></li>
 		<?php endif; ?>
-		<li><a class="lightbox lightbox-login" title="Login">Login</a></li>
+		<li><a href="<?php echo wp_login_url(); ?>" title="Login"><?php _e('Login'); ?></a></li>
 	<?php endif;?>
 	</ul>
 	
@@ -85,9 +91,9 @@ function header_default_top_menu(){
 
 ?>
 	<ul>
-		<li><a href="<?php bloginfo('home') ?>/comments-by-section/" title="Comments by Section">Comments by Section</a></li>
-		<li><a href="<?php bloginfo('home') ?>/comments-by-user/" title="Users">Comments by Users</a></li>		
-		<li><a href="<?php bloginfo('home') ?>/general-comments/" title="General Comments">General Comments</a></li>		
+		<li><a href="<?php bloginfo('home') ?>/comments-by-section/" title="Comments by Section"><?php _e('Comments by Section'); ?></a></li>
+		<li><a href="<?php bloginfo('home') ?>/comments-by-contributor/" title="Users"><?php _e('Comments by Contributor'); ?></a></li>		
+		<li><a href="<?php bloginfo('home') ?>/general-comments/" title="General Comments"><?php _e('General Comments'); ?></a></li>		
 		<?php do_action('custom_default_top_menu'); ?>
 	</ul>
 

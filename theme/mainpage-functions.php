@@ -17,7 +17,7 @@ function mainpage_wp_print_scripts(){
 }
 
 function mainpage_sidebar_widgets(){
-	if(is_active_sidebar(1)){
+	if(is_active_sidebar('mainpage-sidebar')){
 		?>
 		<div class="sidebar-widgets">
 		<div id="dynamic-sidebar" class="sidebar">		
@@ -47,7 +47,7 @@ function mainpage_default_menu(){
 
 	 <?php
 	 global $post;
-	 $myposts = get_posts('numberposts=-1&orderby=ID&order=DESC');
+	 $myposts = get_posts('numberposts=-1&orderby=ID&order=ASC');
 	 foreach($myposts as $post) :
 	   setup_postdata($post);
 		$comment_count = get_post_comment_count($post->ID);
@@ -57,7 +57,7 @@ function mainpage_default_menu(){
 	 </ol> 
 
 	<div class="previews">
-
+		<div class="bubblearrow"></div>
 		<div class="preview default">
 		<?php
 		

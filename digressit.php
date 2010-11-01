@@ -22,14 +22,28 @@ define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
 
 
 
+add_action( 'init', 'digressit_localization' );
 register_activation_hook(__FILE__,  'activate_digressit');
 register_deactivation_hook(__FILE__, 'deactivate_digressit' );
 
-add_action('wp_print_styles', 'digressit_wp_print_styles');
-add_action('wp_print_scripts', 'digressit_wp_print_scripts' );
 
 
 add_action('admin_menu', 'digressit_add_admin_menu');
+
+
+
+function digressit_localization(){
+	// Make theme available for translation
+	// Translations can be filed in the /languages/ directory
+	load_theme_textdomain( 'digressit', TEMPLATEPATH . '/lang/' );
+
+	$locale = get_locale();
+	$locale_file = TEMPLATEPATH . "/languages/$locale.php";
+	if ( is_readable( $locale_file ) ){
+		require_once( $locale_file );
+	}
+
+}
 
 
 function activate_digressit(){
@@ -120,10 +134,7 @@ function activate_digressit(){
 
 	$options['content_parser'] = 'standard_digressit_content_parser';
 	$options['comments_parser'] = 'standard_digressit_comment_parser';
-	$options['commentbox_parser'] = 'standard_digressit_commentbox_parser';
-	
-	
-	
+	$options['commentbox_parser'] = 'grouping_digressit_commentbox_parser';
 	
 	
 	delete_option('digressit');
@@ -190,7 +201,7 @@ function activate_digressit(){
 		
 	}
 	else{
-		die("no write permission on $themes_dir please give the server write permission on this directory");
+		die(__('No write permission on: ').$themes_dir.__('. Please give the server write permission on this directory'));
 	}
 	
 	switch_theme($plugin_name, $plugin_name);	
@@ -203,26 +214,13 @@ function deactivate_digressit(){
 }
 
 
-
-
-
-function digressit_wp_print_styles(){
-}
-
-function digressit_wp_print_scripts(){		
-
-}
-
 function digressit_add_admin_menu() {
 	add_submenu_page( 'themes.php', 'Digress.it', 'Digress.it', 'administrator', 'digressit.php', 'digressit_theme_options_page');
 }
 
 
-
-
 function digressit_theme_options_page() {
 	global $wpdb, $digressit_content_function, $digressit_comments_function, $digressit_commentbox_function, $blog_id;
-
 
 	//var_dump($digressit_content_function);
 	if($_POST['reset'] == 'Reset Options'){
@@ -244,115 +242,115 @@ function digressit_theme_options_page() {
 	}
 
 	$options = get_option('digressit');
-
-
-
-		
 	?>
   	<div class="wrap" style="position: relative; font-size: 110%;">
 	
-		<div id="digressit-donate" style="position: absolute; right: 50px; top: 50px; width: 200px; border: 1px solid; background-color: white; padding: 0 10px">
-		<h3>Please consider donating to help keep this project alive:</h3>
-		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-		<input type="hidden" name="cmd" value="_s-xclick">
-		<input type="hidden" name="hosted_button_id" value="XYBB4WEBLRHMN">
-		<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-		</form>
-		</div>
-	
 		<form method="post" action="<?php $PHP_SELF; ?>">
 
-	<h2>Digress.it Options</h2>
+		<h2><?php _e('Digress.it Options');  ?></h2>
 
-	<table class="form-table" style="vertical-align: top; width: 800px; padding: 0; margin: 0" >
+		<table class="form-table" style="vertical-align: top; width: 800px; padding: 0; margin: 0" >
 	
 
 
-	<?php if(is_super_admin()): ?>
-	<tr>
-		<td style="width: 200px"><b>Debug Mode</b></td>
-		<td><?php print_dropdown('debug_mode', array('no' => 0, 'yes' => '1'), $options['debug_mode']); ?></td>
-	</tr>
-	<?php endif; ?>
+		<?php if(is_super_admin()): ?>
+		<tr>
+			<td style="width: 200px"><b><?php _e('Debug Mode');  ?></b></td>
+			<td><?php print_dropdown('debug_mode', array('no' => 0, 'yes' => '1'), $options['debug_mode']); ?></td>
+		</tr>
+		<?php endif; ?>
 		
 	
-	<?php   
+		<?php   
 	
-		$pages = null;
-		foreach(get_pages() as $page){
-			$pages[$page->post_title] = $page->ID;			
-		}
+			$pages = null;
+			foreach(get_pages() as $page){
+				$pages[$page->post_title] = $page->ID;			
+			}
 		
-	?>
+		?>
 		
-	<tr>
-		<td style="width: 200px"><b>Front Page Content</b></td>
-		<td><?php print_dropdown('front_page_content', $pages, $options['front_page_content']); ?></td>
-	</tr>
+		<tr>
+			<td style="width: 200px"><b><?php _e('Front page content');  ?></b></td>
+			<td><?php print_dropdown('front_page_content', $pages, $options['front_page_content']); ?></td>
+		</tr>
 		
-	<tr>
-		<td style="width: 200px"><b>Content Parsing Function</b></td>
-		<td><?php print_dropdown('content_parser', $digressit_content_function, $options['content_parser']); ?></td>
-	</tr>
+		<tr>
+			<td style="width: 200px"><b><?php _e('Content Parsing Function');  ?></b></td>
+			<td><?php print_dropdown('content_parser', $digressit_content_function, $options['content_parser']); ?></td>
+		</tr>
 
-	<tr>
-		<td style="width: 200px"><b>Comments Parsing Function</b></td>
-		<td><?php print_dropdown('comments_parser', $digressit_comments_function, $options['comments_parser']); ?></td>
-	</tr>
+		<tr>
+			<td style="width: 200px"><b><?php _e('Comments Parsing Function');  ?></b></td>
+			<td><?php print_dropdown('comments_parser', $digressit_comments_function, $options['comments_parser']); ?></td>
+		</tr>
 	
-	<tr>
-		<td style="width: 200px"><b>CommentBox Parsing Function</b></td>
-		<td><?php print_dropdown('commentbox_parser', $digressit_commentbox_function, $options['commentbox_parser']); ?></td>
-	</tr>
+		<tr>
+			<td style="width: 200px"><b><?php _e('Comment Box Parsing Function');  ?></b></td>
+			<td><?php print_dropdown('commentbox_parser', $digressit_commentbox_function, $options['commentbox_parser']); ?></td>
+		</tr>
 
 
-	<tr>
-		<td style="width: 200px"><b>Table of Contents Label</b></td>
-		<td><?php print_input_text('table_of_contents_label', $options['table_of_contents_label']); ?></td>
-	</tr>
+		<tr>
+			<td style="width: 200px"><b><?php _e('Table of Contents Label');  ?></b></td>
+			<td><?php print_input_text('table_of_contents_label', $options['table_of_contents_label']); ?></td>
+		</tr>
 
-	<tr>
-		<td style="width: 200px"><b>Comments by Section Label</b></td>
-		<td><?php print_input_text('comments_by_section_label', $options['comments_by_section_label']); ?></td>
-	</tr>
+		<tr>
+			<td style="width: 200px"><b><?php _e('Comments by Section Label');  ?></b></td>
+			<td><?php print_input_text('comments_by_section_label', $options['comments_by_section_label']); ?></td>
+		</tr>
 
-	<tr>
-		<td style="width: 200px"><b>Comments by Users Label</b></td>
-		<td><?php print_input_text('comments_by_section_label', $options['comments_by_users_label']); ?></td>
-	</tr>
-
-
-	<tr>
-		<td style="width: 200px"><b>General Comments Label</b></td>
-		<td><?php print_input_text('general_comments_label', $options['general_comments_label']); ?></td>
-	</tr>
+		<tr>
+			<td style="width: 200px"><b><?php _e('Comments by Users Label');  ?></b></td>
+			<td><?php print_input_text('comments_by_section_label', $options['comments_by_users_label']); ?></td>
+		</tr>
 
 
+		<tr>
+			<td style="width: 200px"><b><?php _e('General Comments Label');  ?></b></td>
+			<td><?php print_input_text('general_comments_label', $options['general_comments_label']); ?></td>
+		</tr>
 
-	<tr>
-		<td style="width: 200px"><b>Allow General Comments</b></td>
-		<td><?php print_dropdown('allow_general_comments', array('no' => 0, 'yes' => '1'), $options['allow_general_comments']); ?></td>
-	</tr>
 
-	<tr>
-		<td style="width: 200px"><b>Allow Comments Search</b></td>
-		<td><?php print_dropdown('allow_comments_search', array('no' => 0, 'yes' => '1'), $options['allow_comments_search']); ?></td>
-	</tr>
+
+		<tr>
+			<td style="width: 200px"><b><?php _e('Allow General Comments');  ?></b></td>
+			<td><?php print_dropdown('allow_general_comments', array('no' => 0, 'yes' => '1'), $options['allow_general_comments']); ?></td>
+		</tr>
+
+		<tr>
+			<td style="width: 200px"><b><?php _e('Allow Comments Search');  ?></b></td>
+			<td><?php print_dropdown('allow_comments_search', array('no' => 0, 'yes' => '1'), $options['allow_comments_search']); ?></td>
+		</tr>
 	
 	
 
-	</table>
+		</table>
 
-	<input type="hidden" name="update-digressit-options" value="1" />
+		<input type="hidden" name="update-digressit-options" value="1" />
 
-	<p class="submit">
-	<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
-	<input type="submit" name="reset" class="button-primary" value="Reset Options" />
-	</p>
+		<p class="submit">
+		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+		<input type="submit" name="reset" class="button-primary" value="<?php _e('Reset Options') ?>" />
+		</p>
 
+		</form>
+	</div>
+	
+
+	
+	
+	<div id="digressit-donate" style="background-color:white;border:1px solid;padding:0 21px 10px; position:absolute; right:50px; top:200px; width:300px;">
+	<h3><?php _e('Please consider donating to help keep this project alive:') ?></h3>
+	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	<input type="hidden" name="cmd" value="_s-xclick">
+	<input type="hidden" name="hosted_button_id" value="XYBB4WEBLRHMN">
+	<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
 	</form>
 	</div>
+	
 	<?php 
 	//restore_current_blog();
 }
