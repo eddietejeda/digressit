@@ -203,7 +203,7 @@ img{
 #wrapper {
 	width:100%;
 	text-align: left;
-	background: #f5f8f8;
+	background: transparent;
 	position: relative;
 	margin: 0 auto;
 	left: 0;
@@ -294,12 +294,19 @@ img{
 
 
 #wrapper{
-	background:none repeat scroll 0 0 #F5F8F8;
+	background:transparent repeat scroll 0 0 #F5F8F8;
 	margin:0 auto;
 	min-height:100%;
 	position:absolute;
 }
 
+
+.horizontal{
+	border-bottom: 1px solid #ddd;
+	width: 96%;
+	margin: 0 auto;
+	clear: both;
+}
 
 
 .clear{

@@ -1,6 +1,6 @@
 body{
 	font-family: "Times New Roman PS MT","Times New Roman",Times,serif;
-	font-size: 90%;
+	font-size: 100%;
 	background-color:#E6E6E6;
 }
 
@@ -16,7 +16,7 @@ body{
 
 
 #wrapper{
-	background: none repeat scroll 0 0 #E6E6E6;
+	background: transparent repeat scroll 0 0 #E6E6E6;
 }
 
 .frontpage .widget-digressit-block h3{
@@ -69,9 +69,9 @@ h1, h2, h3, h4, h5, h6{
 
 
 .lightbox-submit, .lightbox-button, .button, .submit {
-  -moz-box-shadow: 1px 2px 3px #AAAAAA;
-  -webkit-box-shadow:1px 2px 3px #AAAAAA;
-  box-shadow: 1px 2px 3px #AAAAAA;
+  -moz-box-shadow: 0 0 1px #AAAAAA;
+  -webkit-box-shadow:0 0 1px #AAAAAA;
+  box-shadow: 0 0 1px #AAAAAA;
 
 
 
@@ -237,7 +237,7 @@ h4 {
 }
 
 #menu-primary {
-	padding: 5px 0 0px;
+	padding: 5px 0 5px;
 }
 #respond{
 	border-top: 1px solid #B4BDBD;
@@ -261,6 +261,10 @@ h4 {
 	padding-top: 0;
 }
 
+
+#action-button a:hover{
+	background-color: transparent !important;
+}
 #mainpage{
 	padding-top: 50px;
 }
@@ -951,4 +955,12 @@ div#item-header{
 
 #lightbox-login{
 	padding: 25px 50px 0;
+}
+
+.sidebar h3{
+	margin:0 0 0 0;
+}
+
+.rule-dashboard{
+	display: none;
 }

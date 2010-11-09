@@ -25,7 +25,6 @@ jQuery.fn.openlightbox = function (lightbox){
 		
 		jQuery(lightbox).css('left', left);			
 		jQuery(lightbox).css('top', top);			
-		jQuery(lightbox).show();
 		
 		jQuery('input[type=button]').attr('disabled', false);
 		jQuery('input[type=submit]').attr('disabled', false);
@@ -36,17 +35,22 @@ jQuery.fn.openlightbox = function (lightbox){
 
 		//alert(jQuery(lightbox + ' .lightbox-slot').length);
 		if(jQuery(lightbox + ' .lightbox-slot').length > 1){
-			//jQuery(lightbox + ' .lightbox-slot').hide();
+			jQuery(lightbox + ' .lightbox-slot').hide();
+			jQuery(lightbox + ' .lightbox-previous').hide();
+			jQuery(lightbox + ' .lightbox-submit').hide();
 
 			//jQuery(jQuery(lightbox + ' .lightbox-slot').get(0)).css('position','relative');
 			//jQuery(lightbox + ' .lightbox-slot').hide();
-			//jQuery(jQuery(lightbox + ' .lightbox-slot').get(0)).show();
+			jQuery(jQuery(lightbox + ' .lightbox-slot').get(0)).show();
 			
 		}
+		
+		jQuery(lightbox).fadeIn('slow');
+		
 		if(jQuery(lightbox + ' .lightbox-delay-close').length){
 			var t = setTimeout(function() {
 				jQuery("body").closelightbox();
- 			}, 1000);
+ 			}, 3000);
 			jQuery(this).data('timeout', t);			
 		}		
 	}
@@ -212,26 +216,87 @@ jQuery(document).ready(function() {
 	
 	
 	
-
-
-    jQuery(".lightbox-next").click(function (e) {
-
-
-      	jQuery('.lightbox-slot').hide("slide", { direction: "left" }, 200);
-
-
-
-	});
-
+	var current_slot = 0;
 
 
     jQuery(".lightbox-previous").click(function (e) {
+		
+		if(current_slot > 0){
+			current_slot--;
+			jQuery('.lightbox-slot').hide();		
+	      	jQuery(jQuery('.lightbox-slot').get(current_slot)).show("slide", { direction: "left" }, 200);
+		}
 
-      	jQuery('.lightbox-slot').hide("slide", { direction: "right" }, 200);
+		if(current_slot == 0){	
+			jQuery('.lightbox-previous').hide();
+			jQuery('.lightbox-next').show();
+			jQuery('.lightbox-submit').hide();
+		}
+		else{
+			jQuery('.lightbox-previous').show();
+			jQuery('.lightbox-next').show();			
+			jQuery('.lightbox-submit').hide();
+		}
 
 	});
 
+    jQuery(".lightbox-next").click(function (e) {
+		
+		if(current_slot < jQuery('.lightbox-slot').length -1){		
+			current_slot++;
+			jQuery('.lightbox-slot').hide();
+	      	jQuery(jQuery('.lightbox-slot').get(current_slot)).show("slide", { direction: "right" }, 200);
+		}
+		
+		if(current_slot == jQuery('.lightbox-slot').length -1){	
+			jQuery('.lightbox-next').hide();
+			jQuery('.lightbox-previous').show();
+			jQuery('.lightbox-submit').show();
+		}
+		else{
+			jQuery('.lightbox-previous').show();
+			jQuery('.lightbox-next').show();			
+		}		
+	});
 	
+		
+	
+
+    jQuery(".required").change(function (e) {
+
+		var form =jQuery(this).parentsUntil('form').parent();		
+
+		
+		var form_id = jQuery(form).attr('id');
+
+		jQuery('#' + form_id + ' .lightbox-submit').removeClass('button-disabled');			
+		
+		jQuery('#' + form_id + ' .required').each(function(e){
+			
+			//alert(jQuery(this).attr('type') + jQuery(this).val());
+			//input[type='checkbox']
+			//alert(jQuery(this).attr('type') + " " + jQuery('#'+jQuery(this).attr('id') + ':checked').val());
+
+			if( (
+					(
+						jQuery(this).attr('type') == 'text' && jQuery(this).val().length == 0
+					) 
+					|| 
+					(
+						( jQuery(this).attr('type') == 'radio' || jQuery(this).attr('type') == 'checkbox')  
+						&& 
+						( jQuery("input[name='"+jQuery(this).attr('name')+"']").is(':checked') == false )
+					)
+				)
+			  )
+			{
+				jQuery('#' + form_id + ' .lightbox-submit').addClass('button-disabled');			
+			}
+			
+		})
+		
+
+	});
 
 });
 

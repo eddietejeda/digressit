@@ -3,12 +3,13 @@
 
 add_action('widgets_init', create_function('', 'return register_widget("ListPostsWithCommentCount");'));
 //add_action('widgets_init', create_function('', 'return register_widget("ListUsersWithCommentCount");'));
+
+
 add_action('widgets_init', create_function('', 'return register_widget("LiveContentSearch");'));
 
 
 
 class LiveContentSearch extends WP_Widget {
-	/** constructor */
 	function LiveContentSearch() {
 		parent::WP_Widget(false, $name = 'Live Content Search');	
 	}
@@ -26,9 +27,7 @@ class LiveContentSearch extends WP_Widget {
 }
 
 
-
 class ListPostsWithCommentCount extends WP_Widget {
-	/** constructor */
 	function ListPostsWithCommentCount() {
 		parent::WP_Widget(false, $name = 'List Posts with Comment Count');	
 	}
@@ -38,6 +37,7 @@ class ListPostsWithCommentCount extends WP_Widget {
 		global $post;
 		$currentpost = $post;;
 		
+		//var_dump($args);
 		
 		if($defaults['categorize']){
 			$categories=  get_categories(); 
@@ -46,12 +46,13 @@ class ListPostsWithCommentCount extends WP_Widget {
 			$categories = array('1');
 		}
 		
+		//var_dump($categories)
 		?>
 		<div id="digress-it-list-posts">
 		<a href="<?php echo get_option('siteurl'); ?>">
 			<div class="rule-dashboard">
 				<div class="rule-home-text">
-					<?php echo $instance['title']; ?>
+					<?php echo $defaults['title']; ?>
 				</div>
 			</div>
 		</a>
@@ -62,7 +63,7 @@ class ListPostsWithCommentCount extends WP_Widget {
 		<?php
 		foreach ($categories as $key => $cat) {
 			if(isset($cat->name) && $cat->name == 'Uncategorized'){
-				continue;
+				//continue;
 			}
 			?>
 
@@ -134,16 +135,15 @@ class ListPostsWithCommentCount extends WP_Widget {
 
     }
 
-	/** @see WP_Widget::update */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
+		//var_dump($new_instance);
 		$instance['title'] = $new_instance['title'];
 		$instance['auto_hide'] = $new_instance['auto_hide'];
 		$instance['position'] = $new_instance['position'];
 		$instance['order_by'] = $new_instance['order_by'];
 		$instance['order_type'] = $new_instance['order_type'];
-
 		$instance['categorize'] = $new_instance['categorize'];
 		$instance['categories'] = $new_instance['categories'];
 		$instance['show_category_titles'] = $new_instance['show_category_titles'];
@@ -153,13 +153,11 @@ class ListPostsWithCommentCount extends WP_Widget {
 
 
 
-	/** @see WP_Widget::form */
 	function form($instance) {				
 		global $blog_id, $wpdb;
 
 		
 		$defaults = array( 	
-			
 			'title' => 'Posts',
 			'auto_hide' => true,
 			'position' => 'left',
@@ -171,51 +169,20 @@ class ListPostsWithCommentCount extends WP_Widget {
 		);
 		
 		
-		$instance['title'] = $new_instance['title'];
-		$instance['auto_hide'] = $new_instance['auto_hide'];
-		$instance['position'] = $new_instance['position'];
-		$instance['order_by'] = $new_instance['order_by'];
-		$instance['order_type'] = $new_instance['order_type'];
-
-		$instance['categorize'] = $new_instance['categorize'];
-		$instance['categories'] = $new_instance['categories'];
-		$instance['show_category_titles'] = $new_instance['show_category_titles'];
-
-		
 		$instance = wp_parse_args( (array) $instance, $defaults ); 
+		//var_dump($instance);
 		?>
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><strong><?php _e('Title:', 'digressit'); ?></strong></label>
-			<textarea id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" style="width:100%;" ><?php echo $instance['title']; ?></textarea>
-		</p>
-
-
-
-		<p>
-			<label for="<?php echo $this->get_field_id( 'auto_hide' ); ?>"><?php _e('Auto Hide?', 'digressit'); ?></label>
-			<input class="checkbox" type="checkbox" <?php checked( $instance['auto_hide'], true ); ?> id="<?php echo $this->get_field_id( 'auto_hide' ); ?>" name="<?php echo $this->get_field_name( 'auto_hide' ); ?>" /> 
+			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" value="<?php echo $instance['title']; ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" style="width:100%;" >
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'categorize' ); ?>"><?php _e('Group by Category?', 'digressit'); ?></label>
-			<input class="checkbox" type="checkbox" <?php checked( $instance['categorize'], true ); ?> id="<?php echo $this->get_field_id( 'categorize' ); ?>" name="<?php echo $this->get_field_name( 'categorize' ); ?>" /> 
+			<label for="<?php echo $this->get_field_id( 'categorize' ); ?>"><?php _e('Categorize?', 'digressit'); ?></label>
+			<input class="checkbox" type="checkbox" <?php echo ($instance['categorize'] == 'on') ? " checked " : ""; ?> id="<?php echo $this->get_field_id( 'categorize' ); ?>" name="<?php echo $this->get_field_name( 'categorize' ); ?>" /> 
 		</p>
 
-		<p>
-			
-			<label for="<?php echo $this->get_field_id( 'categories' ); ?>"><strong><?php _e('Visible Categories', 'digressit'); ?></strong></label>
-			<?php 
-			$categories=  get_categories(array(    'hide_empty' => 0) ); 
-//			var_dump($categories);
-			foreach ($categories as $key => $cat) :
-				?>
-				<p><input class="checkbox" type="checkbox" <?php checked( $instance['categories'][$cat->cat_ID], true ); ?> 
-							name="<?php echo $this->get_field_name( 'categories' ); ?>[<?php echo $cat->cat_ID ?>]" /> <?php echo $cat->cat_name; ?></p>
-				<?php
-			 ?>
-			<?php endforeach; ?>
-		</p>
 
 		
 		<?php

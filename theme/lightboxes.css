@@ -26,7 +26,7 @@
 	text-align: left;
 	position:fixed;
 	text-align:left;
-	padding: 25px 50px;
+	padding: 25px 50px 25px 40px;
 	background-color: #f4f8f8;
 	border: 6px solid white;
 	 -moz-box-shadow: 0 0 1em #afafaf;
@@ -265,14 +265,59 @@ a:hover{
 
 
 .lightbox-slider{
-	width: 400px;
-	height: 400px;
-	overflow-x:hidden;
+	width: auto;
+	height: auto;
+}
+
+
+.lightbox-content input, .lightbox-content textarea{
+	background:none repeat scroll 0 0 #FBFBFB;
+	border:1px solid #E5E5E5;
+	font-size:24px;
+	margin-bottom:16px;
+	margin-right:6px;
+	margin-top:2px;
+	padding:3px;
+	width:auto;
 }
 
 .lightbox-slot{
 	position: relative;
 	left: 10;
-	float: left;
 }
+
+
+.lightbox-content .input{
+	background:none repeat scroll 0 0 #FBFBFB;
+	border:1px solid #E5E5E5;
+	font-size:24px;
+	margin-bottom:16px;
+	margin-right:6px;
+	margin-top:2px;
+	padding:3px;
+	width:auto;
+}
+
+.lightbox-content p {
+	padding-bottom: 0;
+}
+
+
+.lightbox-content{
+}
+
+
+.lightbox-content input {
+	background-color: white !important;
+	font-size:15px !important;
+}
+
+
+
+
+.lightbox-slot-5{
+	position: absolute;
+}
+
+
 

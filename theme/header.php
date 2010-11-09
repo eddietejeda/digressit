@@ -80,6 +80,7 @@ else{
 	
 	</div>
 	
+	<div class="horizontal"></div>
 </div> 
 <?php
 do_action('secondary_menu');

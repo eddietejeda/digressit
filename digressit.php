@@ -22,7 +22,6 @@ define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
 
 
 
-add_action( 'init', 'digressit_localization' );
 register_activation_hook(__FILE__,  'activate_digressit');
 register_deactivation_hook(__FILE__, 'deactivate_digressit' );
 
@@ -31,6 +30,7 @@ register_deactivation_hook(__FILE__, 'deactivate_digressit' );
 add_action('admin_menu', 'digressit_add_admin_menu');
 
 
+add_action( 'wp', 'digressit_localization' );
 
 function digressit_localization(){
 	// Make theme available for translation
