@@ -68,7 +68,7 @@ else{
 	<!-- this is some login stuff that should always be here -->
 	<ul>
 	<?php if(is_user_logged_in()): ?>
-		<li><a href="<?php echo get_bloginfo('home'); ?>/wp-admin/" title="You Account"><?php _e('Your Account'); ?></a></li>			
+		<li><a href="<?php echo get_bloginfo('home'); ?>/wp-admin/" title="My Account"><?php _e('My Account'); ?></a></li>			
 		<li><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout"><?php _e('Logout'); ?></a></li>			
 	<?php else: ?>
 		<?php if(get_option('users_can_register')): ?>
