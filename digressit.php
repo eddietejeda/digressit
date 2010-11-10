@@ -50,6 +50,7 @@ function activate_digressit(){
 	global $wpdb;
 	$options = get_option('digressit');
 
+	//die('activating');
 	//PRE-3.0
 	$commentpress_upgraded_to_digress_it = get_option('commentpress_upgraded_to_digress_it');
 	$digressit_community_hostname = get_option('digressit_community_hostname');
@@ -178,22 +179,26 @@ function activate_digressit(){
 	
 	if(is_writable( $themes_dir)){
 
+		//echo "is_writable";
 		$theme_link = $themes_dir . $plugin_name;
 		
 		//CREATE THE THEME DIRECTORY
 		if(is_link($theme_link)){
 			//i think we're good
+			//die( "already link");
 		}
 		elseif(!file_exists($theme_link)){
 			if(symlink($plugin_theme_link,$theme_link)){
 				//we're good
-				update_option($options['theme_mode'], 'stylesheet');
+				//update_option($options['theme_mode'], 'stylesheet');
+				//die( "Created link");
 			}
 			else{
-				die( "There was an error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. If the server doesn't have write permission try creating it manually");
+				//die( "There was an error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. If the server doesn't have write permission try creating it manually");
 			}
 		}
 		else{
+			//die( "unknown error");
 			//probably a windows person
 			//die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. Maybe a theme named DigressIt already exists?");					
 		}

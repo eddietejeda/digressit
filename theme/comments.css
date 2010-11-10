@@ -133,6 +133,7 @@ background:  none;
 .comment-text{
 /*	color: black; */
 	clear: both;
+	margin-top: 5px;
 }
 .comment-text p{
 	padding: 0px;

@@ -44,6 +44,7 @@ else{
 
 <div id="wrapper"> <!-- this is closed in footer -->
 
+<?php do_action('optional_pre_header'); ?>
 <div id="header">
 	<div class="site-title">
 		<?php if(has_action('add_header_image')): ?>

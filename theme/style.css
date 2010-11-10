@@ -1214,8 +1214,10 @@ img{
 }
 
 .mu_register input[type=text]{
-	width: 50% !important;
+	width: 100% !important;
 	position: relative !important;
+	font-size:14px !important;
+	margin:5px 0;
 }
 
 .mu_register input[type=submit]{
