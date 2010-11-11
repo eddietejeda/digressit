@@ -370,8 +370,12 @@ function print_input_text($name, $value){
 }
 
 
-function print_dropdown($form, $options = array(), $selected){
-	echo "<select name='$form'>";
+function print_dropdown($name, $options = array(), $selected, $id=''){
+	if($id){
+		$id = " id='$id' ";
+	}
+	
+	echo "<select $id name='$name'>";
 	foreach($options as $name => $value) {
 		$selected_html = ($value == $selected) ? " selected='selected' " : '';
 		echo "<option $selected_html value='$value'>$name</option>";
