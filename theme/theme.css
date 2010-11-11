@@ -146,7 +146,8 @@ h1, h2, h3, h4, h5, h6{
 .home .description{
 	float:right;
 	font-size:200%;
-	padding:15px;
+	line-height:30px;
+	padding:0 10px;
 	width:538px;
 }
 

@@ -60,7 +60,6 @@ else{
 	<?php if(has_action('primary_menu')): ?>
 			<?php do_action('primary_menu'); ?>
 			<?php do_action('optional_menu_item'); ?>
-		</div>
 	<?php else: ?>
 		<?php wp_nav_menu(array('depth'=> 3, 'fallback_cb'=> 'header_default_top_menu', 'echo' => true, 'theme_location' => 'Top Menu', 'menu_class' => 'navigation')); ?>
 		<?php do_action('optional_menu_item'); ?>

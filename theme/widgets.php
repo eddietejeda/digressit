@@ -5,6 +5,47 @@ if ( function_exists('register_sidebar') ) {
 
 
 
+
+	if(WP_ALLOW_MULTISITE && ($blog_id == 1)){
+		register_sidebar(array(
+			'id' => 'frontpage-content',		
+			'name' => 'Frontpage Content',
+			'before_widget' => '<div id="%1$s-content" class="%2$s">',
+			'after_widget' => '</div>',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>',
+		));
+	}
+
+	register_sidebar(array(
+		'id' => 'mainpage-content',		
+		'name' => 'Mainpage Content',
+		'before_widget' => '<div id="%1$s-content" class="%2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h4>',
+		'after_title' => '</h4>',
+	));
+
+	register_sidebar(array(
+		'id' => 'single-content',		
+		'name' => 'Single Content',
+		'before_widget' => '<div id="%1$s-content" class="%2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h4>',
+		'after_title' => '</h4>',
+	));
+
+	register_sidebar(array(
+		'id' => 'page-content',		
+		'name' => 'Page Content',
+		'before_widget' => '<div id="%1$s-content" class="%2$s">',
+		'after_widget' => '</div>',
+		'before_title' => '<h4>',
+		'after_title' => '</h4>',
+	));
+
+
+
 	if(WP_ALLOW_MULTISITE && ($blog_id == 1)){
 		register_sidebar(array(
 			'name' => 'Frontpage Sidebar',
@@ -46,11 +87,14 @@ if ( function_exists('register_sidebar') ) {
 	
 
 
+
+
 	if(WP_ALLOW_MULTISITE && ($blog_id == 1)){
+	
 		register_sidebar(array(
-			'id' => 'frontpage-content',		
-			'name' => 'Frontpage Content',
-			'before_widget' => '<div id="%1$s-content" class="%2$s">',
+			'id' => 'frontpage-topbar',		
+			'name' => 'Frontpage Topbar',
+			'before_widget' => '<div id="%1$s-topbar" class="%2$s">',
 			'after_widget' => '</div>',
 			'before_title' => '<h4>',
 			'after_title' => '</h4>',
@@ -58,33 +102,32 @@ if ( function_exists('register_sidebar') ) {
 	}
 
 	register_sidebar(array(
-		'id' => 'mainpage-content',		
-		'name' => 'Mainpage Content',
-		'before_widget' => '<div id="%1$s-content" class="%2$s">',
+		'id' => 'mainpage-topbar',		
+		'name' => 'Mainpage Topbar',
+		'before_widget' => '<div id="%1$s-topbar" class="%2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h4>',
 		'after_title' => '</h4>',
 	));
 
 	register_sidebar(array(
-		'id' => 'single-content',		
-		'name' => 'Single Content',
-		'before_widget' => '<div id="%1$s-content" class="%2$s">',
+		'id' => 'single-topbar',		
+		'name' => 'Single Topbar',
+		'before_widget' => '<div id="%1$s-topbar" class="%2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h4>',
 		'after_title' => '</h4>',
 	));
 
 	register_sidebar(array(
-		'id' => 'page-content',		
-		'name' => 'Page Content',
-		'before_widget' => '<div id="%1$s-content" class="%2$s">',
+		'id' => 'page-topbar',		
+		'name' => 'Page Topbar',
+		'before_widget' => '<div id="%1$s-topbar" class="%2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h4>',
 		'after_title' => '</h4>',
 	));
-
-
+	
 
 
 
