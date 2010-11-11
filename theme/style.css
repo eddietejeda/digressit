@@ -763,6 +763,11 @@ img{
 	padding:0;
 	}
 
+.comment-browser .commentlist{
+	float:right;
+	padding:0;
+	width:60%;
+}	
 .commenticonbox{
 	border-color:transparent;
 	border-style:solid;
