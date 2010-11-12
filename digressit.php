@@ -19,7 +19,7 @@ Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
 define("DIGRESSIT_VERSION", '3.0');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
-define("DIGRESSIT_REVISION", 105);
+define("DIGRESSIT_REVISION", 110);
 
 
 
@@ -44,7 +44,8 @@ function digressit_init(){
 		activate_digressit();
 		$options = get_option('digressit');
 		
-		echo "<p style='background-color: red; color: white'>updating digressit. current revision:" . $options['revision']. " please reload this page</p>";
+		echo "<p style='background-color: red; color: white'>updating digressit. current revision: " . $options['revision']. " please reload this page.</p>
+		<meta http-equiv=\"refresh\" content=\"1\" >";
 		
 	}
 }
