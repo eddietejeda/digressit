@@ -30,7 +30,7 @@ elseif(is_multisite() && $blog_id == 1 && is_front_page()){
 }
 else{
 	$current_page_name .= basename(get_bloginfo('home'));
-	if(is_home()){
+	if(is_front_page()){
 		$current_page_name .= ' site-home ';
 	}	
 }
