@@ -542,6 +542,7 @@ function get_users_who_have_commented()
 	$sql = "SELECT *, COUNT( * ) AS comments_per_user  FROM $wpdb->users u RIGHT JOIN $wpdb->comments c ON u.ID=c.user_id
 					LEFT JOIN $wpdb->posts p ON p.ID=c.comment_post_ID
 					WHERE c.comment_approved = 1 
+					AND p.post_status = 'publish'
 					GROUP BY c.comment_author
 					ORDER BY c.comment_author";
 	
@@ -599,7 +600,7 @@ function getParentPosts(){
 /* this might be useless */
 function getAllCommentCount(){
 	global $wpdb;
-	$sql = "SELECT COUNT(*) as count FROM $wpdb->comments, $wpdb->posts WHERE comment_approved = '1' AND comment_post_ID=ID AND post_type='post' AND post_status='publish'";
+	$sql = "SELECT COUNT(*) as count FROM $wpdb->comments c, $wpdb->posts p WHERE c.comment_approved = '1' AND c.comment_post_ID=p.ID AND p.post_type='post' AND p.post_status='publish'";
 	$result = $wpdb->get_var($sql);
 	return $result;
 }

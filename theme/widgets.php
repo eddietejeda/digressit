@@ -83,10 +83,6 @@ if ( function_exists('register_sidebar') ) {
 		'before_title' => '<h4>',
 		'after_title' => '</h4>',
 	));
-	
-	
-
-
 
 
 	if(WP_ALLOW_MULTISITE && ($blog_id == 1)){

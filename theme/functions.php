@@ -50,12 +50,17 @@ add_action('admin_head-post.php', 'add_comment_change_notice');
 add_action('wp', 'apply_content_parser');
 
 
-add_action('wp', 'digressit_init_beta');
+add_action('init', 'digressit_init_beta');
 
 function digressit_init_beta(){
-
-	if(strtotime('now') > strtotime("15 Nov 2010")){
-		die('This is BETA testing period has expired. Please install official release');
+	
+	$options = get_option('digressit');
+	if(!isset($options['revision']) || (int)$options['revision'] != DIGRESSIT_REVISION ){
+		activate_digressit();
+		$options = get_option('digressit');
+		
+		echo "<p style='background-color: red; color: white'>updating digressit. current revision:" . $options['revision']. " please reload this page</p>";
+		
 	}
 }
 

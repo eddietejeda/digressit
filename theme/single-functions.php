@@ -60,11 +60,12 @@ function single_wp_print_scripts(){
 
 function single_sidebar_widgets(){
 	
+	$options = get_option('digressit');
 	//var_dump(is_active_sidebar('Single Sidebar'));
 	if(is_active_sidebar('single-sidebar')){
 		?>
 		<div class="sidebar-widgets">
-		<div id="dynamic-sidebar" class="sidebar">		
+		<div id="dynamic-sidebar" class="sidebar  <?php echo $options['auto_hide_sidebar']; ?> <?php echo $options['sidebar_position']; ?>">		
 		<?php
 		dynamic_sidebar('Single Sidebar');
 		?>

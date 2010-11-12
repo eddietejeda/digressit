@@ -19,6 +19,8 @@ Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
 define("DIGRESSIT_VERSION", '3.0');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
+define("DIGRESSIT_REVISION", 101);
+
 
 
 
@@ -125,9 +127,19 @@ function activate_digressit(){
 	$options['comments_by_section_label'] = 'Comments of Section';
 	$options['comments_by_users_label'] = 'Comments by Users';
 	$options['general_comments_label'] = 'General Comments';
+
+
+	$options['sidebar_position'] = 'sidebar-widget-position-left';
+	$options['auto_hide_sidebar'] = 'sidebar-widget-auto-hide';
+	$options['show_comment_count_in_sidebar'] = 1;
+	$options['revision'] = DIGRESSIT_REVISION;
 	
 	
 	
+	
+
+	
+		
 	$options['commentpress_upgraded_to_digress_it'] = $digressit_installation_key;
 	$options['digressit_community_hostname'] = $digressit_community_hostname;
 	$options['digressit_client_password'] = $digressit_client_password;
@@ -149,7 +161,8 @@ function activate_digressit(){
 	$sidebars_widgets['single-sidebar'] = null;
 	$sidebars_widgets['single-sidebar'][] = 'listposts-1';
 	
-	update_option('sidebars_widgets', $sidebars_widgets);
+	//update_option('sidebars_widgets', $sidebars_widgets);
+	
 	
 	$sql = "SHOW COLUMNS FROM $wpdb->comments";	
 	$columns = $wpdb->get_results($sql);
@@ -324,11 +337,31 @@ function digressit_theme_options_page() {
 			<td><?php print_dropdown('allow_general_comments', array('no' => 0, 'yes' => '1'), $options['allow_general_comments']); ?></td>
 		</tr>
 
+
+		<tr>
+			<td style="width: 200px"><b><?php _e('Sidebar Position');  ?></b></td>
+			<td><?php print_dropdown('sidebar_position', array('left' => 'sidebar-widget-position-left', 'right' => 'sidebar-widget-position-right'), $options['sidebar_position']); ?></td>
+		</tr>
+
+
+		<tr>
+			<td style="width: 200px"><b><?php _e('Auto-hide Sidebar');  ?></b></td>
+			<td><?php print_dropdown('auto_hide_sidebar', array('no' => 'sidebar-widget-no-auto-hide', 'yes' => 'sidebar-widget-auto-hide'), $options['auto_hide_sidebar']); ?></td>
+		</tr>
+		
+		<tr>
+			<td style="width: 200px"><b><?php _e('In Sidebar Show');  ?></b></td>
+			<td><?php print_dropdown('show_comment_count_in_sidebar', array('Comment Count' => '1', 'Section Number' => 0), $options['show_comment_count_in_sidebar']); ?></td>
+		</tr>
+
+		
+
+<!--
 		<tr>
 			<td style="width: 200px"><b><?php _e('Allow Comments Search');  ?></b></td>
 			<td><?php print_dropdown('allow_comments_search', array('no' => 0, 'yes' => '1'), $options['allow_comments_search']); ?></td>
 		</tr>
-	
+-->	
 	
 
 		</table>

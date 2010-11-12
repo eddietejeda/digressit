@@ -1,5 +1,8 @@
 <?php get_header(); ?>
 
+<?php $options = get_option('digressit'); ?>
+
+
 <div class="container">
 
 <?php 
@@ -8,7 +11,7 @@
 		?>
 		
 		<div class="sidebar-widgets default-list-post">
-		<div id="dynamic-sidebar" class="sidebar">		
+		<div id="dynamic-sidebar" class="sidebar <?php echo $options['auto_hide_sidebar']; ?> <?php echo $options['sidebar_position']; ?>">		
 		<?php
 	
 		ListPostsWithCommentCount::widget($args =array(), array('title' => 'Posts', 

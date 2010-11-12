@@ -17,10 +17,11 @@ function mainpage_wp_print_scripts(){
 }
 
 function mainpage_sidebar_widgets(){
+	$options = get_option('digressit');
 	if(is_active_sidebar('mainpage-sidebar')){
 		?>
 		<div class="sidebar-widgets">
-		<div id="dynamic-sidebar" class="sidebar">		
+		<div id="dynamic-sidebar" class="sidebar  <?php echo $options['auto_hide_sidebar']; ?> <?php echo $options['sidebar_position']; ?>">		
 		<?php
 		get_widgets('Mainpage Sidebar');
 		?>

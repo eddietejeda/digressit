@@ -35,9 +35,10 @@ class ListPostsWithCommentCount extends WP_Widget {
 	function widget($args = array(), $defaults) {		
 		extract( $args );
 		global $post;
-		$currentpost = $post;;
+		$currentpost = $post;
 		
 		//var_dump($args);
+		$options = get_option('digressit');
 		
 		if($defaults['categorize']){
 			$categories=  get_categories(); 
@@ -61,6 +62,7 @@ class ListPostsWithCommentCount extends WP_Widget {
 		<div class="sidebar-pullout"></div>
 
 		<?php
+		$section_number = 1;
 		foreach ($categories as $key => $cat) {
 			if(isset($cat->name) && $cat->name == 'Uncategorized'){
 				//continue;
@@ -103,25 +105,35 @@ class ListPostsWithCommentCount extends WP_Widget {
 			
 			<?php 
 			
-			$commentcount = null;
-			$commentcount = get_post_comment_count($post->ID);
+			$sidebar_number = null;
+			if(isset($options['show_comment_count_in_sidebar'] ) && (int)$options['show_comment_count_in_sidebar'] == 0){
+				$sidebar_number = $section_number;
+
+				$commentcountclass  = 'section-number';					
+
+				$section_number++;
+			}
+			else{			
+				$commentcount = null;
+				$commentcount = get_post_comment_count($post->ID);
 						
-			$commentbubblecolor = ($rule_discussion_status == 'current') ? '-dark' : '-grey';
+				$commentbubblecolor = ($rule_discussion_status == 'current') ? '-dark' : '-grey';
 			
-			if($commentcount < 10){
-				$commentcountclass  = 'commentcount commentcount1 sidebar-comment-count-single'.$commentbubblecolor;
+				if($commentcount < 10){
+					$commentcountclass  = 'commentcount commentcount1 sidebar-comment-count-single'.$commentbubblecolor;
+				}
+				else if($commentcount < 100 && $commentcount > 9){
+					$commentcountclass  = 'commentcount commentcount2 sidebar-comment-count-double'.$commentbubblecolor;
+				}
+				else{
+					$commentcountclass  = 'commentcount commentcount3 sidebar-comment-count-triple'.$commentbubblecolor;					
+				}
+				$sidebar_number = $commentcount;
 			}
-			else if($commentcount < 100 && $commentcount > 9){
-				$commentcountclass  = 'commentcount commentcount2 sidebar-comment-count-double'.$commentbubblecolor;
-			}
-			else{
-				$commentcountclass  = 'commentcount commentcount3 sidebar-comment-count-triple'.$commentbubblecolor;					
-			}
-			
 			?>
 			<div id="sidebar-item-<?php echo $post->ID; ?>" class="sidebar-item sidebar-<?php echo $rule_discussion_status; ?>">
 				
-				<span class="<?php echo $commentcountclass; ?>"><?php echo $commentcount; ; ?></span>
+				<span class="<?php echo $commentcountclass; ?>"><?php echo $sidebar_number; ; ?></span>
 				
 				<span class="sidebar-text"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></span>
 				
