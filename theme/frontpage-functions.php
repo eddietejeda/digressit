@@ -5,12 +5,13 @@ add_action('init', 'frontpage_load');
 
 function frontpage_sidebar_widgets(){
 	$options = get_option('digressit');
-	if(is_active_sidebar(1)){
+
+	if(is_active_sidebar('frontpage-sidebar')){
 		?>
 		<div class="sidebar-widgets">
 		<div id="dynamic-sidebar" class="sidebar  <?php echo $options['auto_hide_sidebar']; ?> <?php echo $options['sidebar_position']; ?>">		
 		<?php
-		get_widgets('Frontpage Sidebar');
+		dynamic_sidebar('Frontpage Sidebar');
 		?>
 		</div>
 		</div>
