@@ -706,7 +706,7 @@ class CommentBrowserLinks extends WP_Widget {
 
 	function widget($args = array(), $defaults) {		
 		extract( $args );
-		$options = get_options('digressit');
+		$options = get_option('digressit');
 		?>
 		<h4>Comment Browser</h4>
 		<ul>
@@ -739,6 +739,7 @@ class CommentBrowserLinks extends WP_Widget {
 
 function commentbrowser_comments_by_section(){
 	global $wp;
+	$options = get_option('digressit');
 
 	echo "<h3>".__($options['comments_by_section_label'],'digressit')."</h3>";
 	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
@@ -753,6 +754,7 @@ function commentbrowser_comments_by_user(){
 function commentbrowser_comments_by_contributor(){
 	global $wp;
 	//var_dump($wp->query_vars);
+	$options = get_option('digressit');
 	echo "<h3>".__($options['comments_by_users_label'],'digressit')."</h3>";
 	
 	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
@@ -778,6 +780,7 @@ function commentbrowser_comments_by_contributor(){
 }
 function commentbrowser_general_comments(){
 	global $wp;
+	$options = get_option('digressit');
 	echo "<h3>".__($options['general_comments_label'],'digressit')."</h3>";	
 	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
 	list_general_comments();

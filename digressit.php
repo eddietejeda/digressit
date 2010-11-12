@@ -19,7 +19,7 @@ Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
 define("DIGRESSIT_VERSION", '3.0');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
-define("DIGRESSIT_REVISION", 104);
+define("DIGRESSIT_REVISION", 105);
 
 
 
