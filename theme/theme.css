@@ -677,7 +677,8 @@ a{
 }
 
 .sidebar .sidebar-item{
-	width: 100%;
+	width: 240px;
+	padding: 3px 25px;
 }
 
 
@@ -728,7 +729,6 @@ a:hover{
 
 .sidebar .sidebar-item {
 	margin-left:-20px;
-	padding:3px 20px;
 }
 
 #live-post-search{

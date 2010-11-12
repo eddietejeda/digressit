@@ -25,14 +25,14 @@ $request_root = parse_url($_SERVER['REQUEST_URI']);
 if(is_commentbrowser()){
 	$current_page_name .= ' comment-browser ';	
 }
-elseif (!($request_root['path'] == '/')){
+elseif(is_multisite() && $blog_id == 1 && is_front_page()){
+	$current_page_name = ' frontpage ';	
+}
+else{
 	$current_page_name .= basename(get_bloginfo('home'));
 	if(is_home()){
 		$current_page_name .= ' site-home ';
-	}
-}
-else{
-	$current_page_name = ' frontpage ';
+	}	
 }
 
 ?>
@@ -89,13 +89,13 @@ do_action('secondary_menu');
 <?php
 
 function header_default_top_menu(){
-
+	$options= get_option('digressit');
 ?>
 	<ul>
-		<li><a href="<?php bloginfo('home') ?>/comments-by-section/" title="Comments by Section"><?php _e('Comments by Section'); ?></a></li>
-		<li><a href="<?php bloginfo('home') ?>/comments-by-contributor/" title="Users"><?php _e('Comments by Contributor'); ?></a></li>		
-		<li><a href="<?php bloginfo('home') ?>/general-comments/" title="General Comments"><?php _e('General Comments'); ?></a></li>		
-		<?php do_action('custom_default_top_menu'); ?>
+		<li><a title="<?php _e($options['comments_by_section_label'],'digressit'); ?>" href="<?php bloginfo('home'); ?>/comments-by-section"><?php _e($options['comments_by_section_label'],'digressit'); ?></a></li>
+		<li><a title="<?php _e($options['comments_by_users_label'],'digressit'); ?>"  href="<?php bloginfo('home'); ?>/comments-by-contributor"><?php _e($options['comments_by_users_label'],'digressit'); ?></a></li>
+		<li><a title="<?php _e($options['general_comments_label'],'digressit'); ?>"  href="<?php bloginfo('home'); ?>/general-comments"><?php _e($options['general_comments_label'],'digressit'); ?></a></li>
+		<?php do_action('add_commentbrowser_link'); ?>		
 	</ul>
 
 <?php

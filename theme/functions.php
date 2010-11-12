@@ -50,21 +50,6 @@ add_action('admin_head-post.php', 'add_comment_change_notice');
 add_action('wp', 'apply_content_parser');
 
 
-add_action('init', 'digressit_init_beta');
-
-function digressit_init_beta(){
-	
-	$options = get_option('digressit');
-	if(!isset($options['revision']) || (int)$options['revision'] != DIGRESSIT_REVISION ){
-		activate_digressit();
-		$options = get_option('digressit');
-		
-		echo "<p style='background-color: red; color: white'>updating digressit. current revision:" . $options['revision']. " please reload this page</p>";
-		
-	}
-}
-
-
 function apply_content_parser(){
 	if(is_single()){
 		add_filter('the_content', 'digressit_parser', 10000);	

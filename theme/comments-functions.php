@@ -698,7 +698,6 @@ function mu_get_comments_from_user($user_id){
 
 
 
-
 class CommentBrowserLinks extends WP_Widget {
 	/** constructor */
 	function CommentBrowserLinks() {
@@ -707,13 +706,13 @@ class CommentBrowserLinks extends WP_Widget {
 
 	function widget($args = array(), $defaults) {		
 		extract( $args );
-
+		$options = get_options('digressit');
 		?>
 		<h4>Comment Browser</h4>
 		<ul>
-			<li><a href="<?php bloginfo('home'); ?>/comments-by-section">Comments by Section</a></li>
-			<li><a href="<?php bloginfo('home'); ?>/comments-by-contributor">Comments by Contributor</a></li>
-			<li><a href="<?php bloginfo('home'); ?>/general-comments">General Comments</a></li>
+			<li><a href="<?php bloginfo('home'); ?>/comments-by-section"><?php _e($options['comments_by_section_label'],'digressit'); ?></a></li>
+			<li><a href="<?php bloginfo('home'); ?>/comments-by-contributor"><?php _e($options['comments_by_users_label'],'digressit'); ?></a></li>
+			<li><a href="<?php bloginfo('home'); ?>/general-comments"><?php _e($options['general_comments_label'],'digressit'); ?></a></li>
 			<?php do_action('add_commentbrowser_link'); ?>
 		</ul>
 		<?php
@@ -740,7 +739,8 @@ class CommentBrowserLinks extends WP_Widget {
 
 function commentbrowser_comments_by_section(){
 	global $wp;
-	echo "<h3>Comments by Section</h3>";
+
+	echo "<h3>".__($options['comments_by_section_label'],'digressit')."</h3>";
 	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
 	list_posts();
 	return isset($wp->query_vars['commentbrowser_params']) ? get_comments('post_id='.$wp->query_vars['commentbrowser_params']) : array();
@@ -753,7 +753,8 @@ function commentbrowser_comments_by_user(){
 function commentbrowser_comments_by_contributor(){
 	global $wp;
 	//var_dump($wp->query_vars);
-	echo "<h3>Comments by Contributor</h3>";
+	echo "<h3>".__($options['comments_by_users_label'],'digressit')."</h3>";
+	
 	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
     if(is_numeric($wp->query_vars['commentbrowser_params'])) :
         $curauth = get_user_by('id', $wp->query_vars['commentbrowser_params']);
@@ -777,7 +778,7 @@ function commentbrowser_comments_by_contributor(){
 }
 function commentbrowser_general_comments(){
 	global $wp;
-	echo "<h3>General Comments</h3>";
+	echo "<h3>".__($options['general_comments_label'],'digressit')."</h3>";	
 	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
 	list_general_comments();
 	return get_approved_general_comments($wp->query_vars['commentbrowser_params']);

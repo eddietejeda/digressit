@@ -19,7 +19,7 @@ Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
 define("DIGRESSIT_VERSION", '3.0');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
-define("DIGRESSIT_REVISION", 101);
+define("DIGRESSIT_REVISION", 104);
 
 
 
@@ -33,6 +33,24 @@ add_action('admin_menu', 'digressit_add_admin_menu');
 
 
 add_action( 'wp', 'digressit_localization' );
+
+
+add_action('init', 'digressit_init');
+
+function digressit_init(){
+	
+	$options = get_option('digressit');
+	if(!isset($options['revision']) || (int)$options['revision'] != DIGRESSIT_REVISION ){
+		activate_digressit();
+		$options = get_option('digressit');
+		
+		echo "<p style='background-color: red; color: white'>updating digressit. current revision:" . $options['revision']. " please reload this page</p>";
+		
+	}
+}
+
+
+
 
 function digressit_localization(){
 	// Make theme available for translation
