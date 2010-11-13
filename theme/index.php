@@ -17,7 +17,6 @@ We also added two new functions to determine if we are on the MU homepage. and i
 
 
 
-
 if(is_frontpage()){
 	include(get_template_directory(). '/frontpage.php');
 }

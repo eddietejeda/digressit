@@ -894,6 +894,9 @@ img{
 	margin: 13px;
 }
 
+.previews h2, h3, h4{
+	padding: 0;
+}
 
 .menu-secondary a{
 	color: #727373 !important;

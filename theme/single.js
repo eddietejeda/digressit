@@ -37,7 +37,7 @@ jQuery(document).ready(function() {
 			
 		});
 		
-		if(jQuery('.textblock').length > 1){
+		if(jQuery('.textblock').length > 0){
 
 			var i = jQuery('.textblock').length;
 			var paragraphnumber = (i == 0) ? '&nbsp;'  : i;
