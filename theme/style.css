@@ -890,7 +890,8 @@ img{
 	text-align:right;
 }
 .paragraphtext img{
-	max-width: 550px;
+	max-width: 445px;
+	margin: 13px;
 }
 
 

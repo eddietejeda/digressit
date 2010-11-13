@@ -143,7 +143,7 @@ function activate_digressit(){
 
 
 	$options['table_of_contents_label'] = 'Table of Contents';
-	$options['comments_by_section_label'] = 'Comments of Section';
+	$options['comments_by_section_label'] = 'Comments by Section';
 	$options['comments_by_users_label'] = 'Comments by Users';
 	$options['general_comments_label'] = 'General Comments';
 
@@ -340,7 +340,7 @@ function digressit_theme_options_page() {
 
 		<tr>
 			<td style="width: 200px"><b><?php _e('Comments by Users Label');  ?></b></td>
-			<td><?php print_input_text('comments_by_section_label', $options['comments_by_users_label']); ?></td>
+			<td><?php print_input_text('comments_by_users_label', $options['comments_by_users_label']); ?></td>
 		</tr>
 
 

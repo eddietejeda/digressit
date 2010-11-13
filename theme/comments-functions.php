@@ -710,9 +710,9 @@ class CommentBrowserLinks extends WP_Widget {
 		?>
 		<h4>Comment Browser</h4>
 		<ul>
-			<li><a href="<?php bloginfo('home'); ?>/comments-by-section"><?php _e($options['comments_by_section_label'],'digressit'); ?></a></li>
-			<li><a href="<?php bloginfo('home'); ?>/comments-by-contributor"><?php _e($options['comments_by_users_label'],'digressit'); ?></a></li>
-			<li><a href="<?php bloginfo('home'); ?>/general-comments"><?php _e($options['general_comments_label'],'digressit'); ?></a></li>
+			<li><a href="<?php bloginfo('url'); ?>/comments-by-section"><?php _e($options['comments_by_section_label'],'digressit'); ?></a></li>
+			<li><a href="<?php bloginfo('url'); ?>/comments-by-contributor"><?php _e($options['comments_by_users_label'],'digressit'); ?></a></li>
+			<li><a href="<?php bloginfo('url'); ?>/general-comments"><?php _e($options['general_comments_label'],'digressit'); ?></a></li>
 			<?php do_action('add_commentbrowser_link'); ?>
 		</ul>
 		<?php
