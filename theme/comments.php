@@ -33,8 +33,8 @@ global $blog_id;
 	<?php do_action('commenbox_header'); ?>
 </div>
 
-<div id="commentbox">
 
+<div id="commentbox">
 <div id="commentwindow">
 
 	<?php do_action('digressit_custom_commenbox_header'); ?>

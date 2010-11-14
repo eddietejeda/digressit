@@ -914,6 +914,15 @@ img{
 }
 
 
+.archive .entry{
+	padding:0 120px 30px 25px;
+}
+
+
+.archive .entry p{
+	margin: 0;
+}
+
 
 
 

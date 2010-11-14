@@ -47,6 +47,7 @@ else{
 <?php do_action('optional_pre_header'); ?>
 <div id="header">
 	<div class="site-title">
+		<div class="bubblearrow"></div>		
 		<?php if(has_action('add_header_image')): ?>
 			<?php do_action('add_header_image'); ?>
 			<div class="description"><?php bloginfo('description'); ?></div>

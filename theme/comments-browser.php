@@ -107,6 +107,7 @@ global $current_browser_section, $wp, $blog_id ;
 		<?php endforeach; ?>
 		<?php else: ?>
 			<div class="comment">
+				<div class="bubblearrow"></div>				
 				<div class="no-comment-browser">
 					<?php
 					
