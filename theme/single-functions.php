@@ -49,12 +49,12 @@ function live_post_search_ajax($request_params){
 
 function single_wp_print_styles(){
 ?>
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/single.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo get_digressit_media_uri(); ?>/single.css" type="text/css" media="screen" />
 <?php
 }
 
 function single_wp_print_scripts(){
-	wp_enqueue_script('digressit.single', get_template_directory_uri().'/single.js', 'jquery', false, true );		
+	wp_enqueue_script('digressit.single', get_digressit_media_uri().'/single.js', 'jquery', false, true );		
 }
 
 

@@ -5,12 +5,12 @@ add_action('wp', 'page_load');
 
 function page_wp_print_styles(){
 ?>
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/page.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo get_digressit_media_uri(); ?>/page.css" type="text/css" media="screen" />
 <?php
 }
 
 function page_wp_print_scripts(){
-	wp_enqueue_script('digressit.page', get_template_directory_uri().'/page.js', 'jquery', false, true );
+	wp_enqueue_script('digressit.page', get_digressit_media_uri().'/page.js', 'jquery', false, true );
 }
 
 function page_sidebar_widgets(){

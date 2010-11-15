@@ -159,9 +159,9 @@ jQuery(document).ready(function() {
 					var top = jQuery('#textblock-' + paragraphnumber).offset().top;
 					var scrollto = (top > 200)  ? (top - 35) : 0;
 
-					jQuery(window).scrollTo(scrollto , 200);
+					jQuery(window).scrollTo(scrollto , 100);
 
-					jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 200);
+					jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 1000, {easing:'easeOutBack'});
 				}
 				jQuery('#selected_paragraph_number').val(paragraphnumber);
 				
@@ -195,7 +195,7 @@ jQuery(document).ready(function() {
 			
 				var scrollto = (top > 200)  ? (top - 30) : 0;
 				jQuery(window).scrollTo(scrollto , 200);
-				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 200);
+				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
 			}
 			
 		}, function(e){
@@ -239,7 +239,7 @@ jQuery(document).ready(function() {
 		
 		//alert('#'+commentname);
 		
-		jQuery('#commentbox').scrollTo('#'+commentname , 200);
+		jQuery('#commentbox').scrollTo('#'+commentname , 500);
 		
 		if(paragraphnumber > 0){
 			//alert('sdf2');		
@@ -249,7 +249,7 @@ jQuery(document).ready(function() {
 			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 
 			var scrollto = (top > 200)  ? (top - 30) : 0;
-			jQuery(window).scrollTo(scrollto , 200);
+			jQuery(window).scrollTo(scrollto , 500);
 		}
 
 	}
@@ -284,11 +284,11 @@ jQuery(document).ready(function() {
 			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 			var scrollto = (top > 200)  ? (top - 30) : 0;
 
-			jQuery(window).scrollTo(scrollto , 200);
+			jQuery(window).scrollTo(scrollto , 500);
 		}
 		
 		if(jQuery('#paragraph-block-' + paragraphnumber).length){
-			jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 200);
+			jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500);
 		}
 
 		if( jQuery('.paragraph-' + paragraphnumber).length > 0 ){

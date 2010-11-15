@@ -10,8 +10,8 @@ function lightbubbles_wp_print_styles(){
 }
 
 function lightbubbles_wp_print_scripts(){	
-	wp_enqueue_script('digressit.rounded_corners', get_template_directory_uri().'/rounded_corners.inc.js', 'jquery', false, true );
-	wp_enqueue_script('digressit.lightbubbles', get_template_directory_uri().'/lightbubbles.js', 'jquery', false, true );
+	wp_enqueue_script('digressit.rounded_corners', get_digressit_media_uri().'/rounded_corners.inc.js', 'jquery', false, true );
+	wp_enqueue_script('digressit.lightbubbles', get_digressit_media_uri().'/lightbubbles.js', 'jquery', false, true );
 }
 
 

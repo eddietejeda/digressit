@@ -19,9 +19,7 @@ Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
 define("DIGRESSIT_VERSION", '3.0');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
-define("DIGRESSIT_REVISION", 110);
-
-
+define("DIGRESSIT_REVISION", 115);
 
 
 register_activation_hook(__FILE__,  'activate_digressit');
@@ -153,6 +151,14 @@ function activate_digressit(){
 	$options['show_comment_count_in_sidebar'] = 1;
 	$options['revision'] = DIGRESSIT_REVISION;
 	
+	$options['custom_style_sheet'] = '';
+	$options['custom_header_image'] = '';
+	$options['use_cdn'] = 0;
+	$options['cdn'] = 'http://c0006125.cdn2.cloudfiles.rackspacecloud.com';
+	
+	
+	
+	
 	
 	
 	
@@ -173,12 +179,12 @@ function activate_digressit(){
 	add_option('digressit', $options);	
 	
 
-	update_option('thread_comments_depth', 2);
+	update_option('thread_comments_depth', 2); //we default to just 2 threads.
 
-	$sidebars_widgets = get_option('sidebars_widgets');
+	//$sidebars_widgets = get_option('sidebars_widgets');
 	
-	$sidebars_widgets['single-sidebar'] = null;
-	$sidebars_widgets['single-sidebar'][] = 'listposts-1';
+	//$sidebars_widgets['single-sidebar'] = null;
+	//$sidebars_widgets['single-sidebar'][] = 'listposts-1';
 	
 	//update_option('sidebars_widgets', $sidebars_widgets);
 	
@@ -280,6 +286,19 @@ function digressit_theme_options_page() {
 
 	$options = get_option('digressit');
 	?>
+
+	<style>
+		#wpcontent input[type=text],#wpcontent select {
+		border:1px solid #DDDDDD;
+		font-size:14px;
+		margin:2px;
+		width:auto;
+		}
+ 		.form-table tr{
+			border-bottom: 1px solid #eee;
+		}	
+	</style>
+
   	<div class="wrap" style="position: relative; font-size: 110%;">
 	
 		<form method="post" action="<?php $PHP_SELF; ?>">
@@ -290,14 +309,7 @@ function digressit_theme_options_page() {
 	
 
 
-		<?php if(is_super_admin()): ?>
-		<tr>
-			<td style="width: 200px"><b><?php _e('Debug Mode');  ?></b></td>
-			<td><?php print_dropdown('debug_mode', array('no' => 0, 'yes' => '1'), $options['debug_mode']); ?></td>
-		</tr>
-		<?php endif; ?>
-		
-	
+
 		<?php   
 	
 			$pages = null;
@@ -306,11 +318,119 @@ function digressit_theme_options_page() {
 			}
 		
 		?>
+		<tr>
+			<td colspan="2"><h2>Presentation</h2></td>
+		</tr>
+		
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Front page content');  ?></b></td>
+			<td>
+			
+				<?php print_dropdown('front_page_content', $pages, $options['front_page_content']); ?>
+				<p>The content of this page will be the first thing a visitor to your website will see.</p>
+			</td>
+		</tr>
+		
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Table of Contents Label');  ?></b></td>
+			<td><?php print_input_text('table_of_contents_label', $options['table_of_contents_label']); ?></td>
+		</tr>
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Comments by Section Label');  ?></b></td>
+			<td><?php print_input_text('comments_by_section_label', $options['comments_by_section_label']); ?></td>
+		</tr>
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Comments by Users Label');  ?></b></td>
+			<td><?php print_input_text('comments_by_users_label', $options['comments_by_users_label']); ?></td>
+		</tr>
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('General Comments Label');  ?></b></td>
+			<td><?php print_input_text('general_comments_label', $options['general_comments_label']); ?></td>
+		</tr>
+
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Allow General Comments');  ?></b></td>
+			<td><?php print_dropdown('allow_general_comments', array('No' => 0, 'Yes' => '1'), $options['allow_general_comments']); ?></td>
+		</tr>
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Sidebar Position');  ?></b></td>
+			<td><?php print_dropdown('sidebar_position', array('Left' => 'sidebar-widget-position-left', 'Right' => 'sidebar-widget-position-right'), $options['sidebar_position']); ?></td>
+		</tr>
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Auto-hide Sidebar');  ?></b></td>
+			<td><?php print_dropdown('auto_hide_sidebar', array('No' => 'sidebar-widget-no-auto-hide', 'Yes' => 'sidebar-widget-auto-hide'), $options['auto_hide_sidebar']); ?></td>
+		</tr>
+		
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('In Sidebar Show');  ?></b></td>
+			<td><?php print_dropdown('show_comment_count_in_sidebar', array('Comment Count' => '1', 'Section Number' => 0), $options['show_comment_count_in_sidebar']); ?></td>
+		</tr>
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Custom Header Image URL');  ?></b></td>
+			<td>
+				
+				<?php print_input_text('custom_header_image', $options['custom_header_image']); ?>
+				<p>This image will override the current header and will become the logo to your site. 
+					Be sure to get copy the entire URL in this field. You can also 
+					<a href="<?php bloginfo('url') ?>/wp-admin/media-new.php">upload your logo</a> and get the URL from there.
+			</td>
+		</tr>
+
+		<tr>
+			<td style="width: 200px"><b><?php _e('Custom Style Sheet');  ?></b></td>
+			<td>
+				<?php print_input_text('custom_style_sheet', $options['custom_style_sheet']); ?>
+				<p>If you would like to customize the theme, you can upload a stylesheet which will override the current theme. For more information
+					on this feature follow the instructions provided at <a href="http://digress.it/help">http://digress.it/help</a>. WARNING: This
+					is still experimental. Setting a stylesheet that is not properly configured will break your theme and you'll need to reset your 
+					options</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2"><h2>Advanced</h2></td>
+		</tr>
+
+		
+		
+		<?php if(is_super_admin()): ?>
+		<tr>
+			<td style="width: 200px"><b><?php _e('Debug Mode');  ?></b></td>
+			<td><?php print_dropdown('debug_mode', array('No' => 0, 'Yes' => '1'), $options['debug_mode']); ?></td>
+		</tr>
 		
 		<tr>
-			<td style="width: 200px"><b><?php _e('Front page content');  ?></b></td>
-			<td><?php print_dropdown('front_page_content', $pages, $options['front_page_content']); ?></td>
+			<td style="width: 200px"><b><?php _e('Use CDN');  ?></b></td>
+			<td>
+			<?php print_dropdown('use_cdn', array('Yes' => '1', 'No' => 0), $options['use_cdn']); ?>
+			<p>This is an experimental feature. The idea is that you can host the media files on a really fast file server. Enabling this now
+				has the risk of downloading files that are out of date. Use at your own discretion.</p>				
+				
+			</td>
 		</tr>
+		
+		<tr>
+			<td style="width: 200px"><b><?php _e('CDN');  ?></b></td>
+			<td><?php print_input_text('cdn', $options['cdn'], 'disabled'); ?>
+
+			</td>
+		</tr>
+		
+		<?php endif; ?>
+		
 		
 		<tr>
 			<td style="width: 200px"><b><?php _e('Content Parsing Function');  ?></b></td>
@@ -326,59 +446,12 @@ function digressit_theme_options_page() {
 			<td style="width: 200px"><b><?php _e('Comment Box Parsing Function');  ?></b></td>
 			<td><?php print_dropdown('commentbox_parser', $digressit_commentbox_function, $options['commentbox_parser']); ?></td>
 		</tr>
-
-
-		<tr>
-			<td style="width: 200px"><b><?php _e('Table of Contents Label');  ?></b></td>
-			<td><?php print_input_text('table_of_contents_label', $options['table_of_contents_label']); ?></td>
-		</tr>
-
-		<tr>
-			<td style="width: 200px"><b><?php _e('Comments by Section Label');  ?></b></td>
-			<td><?php print_input_text('comments_by_section_label', $options['comments_by_section_label']); ?></td>
-		</tr>
-
-		<tr>
-			<td style="width: 200px"><b><?php _e('Comments by Users Label');  ?></b></td>
-			<td><?php print_input_text('comments_by_users_label', $options['comments_by_users_label']); ?></td>
-		</tr>
-
-
-		<tr>
-			<td style="width: 200px"><b><?php _e('General Comments Label');  ?></b></td>
-			<td><?php print_input_text('general_comments_label', $options['general_comments_label']); ?></td>
-		</tr>
-
-
-
-		<tr>
-			<td style="width: 200px"><b><?php _e('Allow General Comments');  ?></b></td>
-			<td><?php print_dropdown('allow_general_comments', array('no' => 0, 'yes' => '1'), $options['allow_general_comments']); ?></td>
-		</tr>
-
-
-		<tr>
-			<td style="width: 200px"><b><?php _e('Sidebar Position');  ?></b></td>
-			<td><?php print_dropdown('sidebar_position', array('left' => 'sidebar-widget-position-left', 'right' => 'sidebar-widget-position-right'), $options['sidebar_position']); ?></td>
-		</tr>
-
-
-		<tr>
-			<td style="width: 200px"><b><?php _e('Auto-hide Sidebar');  ?></b></td>
-			<td><?php print_dropdown('auto_hide_sidebar', array('no' => 'sidebar-widget-no-auto-hide', 'yes' => 'sidebar-widget-auto-hide'), $options['auto_hide_sidebar']); ?></td>
-		</tr>
 		
-		<tr>
-			<td style="width: 200px"><b><?php _e('In Sidebar Show');  ?></b></td>
-			<td><?php print_dropdown('show_comment_count_in_sidebar', array('Comment Count' => '1', 'Section Number' => 0), $options['show_comment_count_in_sidebar']); ?></td>
-		</tr>
-
-		
-
 <!--
 		<tr>
 			<td style="width: 200px"><b><?php _e('Allow Comments Search');  ?></b></td>
-			<td><?php print_dropdown('allow_comments_search', array('no' => 0, 'yes' => '1'), $options['allow_comments_search']); ?></td>
+			<td><?php print_dropdown('allow_comments_search', array('No' => 0, 'Yes' => '1'), $options['allow_comments_search']); ?></td>
+			<td>Help</td>
 		</tr>
 -->	
 	
@@ -397,8 +470,8 @@ function digressit_theme_options_page() {
 	
 
 	
-	
-	<div id="digressit-donate" style="background-color:white;border:1px solid;padding:0 21px 10px; position:absolute; right:50px; top:200px; width:300px;">
+	<!--
+	<div id="digressit-donate" style="background-color:white;border:1px solid;padding:0 21px 10px; position:relative; width:300px;">
 	<h3><?php _e('Please consider donating to help keep this project alive:') ?></h3>
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 	<input type="hidden" name="cmd" value="_s-xclick">
@@ -407,7 +480,7 @@ function digressit_theme_options_page() {
 	<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
 	</form>
 	</div>
-	
+	-->
 	<?php 
 	//restore_current_blog();
 }
@@ -415,10 +488,20 @@ function digressit_theme_options_page() {
 
 
 
+function get_digressit_media_uri(){
+	$options = get_option('digressit');
+	
+	if((int)$options['use_cdn']){
+		return $options['cdn'];
+	}
+	else{
+		return get_template_directory_uri();
+	}
+}
 
 
-function print_input_text($name, $value){
-	echo "<input type='text' name='$name' value='$value'>";
+function print_input_text($name, $value, $attrs =null){
+	echo "<input $attrs style='width: 50%' type='text' name='$name' value='$value'>";
 }
 
 
@@ -439,7 +522,7 @@ function is_mu_or_network_mode(){
 
 	$is_multiuser = false;
 
-	if(function_exists('wpmu_create_blog') || WP_ALLOW_MULTISITE){
+	if(function_exists('wpmu_create_blog') || (function_exists('is_multisite') && is_multisite()) ){
 		$is_multiuser = true;
 	}
 	
