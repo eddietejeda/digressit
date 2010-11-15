@@ -677,9 +677,14 @@ a{
 	clear: both;
 }
 
-.paragraph-block:hover{
+.paragraph-block-button:hover{
 	cursor: hand;
 	cursor: pointer;
+}
+
+.comment-date a{
+	color: black;
+	text-decoration: none;
 }
 
 .sidebar-text{

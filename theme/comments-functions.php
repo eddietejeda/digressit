@@ -247,7 +247,7 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 					<span class="comment-paragraph-number" title="<?php echo $comment->comment_text_signature; ?>"></span>
 
 
-					<span class="comment-date"><?php comment_date('n/j/Y'); ?></span>
+					<span class="comment-date"><a href="<?php get_permalink($comment->comment_post_ID); ?>#comment-<?php echo $current_blog_id ?>-<?php comment_ID() ?>"><?php comment_date('n/j/Y'); ?></a></span>
 					
 
 					
