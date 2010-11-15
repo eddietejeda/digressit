@@ -93,6 +93,7 @@ function header_default_top_menu(){
 	$options= get_option('digressit');
 ?>
 	<ul>
+		<li><a title="<?php _e($options['table_of_contents_label'],'digressit'); ?>" href="<?php bloginfo('home'); ?>"><?php _e($options['table_of_contents_label'],'digressit'); ?></a></li>
 		<li><a title="<?php _e($options['comments_by_section_label'],'digressit'); ?>" href="<?php bloginfo('home'); ?>/comments-by-section"><?php _e($options['comments_by_section_label'],'digressit'); ?></a></li>
 		<li><a title="<?php _e($options['comments_by_users_label'],'digressit'); ?>"  href="<?php bloginfo('home'); ?>/comments-by-contributor"><?php _e($options['comments_by_users_label'],'digressit'); ?></a></li>
 		<li><a title="<?php _e($options['general_comments_label'],'digressit'); ?>"  href="<?php bloginfo('home'); ?>/general-comments"><?php _e($options['general_comments_label'],'digressit'); ?></a></li>
