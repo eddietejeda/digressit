@@ -1,12 +1,30 @@
 <?php
+
 global $blog_id;
+
+//require_once(get_template_directory().'/widgets.php');
+add_action('wp_print_styles', 'widgets_wp_print_styles');
+add_action('wp_print_scripts', 'widgets_wp_print_scripts' );
+
+
+function widgets_wp_print_styles(){
+?>
+<link rel="stylesheet" href="<?php echo get_digressit_media_uri(); ?>/widgets.css" type="text/css" media="screen" />
+<?php
+}
+
+function widgets_wp_print_scripts(){
+	wp_enqueue_script('digressit.widgets', get_digressit_media_uri().'/widgets.js', 'jquery', false, true );
+}
+
+
 
 if ( function_exists('register_sidebar') ) {
 
 
 
 
-	if(WP_ALLOW_MULTISITE && ($blog_id == 1)){
+	if(is_multisite() && ($blog_id == 1)){
 		register_sidebar(array(
 			'id' => 'frontpage-content',		
 			'name' => 'Frontpage Content',
@@ -46,7 +64,7 @@ if ( function_exists('register_sidebar') ) {
 
 
 
-	if(WP_ALLOW_MULTISITE && ($blog_id == 1)){
+	if(is_multisite() && ($blog_id == 1)){
 		register_sidebar(array(
 			'name' => 'Frontpage Sidebar',
 			'id' => 'frontpage-sidebar',		
@@ -85,7 +103,7 @@ if ( function_exists('register_sidebar') ) {
 	));
 
 
-	if(WP_ALLOW_MULTISITE && ($blog_id == 1)){
+	if(is_multisite() && ($blog_id == 1)){
 	
 		register_sidebar(array(
 			'id' => 'frontpage-topbar',		
@@ -131,5 +149,6 @@ if ( function_exists('register_sidebar') ) {
 
 
 }
+
 
 ?>

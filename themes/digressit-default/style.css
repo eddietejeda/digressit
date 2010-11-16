@@ -1,7 +1,7 @@
 /*	
-Plugin Name: Digress.it
-Plugin URI: http://digress.it
-Description:  digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
+Theme Name: Digress.it
+Theme URI: http://digress.it
+Description: Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
 Version: 3.0
 Author URI: http://www.visudo.com
@@ -9,9 +9,7 @@ License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
 Tags: buddypress
 
 Special thanks to:	
-Matteo Bicocchi @ www.open-lab.com
 The developers of JQuery @ www.jquery.com
-Mark James, for the famfamfam iconset @ http://www.famfamfam.com/lab/icons/silk/
 Joss Winn and Tony Hirst @ writetoreply.com
 Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
 Cynthia Farina, Mary Newhart, and Austin Austice at Cornell University
@@ -20,9 +18,8 @@ Cynthia Farina, Mary Newhart, and Austin Austice at Cornell University
 /**********  GLOBAL RULES  **********/
 
 @font-face {
-/*  font-family: League Gothic;
-  src: url(League Gothic.otf) format("opentype");
-*/
+
+
 }
  
 h1, h2, h3, h4, h5, h6 {

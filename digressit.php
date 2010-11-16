@@ -16,24 +16,64 @@ Joss Winn and Tony Hirst @ writetoreply.com
 Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
 */
 
+global $commentbrowser, $blog_id, $current_user, $current_user_comments, $development_mode, $testing_mode, $production_mode;
+global $digressit_content_function, $digressit_comments_function, $digressit_commentbox_function,$is_commentbrowser, $browser;
+
+$browser = current_browser();
+$is_commentbrowser= false;
+
+
+//get_currentuserinfo();
+
+$plugin_name = str_replace("/", "", str_replace(basename( __FILE__),"",plugin_basename(__FILE__))); 
+
+
 define("DIGRESSIT_VERSION", '3.0');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
 define("DIGRESSIT_REVISION", 115);
+define("DIGRESSIT_DIR", WP_PLUGIN_DIR ."/". $plugin_name);
+define("DIGRESSIT_CORE_DIR", DIGRESSIT_DIR . '/core');
+define("DIGRESSIT_THEMES_DIR", DIGRESSIT_DIR . '/themes');
 
 
 register_activation_hook(__FILE__,  'activate_digressit');
 register_deactivation_hook(__FILE__, 'deactivate_digressit' );
 
+register_theme_directory( WP_PLUGIN_DIR . '/digressit/themes' );
+
+
+register_digressit_content_function('standard_digressit_content_parser');
+register_digressit_content_function('discrete_digressit_content_parser');
+register_digressit_content_function('regexp_digressit_content_parser');
+
+
+register_digressit_comments_function('standard_digressit_comment_parser');
+
+
+register_digressit_commentbox_js('grouping_digressit_commentbox_parser');
+register_digressit_commentbox_js('nogrouping_digressit_commentbox_parser');	
+
 
 
 add_action('admin_menu', 'digressit_add_admin_menu');
-
-
 add_action( 'wp', 'digressit_localization' );
-
-
 add_action('init', 'digressit_init');
+
+
+
+
+//loading core extensions
+if ($handle = opendir(DIGRESSIT_CORE_DIR)) {
+	while (false !== ($file = readdir($handle))) {
+		if (!is_dir($file) && strstr($file, '-functions.php')) {
+			require_once(DIGRESSIT_CORE_DIR . '/' . $file);
+		}
+	}
+	closedir($handle);
+}
+
+
 
 function digressit_init(){
 	
@@ -45,19 +85,19 @@ function digressit_init(){
 		echo "<p style='background-color: red; color: white'>updating digressit. current revision: " . $options['revision']. " please reload this page.</p>
 		<meta http-equiv=\"refresh\" content=\"1\" >";
 		
-	}
+	}	
 }
 
 
 
 
+// Make theme available for translation
+// Translations can be filed in the /languages/ directory
 function digressit_localization(){
-	// Make theme available for translation
-	// Translations can be filed in the /languages/ directory
-	load_theme_textdomain( 'digressit', TEMPLATEPATH . '/lang/' );
+	load_theme_textdomain( 'digressit', TEMPLATEPATH . '/locales/' );
 
 	$locale = get_locale();
-	$locale_file = TEMPLATEPATH . "/languages/$locale.php";
+	$locale_file = TEMPLATEPATH . "/locales/$locale.php";
 	if ( is_readable( $locale_file ) ){
 		require_once( $locale_file );
 	}
@@ -69,7 +109,6 @@ function activate_digressit(){
 	global $wpdb;
 	$options = get_option('digressit');
 
-	//die('activating');
 	//PRE-3.0
 	$commentpress_upgraded_to_digress_it = get_option('commentpress_upgraded_to_digress_it');
 	$digressit_community_hostname = get_option('digressit_community_hostname');
@@ -114,9 +153,9 @@ function activate_digressit(){
 
 	
 	$installation_key  = null;
-	$installation_key = strlen($current_digressit['installation_key']) == 32 ? $current_digressit['installation_key'] : null;
+	$installation_key = strlen($options['installation_key']) == 32 ? $options['installation_key'] : null;
 
-	$options['wp_path'] = $wp_path;
+	//$options['wp_path'] = $wp_path;
 	$options['debug_mode'] = 0;
 	$options['allow_text_selection'] = 0;
 	$options['default_skin'] = $default_skin;
@@ -125,7 +164,7 @@ function activate_digressit(){
 	$options['default_top_position'] = '175px';
 	$options['allow_users_to_minimize'] = 0;
 	$options['allow_users_to_resize'] = 0;
-	$options['server_sync_interval'] = $monthly;
+	//$options['server_sync_interval'] = $monthly;
 	$options['allow_users_to_drag'] = 1;
 	$options['highlight_color'] = '#FFFC00';
 	$options['parse_list_items'] = 0;
@@ -215,39 +254,43 @@ function activate_digressit(){
 
 	$options = get_option('digressit');
 	
-	if(is_writable( $themes_dir)){
+	/* Since: 2.9.0 */
+	if(!function_exists( 'register_theme_directory')){
+		if(is_writable( $themes_dir)){
 
-		//echo "is_writable";
-		$theme_link = $themes_dir . $plugin_name;
+			//echo "is_writable";
+			$theme_link = $themes_dir . $plugin_name;
 		
-		//CREATE THE THEME DIRECTORY
-		if(is_link($theme_link)){
-			//i think we're good
-			//die( "already link");
-		}
-		elseif(!file_exists($theme_link)){
-			if(symlink($plugin_theme_link,$theme_link)){
-				//we're good
-				//update_option($options['theme_mode'], 'stylesheet');
-				//die( "Created link");
+			//CREATE THE THEME DIRECTORY
+			if(is_link($theme_link)){
+				//i think we're good
+				//die( "already link");
+			}
+			elseif(!file_exists($theme_link)){
+				if(symlink($plugin_theme_link,$theme_link)){
+					//we're good
+					//update_option($options['theme_mode'], 'stylesheet');
+					//die( "Created link");
+				}
+				else{
+					//die( "There was an error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. If the server doesn't have write permission try creating it manually");
+				}
 			}
 			else{
-				//die( "There was an error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. If the server doesn't have write permission try creating it manually");
+				//die( "unknown error");
+				//probably a windows person
+				//die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. Maybe a theme named DigressIt already exists?");					
 			}
+		
+		
 		}
 		else{
-			//die( "unknown error");
-			//probably a windows person
-			//die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. Maybe a theme named DigressIt already exists?");					
+			die(__('No write permission on: ').$themes_dir.__('. Please give the server write permission on this directory'));
 		}
-		
-		
 	}
-	else{
-		die(__('No write permission on: ').$themes_dir.__('. Please give the server write permission on this directory'));
-	}
-	
-	switch_theme($plugin_name, $plugin_name);	
+	switch_theme($plugin_name.'-default', $plugin_name.'-default');	
+	$ct = current_theme_info();
+	//var_dump($ct);
 
 }
 
@@ -266,7 +309,7 @@ function digressit_theme_options_page() {
 	global $wpdb, $digressit_content_function, $digressit_comments_function, $digressit_commentbox_function, $blog_id;
 
 	//var_dump($digressit_content_function);
-	if($_POST['reset'] == 'Reset Options'){
+	if(isset($_POST['reset']) && $_POST['reset'] == 'Reset Options'){
 		delete_option('digressit');
 		activate_digressit();
 		//echo "resetting";
@@ -470,20 +513,19 @@ function digressit_theme_options_page() {
 	
 
 	
-	<!--
-	<div id="digressit-donate" style="background-color:white;border:1px solid;padding:0 21px 10px; position:relative; width:300px;">
-	<h3><?php _e('Please consider donating to help keep this project alive:') ?></h3>
+
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 	<input type="hidden" name="cmd" value="_s-xclick">
 	<input type="hidden" name="hosted_button_id" value="XYBB4WEBLRHMN">
 	<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 	<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
 	</form>
-	</div>
-	-->
+
 	<?php 
 	//restore_current_blog();
 }
+
+
 
 
 
@@ -497,6 +539,33 @@ function get_digressit_media_uri(){
 	else{
 		return get_template_directory_uri();
 	}
+}
+
+
+function get_digressit_theme_path(){
+	return DIGRESSIT_THEMES_DIR . get_current_theme();
+}
+function get_digressit_theme_uri(){
+	return DIGRESSIT_THEMES_DIR . get_current_theme();
+}
+
+
+
+
+
+
+function register_digressit_content_function($function_name){
+	global $digressit_content_function;
+	$digressit_content_function[$function_name] = $function_name;
+}
+function register_digressit_comments_function($function_name){
+	global $digressit_comments_function;
+	$digressit_comments_function[$function_name] = $function_name;
+}
+
+function register_digressit_commentbox_js($function_name){
+	global $digressit_commentbox_function;
+	$digressit_commentbox_function[$function_name] = $function_name;
 }
 
 
@@ -528,6 +597,103 @@ function is_mu_or_network_mode(){
 	
 	return 	$is_multiuser;
 }
+
+function is_frontpage(){
+	global $is_frontpage, $is_mainpage, $blog_id;
+	
+	if(!function_exists('is_multisite')){
+		return false;
+	}
+
+	//die(var_dump(is_frontpage()));
+	
+	if(is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
+		if(is_home()){
+			if($blog_id == 1){		
+				return true;
+			}
+		}
+	}
+	
+	return false;
+}
+
+
+function is_mainpage(){
+	global $is_frontpage, $is_mainpage, $blog_id;
+	
+	if(is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
+		if(is_home()){
+			if($blog_id == 1):			
+				return false;
+			else:
+				return true;
+			endif;
+		}
+	}
+	else{
+		return false;
+	}
+}
+
+
+
+function current_browser() {
+    $userAgent = strtolower($_SERVER['HTTP_USER_AGENT']);
+
+    // Identify the browser. Check Opera and Safari first in case of spoof. Let Google Chrome be identified as Safari.
+    if (preg_match('/opera/', $userAgent)) {
+        $name = 'opera';
+    }
+    elseif (preg_match('/webkit/', $userAgent)) {
+        $name = 'safari';
+    }
+    elseif (preg_match('/msie/', $userAgent)) {
+        $name = 'msie';
+    }
+    elseif (preg_match('/mozilla/', $userAgent) && !preg_match('/compatible/', $userAgent)) {
+        $name = 'mozilla';
+    }
+    else {
+        $name = 'unrecognized';
+    }
+
+    // What version?
+    if (preg_match('/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches)) {
+        $version = $matches[1];
+    }
+    else {
+        $version = 'unknown';
+    }
+
+    // Running on what platform?
+    if (preg_match('/linux/', $userAgent)) {
+        $platform = 'linux';
+    }
+    elseif (preg_match('/macintosh|mac os x/', $userAgent)) {
+        $platform = 'mac';
+    }
+    elseif (preg_match('/windows|win32/', $userAgent)) {
+        $platform = 'windows';
+    }
+    else {
+        $platform = 'unrecognized';
+    }
+
+    return array(
+        'name'      => $name,
+        'version'   => $version,
+        'platform'  => $platform,
+        'userAgent' => $userAgent
+    );
+}
+
+function is_commentbrowser(){
+	global $is_commentbrowser;
+	return $is_commentbrowser;
+}
+
+
 
 
 ?>

@@ -4,11 +4,6 @@ global $digressit_content_function, $digressit_comments_function, $digressit_com
 
 global $browser;
 
-$browser = current_browser();
-$is_commentbrowser= false;
-
-
-get_currentuserinfo();
 
 /*
 
@@ -27,21 +22,11 @@ function add_digressit_parsing_function();
 
 add_action( 'after_setup_theme', 'digressit_setup' );
 
-register_digressit_content_function('standard_digressit_content_parser');
-register_digressit_content_function('discrete_digressit_content_parser');
-register_digressit_content_function('regexp_digressit_content_parser');
 
+//if(file_exists(TEMPLATEPATH . '/extensions.php')){
+//	require_once(TEMPLATEPATH . '/extensions.php');	
+//}
 
-register_digressit_comments_function('standard_digressit_comment_parser');
-
-
-register_digressit_commentbox_js('grouping_digressit_commentbox_parser');
-register_digressit_commentbox_js('nogrouping_digressit_commentbox_parser');	
-
-
-if(file_exists(TEMPLATEPATH . '/extensions.php')){
-	require_once(TEMPLATEPATH . '/extensions.php');	
-}
 
 add_action('init', 'digressit_load');
 
@@ -171,45 +156,6 @@ function standard_stylized_title($title){
 		echo "<h3>{$title}</h3>";
 }
 */
-
-function is_frontpage(){
-	global $is_frontpage, $is_mainpage, $blog_id;
-	
-	if(!function_exists('is_multisite')){
-		return false;
-	}
-
-	//die(var_dump(is_frontpage()));
-	
-	if(is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
-		if(is_home()){
-			if($blog_id == 1){		
-				return true;
-			}
-		}
-	}
-	
-	return false;
-}
-
-
-function is_mainpage(){
-	global $is_frontpage, $is_mainpage, $blog_id;
-	
-	if(WP_ALLOW_MULTISITE && file_exists(get_template_directory(). '/frontpage.php')){
-		if(is_home()){
-			if($blog_id == 1):			
-				return false;
-			else:
-				return true;
-			endif;
-		}
-	}
-	else{
-		return false;
-	}
-}
-
 
 
 
@@ -418,19 +364,6 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 
 
 
-function register_digressit_content_function($function_name){
-	global $digressit_content_function;
-	$digressit_content_function[$function_name] = $function_name;
-}
-function register_digressit_comments_function($function_name){
-	global $digressit_comments_function;
-	$digressit_comments_function[$function_name] = $function_name;
-}
-
-function register_digressit_commentbox_js($function_name){
-	global $digressit_commentbox_function;
-	$digressit_commentbox_function[$function_name] = $function_name;
-}
 
 
 function digressit_parser($content){
@@ -571,62 +504,6 @@ function get_header_images(){
 
 
 
-
-
-function current_browser() {
-    $userAgent = strtolower($_SERVER['HTTP_USER_AGENT']);
-
-    // Identify the browser. Check Opera and Safari first in case of spoof. Let Google Chrome be identified as Safari.
-    if (preg_match('/opera/', $userAgent)) {
-        $name = 'opera';
-    }
-    elseif (preg_match('/webkit/', $userAgent)) {
-        $name = 'safari';
-    }
-    elseif (preg_match('/msie/', $userAgent)) {
-        $name = 'msie';
-    }
-    elseif (preg_match('/mozilla/', $userAgent) && !preg_match('/compatible/', $userAgent)) {
-        $name = 'mozilla';
-    }
-    else {
-        $name = 'unrecognized';
-    }
-
-    // What version?
-    if (preg_match('/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches)) {
-        $version = $matches[1];
-    }
-    else {
-        $version = 'unknown';
-    }
-
-    // Running on what platform?
-    if (preg_match('/linux/', $userAgent)) {
-        $platform = 'linux';
-    }
-    elseif (preg_match('/macintosh|mac os x/', $userAgent)) {
-        $platform = 'mac';
-    }
-    elseif (preg_match('/windows|win32/', $userAgent)) {
-        $platform = 'windows';
-    }
-    else {
-        $platform = 'unrecognized';
-    }
-
-    return array(
-        'name'      => $name,
-        'version'   => $version,
-        'platform'  => $platform,
-        'userAgent' => $userAgent
-    );
-}
-
-function is_commentbrowser(){
-	global $is_commentbrowser;
-	return $is_commentbrowser;
-}
 
 
 

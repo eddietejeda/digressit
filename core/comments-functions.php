@@ -84,14 +84,14 @@ function commentbrowser_template_redirect() {
 function comments_wp_print_styles(){
 	if(is_single()):
 	?>
-<link rel="stylesheet" href="<?php echo get_digressit_media_uri(); ?>/comments.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/comments.css" type="text/css" media="screen" />
 	<?php endif; ?>
 <?php
 }
 
 function comments_wp_print_scripts(){		
 	if(is_single()):
-		wp_enqueue_script('digressit.comments', get_digressit_media_uri().'/comments.js', 'jquery', false, true );
+		wp_enqueue_script('digressit.comments', get_template_directory_uri().'/comments.js', 'jquery', false, true );
 	endif;
 }
 
@@ -247,7 +247,7 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 					<span class="comment-paragraph-number" title="<?php echo $comment->comment_text_signature; ?>"></span>
 
 
-					<span class="comment-date"><a href="<?php get_permalink($comment->comment_post_ID); ?>#comment-<?php echo $current_blog_id ?>-<?php comment_ID() ?>"><?php comment_date('n/j/Y'); ?></a></span>
+					<span class="comment-date"><?php comment_date('n/j/Y'); ?></span>
 					
 
 					

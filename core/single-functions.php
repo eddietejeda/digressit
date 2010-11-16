@@ -1,7 +1,5 @@
 <?php
 
-
-
 add_filter('wp', 'single_load');
 add_filter('init', 'single_init');
 

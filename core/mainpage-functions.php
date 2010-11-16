@@ -8,12 +8,12 @@ add_action('wp', 'mainpage_load');
 
 function mainpage_wp_print_styles(){
 ?>
-<link rel="stylesheet" href="<?php echo get_digressit_media_uri(); ?>/mainpage.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/mainpage.css" type="text/css" media="screen" />
 <?php
 }
 
 function mainpage_wp_print_scripts(){
-	wp_enqueue_script('digressit.mainpage', get_digressit_media_uri().'/mainpage.js', 'jquery', false, true );
+	wp_enqueue_script('digressit.mainpage', get_template_directory_uri().'/mainpage.js', 'jquery', false, true );
 }
 
 function mainpage_sidebar_widgets(){

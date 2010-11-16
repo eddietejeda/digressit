@@ -1,7 +1,7 @@
 <?php
 
 /*
-because MU sites have a completely different layout on the aggregate home page
+because Multi-sites have a completely different layout on the aggregate home page
 than the introduction pages to the book/course, we've changed the standard "home" and "index"
 functionality of WP.
 
