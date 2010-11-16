@@ -22,7 +22,7 @@
 $request_root = parse_url($_SERVER['REQUEST_URI']);
 
 //var_dump(is_commentbrowser());
-if(is_commentbrowser()){
+if(function_exists('is_commentbrowser') && is_commentbrowser()){
 	$current_page_name .= ' comment-browser ';	
 }
 elseif(is_multisite() && $blog_id == 1 && is_front_page()){
