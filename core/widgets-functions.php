@@ -2,27 +2,22 @@
 
 global $blog_id;
 
-//require_once(get_template_directory().'/widgets.php');
-add_action('wp_print_styles', 'widgets_wp_print_styles');
-add_action('wp_print_scripts', 'widgets_wp_print_scripts' );
+add_action('wp_print_styles', 'digress_widgets_print_styles');
+add_action('wp_print_scripts', 'digressit_widgets_print_scripts' );
 
 
-function widgets_wp_print_styles(){
+function digress_widgets_print_styles(){
 ?>
-<link rel="stylesheet" href="<?php echo get_digressit_media_uri(); ?>/widgets.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/widgets.css'); ?>" type="text/css" media="screen" />
 <?php
 }
 
-function widgets_wp_print_scripts(){
-	wp_enqueue_script('digressit.widgets', get_digressit_media_uri().'/widgets.js', 'jquery', false, true );
+function digressit_widgets_print_scripts(){
+	wp_enqueue_script('digressit.widgets', get_digressit_media_uri('js/digressit.widgets.js'), 'jquery', false, true );
 }
 
 
-
 if ( function_exists('register_sidebar') ) {
-
-
-
 
 	if(is_multisite() && ($blog_id == 1)){
 		register_sidebar(array(
