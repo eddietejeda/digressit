@@ -1,24 +1,24 @@
 <?php
-
 //add_action('wp', 'mainpage');
 add_action('wp_print_styles', 'mainpage_wp_print_styles');
 add_action('wp_print_scripts', 'mainpage_wp_print_scripts' );
 add_action('wp', 'mainpage_load');
 
 
+
 function mainpage_wp_print_styles(){
 ?>
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/mainpage.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/mainpage.css'); ?>" type="text/css" media="screen" />
 <?php
 }
 
 function mainpage_wp_print_scripts(){
-	wp_enqueue_script('digressit.mainpage', get_template_directory_uri().'/mainpage.js', 'jquery', false, true );
+	wp_enqueue_script('digressit.mainpage', get_digressit_media_uri('js/digressit.mainpage.js'), 'jquery', false, true );
 }
 
 function mainpage_sidebar_widgets(){
 	$options = get_option('digressit');
-	if(is_active_sidebar('mainpage-sidebar')){
+	if(is_active_sidebar('mainpage-sidebar') && $options['enable_sidebar'] != 0){
 		?>
 		<div class="sidebar-widgets">
 		<div id="dynamic-sidebar" class="sidebar  <?php echo $options['auto_hide_sidebar']; ?> <?php echo $options['sidebar_position']; ?>">		

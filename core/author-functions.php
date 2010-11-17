@@ -1,18 +1,18 @@
 <?php
 
 
-add_action('wp_print_styles', 'author_wp_print_styles');
-add_action('wp_print_scripts', 'author_wp_print_scripts' );
+add_action('wp_print_styles', 'digressit_author_print_styles');
+add_action('wp_print_scripts', 'digressit_author_print_scripts' );
 
-function author_wp_print_styles(){
+function digressit_author_print_styles(){
 ?>
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/author.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/author.css'); ?>" type="text/css" media="screen" />
 <?php
 }
 
-function author_wp_print_scripts(){
+function digressit_author_print_scripts(){
 		
-	wp_enqueue_script('digressit.authors', get_template_directory_uri().'/author.js', 'jquery', false, true );
+	wp_enqueue_script('digressit.authors', get_digressit_media_uri('js/digressit.author.js'), 'jquery', false, true );
 }
 
 ?>
