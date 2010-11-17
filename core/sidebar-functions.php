@@ -3,8 +3,6 @@
 
 add_action('widgets_init', create_function('', 'return register_widget("ListPostsWithCommentCount");'));
 //add_action('widgets_init', create_function('', 'return register_widget("ListUsersWithCommentCount");'));
-
-
 add_action('widgets_init', create_function('', 'return register_widget("LiveContentSearch");'));
 
 
