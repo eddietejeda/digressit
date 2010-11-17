@@ -5,7 +5,7 @@
  * @package WordPress
  */
 require_once(ABSPATH . WPINC . '/registration.php');	
-require_once(get_template_directory() . '/functions.php');
+require_once(DIGRESSIT_CORE_DIR . '/core-functions.php');
 
 global $wp_rewrite, $matches, $wp_query, $wp;
 

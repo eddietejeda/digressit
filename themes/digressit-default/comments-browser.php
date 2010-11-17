@@ -8,8 +8,6 @@ Template Name: CommentsBrowser
 */
 
 global $current_browser_section, $wp, $blog_id ;
-
-//var_dump($current_browser_section);
 ?>
 
 <?php get_header(); ?>
@@ -33,7 +31,6 @@ global $current_browser_section, $wp, $blog_id ;
 			$comment_list = call_user_func($commentbrowser_function, $commentbrowser_params);
 
 		}
-
 		
 		?>		
 		

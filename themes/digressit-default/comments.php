@@ -1,7 +1,7 @@
 <?php
 /**
- * @package WordPress
- * @subpackage Default_Theme
+ * @package Digress.it
+ * @subpackage Digress.it.Default
  */
 
 
