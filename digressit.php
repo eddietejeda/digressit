@@ -34,7 +34,19 @@ define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
 define("DIGRESSIT_REVISION", 115);
 define("DIGRESSIT_DIR", WP_PLUGIN_DIR ."/". $plugin_name);
 define("DIGRESSIT_CORE_DIR", DIGRESSIT_DIR . '/core');
+define("DIGRESSIT_CORE_JS_DIR", DIGRESSIT_CORE_DIR . '/js');
+define("DIGRESSIT_CORE_IMG_DIR", DIGRESSIT_CORE_DIR . '/images');
+define("DIGRESSIT_CORE_CSS_DIR", DIGRESSIT_CORE_DIR . '/css');
 define("DIGRESSIT_THEMES_DIR", DIGRESSIT_DIR . '/themes');
+
+
+define("DIGRESSIT_URL", WP_PLUGIN_URL ."/". $plugin_name);
+define("DIGRESSIT_CORE_URL", DIGRESSIT_URL . '/core');
+define("DIGRESSIT_CORE_JS_URL", DIGRESSIT_CORE_URL . '/js');
+define("DIGRESSIT_CORE_IMG_URL", DIGRESSIT_CORE_URL . '/images');
+define("DIGRESSIT_CORE_CSS_URL", DIGRESSIT_CORE_URL . '/css');
+define("DIGRESSIT_THEMES_URL", DIGRESSIT_URL . '/themes');
+
 
 
 register_activation_hook(__FILE__,  'activate_digressit');
@@ -177,6 +189,7 @@ function activate_digressit(){
 	$options['front_page_order_by'] = 'date';
 	$options['allow_general_comments'] = 1;
 	$options['allow_comments_search'] = 0;
+	$options['enable_sidebar'] = 1;
 
 
 	$options['table_of_contents_label'] = 'Table of Contents';
@@ -220,13 +233,6 @@ function activate_digressit(){
 
 	update_option('thread_comments_depth', 2); //we default to just 2 threads.
 
-	//$sidebars_widgets = get_option('sidebars_widgets');
-	
-	//$sidebars_widgets['single-sidebar'] = null;
-	//$sidebars_widgets['single-sidebar'][] = 'listposts-1';
-	
-	//update_option('sidebars_widgets', $sidebars_widgets);
-	
 	
 	$sql = "SHOW COLUMNS FROM $wpdb->comments";	
 	$columns = $wpdb->get_results($sql);
@@ -290,8 +296,6 @@ function activate_digressit(){
 	}
 	switch_theme($plugin_name.'-default', $plugin_name.'-default');	
 	$ct = current_theme_info();
-	//var_dump($ct);
-
 }
 
 
@@ -401,6 +405,11 @@ function digressit_theme_options_page() {
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Allow General Comments');  ?></b></td>
 			<td><?php print_dropdown('allow_general_comments', array('No' => 0, 'Yes' => '1'), $options['allow_general_comments']); ?></td>
+		</tr>
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Enable Sidebar');  ?></b></td>
+			<td><?php print_dropdown('enable_sidebar', array('No' => 0, 'Yes' => 1), $options['enable_sidebar']); ?></td>
 		</tr>
 
 
@@ -530,14 +539,14 @@ function digressit_theme_options_page() {
 
 
 
-function get_digressit_media_uri(){
+function get_digressit_media_uri($filepath){
 	$options = get_option('digressit');
 	
 	if((int)$options['use_cdn']){
-		return $options['cdn'];
+		return $options['cdn'] ."/". basename($filepath);
 	}
 	else{
-		return get_template_directory_uri();
+		return DIGRESSIT_CORE_URL ."/".$filepath;
 	}
 }
 
