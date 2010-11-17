@@ -1,0 +1,56 @@
+
+
+#comments-toolbar{
+	background:none repeat scroll 0 0 transparent;
+	border-width:0 0 2px;
+	overflow:hidden;
+	padding:0;
+	position:fixed;
+	top:100px;
+	width:414px;
+	z-index:100;
+	display: none;
+	padding: 3px 0 0;
+	
+/*	-moz-box-shadow: 5px 10px 1em #CCCCCC; */
+}
+
+
+#comments-toolbar #comment{
+	height: 20px;
+}
+
+.single #commentbox {
+	overflow-x: hidden;
+	overflow-y: scroll;
+/*	background: none repeat scroll 0 0 transparent; */
+	overflow-y: scroll;
+/*	-moz-box-shadow: 5px 10px 1em #CCC; */
+/*	overflow:hidden;
+	overflow-x:hidden; */
+	border:1px solid #B4BDBD;
+
+		
+}
+
+#no-comments{
+	background:none repeat scroll 0 0 white;
+	border:1px solid #DDDDDD;
+	color:#474747;
+	display:none;
+	margin:10px 5px;
+	padding:10px;
+}
+
+#respond{
+	border-width:2px 0;
+	height:100%;
+	margin-left:0px;
+	margin-right:0px;
+	margin-top:5px;
+	padding:5px 0 40px;
+	text-align:left;
+	width:100%;
+	display: none;
+}
+
