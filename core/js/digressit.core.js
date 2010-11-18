@@ -32,9 +32,10 @@ jQuery(document).ready(function() {
 	var request_time = 0;
 	var request_time_delay = 500; // ms - adjust as you like
 
-
+	
 	if(jQuery('.tabs').length){
 		jQuery('.tabs').generate_tabs();
+		
 	}
 
 
@@ -357,7 +358,7 @@ jQuery.fn.extend({
 		var top =  default_top  + parseInt(jQuery(window).scrollTop());
 		var min_browser_height = (browser_height > 300) ? browser_height : 300; 
 		var new_commentbox_height = ((browser_height - default_top - 150) < 370) ? 370 : (browser_height - default_top - 150);
-		var commentbox_top = jQuery("#the_title").outerHeight();
+		var commentbox_top = jQuery(jQuery(".entry").get(0)).offset().top;
 
 		jQuery('#commentbox').css('top',  commentbox_top + 'px' );
 		jQuery('#commentbox').css('height', new_commentbox_height + 'px');
@@ -368,12 +369,10 @@ jQuery.fn.extend({
 		if(safari || chrome){
 			//left = left + 210;
 		}
-		jQuery('#commentbox').css('left', left + 'px');
-		jQuery('#commentbox').css('display', 'block');
 
 
 		var sidebar_fix_point = parseInt(jQuery("#header").outerHeight())  + parseInt(jQuery("#header").css('margin-top'));
-		var commentbox_fix_point = parseInt(jQuery("#the_title").outerHeight()) + parseInt(jQuery("#header").outerHeight());
+		var commentbox_fix_point = commentbox_top;
 
 		if(parseInt(jQuery(window).scrollTop()) > sidebar_fix_point){
 			jQuery("#dynamic-sidebar").css('position',  'fixed');			
@@ -381,17 +380,28 @@ jQuery.fn.extend({
 		}
 		else{
 			jQuery("#dynamic-sidebar").css('position',  'absolute');
-			jQuery("#dynamic-sidebar").css('top',   '0px');
+			jQuery("#dynamic-sidebar").css('top',  parseInt(jQuery("#header").outerHeight()));			
 		}
 
-		if(parseInt(jQuery(window).scrollTop()) > commentbox_fix_point){
+		if(parseInt(jQuery(window).scrollTop()) > commentbox_fix_point - parseInt(jQuery("#header").outerHeight()) ){
+
+			jQuery("#commentbox-header").css('position',  'fixed');			
+			jQuery("#commentbox-header").css('top',  parseInt(jQuery("#header").outerHeight()));			
+
 			jQuery("#commentbox").css('position',  'fixed');			
-			jQuery("#commentbox").css('top',  parseInt(jQuery("#header").css('margin-top')));			
+			jQuery("#commentbox").css('top',  parseInt(jQuery("#header").outerHeight())  + parseInt(jQuery("#commentbox-header").outerHeight()) );			
 		}
 		else{
+			jQuery("#commentbox-header").css('position',  'absolute');
+			jQuery("#commentbox-header").css('top',  commentbox_top + 'px');			
+			
 			jQuery("#commentbox").css('position',  'absolute');
-			jQuery("#commentbox").css('top',  commentbox_top + 'px');			
+			jQuery("#commentbox").css('top',  (commentbox_top + parseInt(jQuery("#commentbox-header").outerHeight())) + 'px');			
 		}
+		
+		jQuery('#commentbox,#commentbox-header').css('left', left + 'px');
+		jQuery('#commentbox,#commentbox-header').css('display', 'block');
+		
 
 	}	
 	

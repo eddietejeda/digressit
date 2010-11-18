@@ -1,8 +1,6 @@
 <?php
 
 add_filter('init', 'single_init');
-add_action('wp_print_styles', 'digressit_single_print_styles');
-add_action('wp_print_scripts', 'digressit_single_print_scripts' );
 add_action('add_dynamic_widget', 'digressit_single_sidebar_widgets');
 
 
@@ -10,21 +8,14 @@ add_action('add_dynamic_widget', 'digressit_single_sidebar_widgets');
 
 function single_init(){
 	add_action('public_ajax_function', 'live_post_search_ajax');	
+	add_action('wp_print_scripts', 'digressit_single_print_scripts');
 }
 
 
-
-function digressit_single_print_styles(){
-	if(is_single()){
-	?>
-	<link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/single.css'); ?>" type="text/css" media="screen" />
-	<?php
-	}
-}
 
 function digressit_single_print_scripts(){
 	if(is_single()){
-	wp_enqueue_script('digressit.single', get_digressit_media_uri('js/digressit.single.js'), 'jquery', false, true );		
+		wp_enqueue_script('digressit.single', get_digressit_media_uri('js/digressit.single.js'), 'jquery', false, true );
 	}
 }
 
@@ -33,7 +24,7 @@ function digressit_single_sidebar_widgets(){
 	if(is_single()){	
 		$options = get_option('digressit');
 		//var_dump(is_active_sidebar('Single Sidebar'));
-		if(is_active_sidebar('single-sidebar') && $options['enable_sidebar'] != 0){
+		if(is_active_sidebar('single-sidebar') && (int)$options['enable_sidebar'] != 0){
 			?>
 			<div class="sidebar-widgets">
 			<div id="dynamic-sidebar" class="sidebar  <?php echo $options['auto_hide_sidebar']; ?> <?php echo $options['sidebar_position']; ?>">		

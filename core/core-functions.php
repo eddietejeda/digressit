@@ -89,6 +89,8 @@ function get_dynamic_widgets(){
 
 
 function get_single_default_widgets(){
+	
+	$options = get_option('digressit');
 	if ( !is_active_sidebar('single-sidebar') ) : 
 		
 		?>
@@ -635,35 +637,36 @@ function digressit_core_print_scripts(){
 
 	$url = parse_url(get_root_domain(). $_SERVER["REQUEST_URI"]);
 
+
+	if(!is_admin()){
 	?>
-	<script>	
-		var siteurl = '<?php echo get_option("siteurl"); ?>';
-		var baseurl = '<?php echo get_root_domain() ?>';
-		var user_ID =  <?php echo $current_user->ID; ?>;
-		<?php if(is_single()): ?>
-		var post_ID = <?php echo $post->ID ?>;
-		<?php endif; ?>
-		var blog_ID = <?php echo $blog_id; ?>;
-		var current_blog_id = <?php echo $blog_id; ?>;
-		var request_uri = '<?php echo  $url['path']; ?>';
-		<?php if(is_single()): ?>
-			var is_single = true;
-			var post_name = '<?php echo $post->post_name; ?>';
-			var allow_general_comments = <?php echo !is_null($options["allow_general_comments"]) ? $options["allow_general_comments"] : 0; ?>;
-			var allow_comments_search = <?php echo !is_null($options["allow_comments_search"]) ? $options["allow_comments_search"] : 0; ?>;
-			var comment_count = <?php echo count($comment_array); ?>;
-			var commment_text_signature = new Array(); 
-			var commentbox_function = '<?php echo strlen($options['commentbox_parser']) ? $options['commentbox_parser'] : 'grouping_digressit_commentbox_parser'; ?>';
-		<?php else: ?>
-			var is_single = false;
-		<?php endif; ?>
+		<script>	
+			var siteurl = '<?php echo get_option("siteurl"); ?>';
+			var baseurl = '<?php echo get_root_domain() ?>';
+			var user_ID =  <?php echo $current_user->ID; ?>;
+			<?php if(is_single()): ?>
+			var post_ID = <?php echo $post->ID ?>;
+			<?php endif; ?>
+			var blog_ID = <?php echo $blog_id; ?>;
+			var current_blog_id = <?php echo $blog_id; ?>;
+			var request_uri = '<?php echo  $url['path']; ?>';
+			<?php if(is_single()): ?>
+				var is_single = true;
+				var post_name = '<?php echo $post->post_name; ?>';
+				var allow_general_comments = <?php echo !is_null($options["allow_general_comments"]) ? $options["allow_general_comments"] : 0; ?>;
+				var allow_comments_search = <?php echo !is_null($options["allow_comments_search"]) ? $options["allow_comments_search"] : 0; ?>;
+				var comment_count = <?php echo count($comment_array); ?>;
+				var commment_text_signature = new Array(); 
+				var commentbox_function = '<?php echo strlen($options['commentbox_parser']) ? $options['commentbox_parser'] : 'grouping_digressit_commentbox_parser'; ?>';
+			<?php else: ?>
+				var is_single = false;
+			<?php endif; ?>
 	
-	</script>	
+		</script>	
 	<?php
 	
 
 	
-	if(!is_admin()){
 		wp_enqueue_script('digressit.core',		get_digressit_media_uri('js/digressit.core.js'), 'jquery', false, true );	
 		wp_enqueue_script('jquery.easing', 		get_digressit_media_uri('js/jquery.easing.js'), 'jquery', false, true );		
 		wp_enqueue_script('jquery.scrollto',	get_digressit_media_uri('js/jquery.scrollTo.js'), 'jquery', false, true );		

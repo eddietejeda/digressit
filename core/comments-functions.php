@@ -13,7 +13,7 @@ add_action('template_redirect', 'commentbrowser_template_redirect' );
 
 
 
-add_action('wp_print_styles', 'comments_wp_print_styles');
+//add_action('wp_print_styles', 'comments_wp_print_styles');
 add_action('wp_print_scripts', 'comments_wp_print_scripts' );
 add_action('public_ajax_function', 'add_comment_ajax');
 
@@ -85,14 +85,6 @@ function commentbrowser_template_redirect() {
 
 
 
-
-function comments_wp_print_styles(){
-	if(is_single()):
-	?>
-<link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/comments.css'); ?>" type="text/css" media="screen" />
-	<?php endif; ?>
-<?php
-}
 
 function comments_wp_print_scripts(){		
 	if(is_single()):
@@ -382,11 +374,11 @@ function indexOf($needle, $haystack)
 		return -1;
 }
 
-function list_posts()
+function list_posts($number='-1')
 {
 	global $wp;
-	
-	$myposts = get_posts('numberposts=-1');
+
+	$myposts = get_posts('numberposts='.$number);
 	
 	?>
 	

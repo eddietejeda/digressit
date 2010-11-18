@@ -281,7 +281,7 @@ h4 {
 	padding-top: 50px;
 }
 
-#footer div {
+#footer .foot {
 	background-color:#F8F8F8;
 	border-style:solid;
 	border-width:0;
@@ -339,7 +339,7 @@ h4 {
 .paragraph-block{
 }
 
-#footer div {
+#footer .foot {
 	background-color:#F8F8F8;
 	border-style:solid;
 	border-top:1px solid #BDBDBD;
@@ -380,7 +380,7 @@ h4 {
 	height:15px;
 	padding:0 10px 0 8px;
 	position:absolute;
-	width:15px;
+	width:22px;
 }
 
 #content a{
@@ -590,7 +590,7 @@ h4 {
 
 
 
-#footer div span{
+#footer .foot span{
 	margin: 20px;
 }
 
@@ -732,7 +732,7 @@ h2 a{
 	display: none;
 }
 
-#footer div{
+#footer .foot{
 	background-color: white;
 }
 
@@ -863,7 +863,7 @@ h2{
 }
 
 .container{
-	position: relative;
+	position: static;
 }
 
 .comment-count-in-book{

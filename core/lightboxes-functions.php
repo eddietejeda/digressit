@@ -16,8 +16,8 @@ function lightboxes_wp_print_scripts(){
 
 
 function get_lightboxes(){
-	include(TEMPLATEPATH . '/lightboxes.php');
-    do_action('add_lightbox');
+	//include(TEMPLATEPATH . '/lightboxes.php');
+    //do_action('add_lightbox');
 }
 
 ?>
