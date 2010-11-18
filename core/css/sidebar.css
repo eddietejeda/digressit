@@ -113,3 +113,78 @@ ul{
 .single #sidebar{
 	left: -250px;	
 }
+
+
+/* SIDEBAR */
+.sidebar .sidebar-item{
+	border : 0px !important;
+}
+
+.sidebar .sidebar-item .commentcount1, .sidebar .sidebar-item .commentcount2, .sidebar .sidebar-item .commentcount3{
+	right: 0;
+	padding-right: 0px;
+}
+
+.sidebar .sidebar-item{
+	padding: 3px 25px;
+}
+.sidebar-text{
+	padding-right:10px;
+}
+
+.sidebar .sidebar-item{
+	width: 240px;
+	padding: 3px 25px;
+}
+
+
+.sidebar-text a{
+	text-decoration: none;
+}
+
+.sidebar-text a:hover{
+	text-decoration: none;
+	color:#409DD7;
+	text-decoration:none;
+}
+
+.sidebar{
+	padding-top: 10px;
+}
+.sidebar .sidebar-item {
+	margin-left:-20px;
+}
+.sidebar h3{
+	margin:0 0 0 0;
+}
+
+#dynamic-sidebar {
+	overflow-x: visible;
+}
+
+.sidebar-widgets .widget_text{
+	font-size:93%;
+}
+
+.frontpage #text-6-sidebar{
+	background-color: #d0ebf3;
+}
+
+.frontpage #text-6-sidebar {
+	background-color:#D0EBF3;
+	border-bottom:1px solid #B8D0D7;
+	border-top:1px solid #B8D0D7;
+}
+.frontpage .sidebar-widgets{
+	display: none;
+
+}
+
+.text-6-sidebar .widget_text a{
+	border-bottom:0px !important;
+	
+}
+
+.page #dynamic-sidebar{
+
+}

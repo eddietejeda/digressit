@@ -58,11 +58,11 @@ global $current_browser_section, $wp, $blog_id ;
 
 						if($comment->user_id){
 							$comment_user = get_userdata($comment->user_id); 
-							$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $comment_user->user_login;
+							$profile_url = get_bloginfo('url')."/comments-by-contributor/" . $comment_user->user_login;
 							echo "<a href='$profile_url'>$comment_user->display_name</a>";
 						}
 						else{
-							$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $comment->comment_author;						
+							$profile_url = get_bloginfo('url')."/comments-by-contributor/" . $comment->comment_author;						
 							echo "<a href='$profile_url'>$comment->comment_author</a>";						
 						}
 						?>

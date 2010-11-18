@@ -193,9 +193,6 @@ h4 {
 
 }
 
-.page #dynamic-sidebar{
-
-}
 
 .the_title {
 	border:0 solid #BDBDBD;
@@ -205,9 +202,6 @@ h4 {
 	
 }
 
-#dynamic-sidebar {
-	overflow-x: visible;
-}
 
 .frontpage .the_title, .site-home .the_title{
 	display:none;
@@ -217,10 +211,6 @@ h4 {
 	border-color:#BDBDBD;
 	border-style:solid;
 	border-width:0 1px;
-	margin:auto;
-	max-width:1000px;
-	min-height:600px;
-	padding-bottom:400px;
 }
 
 #respond{
@@ -450,19 +440,7 @@ h4 {
 }
 /* DIGRESS IT WEBSITE */
 
-.sidebar-widgets .widget_text{
-	font-size:93%;
-}
 
-.frontpage #text-6-sidebar{
-	background-color: #d0ebf3;
-}
-
-.frontpage #text-6-sidebar {
-	background-color:#D0EBF3;
-	border-bottom:1px solid #B8D0D7;
-	border-top:1px solid #B8D0D7;
-}
 
 .column .project-icon{
 	float: left;
@@ -530,10 +508,6 @@ h4 {
 	
 	
 }
-.frontpage .sidebar-widgets{
-	display: none;
-
-}
 
 
 .frontpage .widget-digressit-block {
@@ -579,10 +553,7 @@ h4 {
 	text-decoration:none;
 }
 
-.text-6-sidebar .widget_text a{
-	border-bottom:0px !important;
-	
-}
+
 
 .scrollable-widgets{
 	padding-top: 20px;
@@ -656,18 +627,7 @@ a{
 }
 
 
-.sidebar .sidebar-item{
-	border : 0px !important;
-}
 
-.sidebar .sidebar-item .commentcount1, .sidebar .sidebar-item .commentcount2, .sidebar .sidebar-item .commentcount3{
-	right: 0;
-	padding-right: 0px;
-}
-
-.sidebar .sidebar-item{
-	padding: 3px 25px;
-}
 
 #comments-sort-all{
 	display: none !important;
@@ -705,29 +665,7 @@ a{
 	text-decoration: none;
 }
 
-.sidebar-text{
-	padding-right:10px;
-}
 
-.sidebar .sidebar-item{
-	width: 240px;
-	padding: 3px 25px;
-}
-
-
-.sidebar-text a{
-	text-decoration: none;
-}
-
-.sidebar-text a:hover{
-	text-decoration: none;
-	color:#409DD7;
-	text-decoration:none;
-}
-
-.sidebar{
-	padding-top: 10px;
-}
 
 .comment{
 	margin: 10px 2px 15px;
@@ -760,9 +698,8 @@ a:hover{
 	font-size: 110%;
 }
 
-.sidebar .sidebar-item {
-	margin-left:-20px;
-}
+
+
 
 #live-post-search{
 	width: 95%;
@@ -839,9 +776,6 @@ h2{
 	right:10px;
 }
 
-#container{
-	padding: 0;
-}
 
 #item-header, #item-nav, #item-body{
 	padding: 20px;
@@ -986,10 +920,6 @@ div#item-header{
 
 #lightbox-login{
 	padding: 25px 50px 0;
-}
-
-.sidebar h3{
-	margin:0 0 0 0;
 }
 
 .rule-dashboard{

@@ -69,7 +69,12 @@ function commentbrowser_template_redirect() {
 	
 	if( has_action('add_commentbrowser', $commentbrowser_function) && function_exists($commentbrowser_function)) :
 		$is_commentbrowser = true;
-		include(TEMPLATEPATH . '/comments-browser.php');
+		if(file_exists(DIGRESSIT_THEMES_DIR .get_current_theme(). '/comments-browser.php')){
+			
+		}
+		else{
+			include(DIGRESSIT_THEMES_DIR . '/digressit-default/comments-browser.php');
+		}
 		exit;
 	endif;
 	

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Digress.it
- * @subpackage Digress.it.Default
+ * @subpackage Digress.it.Wireframe
  */
 /*
 Template Name: Frontpage

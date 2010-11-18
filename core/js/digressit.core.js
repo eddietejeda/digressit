@@ -374,6 +374,7 @@ jQuery.fn.extend({
 
 		var sidebar_fix_point = parseInt(jQuery("#header").outerHeight())  + parseInt(jQuery("#header").css('margin-top'));
 		var commentbox_fix_point = parseInt(jQuery("#the_title").outerHeight()) + parseInt(jQuery("#header").outerHeight());
+
 		if(parseInt(jQuery(window).scrollTop()) > sidebar_fix_point){
 			jQuery("#dynamic-sidebar").css('position',  'fixed');			
 			jQuery("#dynamic-sidebar").css('top',  '0px');			
