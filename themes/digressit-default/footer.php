@@ -15,7 +15,6 @@
 
 </div> <!-- wrapper -->
 
-<?php get_lightboxes(); ?>
 </body>
 </html> 
 

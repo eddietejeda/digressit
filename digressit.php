@@ -301,7 +301,7 @@ function activate_digressit(){
 		}
 	}
 	switch_theme($plugin_name.'-default', $plugin_name.'-default');	
-	$ct = current_theme_info();
+	//$ct = current_theme_info();
 }
 
 
@@ -572,7 +572,7 @@ function get_digressit_media_uri($filepath){
 
 
 function get_digressit_theme_path(){
-	return DIGRESSIT_THEMES_DIR . get_current_theme();
+	return DIGRESSIT_THEMES_DIR."/".basename(get_template_directory());;
 }
 function get_digressit_theme_uri(){
 	return DIGRESSIT_THEMES_DIR . get_current_theme();
