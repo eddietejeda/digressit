@@ -1,12 +1,3 @@
-<?php
-/**
- * @package Digress.it
- * @subpackage Digress.it.Wireframe
- */
-/*
-Template Name: Frontpage
-*/
-?>
 <?php get_header(); ?>
 
 <div id="container">
