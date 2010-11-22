@@ -227,6 +227,13 @@ img{
 	position: relative;
 }
 
+#menu-primary li, #menu-primary ul {
+	display:inline;
+	list-style:none outside none;
+	padding-right:15px;
+}
+
+
 .entry{
 	padding: 20px;
 }
@@ -374,7 +381,6 @@ img{
 	overflow-x: scroll;
 	z-index: 100;
 	display: none;
-	background-color: #D5E8F1;
 
 }
 
@@ -1006,9 +1012,6 @@ img{
 }
 
 
-.single .entry {
-	border-bottom: 1px solid #B4BDBD;
-}
 
 
 .submit-wrapper{

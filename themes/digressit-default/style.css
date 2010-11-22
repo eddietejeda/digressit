@@ -968,6 +968,14 @@ div#item-header{
 }
 
 
+#commentbox{
+	background-color: #D5E8F1;	
+}
+
+.single .entry {
+	border-bottom: 1px solid #B4BDBD;
+}
+
 
 #signup-welcome, .mu_register .view{
 	padding-left: 20px;

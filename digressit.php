@@ -634,10 +634,9 @@ function is_frontpage(){
 		return false;
 	}
 
-	//die(var_dump(is_frontpage()));
 	
 	if(is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
-		if(is_home()){
+		if(is_home() || is_front_page()){
 			if($blog_id == 1){		
 				return true;
 			}
@@ -652,7 +651,7 @@ function is_mainpage(){
 	global $is_frontpage, $is_mainpage, $blog_id;
 	
 	if(is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
-		if(is_home()){
+		if(is_home() || is_front_page()){
 			if($blog_id == 1):			
 				return false;
 			else:
