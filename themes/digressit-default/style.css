@@ -973,4 +973,9 @@ div#item-header{
 	padding-left: 20px;
 }
 
+.error404 #header,.error404 #footer{
+	width: 1000px;
+	margin:0 auto;
+	-moz-box-shadow:0;
+}
 
