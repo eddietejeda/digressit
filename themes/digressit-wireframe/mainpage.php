@@ -1,14 +1,5 @@
 <?php
-/**
- * @package WordPress
- * @subpackage Default_Theme
- */
-/*
-Template Name: Mainpage
-*/
-
 $options = get_option('digressit');
-//global $options;
 ?>
 
 

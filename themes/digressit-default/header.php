@@ -20,7 +20,15 @@
 
 </head>
 
-<body <?php body_class(digressit_body_class()); ?>>
+<?php 
+
+if(function_exists('digressit_body_class')){
+	$digressit_body_class = digressit_body_class();
+}
+
+
+?>
+<body <?php body_class($digressit_body_class); ?>>
 
 <?php do_action('after_body'); ?>	
 
