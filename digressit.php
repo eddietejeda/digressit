@@ -31,7 +31,7 @@ $plugin_name = str_replace("/", "", str_replace(basename( __FILE__),"",plugin_ba
 define("DIGRESSIT_VERSION", '3.0');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
-define("DIGRESSIT_REVISION", 115);
+define("DIGRESSIT_REVISION", 137);
 define("DIGRESSIT_DIR", WP_PLUGIN_DIR ."/". $plugin_name);
 define("DIGRESSIT_CORE_DIR", DIGRESSIT_DIR . '/core');
 define("DIGRESSIT_CORE_JS_DIR", DIGRESSIT_CORE_DIR . '/js');
@@ -207,6 +207,12 @@ function activate_digressit(){
 	$options['custom_header_image'] = '';
 	$options['use_cdn'] = 0;
 	$options['cdn'] = 'http://c0006125.cdn2.cloudfiles.rackspacecloud.com';
+
+
+	$options['frontpage_list_style'] = 'list-style-decimal';
+	
+	
+	
 	
 	
 	
@@ -399,8 +405,6 @@ function digressit_theme_options_page() {
 			<td style="width: 200px"><b><?php _e('General Comments Label');  ?></b></td>
 			<td><?php print_input_text('general_comments_label', $options['general_comments_label']); ?></td>
 		</tr>
-
-
 
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Frontpage List Style');  ?></b></td>
