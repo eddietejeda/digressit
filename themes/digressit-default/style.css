@@ -976,6 +976,10 @@ div#item-header{
 .error404 #header,.error404 #footer{
 	width: 1000px;
 	margin:0 auto;
-	-moz-box-shadow:0;
+	-moz-box-shadow:none;
+}
+
+.lead-in{
+	padding: 10px;
 }
 
