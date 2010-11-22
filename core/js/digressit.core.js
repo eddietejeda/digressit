@@ -229,7 +229,10 @@ jQuery(document).ready(function() {
 	    this[func].apply(this, Array.prototype.slice.call(arguments, 1));
 	}
 	
-	jQuery('#commentbox').position_main_elements();
+
+	if(is_single){
+		jQuery('#commentbox').position_main_elements();
+	}
 	
 	
     jQuery(window).scroll(function () { 

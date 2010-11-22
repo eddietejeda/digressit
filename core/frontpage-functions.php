@@ -3,6 +3,7 @@
 add_action('init', 'frontpage_load');
 
 
+
 function frontpage_sidebar_widgets(){
 	$options = get_option('digressit');
 
@@ -20,7 +21,6 @@ function frontpage_sidebar_widgets(){
 }
 
 function frontpage_load(){
-	//var_dump(is_frontpage());
 	if(is_frontpage()){
 		add_action('add_dynamic_widget', 'frontpage_sidebar_widgets');
 	}

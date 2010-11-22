@@ -17,9 +17,10 @@
 	float:left;
 	width:30%;
 	min-height:800px;
-	padding-left:25px;
 	padding-right:15px;
 	top:0;
+	padding-left:25px;
+	
 }
 
 #mainpage .default{
@@ -32,9 +33,6 @@
 
 }
 
-.navigation li{
-	list-style: decimal;
-}
 
 
 
@@ -79,3 +77,57 @@
 	padding-top: 3px;
 }
 
+
+#mainpage .widget_text{
+	margin-right:5%;
+	width:50% !important;
+}
+
+
+.navigation .sub-menu{
+	padding-left: 10px;
+}
+.navigation .sub-menu li{
+	list-style: disc;
+}
+
+
+
+.list-style-none{
+	padding-left:5px !important;
+}
+
+.list-style-none li{
+	list-style: none!important;
+}
+
+.list-style-decimal li{
+	list-style: decimal !important;
+}
+
+
+
+.list-style-square li{
+	list-style: square!important;
+}
+.list-style-circle li{
+	list-style: circle!important;
+}
+
+
+.list-style-lower-roman li{
+	list-style: lower-roman!important;
+}
+.list-style-upper-roman li{
+	list-style: upper-roman!important;
+}
+
+
+.list-style-upper-alpha li{
+	list-style: upper-alpha!important;
+}
+.list-style-lower-alpha li{
+	list-style: lower-alpha!important;
+}
+
+.

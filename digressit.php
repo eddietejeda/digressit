@@ -403,6 +403,22 @@ function digressit_theme_options_page() {
 
 
 		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Frontpage List Style');  ?></b></td>
+			<td><?php print_dropdown('frontpage_list_style', array(
+																	'Numbers' => 'list-style-decimal', 
+																	'None' => 'list-style-none',
+																	'Lower Alphabet' => 'list-style-lower-alpha',
+																	'Upper Alphabet' => 'list-style-upper-alpha',
+																	'Lower Roman' => 'list-style-lower-roman',
+																	'Upper Roman' => 'list-style-upper-roman',
+																	'Square' => 'list-style-square',
+																	'Circle' => 'list-style-circle'
+
+
+																), $options['frontpage_list_style']); ?></td>
+		</tr>
+
+		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Allow General Comments');  ?></b></td>
 			<td><?php print_dropdown('allow_general_comments', array('No' => 0, 'Yes' => '1'), $options['allow_general_comments']); ?></td>
 		</tr>

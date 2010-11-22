@@ -43,8 +43,11 @@ function mainpage_load(){
 
 
 function mainpage_default_menu(){
+
+	$options = get_option('digressit');
+	
 	?>
-	<ol class="navigation">
+	<ol class="navigation <?php echo $options['frontpage_list_style']; ?>">
 
 	 <?php
 	 global $post;

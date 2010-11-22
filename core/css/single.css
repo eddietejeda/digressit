@@ -33,6 +33,15 @@
 		
 }
 
+
+#navigation-next{
+	float: right;
+}
+
+#navigation-previous{
+	float: left;
+	
+}
 #no-comments{
 	background:none repeat scroll 0 0 white;
 	border:1px solid #DDDDDD;

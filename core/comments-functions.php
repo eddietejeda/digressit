@@ -101,7 +101,6 @@ function add_comment_ajax($request_params){
 	//extract($request_params);
 	global $wpdb, $current_user;
 
-	switch_to_blog($request_params['blog_id']);
 	$time = current_time('mysql', $gmt = get_option('gmt_offset')); 
 	$time_gmt = current_time('mysql', $gmt = 0); 
 	
@@ -186,7 +185,6 @@ function add_comment_ajax($request_params){
 
 	
 	
-	//restore_current_blog();
 	
 	die(json_encode(array('status' => $status, "message" => $message)));
 	
@@ -540,6 +538,7 @@ function get_users_who_have_commented()
 					LEFT JOIN $wpdb->posts p ON p.ID=c.comment_post_ID
 					WHERE c.comment_approved = 1 
 					AND p.post_status = 'publish'
+					AND c.comment_type = ''
 					GROUP BY c.comment_author
 					ORDER BY c.comment_author";
 	

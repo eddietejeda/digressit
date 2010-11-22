@@ -17,7 +17,9 @@
 				<div class="entry">
 					<?php get_stylized_content_header(); ?>
 					
-					<div id="previous-next"><?php posts_nav_link(); ?></div>
+					<div id="navigation-previous">  <?php previous_post_link('%link', '&laquo; Previous'); ?> </div>
+					<div id="navigation-next">  <?php next_post_link('%link', 'Next &raquo;'); ?> </div>
+					<div class="clear"></div>
 					<?php the_content(); ?>
 				</div>	
 				<div class="edit-this"><?php edit_post_link(); ?></div>

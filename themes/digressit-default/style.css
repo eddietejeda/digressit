@@ -147,7 +147,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .selected-textblock {
-	border: 1px dashed #aaa !important;
+	border: 1px solid #ddd !important;
 	background-color: #feff9b;
 }
 
@@ -610,7 +610,7 @@ h4 {
 }
 
 .entry .clear{
-	height: 50px;
+
 }
 a{
 	color: #409DD7;
