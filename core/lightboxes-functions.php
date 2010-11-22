@@ -12,13 +12,6 @@ add_action('add_lightbox', 'lightbox_registering');
 add_action('add_lightbox', 'lightbox_generic_response');
 
 
-add_action('wp_footer', 'lightboxes_transparency' );
-
-function lightboxes_transparency(){
-?>
-<div class="lightbox-transparency"></div>
-<?php
-}
 
 
 
@@ -35,6 +28,9 @@ function lightboxes_wp_print_scripts(){
 
 
 function get_lightboxes(){
+	?>
+	<div class="lightbox-transparency"></div>	
+	<?php
 	do_action('add_lightbox');
 }
 
