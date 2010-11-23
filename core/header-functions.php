@@ -17,13 +17,13 @@ function header_default_top_menu(){
 
 
 function digressit_body_class(){
+	global $blog_id ;
 	$request_root = parse_url($_SERVER['REQUEST_URI']);
-
 	//var_dump(is_commentbrowser());
 	if(function_exists('is_commentbrowser') && is_commentbrowser()){
 		$current_page_name .= ' comment-browser ';	
 	}
-	elseif(is_multisite() && $blog_id == 1 && is_front_page()){
+	elseif(is_multisite() && $blog_id == 1 && is_frontpage()){
 		$current_page_name = ' frontpage ';	
 	}
 	else{

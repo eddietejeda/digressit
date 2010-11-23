@@ -1,6 +1,6 @@
 <?php
 
-add_action('init', 'frontpage_load');
+add_action('wp', 'frontpage_load');
 
 
 

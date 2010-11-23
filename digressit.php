@@ -635,6 +635,7 @@ function is_frontpage(){
 	}
 
 	
+	//var_dump(is_front_page());
 	if(is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
 		if(is_home() || is_front_page()){
 			if($blog_id == 1){		
