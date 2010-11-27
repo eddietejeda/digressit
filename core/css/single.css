@@ -34,12 +34,14 @@
 }
 
 
-#navigation-next{
+.navigation-next{
 	float: right;
+	font-size: 75%;
 }
 
-#navigation-previous{
+.navigation-previous{
 	float: left;
+	font-size: 75%;
 	
 }
 #no-comments{

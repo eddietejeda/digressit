@@ -991,3 +991,10 @@ div#item-header{
 	padding: 0 25px;
 }
 
+
+#item-header, #item-nav, #item-body {
+	float:left;
+	padding:20px;
+}
+
+
