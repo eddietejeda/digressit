@@ -72,7 +72,7 @@ global $blog_id;
 			<?php endif;?>
 		<?php else: ?>
 			<div id="must-be-logged-in">
-			<?php echo strlen(get_post_meta($post->ID, 'discussion_closed', true)) ? get_post_meta($post->ID, 'discussion_closed', true) : 'This discussion is now closed.'; ?>
+			<?php echo strlen(get_post_meta($post->ID, 'discussion_closed', true)) ? get_post_meta($post->ID, 'discussion_closed', true) : 'This discussion is now closed.'; 					?>
 			</div>
 		
 		<?php endif; ?>

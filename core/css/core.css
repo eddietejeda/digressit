@@ -32,7 +32,7 @@ body {
 /**********  HEADER   **********/
 
 #header {
-	background:none repeat scroll 0 0 #F8F8F8;
+	background:none repeat scroll 0 0 white;
 	border-color:#BDBDBD;
 	border-style:solid;
 	border-width:1px 1px 0;
@@ -55,14 +55,12 @@ h1, h2, h3, h4, h5, h6, h7, h8{
 /*********** PRIMARY MENU **************/
 
 #menu-primary{
-	padding:12px 0 14px;
-	position:absolute;
-	right:5%;
 	text-align:right;
 	top:0;
-	width:500px;
 	z-index:0;
 }
+
+
 
 
 .page_item{
@@ -162,7 +160,7 @@ img{
 /*	width: 768px; */
 /*	padding-bottom: 100px; */
 /*	min-height: 600px;  */
-	background-color: #F8F8F8;
+	background-color: white;
 	width:1000px;
 	margin:0 auto;
 }
@@ -669,10 +667,12 @@ img{
 }
 
 .selected-textblock .commenticonbox{
+	/*
 	background-color:#D5E8F1;
 	border-color:#B4BDBD;
 	border-style:solid;
 	border-width:1px 1px 1px 0px;
+	*/
 }
 
 .single-heading{
@@ -849,7 +849,7 @@ img{
 
 #footer {
 
-	background:none repeat scroll 0 0 #F8F8F8;
+	background:none repeat scroll 0 0 white;
 	border-color:#BDBDBD;
 	border-style:solid;
 	border-width:0px 1px 1px;

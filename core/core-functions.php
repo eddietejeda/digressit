@@ -2,7 +2,7 @@
 global $commentbrowser, $blog_id, $current_user, $current_user_comments, $development_mode, $testing_mode, $production_mode;
 global $digressit_content_function, $digressit_comments_function, $digressit_commentbox_function,$is_commentbrowser;
 
-global $browser;
+global $browser, $post_paragraph_count;
 
 
 $options = get_option('digressit');
@@ -359,7 +359,8 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 		$blocks[$paranumber] = $block_content;
     }
 
-	
+	global $post_paragraph_count;
+	$post_paragraph_count = count($blocks);
 	return $blocks;
 
 }
@@ -406,9 +407,10 @@ function get_the_paragraph($number){
 
 function get_digressit_comments_function(){
 	$options = get_option('digressit');
+	
 
-	if( isset($options['comments_function']) || function_exists($options['comments_function']) ){
-		return $options['comments_function'];
+	if( isset($options['comments_parser']) || function_exists($options['comments_parser']) ){
+		return $options['comments_parser'];
 	}
 	else{
 		return 'standard_digressit_comment_parser';

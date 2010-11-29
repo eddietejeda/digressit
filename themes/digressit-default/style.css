@@ -6,7 +6,7 @@ Author: Eddie A Tejeda
 Version: 3.0
 Author URI: http://www.visudo.com
 License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
-Tags: buddypress
+Tags: buddypress, annotation, comments, discussion, documents
 
 Special thanks to:	
 The developers of JQuery @ www.jquery.com
@@ -247,6 +247,18 @@ h4 {
 	top:-20px;
 	padding: 17px;
 }
+
+#menu-primary{
+
+padding:12px 0 14px;
+position:absolute;
+right:5%;
+text-align:right;
+top:0;
+width:500px;
+z-index:0;
+}
+
 
 #menu-primary {
 	padding: 5px 0 5px;

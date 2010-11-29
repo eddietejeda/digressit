@@ -372,11 +372,13 @@ function indexOf($needle, $haystack)
 		return -1;
 }
 
-function list_posts($number='-1')
+function list_posts($args = array('number' => -1, 'category_name' => null ) )
 {
 	global $wp;
 
-	$myposts = get_posts('numberposts='.$number);
+	//var_dump('numberposts='.$args['number']."&category_name=".$args['category_name']);
+	//".$args['category_name']
+	$myposts = get_posts('numberposts='.$args['number']."&category_name=".$args['category_name']);
 	
 	?>
 	

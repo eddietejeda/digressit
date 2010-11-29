@@ -94,8 +94,7 @@ function digressit_init(){
 		activate_digressit();
 		$options = get_option('digressit');
 		
-		echo "<p style='background-color: red; color: white'>updating digressit. current revision: " . $options['revision']. " please reload this page.</p>
-		<meta http-equiv=\"refresh\" content=\"1\" >";
+		echo "<meta http-equiv=\"refresh\" content=\"1\" >";
 		
 	}	
 }

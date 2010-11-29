@@ -4,7 +4,7 @@
 <head profile="http://gmpg.org/xfn/11">
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-<title><?php wp_title('&laquo;', true, 'right'); ?> <?php bloginfo('name'); ?></title>
+<title><?php bloginfo('name'); ?>: <?php bloginfo('description'); ?><?php wp_title('&laquo;', true, 'left'); ?> </title>
 <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
@@ -53,13 +53,13 @@ if(function_exists('digressit_body_class')){
 	<!-- this is some login stuff that should always be here -->
 	<ul>
 	<?php if(is_user_logged_in()): ?>
-		<li><a href="<?php echo get_bloginfo('home'); ?>/wp-admin/" title="My Account"><?php _e('My Account'); ?></a></li>			
-		<li><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout"><?php _e('Logout'); ?></a></li>			
+		<li id="menu-my-account"><a href="<?php echo get_bloginfo('home'); ?>/wp-admin/" title="My Account"><?php _e('My Account'); ?></a></li>			
+		<li id="menu-logout"><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout"><?php _e('Logout'); ?></a></li>			
 	<?php else: ?>
 		<?php if(get_option('users_can_register')): ?>
-		<li><a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="Register"><?php _e('Register'); ?></a></li>
+		<li id="menu-register"><a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="Register"><?php _e('Register'); ?></a></li>
 		<?php endif; ?>
-		<li><a href="<?php echo wp_login_url(); ?>" title="Login"><?php _e('Login'); ?></a></li>
+		<li id="menu-login"><a href="<?php echo wp_login_url(); ?>" title="Login"><?php _e('Login'); ?></a></li>
 	<?php endif;?>
 	</ul>
 	
