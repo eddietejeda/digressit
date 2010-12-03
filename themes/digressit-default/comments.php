@@ -84,6 +84,7 @@ global $blog_id;
 		
 		<?php endif; ?>
 	</div>
+	<?php do_action('digressit_toplevel_commentbox'); ?>
 	</div>
 	
 

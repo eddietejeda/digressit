@@ -675,6 +675,11 @@ img{
 	*/
 }
 
+.highlight-class{
+	background-color:yellow;
+	
+}
+
 .single-heading{
 	background-color: #dbe0e0;
 }

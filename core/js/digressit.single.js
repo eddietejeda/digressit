@@ -1,3 +1,17 @@
+var grouping_digressit_commentbox_parser;
+	
+jQuery.fn.highlight = function (str, className)
+{
+    return this.each(function ()
+    {
+        this.innerHTML = this.innerHTML.replace(
+            new RegExp(str, "g"),
+            "<span class=\"" + className + "\">" + str + "</span>"
+        );
+    });
+};
+	
+	
 jQuery(document).ready(function() {
 
 
@@ -14,6 +28,26 @@ jQuery(document).ready(function() {
 		}
 	});
 	
+	
+	AjaxResult.live_comment_search = function(data) {
+		jQuery('.comment').hide();
+		
+		
+		//jQuery('.comment-text').clone().find('span').replaceWith(function() { return this.innerHTML; }).end().html();
+		
+		jQuery(".comment").highlight(jQuery('#live-comment-search').val(), "highlight-class");
+		
+		for (var i in data.message) {  
+			jQuery('#comment-' + current_blog_id + '-' + data.message[i]).show();
+		}  
+	}
+	
+	jQuery('#live-comment-search').focus(function(){
+		if(jQuery('#live-comment-search').val() == 'Search'){
+			jQuery('#live-comment-search').val('');
+		}
+	});
+	
 
 
 	
@@ -22,7 +56,7 @@ jQuery(document).ready(function() {
 	}
 
 
-	function grouping_digressit_commentbox_parser(){
+	grouping_digressit_commentbox_parser = function(data){
 
 		jQuery('.textblock').each(function(i){
 			var paragraphnumber = (i == 0) ? '&nbsp;'  : i;

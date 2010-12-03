@@ -32,51 +32,52 @@ global $blog_id;
 
 	<?php do_action('digressit_custom_commenbox_header'); ?>
 	
-	<div id="toplevel-commentbox">
-	<div name="respond-form" id="respond">
-		<div class='lightbox lightbox-comments-link '></div>
+	<div id="toplevel-commentbox" class="comment-tabs tab-container">
+		<div name="respond-form" id="respond" class="tab-content">
+			<div class='lightbox lightbox-comments-link '></div>
 
-		<?php
-		$custom_comment_open = true;
-		if(function_exists('custom_conditional_comment_open')){
-			$custom_comment_open = custom_conditional_comment_open();
-		}
-		?>
+			<?php
+			$custom_comment_open = true;
+			if(function_exists('custom_conditional_comment_open')){
+				$custom_comment_open = custom_conditional_comment_open();
+			}
+			?>
 		
-		<?php if ( comments_open() && $custom_comment_open) : ?>
+			<?php if ( comments_open() && $custom_comment_open) : ?>
 
-			<?php if ( is_user_logged_in() ) : ?>
+				<?php if ( is_user_logged_in() ) : ?>
 				
-				<?php digressit_comment_form(); ?>
-
-			<?php else : ?>
-
-				<?php if(get_option('comment_registration')): ?>
-					
-
-					<div id="must-be-logged-in">
-						You must be logged in to write a comment. 
-						
-						<p><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login">Login</a></p>
-						<p><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account">Create Account</a></p>
-						
-					</div>
-
-				<?php else: ?>
-
 					<?php digressit_comment_form(); ?>
+
+				<?php else : ?>
+
+					<?php if(get_option('comment_registration')): ?>
 					
-				<?php endif; ?>
+
+						<div id="must-be-logged-in">
+							You must be logged in to write a comment. 
+						
+							<p><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login">Login</a></p>
+							<p><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account">Create Account</a></p>
+						
+						</div>
+
+					<?php else: ?>
+
+						<?php digressit_comment_form(); ?>
+					
+					<?php endif; ?>
 	
 				
-			<?php endif;?>
-		<?php else: ?>
-			<div id="must-be-logged-in">
-			<?php echo strlen(get_post_meta($post->ID, 'discussion_closed', true)) ? get_post_meta($post->ID, 'discussion_closed', true) : 'This discussion is now closed.'; 					?>
-			</div>
+				<?php endif;?>
+			<?php else: ?>
+				<div id="must-be-logged-in">
+				<?php echo strlen(get_post_meta($post->ID, 'discussion_closed', true)) ? get_post_meta($post->ID, 'discussion_closed', true) : 'This discussion is now closed.'; 					?>
+				</div>
 		
-		<?php endif; ?>
-	</div>
+			<?php endif; ?>
+		</div>
+		<?php do_action('digressit_toplevel_commentbox'); ?>
 	</div>
 	
 

@@ -8,6 +8,7 @@ add_action('add_dynamic_widget', 'digressit_single_sidebar_widgets');
 
 function single_init(){
 	add_action('public_ajax_function', 'live_post_search_ajax');	
+	add_action('public_ajax_function', 'live_comment_search_ajax');	
 	add_action('wp_print_scripts', 'digressit_single_print_scripts');
 }
 
@@ -89,6 +90,28 @@ function live_post_search_ajax($request_params){
 		}
 */
 	
+		die(json_encode(array('status' => 1, "message" => $message)));
+	}
+	
+	
+}
+
+
+
+function live_comment_search_ajax($request_params){
+	extract($request_params);
+	global $wpdb, $current_user;
+
+	$excluded_words = array('the','and');
+	//every three letters we give results
+	if(!in_array($request_params['value'], $excluded_words)){
+
+		$query = 'SELECT * FROM '.$wpdb->comments.' WHERE comment_content LIKE "%'. $request_params['value'] .'%"';
+		$comments = $wpdb->get_results( $query);		
+		foreach($comments as $item){
+			$message[] = $item->comment_ID;
+		}
+		
 		die(json_encode(array('status' => 1, "message" => $message)));
 	}
 	

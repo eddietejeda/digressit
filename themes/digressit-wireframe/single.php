@@ -23,7 +23,7 @@
 				<div class="edit-this"><?php edit_post_link(); ?></div>
 
 				<?php do_action('after_post_content'); ?>
-				<?php dynamic_sidebar('Single Content');		 ?>
+				<?php dynamic_sidebar('Single Content'); ?>
 				
 			</div>			
 		</div>
@@ -31,5 +31,5 @@
 	<?php endwhile;?>
 <?php endif; ?>
 
-</div>
 <?php get_footer(); ?>
+</div>

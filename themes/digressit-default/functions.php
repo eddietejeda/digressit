@@ -16,6 +16,5 @@ function digressit_default_lightboxes(){
 	add_action('add_lightbox', 'lightbox_site_register');
 	add_action('add_lightbox', 'lightbox_registering');
 	add_action('add_lightbox', 'lightbox_generic_response');
-
 }
 ?>

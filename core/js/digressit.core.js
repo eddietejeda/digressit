@@ -52,6 +52,11 @@ jQuery(document).ready(function() {
 			jQuery(e.target).addClass('disabled');
 		}
 	});
+	
+	
+	jQuery('.input').keypress(function(e){
+		//alert(e.target);
+	})
 
 	
 
@@ -320,6 +325,7 @@ jQuery.fn.extend({
 
 		jQuery('ul.tabs').each(function(item){
 			var tab_id = jQuery(this).attr('id');			
+			//alert(tab_id);
 			jQuery("#" +tab_id +" + .tab-container .tab-content").hide();					//Hide all content
 			jQuery("#" +tab_id +"  li:first").addClass("active").show();	//Activate first tab
 			jQuery("#" +tab_id +" + .tab-container .tab-content:first").show();				//Show first tab content
@@ -335,6 +341,8 @@ jQuery.fn.extend({
 			jQuery(this).addClass("active"); //Add "active" class to selected tab
 
 			jQuery("#"+tab_id+ " + .tab-container .tab-content").hide(); //Hide all tab content
+			jQuery("." +tab_id+" .tab-content").hide(); //Hide all tab content
+
 			
 			var activeTab = jQuery(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
 			jQuery(activeTab).show();
