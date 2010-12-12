@@ -299,7 +299,7 @@ function activate_digressit(){
 			die(__('No write permission on: ').$themes_dir.__('. Please give the server write permission on this directory'));
 		}
 	}
-	switch_theme($plugin_name.'-default', $plugin_name.'-default');	
+	switch_theme('digressit-default', 'digressit-default');	
 	//$ct = current_theme_info();
 }
 
