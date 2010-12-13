@@ -53,7 +53,8 @@ register_activation_hook(__FILE__,  'activate_digressit');
 register_deactivation_hook(__FILE__, 'deactivate_digressit' );
 
 
-$plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/theme/';
+$plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/themes/';
+
 
 register_theme_directory( $plugin_theme_link );
 
@@ -141,7 +142,7 @@ function activate_digressit(){
 	$is_multiuser = is_mu_or_network_mode();			
 
 
-	$theme_url = $plugin_url. 'theme/'; 
+	$theme_url = $plugin_url. 'themes/'; 
 
 	$js_path = $plugin_url. 'js/'; 
 	$jquery_path = $js_path . 'jquery/'; 
@@ -151,7 +152,7 @@ function activate_digressit(){
 	$jquery_css_path = $jquery_path . 'css/'; 
 
 	$style_path = $plugin_url . 'style/'; 
-	$image_path = $plugin_url . 'theme/images/'; 
+	$image_path = $plugin_url . 'themes/images/'; 
 	$punctuations = null;
 
 
@@ -262,7 +263,7 @@ function activate_digressit(){
 
 
 	$themes_dir = WP_CONTENT_DIR . '/themes/';
-	$plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/theme/';
+	$plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/themes/';
 
 
 
