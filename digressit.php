@@ -52,7 +52,10 @@ define("DIGRESSIT_THEMES_URL", DIGRESSIT_URL . '/themes');
 register_activation_hook(__FILE__,  'activate_digressit');
 register_deactivation_hook(__FILE__, 'deactivate_digressit' );
 
-register_theme_directory( WP_PLUGIN_DIR . '/digressit/themes' );
+
+$plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/theme/';
+
+register_theme_directory( $plugin_theme_link );
 
 
 register_digressit_content_function('standard_digressit_content_parser');
