@@ -1009,4 +1009,6 @@ div#item-header{
 	padding:20px;
 }
 
-
+.sidebar-widget-auto-hide {
+	display:none
+}
