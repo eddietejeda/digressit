@@ -344,9 +344,9 @@ z-index:0;
 	border-width:0;
 	margin:0 auto;
 	width:1000px;	
-	-moz-box-shadow:0 25px 30px #AAAAAA !important;
-	-webkit-box-shadow:0 25px 30px #AAAAAA !important;
-	box-shadow: 0 25px 30px #AAAAAA !important;
+	-moz-box-shadow:0 25px 30px #AAAAAA;
+	-webkit-box-shadow:0 25px 30px #AAAAAA;
+	box-shadow: 0 25px 30px #AAAAAA;
 }
 .paragraph-block{
 }
