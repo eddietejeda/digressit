@@ -543,8 +543,6 @@ function digressit_core_print_styles(){
 	wp_register_style('digressit.ie7', get_digressit_media_uri('css/ie7.css'));
 	wp_register_style('digressit.ie8', get_digressit_media_uri('css/ie8.css'));
 	
-
-	
 	if(is_page() || is_search()){	
 		wp_enqueue_style('digressit.page');
 	}
