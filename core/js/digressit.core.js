@@ -422,6 +422,16 @@ jQuery.fn.extend({
 			jQuery("#commentbox").css('top',  (commentbox_top + parseInt(jQuery("#commentbox-header").outerHeight())) + 'px');			
 		}
 		
+		
+		//stick the footer at the bottom of the page if we're on an iPad/iPhone due to viewport/page bugs in mobile webkit
+		if(navigator.platform == 'iPad' || navigator.platform == 'iPhone' || navigator.platform == 'iPod')
+		{
+			 //jQuery("#footer").css("position", "static");
+		};
+
+
+		
+		
 		jQuery('#commentbox,#commentbox-header').css('left', left + 'px');
 		jQuery('#commentbox,#commentbox-header').css('display', 'block');
 		

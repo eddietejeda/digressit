@@ -114,7 +114,7 @@ function digressit_localization(){
 	$locale = get_locale();
 	$locale_file = TEMPLATEPATH . "/locales/$locale.php";
 	if ( is_readable( $locale_file ) ){
-		require_once( $locale_file );
+		include_once( $locale_file );
 	}
 
 }

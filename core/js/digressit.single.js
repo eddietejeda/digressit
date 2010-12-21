@@ -16,11 +16,10 @@ jQuery(document).ready(function() {
 
 
 	AjaxResult.live_post_search = function(data) {
-		jQuery('.sidebar-item').hide();
-		for (var i in data.message) {  
-			jQuery('#sidebar-item-' + data.message[i]).show();
-		}  
+		jQuery('#live-post-search-result').html(data.message);
+		jQuery('#live-post-search-result').fadeIn();
 	}
+	
 	
 	jQuery('#live-post-search').focus(function(){
 		if(jQuery('#live-post-search').val() == 'Search'){

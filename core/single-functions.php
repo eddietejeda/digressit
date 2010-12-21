@@ -70,25 +70,18 @@ function live_post_search_ajax($request_params){
 	if(!in_array($request_params['value'], $excluded_words)){
 
 
-		$query = 'SELECT ID, post_content FROM '.$wpdb->posts.' WHERE post_content LIKE "%'. $request_params['value'] .'%" OR post_title LIKE "%'. $request_params['value'] .'%"';
+		$query = 'SELECT DISTINCT ID, post_title, post_content FROM '.$wpdb->posts.' WHERE post_type = "post" AND post_status = "publish" AND post_content LIKE "%'. $request_params['value'] .'%" OR post_title LIKE "%'. $request_params['value'] .'%" LIMIT 10';
+
 		$posts = $wpdb->get_results( $query);
-		foreach($posts as $item){
-			$message[] = $item->ID;
+		$message = null;
+		foreach($posts as $post){
+			$message .= "<div class='search-result'>".
+						"<div class='post-title'><a href='".get_permalink($post->ID)."'>".$post->post_title."</a></div>".
+						//"<div class='post-summary'>".substr($post->post_content, $pos, $pos+100)."</div>".
+						"</div>";
 		}
+		
 
-		$query = 'SELECT comment_post_ID, comment_content FROM '.$wpdb->comments.' WHERE comment_content LIKE "%'. $request_params['value'] .'%"';
-		$comments = $wpdb->get_results( $query);		
-		foreach($comments as $item){
-			$message[] = $item->comment_post_ID;
-		}
-
-/*
-		$query = 'SELECT m.*, p. FROM '.$wpdb->commentmeta.' m, '.$wpdb->posts.' p WHERE meta_key = "comment_tag" AND meta_value LIKE "%'. $request_params['value'] .'%"';
-		$tags = $wpdb->get_results( $query);		
-		foreach($tags as $item){
-			$message[] = $item->comment_post_ID;
-		}
-*/
 	
 		die(json_encode(array('status' => 1, "message" => $message)));
 	}
