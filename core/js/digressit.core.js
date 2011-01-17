@@ -225,6 +225,39 @@ jQuery(document).ready(function() {
 			}, 'json' );
 	});
 	
+	
+	jQuery('.ajax-auto-update').live('change', function(e) {
+		if(jQuery(this).hasClass('disabled') || jQuery(this).hasClass('button-disabled')){
+			jQuery(this).css('color', '#DFE4E4');
+			return true;
+		}
+		
+		var ajax_simple_classes = jQuery(this).attr('class').split(' ');
+
+		for(var i = 0; i < ajax_simple_classes.length; i++){
+			if(ajax_simple_classes[i] == 'ajax-simple'){
+				function_name = ajax_simple_classes[i+1];
+				break;				
+			}
+		}
+
+		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
+		
+		jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
+			function( data ) {					
+				function_name = function_name.replace(/-/g, '_');// + "_ajax_result";
+
+				var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
+				if(eval(dynamic_call)){
+					eval('AjaxResult.' + function_name + '(data);');
+				}
+				else{
+					
+				}
+				
+			}, 'json' );
+	});
+	
 		
 	function ajax_callback(function_name, data) {
 		window[function_name](data);
@@ -328,7 +361,7 @@ jQuery.fn.extend({
 			//alert(tab_id);
 			jQuery("#" +tab_id +" + .tab-container .tab-content").hide();					//Hide all content
 			jQuery("#" +tab_id +"  li:first").addClass("active").show();	//Activate first tab
-			jQuery("#" +tab_id +" + .tab-container .tab-content:first").show();				//Show first tab content
+			jQuery(".tab-container  .tab-content:first").show();				//Show first tab content
 		});
 
 		//On Click Event

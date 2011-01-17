@@ -82,7 +82,6 @@ global $blog_id;
 	
 
 
-<div id="comments-sort-all">show all (<?php echo count(get_approved_comments($post->ID)); ?>)</div>	
 <div id="no-comments">There are no comments. Click the text to your left to make a new comment.</div>
 
 

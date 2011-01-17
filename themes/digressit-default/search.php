@@ -1,7 +1,6 @@
 <?php get_header(); ?>
 
 <div class="content-wrapper">
-<?php get_dynamic_widgets(); ?>
 
 
 <div id="search-wrapper">
