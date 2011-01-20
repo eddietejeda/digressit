@@ -7,8 +7,6 @@ add_action('add_dynamic_widget', 'digressit_single_sidebar_widgets');
 
 
 function single_init(){
-	add_action('public_ajax_function', 'live_content_search_ajax');	
-	add_action('public_ajax_function', 'live_comment_search_ajax');	
 	add_action('wp_print_scripts', 'digressit_single_print_scripts');
 }
 
@@ -58,59 +56,6 @@ function get_text_signature_count($post_ID, $text_signature)
 
 
 
-
-
-
-function live_content_search_ajax($request_params){
-	extract($request_params);
-	global $wpdb, $current_user;
-
-	$excluded_words = array('the','and');
-	//every three letters we give results
-	if(!in_array($request_params['value'], $excluded_words)){
-
-
-		$sql = 'SELECT DISTINCT ID, post_title, post_content FROM '.$wpdb->posts.' WHERE post_type = "post" AND post_status = "publish" AND post_content LIKE "%'. $request_params['value'] .'%" OR post_title LIKE "%'. $request_params['value'] .'%" LIMIT 10';
-
-		//$sql = "SELECT DISTINCT ID, post_title, post_content FROM $wpdb->posts WHERE post_status = 'publish' AND post_content LIKE %".$request_params['value']."%  OR post_content LIKE %".$request_params['value']."% ";
-		$posts = $wpdb->get_results( $sql);
-		$message = null;
-		foreach($posts as $post){
-			$message .= "<div class='search-result'>".
-						"<div class='post-title'><a href='".get_permalink($post->ID)."'>".$post->post_title."</a></div>".
-						//"<div class='post-summary'>".substr($post->post_content, $pos, $pos+100)."</div>".
-						"</div>";
-		}
-		
-
-	
-		die(json_encode(array('status' => 1, "message" => $message)));
-	}
-	
-	
-}
-
-
-
-function live_comment_search_ajax($request_params){
-	extract($request_params);
-	global $wpdb, $current_user;
-
-	$excluded_words = array('the','and');
-	//every three letters we give results
-	if(!in_array($request_params['value'], $excluded_words)){
-
-		$query = 'SELECT * FROM '.$wpdb->comments.' WHERE comment_content LIKE "%'. $request_params['value'] .'%"';
-		$comments = $wpdb->get_results( $query);		
-		foreach($comments as $item){
-			$message[] = $item->comment_ID;
-		}
-		
-		die(json_encode(array('status' => 1, "message" => $message)));
-	}
-	
-	
-}
 
 
 

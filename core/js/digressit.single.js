@@ -13,42 +13,6 @@ jQuery.fn.highlight = function (str, className)
 	
 	
 jQuery(document).ready(function() {
-
-
-	AjaxResult.live_post_search = function(data) {
-		jQuery('#live-post-search-result').html(data.message);
-		jQuery('#live-post-search-result').fadeIn();
-	}
-	
-	
-	jQuery('#live-post-search').focus(function(){
-		if(jQuery('#live-post-search').val() == 'Search'){
-			jQuery('#live-post-search').val('');
-		}
-	});
-	
-	
-	AjaxResult.live_comment_search = function(data) {
-		jQuery('.comment').hide();
-		
-		
-		//jQuery('.comment-text').clone().find('span').replaceWith(function() { return this.innerHTML; }).end().html();
-		
-		jQuery(".comment").highlight(jQuery('#live-comment-search').val(), "highlight-class");
-		
-		for (var i in data.message) {  
-			jQuery('#comment-' + current_blog_id + '-' + data.message[i]).show();
-		}  
-	}
-	
-	jQuery('#live-comment-search').focus(function(){
-		if(jQuery('#live-comment-search').val() == 'Search'){
-			jQuery('#live-comment-search').val('');
-		}
-	});
-	
-
-
 	
 	function isNumber(n) {
 	  return !isNaN(parseFloat(n)) && isFinite(n);

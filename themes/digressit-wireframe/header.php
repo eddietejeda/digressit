@@ -4,7 +4,7 @@
 <head profile="http://gmpg.org/xfn/11">
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-<title><?php bloginfo('name'); ?>: <?php bloginfo('description'); ?><?php wp_title('&laquo;', true, 'left'); ?> </title>
+<title><?php bloginfo('name'); ?>:<?php wp_title('&raquo;', true, 'left'); ?> </title>
 <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 

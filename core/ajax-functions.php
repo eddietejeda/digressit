@@ -3,9 +3,9 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'ajax-functions.php' == basename($_SE
 	die (':)');
 endif;
 
-add_action('init', 'ajax_flush_rewrite_rules' );
-add_filter('query_vars', 'ajax_query_vars' );
-add_action('generate_rewrite_rules', 'ajax_add_rewrite_rules' );
+add_action('init', 'ajax_flush_rewrite_rules', 0 );
+add_filter('query_vars', 'ajax_query_vars', 0);
+add_action('generate_rewrite_rules', 'ajax_add_rewrite_rules', 0 );
 add_action('template_redirect', 'ajax_template' );
 
 //add_action('wp_ajax_my_action', 'my_action_callback');
@@ -29,9 +29,10 @@ function ajax_query_vars( $query_vars ) {
 
 // Create a rewrite rule if you want pretty permalinks
 function ajax_add_rewrite_rules( $wp_rewrite ) {
-	$wp_rewrite->add_rewrite_tag( "%inc_ajax%", "(.+?)", "inc_ajax=" );
 
-	$urls = array( 'ajax/%inc_ajax%' );
+	$wp_rewrite->add_rewrite_tag( "%inc_ajax%", "([^/]+)", "inc_ajax=" );
+
+	$urls = array( "ajax/%inc_ajax%" );
 	foreach( $urls as $url ) {
 		$rule = $wp_rewrite->generate_rewrite_rules($url, EP_NONE, false, false, false, false, false);
 		$wp_rewrite->rules = array_merge( $rule, $wp_rewrite->rules );
@@ -46,11 +47,11 @@ function ajax_add_rewrite_rules( $wp_rewrite ) {
 function ajax_template() {
 	global $wp, $wpdb;
 	global $current_user;
-	//var_dump($wp->query_vars);
+
 	if(isset( $wp->query_vars['inc_ajax'] ) && !empty($wp->query_vars['inc_ajax'] ) ):
 
 		$request_action = str_replace('-','_',$wp->query_vars['inc_ajax'])."_ajax"; 
-		$request_params = $_POST;
+		$request_params = $_REQUEST;
 
 		$comment_id = $request_params['comment_id'];
 		$status = null;

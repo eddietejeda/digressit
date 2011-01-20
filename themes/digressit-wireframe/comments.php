@@ -53,14 +53,17 @@ global $blog_id;
 
 					<?php if(get_option('comment_registration')): ?>
 					
-
-						<div id="must-be-logged-in">
-							You must be logged in to write a comment. 
+						<?php if(function_exists('digressit_custom_login_message')): ?>
+							<?php digressit_custom_login_message(); ?>
+						<?php else: ?>
+							<div id="must-be-logged-in">
+								You must be logged in to write a comment. 
 						
-							<p><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login">Login</a></p>
-							<p><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account">Create Account</a></p>
+								<p><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login">Login</a></p>
+								<p><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account">Create Account</a></p>
 						
-						</div>
+							</div>
+						<?php endif; ?>
 
 					<?php else: ?>
 

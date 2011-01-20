@@ -88,6 +88,11 @@ function lightbox_login(){ ?>
 			<input type="hidden" name="redirect_to" value="<?php echo 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]; ?>#login-success" />
 			<input type="hidden" name="testcookie" value="1" />
 
+			<?php if (function_exists('sfc_version')): ?>
+
+			<p><fb:login-button onlogin="sfc_login_check();" perms="email" v="2" class="FB_login_button FB_ElementReady fb_login_not_logged_in"><a class="fbconnect_login_button FBConnectButton FBConnectButton_Medium" id="RES_ID_fb_login"><span class="FBConnectButton_Text" id="RES_ID_fb_login_text"><fb:intl>Connect with Facebook</fb:intl></span></a></fb:login-button></p>
+			<?php endif; ?>
+
 			<span class="lightbox-submit" tabindex="100" >Login</span>
 			<span class="lightbox-close"></span>
 		

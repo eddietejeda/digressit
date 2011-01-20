@@ -17,7 +17,7 @@ class LiveContentSearch extends WP_Widget {
 		global $post;
 		?>
 		<div id="searchform">
-			<input id="live-post-search" class="ajax-live live-post-search comment-field-area" type="text" value="Search">
+			<input id="live-content-search" class="ajax-live live-content-search comment-field-area" type="text" value="Search">
 		</div>
 		<?php
 	}

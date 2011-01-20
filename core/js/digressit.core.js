@@ -43,6 +43,42 @@ jQuery(document).ready(function() {
 
 
 
+	AjaxResult.live_content_search = function(data) {
+		jQuery('#live-content-search-result').html(data.message);
+		jQuery('#live-content-search-result').fadeIn();
+	}
+	
+	
+	jQuery('#live-content-search').focus(function(){
+		if(jQuery('#live-content-search').val() == 'Search'){
+			jQuery('#live-content-search').val('');
+		}
+	});
+	
+	
+	AjaxResult.live_comment_search = function(data) {
+		jQuery('.comment').hide();
+		
+		
+		//jQuery('.comment-text').clone().find('span').replaceWith(function() { return this.innerHTML; }).end().html();
+		
+		jQuery(".comment").highlight(jQuery('#live-comment-search').val(), "highlight-class");
+		
+		for (var i in data.message) {  
+			jQuery('#comment-' + current_blog_id + '-' + data.message[i]).show();
+		}  
+	}
+	
+	jQuery('#live-comment-search').focus(function(){
+		if(jQuery('#live-comment-search').val() == 'Search'){
+			jQuery('#live-comment-search').val('');
+		}
+	});
+
+
+
+
+
 	
 	jQuery('.submit, .lightbox-submit').click(function(e){
 		if(jQuery(e.target).hasClass('ajax')){
