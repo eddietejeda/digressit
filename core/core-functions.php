@@ -258,10 +258,28 @@ function discrete_digressit_content_parser($content){
 	
 }
 
+/**
+ * strip_selected_tags ( string str [, string strip_tags[, strip_content flag]] )
+ * ---------------------------------------------------------------------
+ * Like strip_tags() but inverse; the strip_tags tags will be stripped, not kept.
+ * strip_tags: string with tags to strip, ex: "<a><p><quote>" etc.
+ * strip_content flag: TRUE will also strip everything between open and closed tag
+ */
+function strip_selected_tags($str, $tags = "", $stripContent = false)
+{
+    preg_match_all("/<([^>]+)>/i",$tags,$allTags,PREG_PATTERN_ORDER);
+    foreach ($allTags[1] as $tag){
+        if ($stripContent) {
+            $str = preg_replace("/<".$tag."[^>]*>.*<\/".$tag.">/iU","",$str);
+        }
+        $str = preg_replace("/<\/?".$tag."[^>]*>/iU","",$str);
+    }
+    return $str;
+}
 function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8'){
 	global $post;
 	$matches = array();
-
+	$html = strip_selected_tags($html, '<hr>');
 	//we need to do this twice in case there are empty tags surrounded by empty p tags
 	$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 	$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);

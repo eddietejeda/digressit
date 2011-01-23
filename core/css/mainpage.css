@@ -16,7 +16,7 @@
 #mainpage .navigation{
 	float:left;
 	width:30%;
-	min-height:800px;
+	min-height:1000px;
 	padding-right:15px;
 	top:0;
 	padding-left:25px;
@@ -55,7 +55,7 @@
 	border:1px solid #BBBCBD;
 	float:right;
 	margin:10px;
-	min-width:265px;
+	min-width:445px;
 	padding:5px 10px 20px 15px;
 	
 }

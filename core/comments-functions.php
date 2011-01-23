@@ -292,12 +292,27 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 function digressit_comment_form(){
 global $blog_id;
 ?>
+
+<?php if(function_exists('display_recaptcha')):?>
+<form method="post" action="<?php bloginfo('url') ?>/wp-comments-post.php" id="add-comment">
+<?php else: ?>
 <form method="post" action="/" id="add-comment">
+<?php endif;?>
 
 	<?php if(!is_user_logged_in()): ?>
+
+
+		<?php if(function_exists('display_recaptcha')):?>
+			<p><input type="text" class="comment-field-area" id="display_name"  name="author" value="Your Name" ><p>
+			<p><input type="text" class="comment-field-area" id="user_email" name="email" value="Email"></p>
+
+		<?php else: ?>
+
+			<p><input type="text" class="comment-field-area" id="display_name"  name="display_name" value="Your Name" ><p>
+			<p><input type="text" class="comment-field-area" id="user_email" name="user_email" value="Email"></p>
+
+		<?php endif;?>
 		
-		<p><input type="text" class="comment-field-area" id="display_name"  name="display_name" value="Your Name" ><p>
-		<p><input type="text" class="comment-field-area" id="user_email" name="user_email" value="Email"></p>
 		
 		
 	<?php endif; ?>
@@ -313,7 +328,11 @@ global $blog_id;
 
 	<div id="submit-wrapper">
 		<div name="cancel-response" id="cancel-response" class="button link">Cancel</div>
+		<?php if(function_exists('display_recaptcha')):?>
+		<input type="submit" name="submit" id="submit" value="submit">
+		<?php else: ?>
 		<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div>Submit</div>
+		<?php endif; ?>
 	</div>
 	<?php comment_id_fields(); ?>
 	<?php do_action('comment_form', $post->ID); ?>
@@ -378,7 +397,7 @@ function list_posts($args = array('number' => -1, 'category_name' => null ) )
 
 	//var_dump('numberposts='.$args['number']."&category_name=".$args['category_name']);
 	//".$args['category_name']
-	$myposts = get_posts('numberposts='.$args['number']."&category_name=".$args['category_name']);
+	$myposts = get_posts('order=ASC&orderby=post_date&numberposts='.$args['number']."&category_name=".$args['category_name']);
 	
 	?>
 	
@@ -439,7 +458,8 @@ function list_general_comments()
 {
 	global $wp;
 	
-	$myposts = get_posts('numberposts=-1');
+
+	$myposts = get_posts('order=ASC&orderby=post_date&numberposts=-1');
 	
 	?>
 	
