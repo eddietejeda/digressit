@@ -34,6 +34,13 @@
 }
 
 
+
+.type-post .widget_text{
+	padding: 10px;
+	margin: 3px;
+	width: 300px;
+}
+
 .navigation-next{
 	float: right;
 	font-size: 75%;
