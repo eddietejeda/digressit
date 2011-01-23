@@ -51,17 +51,16 @@
 #mainpage .widget_search,
 #mainpage .previews
 {
-	-moz-box-shadow:3px 3px 7px #BBBCBD;
-	border:1px solid #BBBCBD;
-	float:right;
-	margin:10px;
-	min-width:445px;
-	padding:5px 10px 20px 15px;
+    -moz-box-shadow: 3px 3px 7px #BBBCBD;
+    border: 1px solid #BBBCBD;
+    float: right;
+    margin: 10px;
+    padding: 5px 10px 20px 15px;
+    width: 550px;
 	
 }
 #mainpage .previews{
-	margin-right:5%;
-	width:50%;
+
 }
 
 #content #digress-it-list-posts{

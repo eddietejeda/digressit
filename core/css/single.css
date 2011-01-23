@@ -35,10 +35,18 @@
 
 
 
+.type-post .widget_text,
+.type-post .widget_links, 
+.type-post .widget_meta, 
+.type-post .widget_calendar, 
+.type-post .widget_pages, 
+.type-post .widget_tag_cloud, 
+.type-post .widget_search,
+.type-post .previews,
 .type-post .widget_text{
-	padding: 10px;
-	margin: 3px;
-	width: 300px;
+    margin: 3px;
+    padding: 25px;
+    width: 451px;
 }
 
 .navigation-next{
