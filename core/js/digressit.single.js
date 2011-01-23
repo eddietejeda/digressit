@@ -137,8 +137,13 @@ jQuery(document).ready(function() {
 		});
 		//jQuery('<li class="page_item"><input class="live-post-search" type="text" value="Search"></li>').appendTo('.menu ul');
 		
-		jQuery('.textblock').toggle(function(){
-			if(jQuery('.paragraph-block').length){
+		jQuery('.textblock').toggle(function(e){
+			
+			if(jQuery(e.target).attr('href')){
+				window.location = jQuery(e.target).attr('href').toString();
+			}
+			
+			if(jQuery('.paragraph-block')){
 				jQuery('#respond').hide();			
 				var paragraphnumber = parseInt(jQuery('.textblock').index(this)) +1 ;
 
@@ -166,8 +171,11 @@ jQuery(document).ready(function() {
 			}
 
 
-		}, function(){
-			//document.location.hash = 's';
+		}, function(e){
+			if(jQuery(e.target).attr('href')){
+				window.location = jQuery(e.target).attr('href').toString();
+			}
+
 			jQuery('.textblock').removeClass('selected-textblock');
 			jQuery('.comment'  ).hide();
 			jQuery('#respond').hide();						
