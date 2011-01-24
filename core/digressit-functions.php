@@ -1,7 +1,4 @@
 <?php
-
-
-
 add_action('public_ajax_function', 'live_content_search_ajax');	
 add_action('public_ajax_function', 'live_comment_search_ajax');	
 
@@ -21,7 +18,7 @@ function live_content_search_ajax($request_params){
 		$message = null;		
 		foreach ($blog_list AS $blog) {
 			switch_to_blog($blog['blog_id']);
-				$sql = "SELECT * FROM $wpdb->posts WHERE post_status = 'publish' AND post_content LIKE '%".$request_params['value']."%'  OR post_content LIKE '%".$request_params['value']."%' GROUP BY ID LIMIT 3";
+				$sql = "SELECT * FROM $wpdb->posts p  WHERE p.post_type  = 'post' OR p.post_type  = 'page' AND p.post_status = 'publish' AND p.post_content LIKE '%".$request_params['value']."%'  OR p.post_content LIKE '%".$request_params['value']."%' GROUP BY p.ID LIMIT 3";
 
 				$posts = $wpdb->get_results($sql);			
 

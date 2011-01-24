@@ -107,6 +107,7 @@ jQuery(document).ready(function() {
 		form = jQuery(this).parentsUntil('form').parent();		
 		var form_id = jQuery(form).attr('id');
 
+		//alert(function_name);
 
 		var function_name = form_id;
 		var form_class = jQuery(form).attr('class');

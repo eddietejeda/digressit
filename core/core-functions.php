@@ -28,6 +28,12 @@ if(esc_url($options['custom_header_image'], array('http', 'https'))){
 add_filter('the_content', 'digressit_parser', 10000);	
 
 
+
+/**
+ * Basic theme setup function
+ * *
+ * @since 3.0.0
+ */
 function digressit_setup(){
 	global $wpdb;
 	// This theme uses post thumbnails
@@ -49,20 +55,16 @@ function digressit_setup(){
 			$comment_text_signature_exists = true;
 		}
 	}
-
 	
-
 	if($comment_text_signature_exists == false){
 		$sql = "ALTER TABLE `$wpdb->comments` ADD `comment_text_signature` VARCHAR( 255 ) NULL;";	
 		$wpdb->query($sql);
 	}
 
-
 	// This theme allows users to set a custom background
 	add_custom_background();	
 	
 	register_nav_menus(
-
 		array(
 		  'Main Page' => 'This menu appears in the first page',
 		  'Top Menu' => 'A custom top menu',
@@ -75,19 +77,49 @@ function digressit_setup(){
 }
 	
 
+/**
+ * Hooks into the {@the_content} of each posts and breaks the text into an array.
+ * *
+ * @since 3.0.0
+ *
+ * @param string $html Required. Comment amount in post if > 0, else total comments blog wide.
+ */
 function get_secondary_menu(){
 	do_action('secondary_menu');
 }
 
+
+/**
+ * Hooks into the {@the_content} of each posts and breaks the text into an array.
+ * *
+ * @since 3.0.0
+ *
+ * @param string $html Required. Comment amount in post if > 0, else total comments blog wide.
+ */
 function get_widgets($widget_name){
 	return dynamic_sidebar($widget_name);
 }
 
+
+/**
+ * Hooks into the {@the_content} of each posts and breaks the text into an array.
+ * *
+ * @since 3.0.0
+ *
+ * @param string $html Required. Comment amount in post if > 0, else total comments blog wide.
+ */
 function get_dynamic_widgets(){
 	do_action('add_dynamic_widget');
 }
 
 
+/**
+ * Hooks into the {@the_content} of each posts and breaks the text into an array.
+ * *
+ * @since 3.0.0
+ *
+ * @param string $html Required. Comment amount in post if > 0, else total comments blog wide.
+ */
 function get_single_default_widgets(){
 	
 	$options = get_option('digressit');
@@ -119,7 +151,6 @@ function get_single_default_widgets(){
 
 
 function get_stylized_content_header(){
-	
 	if(has_action('stylized_content_header')){
 		do_action('stylized_content_header');
 	}
@@ -208,13 +239,10 @@ function discrete_digressit_content_parser($content){
 	$total_comments = get_comments($defaults);
 	$total_count = count($total_comments);
 
-	foreach($paragraph_blocks as $key=>$paragraph)
-	{
- 
+	foreach($paragraph_blocks as $key=>$paragraph){
 		$text_signature = $key+1;
 		$text_signatures[] = $text_signature;
 		$paranumber = $number = ( $key+1 );
-
 
 		$comment_count = 0;
 
@@ -226,15 +254,10 @@ function discrete_digressit_content_parser($content){
 		
 				
 		$paragraphnumber = '<span class="paragraphnumber">';
-		
-		
-		
 	 	$numbertext = ($comment_count == 1) ?  'is one comment' : 'are '.$comment_count.' comments';
-	 	$numbertext = ($comment_count == 0) ?  'are no comments' : $numbertext;
-		
+	 	$numbertext = ($comment_count == 0) ?  'are no comments' : $numbertext;		
 		$digit_count = strlen($comment_count);
 		$commenticon =	'<span  title="There '.$numbertext.' for this paragraph" class="commenticonbox"><small class="commentcount fff commentcount'.$digit_count.'">'.$comment_count.'</small></span>'."\n";
-
 
 		if($number == 1){
 			//$morelink = '<span class="morelink"></span>';
@@ -243,7 +266,6 @@ function discrete_digressit_content_parser($content){
 			$morelink = null;
 		}
 
-
 		$block_content = "<div id='textblock-$number' class='textblock'>
 			<span class='paragraphnumber'><a href='$permalink#$number'>$number</a></span>
 			<span  title='There $numbertext for this paragraph' class='commenticonbox'><small class='commentcount commentcount".$digit_count."'>".$comment_count."</small></span>
@@ -251,12 +273,10 @@ function discrete_digressit_content_parser($content){
 		</div>" .  $morelink;
 		
 		$blocks[$paranumber] = $block_content;
-    }
-
-	
+    }	
 	return $blocks;
-	
 }
+
 
 /**
  * strip_selected_tags ( string str [, string strip_tags[, strip_content flag]] )
@@ -276,6 +296,19 @@ function strip_selected_tags($str, $tags = "", $stripContent = false)
     }
     return $str;
 }
+
+
+
+
+/**
+ * Hooks into the {@the_content} of each posts and breaks the text into an array.
+ * *
+ * @since 3.0.0
+ *
+ * @param string $html Required. Comment amount in post if > 0, else total comments blog wide.
+ * @param string $tags Optional
+ * @return array An array of each text block with the proper html tags for comment count and extra tags for adding javascript hooks
+ */
 function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8'){
 	global $post;
 	$matches = array();
@@ -286,7 +319,7 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 
 	$options = get_option('digressit');
 	
-	$blocks = null;
+	$blocks = array();
 	$text_signatures = null;
 	$permalink = get_permalink($post->ID);
 
@@ -313,36 +346,24 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 		}
 	}
 
-
-
-
-	foreach($matches as $key=>$paragraph)
-	{
- 
+	foreach($matches as $key=>$paragraph){
 		$text_signature = $key+1;
 		$text_signatures[] = $text_signature;
 		$paranumber = $number = ( $key+1 );
 
-
 		$comment_count = 0;
-
 		foreach($total_comments as $c){
 			if($c->comment_text_signature == $paranumber){
 				$comment_count++;
 			}
 		}
-		
-				
+			
 		$paragraphnumber = '<span class="paragraphnumber">';
-		
-		
-		
 	 	$numbertext = ($comment_count == 1) ?  'is one comment' : 'are '.$comment_count.' comments';
 	 	$numbertext = ($comment_count == 0) ?  'are no comments' : $numbertext;
 		
 		$digit_count = strlen($comment_count);
 		$commenticon =	'<span  title="There '.$numbertext.' for this paragraph" class="commenticonbox"><small class="commentcount fff commentcount'.$digit_count.'">'.$comment_count.'</small></span>'."\n";
-
 
 		if($number == 1){
 			//$morelink = '<span class="morelink"></span>';
@@ -351,11 +372,9 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 			$morelink = null;
 		}
 
-
 		$matches = null;
 
-		preg_match_all('/class=\"([^"]+)\"/is', $paragraph, $matches); 		
-		
+		preg_match_all('/class=\"([^"]+)\"/is', $paragraph, $matches);
 		//var_dump($matches);
 		
 		if(count($matches)){
@@ -390,7 +409,7 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 
 function digressit_parser($content){
 	if(is_single()){
-		return implode("\n",digressit_paragraphs($content));
+		return implode("\n", (array)digressit_paragraphs($content));
 	}
 	else{
 		return $content;
@@ -607,14 +626,8 @@ function digressit_core_print_styles(){
 		wp_enqueue_style('digressit.ie8');				
 	}
 
-
 	wp_enqueue_style('digressit.custom');
-
-
-
-
-	//var_dump(get_option('sidebars_widgets'));
-	
+	//var_dump(get_option('sidebars_widgets'));	
 }
 
 

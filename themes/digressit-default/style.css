@@ -975,6 +975,10 @@ div#item-header{
 	-moz-box-shadow: none!important;
 }
 
+.site-home #content, .frontpage #content{
+	min-height:800px;
+}
+
 .widecolumn{
 	-moz-box-shadow:0 25px 30px #AAAAAA !important;
 }

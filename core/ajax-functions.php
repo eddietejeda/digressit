@@ -84,6 +84,4 @@ function ajax_template() {
 
 	endif;
 }
-
-
 ?>
