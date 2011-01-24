@@ -27,6 +27,7 @@ $is_commentbrowser= false;
 
 $plugin_name = str_replace("/", "", str_replace(basename( __FILE__),"",plugin_basename(__FILE__))); 
 
+load_plugin_textdomain('digressit', 'wp-content/plugins/'.dirname(plugin_basename(__FILE__)).'/languages');
 
 define("DIGRESSIT_VERSION", '3.0');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
@@ -74,7 +75,7 @@ register_digressit_commentbox_js('nogrouping_digressit_commentbox_parser');
 
 
 add_action('admin_menu', 'digressit_add_admin_menu');
-add_action( 'wp', 'digressit_localization' );
+add_action('init', 'digressit_localization' );
 add_action('init', 'digressit_init');
 
 
@@ -107,23 +108,6 @@ function digressit_init(){
 
 
 
-// Make theme available for translation
-// Translations can be filed in the /languages/ directory
-function digressit_localization(){
-	
-	
-
-	load_theme_textdomain( 'digressit', DIGRESSIT_DIR.'/languages/' );
-
-	/*
-	$locale = get_locale();
-	$locale_file = TEMPLATEPATH . "/languages/$locale.php";
-	if ( is_readable( $locale_file ) ){
-		include_once( $locale_file );
-	}
-	*/
-
-}
 
 
 function activate_digressit(){
