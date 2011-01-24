@@ -2,10 +2,10 @@
 /*	
 Plugin Name: Digress.it
 Plugin URI: http://digress.it
-Description:  digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
+Description:  Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
 Version: 3.0
-Author URI: http://www.visudo.com
+Author URI: http://eddietejeda.com
 License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
 
 Special thanks to:	
@@ -53,6 +53,7 @@ register_activation_hook(__FILE__,  'activate_digressit');
 register_deactivation_hook(__FILE__, 'deactivate_digressit' );
 
 
+$plugin_dir = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/';
 $plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/themes/';
 
 
@@ -109,13 +110,18 @@ function digressit_init(){
 // Make theme available for translation
 // Translations can be filed in the /languages/ directory
 function digressit_localization(){
-	load_theme_textdomain( 'digressit', TEMPLATEPATH . '/locales/' );
+	
+	
 
+	load_theme_textdomain( 'digressit', DIGRESSIT_DIR.'/languages/' );
+
+	/*
 	$locale = get_locale();
-	$locale_file = TEMPLATEPATH . "/locales/$locale.php";
+	$locale_file = TEMPLATEPATH . "/languages/$locale.php";
 	if ( is_readable( $locale_file ) ){
 		include_once( $locale_file );
 	}
+	*/
 
 }
 
