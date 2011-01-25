@@ -272,18 +272,23 @@ jQuery(document).ready(function() {
 		var ajax_simple_classes = jQuery(this).attr('class').split(' ');
 
 		for(var i = 0; i < ajax_simple_classes.length; i++){
-			if(ajax_simple_classes[i] == 'ajax-simple'){
+			if(ajax_simple_classes[i] == 'ajax-auto-update'){
 				function_name = ajax_simple_classes[i+1];
 				break;				
 			}
 		}
 
-		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
+		var name_values = jQuery(this).attr('name') + '=' + jQuery(this).attr('value');
+		//alert(name_values);
+		var function_parameters = parseGetVariables(name_values);
+		
+		jQuery('.' + function_name + '  + .loading-throbber' + ', .' + function_name + '  + .loading-bars').show();
 		
 		jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
 			function( data ) {					
 				function_name = function_name.replace(/-/g, '_');// + "_ajax_result";
 
+				jQuery('.loading, .loading-bars, .loading-bar, .loading-throbber').hide();
 				var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
 				if(eval(dynamic_call)){
 					eval('AjaxResult.' + function_name + '(data);');
@@ -291,6 +296,8 @@ jQuery(document).ready(function() {
 				else{
 					
 				}
+				
+				
 				
 			}, 'json' );
 	});

@@ -66,11 +66,10 @@ function digressit_setup(){
 	
 	register_nav_menus(
 		array(
-		  'Main Page' => 'This menu appears in the first page',
-		  'Top Menu' => 'A custom top menu',
-		  'Sidebar' => 'A custom sidebar menu'
+		  'Main Page' => __('This menu appears in the first page')  ,
+		  'Top Menu' => __('A custom top menu')  ,
+		  'Sidebar' => __('A custom sidebar menu')  
 		)
-
 	);
 
 	
@@ -508,7 +507,10 @@ function json_remote_call($webservice, $parameters = null){
 		$response = json_decode($json);
 	}
 	else{
-		$response = (object)array('responseCode' => false, 'errorMessage' => 'Server failed to respond. Please try again later');
+		
+
+		
+		$response = (object)array('responseCode' => false, 'errorMessage' => __('Server failed to respond. Please try again later'));
 	}
 		
 	return $response;
@@ -534,8 +536,9 @@ function change_content_warning(){
 	?>
 	
 	<div id="register-form" class="updated error" style="padding: 5px; width: 99% <?php echo $hidethis;?>" >
-		Warning: There are comments attached to the structure of this page. Changing the structure
-		of this post will break the alignment of comments to their paragraphs
+		
+		<?php _e('Warning: There are comments attached to the structure of this page. Changing the structure of this post will break the alignment of comments to their paragraphs'); ?>
+		
 	</div>
 	
 	<?php

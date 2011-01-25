@@ -915,7 +915,7 @@ img{
 /**** LOADING BARS *******/
 
 .loading{
-	background:url("images/loading-large.gif") no-repeat scroll center center transparent;
+	background:url("../images/loading-large.gif") no-repeat scroll center center transparent;
 	padding: 75px;
 	z-index: 100;
 	display:none;
@@ -924,7 +924,7 @@ img{
 
 
 .loading-bars{
-	background:url("images/loading-bars.gif") no-repeat scroll center center transparent;
+	background:url("../images/loading-bars.gif") no-repeat scroll center center transparent;
 	padding: 10px;
 	z-index: 100;
 	display:none;
@@ -934,14 +934,14 @@ img{
 
 
 .loading-circles{
-	background:url("images/loading-circles.gif") no-repeat scroll center center transparent;
+	background:url("../images/loading-circles.gif") no-repeat scroll center center transparent;
 	padding: 10px;
 	z-index: 100;
 	display:none;
 }
 
 .loading-circle{
-	background:url("images/loading-small.gif") no-repeat scroll center center transparent;
+	background:url("../images/loading-small.gif") no-repeat scroll center center transparent;
 	padding: 5px;
 	padding: 10px;
 	display:none;
@@ -949,19 +949,24 @@ img{
 }
 
 .loading-bar{
-	background:url("images/loading-bar.gif") no-repeat scroll center center transparent;
+	background:url("../images/loading-bar.gif") no-repeat scroll center center transparent;
 	padding: 10px;
 	z-index: 100;
 	display:none;
 }
 
 .loading-throbber{
-	background:url("images/loading-throbber.gif") no-repeat scroll center center transparent;
-	padding: 10px;
+	background:url("../images/loading-throbber.gif") no-repeat scroll center center transparent;
+	padding: 12px;
 	z-index: 100;
+	float: right;
 	display:none;
 }
 
+
+.force-float-right{
+	float: right !important;
+}
 
 #mainpage{
 	padding-bottom:20px;

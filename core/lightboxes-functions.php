@@ -108,7 +108,7 @@ function lightbox_register(){ ?>
 <div class="lightbox-content" id="lightbox-register">	
 	<div class="ribbon">
 		<div class="ribbon-left"></div>
-		<div class="ribbon-title">Register</div>
+		<div class="ribbon-title"><?php _e('Register'); ?></div>
 		<div class="ribbon-right"></div>
 	</div>
 	<form name="registerform" id="registerform" action="<?php echo wp_login_url(); ?>?action=register" method="post">		
@@ -117,13 +117,13 @@ function lightbox_register(){ ?>
 		<div class="lightbox-slider">
 		<div class="lightbox-slot">
 			<p>
-			<label>Choose a username (required)<br>
+			<label><?php _e('Choose a username (required)'); ?><br>
 			<input name="user_login" id="user_login" class="input required" value="" size="25" type="text">
 			<div class="status"></div>
 			</label>
 			</p>
 			<p>
-			<label>E-mail (required)<br>
+			<label><?php _e('E-mail (required)'); ?><br>
 			<input name="user_email" id="user_email" class="input required" value="" size="25" type="text"></label>
 			</p>
 
@@ -144,9 +144,9 @@ function lightbox_register(){ ?>
 		<div class="status"></div>
 		<span class="lightbox-close"></span>
 		
-		<span class="lightbox-button lightbox-previous">Previous</span>
-		<span id="register-submit" class="lightbox-submit button-disabled"><span class="loading-bars"></span>Register</span>
-		<span class="lightbox-button lightbox-next">Next</span>
+		<span class="lightbox-button lightbox-previous"><?php _e('Previous'); ?></span>
+		<span id="register-submit" class="lightbox-submit button-disabled"><span class="loading-bars"></span><?php _e('Register'); ?></span>
+		<span class="lightbox-button lightbox-next"><?php _e('Next'); ?></span>
 
 	</form>
 
@@ -162,7 +162,7 @@ function lightbox_site_register(){ ?>
 <div class="lightbox-content" id="lightbox-register">	
 	<div class="ribbon">
 		<div class="ribbon-left"></div>
-		<div class="ribbon-title">Register</div>
+		<div class="ribbon-title"><?php _e('Register'); ?></div>
 		<div class="ribbon-right"></div>
 	</div>
 	<form name="registerform" id="registerform" action="<?php echo wp_login_url(); ?>?action=register" method="post">		
@@ -182,9 +182,9 @@ function lightbox_site_register(){ ?>
 		<div class="status"></div>
 		<span class="lightbox-close"></span>
 		
-		<span class="lightbox-button lightbox-previous">Previous</span>
-		<span id="register-submit" class="lightbox-submit button-disabled"><span class="loading-bars"></span>Register</span>
-		<span class="lightbox-button lightbox-next">Next</span>
+		<span class="lightbox-button lightbox-previous"><?php _e('Previous'); ?></span>
+		<span id="register-submit" class="lightbox-submit button-disabled"><span class="loading-bars"></span><?php _e('Register'); ?></span>
+		<span class="lightbox-button lightbox-next"><?php _e('Next'); ?></span>
 
 	</form>
 
@@ -197,7 +197,7 @@ function lightbox_site_register(){ ?>
 
 function lightbox_registering(){ ?>
 <div class="lightbox-content" id="lightbox-registering">
-	<p>Your account has been created. Check your email for further instructions on how to log in.</p>
+	<p><?php _e('Your account has been created. Check your email for further instructions on how to log in.'); ?></p>
 	<span class="lightbox-close"></span>
 </div>
 <?php } 
@@ -205,7 +205,7 @@ function lightbox_registering(){ ?>
 
 function lightbox_login_success(){ ?>
 <div class="lightbox-content" id="lightbox-login-success">
-	<p>Login successful</p>
+	<p><?php _e('Login Successful'); ?></p>
 	<span class="lightbox-delay-close"></span>
 </div>
 <?php } 
