@@ -336,8 +336,8 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	
 	
 	$html = wpautop(force_balance_tags($html));
+	$html = html_entity_decode($html, ENT_COMPAT, 'UTF-8'); 
 
-	//var_dump($html);
 	if($result = @simplexml_load_string(trim('<content>'.$html.'</content>'))){
 		$xml = $result->xpath('/content/'. $tags);
 		foreach($xml as $match){
