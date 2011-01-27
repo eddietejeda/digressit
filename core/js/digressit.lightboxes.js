@@ -118,6 +118,9 @@ jQuery(document).ready(function() {
 	});
 	
 	
+	
+	
+	
     jQuery(".lightbox").click(function (e) {
 
 		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
@@ -155,6 +158,9 @@ jQuery(document).ready(function() {
 			}
 			else{
 				//alert('submit');
+				
+				jQuery(event.target).parentsUntil('form').parent().submit();		
+
 		  		/* UNDO COMMENT: */
 		  		//jQuery(this).parent().submit();
 			}

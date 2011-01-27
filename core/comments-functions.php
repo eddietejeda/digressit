@@ -331,7 +331,7 @@ global $blog_id;
 		<?php if(function_exists('display_recaptcha')):?>
 		<input type="submit" name="submit" id="submit" value="submit">
 		<?php else: ?>
-		<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div>Submit</div>
+		<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div>Submit Comment</div>
 		<?php endif; ?>
 	</div>
 	<?php comment_id_fields(); ?>
