@@ -75,7 +75,7 @@ register_digressit_commentbox_js('nogrouping_digressit_commentbox_parser');
 
 
 add_action('admin_menu', 'digressit_add_admin_menu');
-add_action('init', 'digressit_localization' );
+//add_action('init', 'digressit_localization' );
 add_action('init', 'digressit_init');
 
 
