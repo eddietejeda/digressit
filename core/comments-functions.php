@@ -336,7 +336,7 @@ global $blog_id;
 	</div>
 	<?php comment_id_fields(); ?>
 	<?php do_action('comment_form', $post->ID); ?>
-
+	<?php do_action('digressit_after_comment_form'); ?>
 </form>
 <?php
 }

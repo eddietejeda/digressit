@@ -1,7 +1,7 @@
 <?php
 
-add_action('wp_print_styles', 'lightbubbles_wp_print_styles');
-add_action('wp_print_scripts', 'lightbubbles_wp_print_scripts' );
+//add_action('wp_print_styles', 'lightbubbles_wp_print_styles');
+//add_action('wp_print_scripts', 'lightbubbles_wp_print_scripts' );
 
 function lightbubbles_wp_print_styles(){
 ?>

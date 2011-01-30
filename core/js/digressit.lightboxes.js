@@ -85,8 +85,18 @@ jQuery.fn.displayerrorslightbox = function (data){
 
 jQuery(document).ready(function() {
 
+
+	
+
 	if (document.location.hash.length) {
 		var lightbox = '#lightbox-' + document.location.hash.substr(1);
+		jQuery('body').openlightbox(lightbox);
+	}	
+
+
+	if (jQuery('.lightbox-auto-load').length) {
+		var lightbox = '#'+jQuery('.lightbox-auto-load:first').attr('id');
+
 		jQuery('body').openlightbox(lightbox);
 	}	
 	

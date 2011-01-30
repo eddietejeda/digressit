@@ -119,7 +119,7 @@ jQuery(document).ready(function() {
 		jQuery('.lightbox-submit').addClass('disabled');
 		jQuery('.submit').addClass('disabled');
 		
-		jQuery('form #' + form_id + ' .loading,' + '#' + form_id + ' .loading-bars, ' + '#' + form_id + ' . loading-bar , #' + form_id + ' .loading-throbber').show();
+		jQuery('form #' + form_id + ' .loading,' + '#' + form_id + ' .loading-bars, ' + '#' + form_id + ' . loading-bar , #' + form_id + ' .loading-throbber').css('display', 'inline');
 		
 		jQuery.post( siteurl + "/ajax/" + form_id +'/',	jQuery("#"+form_id).serialize(),
 			function( data ) {	
@@ -213,6 +213,9 @@ jQuery(document).ready(function() {
 				}
 			}
 
+			var form_id = jQuery(obj).attr('id');
+			jQuery('#' + form_id + ' .loading,' + '#' + form_id + ' .loading-bars, ' + '#' + form_id + ' . loading-bar , #' + form_id + ' .loading-throbber').css('display', 'inline');
+
 			var function_parameters = {'value' :jQuery(obj).attr('value')};
 			jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
 				function( data ) {					
@@ -225,6 +228,9 @@ jQuery(document).ready(function() {
 					else{
 
 					}
+					
+					jQuery('.loading, .loading-bars, .loading-bar, .loading-throbber').css('display', 'none');
+					
 				}, 'json' );
 				
 		}, request_time_delay, this);
@@ -245,6 +251,7 @@ jQuery(document).ready(function() {
 			}
 		}
 
+		jQuery(this).css('background', '#ddd');
 		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
 		
 		jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
@@ -260,6 +267,13 @@ jQuery(document).ready(function() {
 				}
 				
 			}, 'json' );
+	});
+	
+	jQuery('.button-green').hover(function(){
+		
+		jQuery(this).css('cursor', 'pointer');
+		
+		
 	});
 	
 	
@@ -282,7 +296,7 @@ jQuery(document).ready(function() {
 		//alert(name_values);
 		var function_parameters = parseGetVariables(name_values);
 		
-		jQuery('.' + function_name + '  + .loading-throbber' + ', .' + function_name + '  + .loading-bars').show();
+		jQuery('.' + function_name + '  + .loading-throbber' + ', .' + function_name + '  + .loading-bars').css('display','inline');
 		
 		jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
 			function( data ) {					

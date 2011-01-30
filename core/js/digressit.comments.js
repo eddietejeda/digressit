@@ -22,7 +22,7 @@ jQuery(document).ready(function() {
 			depth = 'depth-2';
 		}
 
-		var new_comment = '<div id="'+comment_id+'" class="comment byuser bypostauthor '+depth+' paragraph-'+selected_paragraph_number+'">' +
+		var new_comment = '<div id="'+comment_id+'" class="new-comment comment byuser bypostauthor '+depth+' paragraph-'+selected_paragraph_number+'">' +
 				'<div class="comment-body" id="div-'+comment_id+'">' +
 					'<div class="comment-header">' +
 					'<div class="comment-author vcard">' +
