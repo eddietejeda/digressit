@@ -13,6 +13,7 @@
 <?php get_currentuserinfo(); ?>
 <?php wp_head(); ?>
 
+
 </head>
 
 <?php 
