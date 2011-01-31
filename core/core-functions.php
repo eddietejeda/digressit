@@ -5,17 +5,16 @@ global $digressit_content_function, $digressit_comments_function, $digressit_com
 global $browser, $post_paragraph_count;
 
 
-$options = get_option('digressit');
+$digressit = $options = get_option('digressit');
 
 //add_action('init', 'digressit_load');
 
 add_action('after_setup_theme', 'digressit_setup' );
 add_action('admin_head-post.php', 'add_comment_change_notice');
 
-if(!is_admin()){
-	add_action('wp_print_scripts',  'digressit_core_print_scripts', 1);
-	add_action('wp_print_styles',  'digressit_core_print_styles', 1) ; 		
-}
+
+add_action('wp_print_scripts',  'digressit_core_print_scripts', 1);
+add_action('wp_print_styles',  'digressit_core_print_styles', 1) ; 		
 
 add_action('wp_head',  'on_wp_head') ; 		
 
@@ -681,8 +680,13 @@ function digressit_core_print_scripts(){
 	global $current_user, $post, $blog_id;
 	wp_deregister_script('autosave');
     //wp_deregister_script( 'jquery' );
-    wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js');
+    //wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js');
+    if (!is_admin()) {
+        wp_deregister_script( 'jquery' );
+        wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js');
+    }
     wp_enqueue_script( 'jquery' );
+
 
 	$options = get_option('digressit');
 
@@ -692,33 +696,33 @@ function digressit_core_print_scripts(){
 
 	if(!is_admin()){
 		?>
-			<script>	
-				var siteurl = '<?php echo get_option("siteurl"); ?>';
-				var baseurl = '<?php echo get_root_domain() ?>';
-				var user_ID =  <?php echo $current_user->ID; ?>;
-				<?php if(is_single()): ?>
-				var post_ID = <?php echo $post->ID ?>;
-				<?php endif; ?>
-				var blog_ID = <?php echo $blog_id; ?>;
-				var current_blog_id = <?php echo $blog_id; ?>;
-				var request_uri = '<?php echo  $url['path']; ?>';
-				<?php if(is_single()): ?>
-					var is_single = true;
-					var post_name = '<?php echo $post->post_name; ?>';
-					var allow_general_comments = <?php echo !is_null($options["allow_general_comments"]) ? $options["allow_general_comments"] : 0; ?>;
-					var allow_comments_search = <?php echo !is_null($options["allow_comments_search"]) ? $options["allow_comments_search"] : 0; ?>;
-					var comment_count = <?php echo count($comment_array); ?>;
-					var commment_text_signature = new Array(); 
-					var commentbox_function = '<?php echo strlen($options['commentbox_parser']) ? $options['commentbox_parser'] : 'grouping_digressit_commentbox_parser'; ?>';
-				<?php else: ?>
-					var is_single = false;
-				<?php endif; ?>
-	
-			</script>	
+		<script>	
+			var siteurl = '<?php echo get_option("siteurl"); ?>';
+			var baseurl = '<?php echo get_root_domain() ?>';
+			var user_ID =  <?php echo $current_user->ID; ?>;
+			<?php if(is_single()): ?>
+			var post_ID = <?php echo $post->ID ?>;
+			<?php endif; ?>
+			var blog_ID = <?php echo $blog_id; ?>;
+			var current_blog_id = <?php echo $blog_id; ?>;
+			var request_uri = '<?php echo  $url['path']; ?>';
+			<?php if(is_single()): ?>
+				var is_single = true;
+				var post_name = '<?php echo $post->post_name; ?>';
+				var allow_general_comments = <?php echo !is_null($options["allow_general_comments"]) ? $options["allow_general_comments"] : 0; ?>;
+				var allow_comments_search = <?php echo !is_null($options["allow_comments_search"]) ? $options["allow_comments_search"] : 0; ?>;
+				var comment_count = <?php echo count($comment_array); ?>;
+				var commment_text_signature = new Array(); 
+				var commentbox_function = '<?php echo strlen($options['commentbox_parser']) ? $options['commentbox_parser'] : 'grouping_digressit_commentbox_parser'; ?>';
+			<?php else: ?>
+				var is_single = false;
+			<?php endif; ?>
+
+		</script>	
 		<?php
 	
 
-	
+
 		wp_enqueue_script('digressit.core',		get_digressit_media_uri('js/digressit.core.js'), 'jquery', false, true );	
 		wp_enqueue_script('jquery.easing', 		get_digressit_media_uri('js/jquery.easing.js'), 'jquery', false, true );		
 		wp_enqueue_script('jquery.scrollto',	get_digressit_media_uri('js/jquery.scrollTo.js'), 'jquery', false, true );		

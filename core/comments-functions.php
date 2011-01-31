@@ -329,7 +329,7 @@ global $blog_id;
 	<div id="submit-wrapper">
 		<div name="cancel-response" id="cancel-response" class="button link">Cancel</div>
 		<?php if(function_exists('display_recaptcha')):?>
-		<input type="submit" name="submit" id="submit" value="submit">
+		<input type="submit" class="recaptcha-submit" name="submit" id="submit" value="submit">
 		<?php else: ?>
 		<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div>Submit Comment</div>
 		<?php endif; ?>

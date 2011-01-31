@@ -19,7 +19,7 @@ function live_content_search_ajax($request_params){
 		//foreach ($blog_list AS $blog) {
 		//	switch_to_blog($blog['blog_id']);
 
-		$sql = "SELECT * FROM $wpdb->posts p  WHERE p.post_type  = 'post' OR p.post_type  = 'page' AND p.post_status = 'publish' AND p.post_content LIKE '%".$request_params['value']."%'  OR p.post_content LIKE '%".$request_params['value']."%' GROUP BY p.ID LIMIT 3";
+		$sql = "SELECT * FROM $wpdb->posts p  WHERE p.post_type  = 'post' OR p.post_type  = 'page' AND p.post_status = 'publish' AND p.post_content LIKE '%".esc_sql($request_params['value'])."%'  OR p.post_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY p.ID LIMIT 3";
 
 		$posts = $wpdb->get_results($sql);			
 
@@ -33,6 +33,7 @@ function live_content_search_ajax($request_params){
 		//}
 		die(json_encode(array('status' => count($posts), "message" => $message)));
 	}
+	die(json_encode(array('status' => 0, "message" => '')));
 	
 	
 }
@@ -55,7 +56,7 @@ function live_comment_search_ajax($request_params){
 		$message = null;		
 		//foreach ($blog_list AS $blog) {
 		//	switch_to_blog($blog['blog_id']);
-		$sql = "SELECT * FROM $wpdb->posts WHERE post_status = 'publish' AND comment_content LIKE '%".$request_params['value']."%' GROUP BY comment_ID LIMIT 3";
+		$sql = "SELECT * FROM $wpdb->posts WHERE post_status = 'publish' AND comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
 
 		$posts = $wpdb->get_results($sql);			
 
@@ -68,6 +69,7 @@ function live_comment_search_ajax($request_params){
 		//}
 		die(json_encode(array('status' => count($posts), "message" => $message)));
 	}
+	die(json_encode(array('status' => 0, "message" => '')));
 }
 
 ?>

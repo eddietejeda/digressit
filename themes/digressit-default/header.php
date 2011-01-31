@@ -20,7 +20,7 @@
 if(function_exists('digressit_body_class')){
 	$digressit_body_class = digressit_body_class();
 }
-
+global $digressit;
 
 ?>
 <body <?php body_class($digressit_body_class); ?>>
@@ -38,6 +38,14 @@ if(function_exists('digressit_body_class')){
 			<div class="description"><?php bloginfo('description'); ?></div>
 		<?php else: ?>
 			<a href="<?php bloginfo('home') ?>"><h1><?php bloginfo('name'); ?></h1></a>
+		<?php endif; ?>
+		<?php if($digressit['enable_instant_content_search'] == 1): ?>
+		<div id="instant-search">
+			<input type="text" value="Search" class="ajax-live live-content-search content-field-area" id="live-content-search">
+			<div class="loading-throbber"></div>
+
+			<div id="live-content-search-result"></div>
+		</div>
 		<?php endif; ?>
 	</div>
 		

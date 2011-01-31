@@ -1055,3 +1055,8 @@ img{
 	min-height:600px;
 	padding-bottom:400px;
 }
+
+
+#instant-search{
+	display: inline;
+}

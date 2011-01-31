@@ -9,7 +9,7 @@
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
 
-<?php global $blog_id, $current_user, $current_page_name; ?>
+<?php global $blog_id, $current_user, $current_page_name, $digressit; ?>
 <?php get_currentuserinfo(); ?>
 <?php wp_head(); ?>
 
@@ -19,8 +19,6 @@
 if(function_exists('digressit_body_class')){
 	$digressit_body_class = digressit_body_class();
 }
-
-
 ?>
 <body <?php body_class($digressit_body_class); ?>>
 
@@ -38,6 +36,17 @@ if(function_exists('digressit_body_class')){
 		<?php else: ?>
 			<a href="<?php bloginfo('home') ?>"><h1><?php bloginfo('name'); ?></h1></a>
 		<?php endif; ?>
+
+		<?php if($digressit['enable_instant_content_search'] == 1): ?>
+		<div id="instant-search">
+			<input type="text" value="Search" class="ajax-live live-content-search content-field-area" id="live-content-search">
+			<div class="loading-throbber"></div>
+
+			<div id="live-content-search-result"></div>
+		</div>
+		<?php endif; ?>
+
+		
 	</div>
 		
 

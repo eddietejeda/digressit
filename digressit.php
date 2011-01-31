@@ -103,6 +103,16 @@ function digressit_init(){
 		echo "<meta http-equiv=\"refresh\" content=\"1\" >";
 		
 	}	
+	
+	if(!isset($options['enable_instant_content_search'])){
+		$options['enable_instant_content_search'] = 0;
+		$options['enable_instant_comment_search'] = 0;
+	}
+
+	delete_option('digressit');
+	add_option('digressit', $options);
+	
+	
 }
 
 
@@ -183,6 +193,8 @@ function activate_digressit(){
 	$options['allow_general_comments'] = 1;
 	$options['allow_comments_search'] = 0;
 	$options['enable_sidebar'] = 1;
+	$options['enable_instant_content_search'] = 1;
+	$options['enable_instant_comment_search'] = 1;
 
 
 	$options['table_of_contents_label'] = 'Table of Contents';
@@ -200,6 +212,8 @@ function activate_digressit(){
 	$options['custom_header_image'] = '';
 	$options['use_cdn'] = 0;
 	$options['cdn'] = 'http://c0006125.cdn2.cloudfiles.rackspacecloud.com';
+
+
 
 
 	$options['frontpage_list_style'] = 'list-style-decimal';
@@ -421,6 +435,13 @@ function digressit_theme_options_page() {
 		</tr>
 
 		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Enable Instant Content Search');  ?></b></td>
+			<td><?php print_dropdown('enable_instant_content_search', array('No' => 0, 'Yes' => 1), $options['enable_instant_content_search']); ?></td>
+		</tr>
+
+
+
+		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Enable Sidebar');  ?></b></td>
 			<td><?php print_dropdown('enable_sidebar', array('No' => 0, 'Yes' => 1), $options['enable_sidebar']); ?></td>
 		</tr>
@@ -451,6 +472,7 @@ function digressit_theme_options_page() {
 				<p>This image will override the current header and will become the logo to your site. 
 					Be sure to get copy the entire URL in this field. You can also 
 					<a href="<?php bloginfo('url') ?>/wp-admin/media-new.php">upload your logo</a> and get the URL from there.
+					<b>Note:</b> The image needs to be a maximum of 60px tall.
 			</td>
 		</tr>
 
@@ -458,10 +480,9 @@ function digressit_theme_options_page() {
 			<td style="width: 200px"><b><?php _e('Custom Style Sheet');  ?></b></td>
 			<td>
 				<?php print_input_text('custom_style_sheet', $options['custom_style_sheet']); ?>
-				<p>If you would like to customize the theme, you can upload a stylesheet which will override the current theme. For more information
-					on this feature follow the instructions provided at <a href="http://digress.it/help">http://digress.it/help</a>. WARNING: This
-					is still experimental. Setting a stylesheet that is not properly configured will break your theme and you'll need to reset your 
-					options</p>
+				<p>If you would like to customize the theme, you can upload a stylesheet that can be be loaded after the required stylesheets. 
+					For heavy customizations you should use the "Digress.it Wireframe" theme provided.
+					For more information on this feature follow the instructions provided at <a href="http://digress.it/help">http://digress.it/help</a>. </p>
 			</td>
 		</tr>
 
