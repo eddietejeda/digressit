@@ -111,12 +111,6 @@ function digressit_init(){
 
 	delete_option('digressit');
 	add_option('digressit', $options);
-
-	//echo "checking";
-	//var_dump(file_exists(ABSPATH.'/wp-content/buddypress/bp-core/bp-core-cssjs.php'));
-	if(is_frontpage() && file_exists(ABSPATH.'/wp-content/buddypress/bp-core/bp-core-cssjs.php')){
-		require_once(ABSPATH.'/wp-content/buddypress/bp-core/bp-core-cssjs.php');
-	}
 	
 	
 }

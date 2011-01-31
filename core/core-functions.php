@@ -610,6 +610,8 @@ function digressit_core_print_styles(){
 
 	if(is_frontpage()){
 		wp_enqueue_style('digressit.frontpage');
+
+
 	}
 
 	
@@ -646,7 +648,25 @@ function digressit_core_print_styles(){
 	}
 
 	wp_enqueue_style('digressit.custom');
-	//var_dump(get_option('sidebars_widgets'));	
+
+	global $blog_id;
+        if($blog_id == 1 && file_exists(ABSPATH.'/wp-content/plugins/buddypress/bp-core/bp-core-cssjs.php') && function_exists('bp_core_add_admin_bar_css')){
+
+	if ( defined( 'BP_DISABLE_ADMIN_BAR' ) )
+		return false;
+
+	if ( is_multisite()  || is_admin() ) {
+		$stylesheet = get_blog_option( BP_ROOT_BLOG, 'stylesheet' );
+
+		if ( file_exists( WP_CONTENT_DIR . '/themes/' . $stylesheet . '/_inc/css/adminbar.css' ) )
+			wp_enqueue_style( 'bp-admin-bar', apply_filters( 'bp_core_admin_bar_css', WP_CONTENT_URL . '/themes/' . $stylesheet . '/_inc/css/adminbar.css' ) );
+		else
+			wp_enqueue_style( 'bp-admin-bar', apply_filters( 'bp_core_admin_bar_css', BP_PLUGIN_URL . '/bp-themes/bp-default/_inc/css/adminbar.css' ) );
+	}
+
+
+        }
+
 }
 
 
