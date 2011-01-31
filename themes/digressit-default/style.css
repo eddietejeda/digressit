@@ -1014,5 +1014,5 @@ div#item-header{
 }
 
 .sidebar-widget-auto-hide {
-	display:none
+	display:block;
 }
