@@ -251,6 +251,8 @@ jQuery(document).ready(function() {
 			}
 		}
 
+		//alert(function_name);
+		jQuery('.' + function_name).css('background', 'invert');
 		jQuery(this).css('background', '#ddd');
 		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
 		
