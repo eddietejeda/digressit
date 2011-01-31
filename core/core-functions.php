@@ -12,9 +12,10 @@ $options = get_option('digressit');
 add_action('after_setup_theme', 'digressit_setup' );
 add_action('admin_head-post.php', 'add_comment_change_notice');
 
-add_action('wp_print_scripts',  'digressit_core_print_scripts', 1);
-add_action('wp_print_styles',  'digressit_core_print_styles', 1) ; 		
-
+if(!is_admin()){
+	add_action('wp_print_scripts',  'digressit_core_print_scripts', 1);
+	add_action('wp_print_styles',  'digressit_core_print_styles', 1) ; 		
+}
 
 add_action('wp_head',  'on_wp_head') ; 		
 
@@ -680,7 +681,7 @@ function digressit_core_print_scripts(){
 	global $current_user, $post, $blog_id;
 	wp_deregister_script('autosave');
     //wp_deregister_script( 'jquery' );
-    //wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js');
+    wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js');
     wp_enqueue_script( 'jquery' );
 
 	$options = get_option('digressit');
