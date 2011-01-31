@@ -104,9 +104,9 @@ function digressit_init(){
 		
 	}	
 	
-	if(!isset($options['enable_instant_content_search'])){
-		$options['enable_instant_content_search'] = 0;
-		$options['enable_instant_comment_search'] = 0;
+	if(!is_string($options['enable_instant_content_search']) ){
+		$options['enable_instant_content_search'] = 'false';
+		$options['enable_instant_comment_search'] = 'false';
 	}
 
 	delete_option('digressit');
@@ -193,8 +193,8 @@ function activate_digressit(){
 	$options['allow_general_comments'] = 1;
 	$options['allow_comments_search'] = 0;
 	$options['enable_sidebar'] = 1;
-	$options['enable_instant_content_search'] = 1;
-	$options['enable_instant_comment_search'] = 1;
+	$options['enable_instant_content_search'] = 'false';
+	$options['enable_instant_comment_search'] = 'false';
 
 
 	$options['table_of_contents_label'] = 'Table of Contents';
@@ -436,7 +436,7 @@ function digressit_theme_options_page() {
 
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Enable Instant Content Search');  ?></b></td>
-			<td><?php print_dropdown('enable_instant_content_search', array('No' => 0, 'Yes' => 1), $options['enable_instant_content_search']); ?></td>
+			<td><?php print_dropdown('enable_instant_content_search', array('No' => 'false', 'Yes' => 'true'), $options['enable_instant_content_search']); ?></td>
 		</tr>
 
 

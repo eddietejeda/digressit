@@ -37,7 +37,7 @@ if(function_exists('digressit_body_class')){
 			<a href="<?php bloginfo('home') ?>"><h1><?php bloginfo('name'); ?></h1></a>
 		<?php endif; ?>
 
-		<?php if($digressit['enable_instant_content_search'] == 1): ?>
+		<?php if($digressit['enable_instant_content_search'] == 'true'): ?>
 		<div id="instant-search">
 			<input type="text" value="Search" class="ajax-live live-content-search content-field-area" id="live-content-search">
 			<div class="loading-throbber"></div>
