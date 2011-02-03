@@ -236,7 +236,7 @@ jQuery(document).ready(function() {
 		}, request_time_delay, this);
 	});
 	
-	jQuery('.ajax-simple').live('click', function(e) {
+	jQuery('.ajax-simple').click(function (e) {
 		if(jQuery(this).hasClass('disabled') || jQuery(this).hasClass('button-disabled')){
 			jQuery(this).css('color', '#DFE4E4');
 			return true;
@@ -294,7 +294,21 @@ jQuery(document).ready(function() {
 			}
 		}
 
-		var name_values = jQuery(this).attr('name') + '=' + jQuery(this).attr('value');
+		var var_value;
+		
+		if(jQuery(this).attr('type') == 'checkbox'){
+			if(jQuery(this).attr("checked")){
+				var_value = jQuery(this).attr('value');				
+			}
+			else{
+				var_value = false;
+			}
+		}
+		else{
+			 var_value = jQuery(this).attr('value');
+		}
+		
+		var name_values = jQuery(this).attr('name') + '=' + var_value;
 		//alert(name_values);
 		var function_parameters = parseGetVariables(name_values);
 		
