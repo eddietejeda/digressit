@@ -351,7 +351,9 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	
 	$html = wpautop(force_balance_tags($html));
 	$html = str_replace('&nbsp', '', $html);
+	$html = str_replace('&copy;', '(c)', $html);
 	
+	$html = preg_replace("/&#?[a-z0-9]{2,8};/i","",$html);
 
 	//var_dump($html);
 	if($result = @simplexml_load_string(trim('<content>'.$html.'</content>'))){
