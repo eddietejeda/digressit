@@ -6,9 +6,9 @@ add_action('wp_print_styles', 'lightboxes_wp_print_styles', 1000);
 add_action('wp_print_scripts', 'lightboxes_wp_print_scripts' );
 
 add_action('add_lightbox', 'lightbox_login');
-add_action('add_lightbox', 'lightbox_register');
-add_action('add_lightbox', 'lightbox_site_register');
-add_action('add_lightbox', 'lightbox_registering');
+//add_action('add_lightbox', 'lightbox_register');
+//add_action('add_lightbox', 'lightbox_site_register');
+//add_action('add_lightbox', 'lightbox_registering');
 add_action('add_lightbox', 'lightbox_generic_response');
 
 
@@ -158,7 +158,7 @@ function lightbox_register(){ ?>
 
 
 function lightbox_site_register(){ ?>
-<?php if(is_user_logged_in()): ?>
+<?php if(!is_user_logged_in()): ?>
 <div class="lightbox-content" id="lightbox-register">	
 	<div class="ribbon">
 		<div class="ribbon-left"></div>

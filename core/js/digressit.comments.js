@@ -378,7 +378,7 @@ jQuery(document).ready(function() {
 		jQuery('#respond').appendTo(current_comment_id + ' .comment-respond');		
 		
 		jQuery(window).scrollTo(scrollto, 200);
-		jQuery('#commentbox').scrollTo( jQuery(current_comment_id + ' .comment-header'), 0)
+		jQuery('#commentbox').scrollTo( jQuery(current_comment_id + ' .comment-respond'), 0)
 	
 		document.location.hash = '#' + paragraphnumber;
 		
