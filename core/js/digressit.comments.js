@@ -336,11 +336,8 @@ jQuery(document).ready(function() {
 
 		var top = 0;
 		var comment_id = jQuery(this).attr('title');
-		
-		var current_comment_id = '#comment-'+ blog_ID +'-'+comment_id;
-		
+		var current_comment_id = '#comment-'+ blog_ID +'-'+comment_id;		
 		var paragraphnumber = jQuery(current_comment_id + ' .comment-paragraph-number').attr('title');
-
 		var comment_id = jQuery(current_comment_id + ' .comment-id').attr('title');
 		var blog_id = jQuery(current_comment_id + ' .comment-blog-id').attr('title');
 
@@ -389,6 +386,7 @@ jQuery(document).ready(function() {
 		jQuery('.comment .comment-reply').html('reply');
 		jQuery(current_comment_id + ' .comment-reply').html('cancel response');
 
+		jQuery(this).addClass('cancel-response');
 
 		
 	}, function(){
@@ -397,7 +395,13 @@ jQuery(document).ready(function() {
 		
 		jQuery('#comment_parent').val(0);
 		jQuery('.comment-reply').html('reply');
-		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber));
+		if(jQuery('.paragraph-block').length){
+			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');			
+		}
+		else{	
+			jQuery('#respond').appendTo('#toplevel-commentbox');
+		}
+		jQuery(this).removeClass('cancel-response');
 		
 		
 	});
