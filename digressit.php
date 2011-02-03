@@ -273,6 +273,12 @@ function activate_digressit(){
 
 	$options = get_option('digressit');
 	
+	
+	$theme_link = $themes_dir . $plugin_name;
+	
+	if(is_link($theme_link)){
+		unlink($theme_link);
+	}
 	/* Since: 2.9.0 */
 	if(!function_exists( 'register_theme_directory')){
 		if(is_writable( $themes_dir)){
