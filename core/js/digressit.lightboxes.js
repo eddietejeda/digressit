@@ -45,7 +45,7 @@ jQuery.fn.openlightbox = function (lightbox){
 			
 		}
 		
-		jQuery(lightbox).fadeIn('slow');
+		jQuery(lightbox).fadeIn();
 		
 		if(jQuery(lightbox + ' .lightbox-delay-close').length){
 			var t = setTimeout(function() {
@@ -96,6 +96,7 @@ jQuery(document).ready(function() {
 
 	if (jQuery('.lightbox-auto-load').length) {
 		var lightbox = '#'+jQuery('.lightbox-auto-load:first').attr('id');
+		jQuery("body").closelightbox();
 
 		jQuery('body').openlightbox(lightbox);
 	}	
@@ -155,7 +156,7 @@ jQuery(document).ready(function() {
 	
 
 	
-	jQuery('.lightbox-content input').keyup(function(event) {
+	jQuery(".lightbox-content input[type=text]").keyup(function(event) {
 
 
 		if (event.keyCode == '13') {

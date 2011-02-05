@@ -204,6 +204,9 @@ jQuery(document).ready(function() {
 				return true;
 			}
 			
+			if(!jQuery(obj).attr('class').toSting().length){
+				return
+			}
 			var ajax_simple_classes = jQuery(obj).attr('class').split(' ');
 			for(var i = 0; i < ajax_simple_classes.length; i++){
 
