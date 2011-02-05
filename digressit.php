@@ -95,22 +95,25 @@ if ($handle = opendir(DIGRESSIT_CORE_DIR)) {
 
 function digressit_init(){
 	
-	$options = get_option('digressit');
 	if(!isset($options['revision']) || (int)$options['revision'] != DIGRESSIT_REVISION ){
-		activate_digressit();
-		$options = get_option('digressit');
+		//activate_digressit();
+		//$options = get_option('digressit');
 		
-		echo "<meta http-equiv=\"refresh\" content=\"1\" >";
+		//echo "<meta http-equiv=\"refresh\" content=\"1\" >";
 		
 	}	
 	
 	if(!is_string($options['enable_instant_content_search']) ){
+		$options = get_option('digressit');
+
 		$options['enable_instant_content_search'] = 'false';
 		$options['enable_instant_comment_search'] = 'false';
+		
+		delete_option('digressit');
+		add_option('digressit', $options);
+
 	}
 
-	delete_option('digressit');
-	add_option('digressit', $options);
 	
 	
 }
@@ -332,7 +335,7 @@ function digressit_theme_options_page() {
 	global $wpdb, $digressit_content_function, $digressit_comments_function, $digressit_commentbox_function, $blog_id;
 
 	//var_dump($digressit_content_function);
-	if(isset($_POST['reset']) && $_POST['reset'] == 'Reset Options'){
+	if($_GET['page'] == 'digressit.php' && isset($_POST['reset']) && $_POST['reset'] == 'Reset Options'){
 		delete_option('digressit');
 		activate_digressit();
 		//echo "resetting";
