@@ -32,7 +32,7 @@ load_plugin_textdomain('digressit', 'wp-content/plugins/'.dirname(plugin_basenam
 define("DIGRESSIT_VERSION", '3.0');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
-define("DIGRESSIT_REVISION", 192);
+define("DIGRESSIT_REVISION", 198);
 define("DIGRESSIT_DIR", WP_PLUGIN_DIR ."/". $plugin_name);
 define("DIGRESSIT_CORE_DIR", DIGRESSIT_DIR . '/core');
 define("DIGRESSIT_CORE_JS_DIR", DIGRESSIT_CORE_DIR . '/js');
@@ -94,10 +94,10 @@ if ($handle = opendir(DIGRESSIT_CORE_DIR)) {
 
 
 function digressit_init(){
+	$options = get_option('digressit');
 	
 	if(!isset($options['revision']) || (int)$options['revision'] != DIGRESSIT_REVISION ){
 		activate_digressit();
-		$options = get_option('digressit');
 		
 		echo "<meta http-equiv=\"refresh\" content=\"1\" >";
 		
