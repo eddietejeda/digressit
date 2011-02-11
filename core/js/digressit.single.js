@@ -139,9 +139,15 @@ jQuery(document).ready(function() {
 		
 		jQuery('.textblock').toggle(function(e){
 			
-			if(jQuery(e.target).attr('href')){
-				window.location = jQuery(e.target).attr('href').toString();
+			if(jQuery(e.target).attr('target') && jQuery(e.target).attr('href')){
+				window.open(jQuery(e.target).attr('href').toString());				
+				return;
 			}
+			else if(jQuery(e.target).attr('href')){
+				window.location = jQuery(e.target).attr('href').toString();
+				return;
+			}
+			
 			
 			if(jQuery('.paragraph-block')){
 				jQuery('#respond').hide();			
@@ -172,9 +178,15 @@ jQuery(document).ready(function() {
 
 
 		}, function(e){
-			if(jQuery(e.target).attr('href')){
-				window.location = jQuery(e.target).attr('href').toString();
+			if(jQuery(e.target).attr('target') && jQuery(e.target).attr('href')){
+				window.open(jQuery(e.target).attr('href').toString());				
+				return;
 			}
+			else if(jQuery(e.target).attr('href')){
+				window.location = jQuery(e.target).attr('href').toString();
+				return;
+			}
+
 
 			jQuery('.textblock').removeClass('selected-textblock');
 			jQuery('.comment'  ).hide();

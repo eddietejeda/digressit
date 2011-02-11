@@ -255,10 +255,8 @@ jQuery(document).ready(function() {
 		}
 
 		//alert(function_name);
-		jQuery('.' + function_name).css('background', 'invert');
-		jQuery(this).css('background', '#ddd');
 		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
-		
+		jQuery(this).css('cursor', 'wait');
 		jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
 			function( data ) {					
 				function_name = function_name.replace(/-/g, '_');// + "_ajax_result";
@@ -270,6 +268,9 @@ jQuery(document).ready(function() {
 				else{
 					
 				}
+				
+				jQuery(this).css('cursor', 'auto');
+				
 				
 			}, 'json' );
 	});
