@@ -204,7 +204,7 @@ jQuery(document).ready(function() {
 				return true;
 			}
 			
-			if(!jQuery(obj).attr('class').toSting().length){
+			if(!jQuery(obj).attr('class').toString().length){
 				return
 			}
 			var ajax_simple_classes = jQuery(obj).attr('class').split(' ');
