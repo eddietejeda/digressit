@@ -54,15 +54,22 @@ function live_comment_search_ajax($request_params){
 		$message = null;		
 		//foreach ($blog_list AS $blog) {
 		//	switch_to_blog($blog['blog_id']);
-		$sql = "SELECT * FROM $wpdb->posts p,  $wpdb->comments c  WHERE p.ID = c.comment_post_ID AND p.post_status = 'publish' AND c.comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
+		//$sql = "SELECT * FROM $wpdb->posts p,  $wpdb->comments c  WHERE p.ID = c.comment_post_ID AND c.comment_approved = 1 AND p.post_status = 'publish' AND c.comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
 
+		$sql = "SELECT *
+		FROM wp_2_posts p, wp_2_comments c
+		WHERE p.ID = c.comment_post_ID
+		AND c.comment_approved =1
+		AND p.post_status = 'publish'
+		AND c.comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
+		//var_dump($sql);
 		$posts = $wpdb->get_results($sql);			
 		
 		//var_dump($posts);
 
 		foreach($posts as $post){
 			$message .= "<div class='search-result'>".
-						"<div class='post-title'><a href='".get_permalink($post->ID)."#comment-".$post->comment_ID."'>".$post->comment_content."</a></div>".
+						"<div class='post-title'><a href='".get_permalink($post->ID)."#comment-".$post->comment_ID."'>".substr($post->comment_content, 0, 75)." [...]</a></div>".
 						"</div>";
 		}
 		//	restore_current_blog();
