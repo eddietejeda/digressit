@@ -63,7 +63,7 @@ register_theme_directory( $plugin_theme_link );
 
 register_digressit_content_function('standard_digressit_content_parser');
 register_digressit_content_function('discrete_digressit_content_parser');
-register_digressit_content_function('regexp_digressit_content_parser');
+//register_digressit_content_function('regexp_digressit_content_parser');
 
 
 register_digressit_comments_function('standard_digressit_comment_parser');
@@ -396,6 +396,22 @@ function digressit_theme_options_page() {
 			<td><?php print_input_text('table_of_contents_label', $options['table_of_contents_label']); ?></td>
 		</tr>
 
+
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Front Page Order');  ?></b></td>
+			<td><?php print_dropdown('front_page_order', array('id' => 'id', 'date' => 'date'), $options['front_page_order']); ?></td>
+		</tr>
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Front Page Order by');  ?></b></td>
+			<td><?php print_dropdown('front_page_order_by', array('ASC' => 'ASC', 'DESC' => 'DESC'), $options['front_page_order_by']); ?></td>
+		</tr>
+
+
+
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Comments by Section Label');  ?></b></td>
 			<td><?php print_input_text('comments_by_section_label', $options['comments_by_section_label']); ?></td>
@@ -438,6 +454,12 @@ function digressit_theme_options_page() {
 			<td><?php print_dropdown('enable_instant_content_search', array('No' => 'false', 'Yes' => 'true'), $options['enable_instant_content_search']); ?></td>
 		</tr>
 
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Parse List Items');  ?></b></td>
+			<td><?php print_dropdown('parse_list_items', array('No' => 0, 'Yes' => 1), $options['parse_list_items']); ?></td>
+		</tr>
 
 
 		<tr valign="top">

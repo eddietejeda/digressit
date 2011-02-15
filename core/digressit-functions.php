@@ -9,28 +9,26 @@ function live_content_search_ajax($request_params){
 
 	$excluded_words = array('the','and');
 	//every three letters we give results
-	if(strlen($request_params['value']) > 3 && !in_array($request_params['value'], $excluded_words)){
+	if(strlen($request_params['value']) > 4 && !in_array($request_params['value'], $excluded_words)){
 
-
-		//$blog_list = get_blog_list( 0, 'all' );
 
 		$posts = null;
 		$message = null;		
-		//foreach ($blog_list AS $blog) {
-		//	switch_to_blog($blog['blog_id']);
 
-		$sql = "SELECT * FROM $wpdb->posts p  WHERE p.post_type  = 'post' OR p.post_type  = 'page' AND p.post_status = 'publish' AND p.post_content LIKE '%".esc_sql($request_params['value'])."%'  OR p.post_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY p.ID LIMIT 3";
+
+		$sql = "SELECT * FROM $wpdb->posts p  WHERE p.post_status = 'publish' AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) AND p.post_content LIKE '%".esc_sql($request_params['value'])."%'  OR p.post_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY p.ID LIMIT 3";
+		
 
 		$posts = $wpdb->get_results($sql);			
 
-		foreach($posts as $post){
+		$message = null;
+		foreach($posts as $p){
 			$message .= "<div class='search-result'>".
-						"<div class='post-title'><a href='".get_permalink($post->ID)."'>".$post->post_title."</a></div>".
+						"<div class='post-title'><a href='".get_permalink($p->ID)."'>".$p->post_title."</a></div>".
 						"</div>";
 		}
+		
 
-		//	restore_current_blog();
-		//}
 		die(json_encode(array('status' => count($posts), "message" => $message)));
 	}
 	die(json_encode(array('status' => 0, "message" => '')));
@@ -47,7 +45,7 @@ function live_comment_search_ajax($request_params){
 
 	$excluded_words = array('the','and');
 	//every three letters we give results
-	if(strlen($request_params['value']) > 3 && !in_array($request_params['value'], $excluded_words)){
+	if(strlen($request_params['value']) > 4 && !in_array($request_params['value'], $excluded_words)){
 
 
 		$blog_list = get_blog_list( 0, 'all' );
@@ -56,13 +54,15 @@ function live_comment_search_ajax($request_params){
 		$message = null;		
 		//foreach ($blog_list AS $blog) {
 		//	switch_to_blog($blog['blog_id']);
-		$sql = "SELECT * FROM $wpdb->posts WHERE post_status = 'publish' AND comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
+		$sql = "SELECT * FROM $wpdb->posts p,  $wpdb->comments c  WHERE p.ID = c.comment_post_ID AND p.post_status = 'publish' AND c.comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
 
 		$posts = $wpdb->get_results($sql);			
+		
+		//var_dump($posts);
 
 		foreach($posts as $post){
 			$message .= "<div class='search-result'>".
-						"<div class='post-title'><a href='".get_permalink($post->ID)."'>".$post->post_title."</a></div>".
+						"<div class='post-title'><a href='".get_permalink($post->ID)."#comment-".$post->comment_ID."'>".$post->comment_content."</a></div>".
 						"</div>";
 		}
 		//	restore_current_blog();

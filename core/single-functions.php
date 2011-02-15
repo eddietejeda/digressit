@@ -1,22 +1,26 @@
 <?php
 
-add_filter('init', 'single_init');
+//add_filter('init', 'single_init');
 add_action('add_dynamic_widget', 'digressit_single_sidebar_widgets');
 
 
 
 
+/*
 function single_init(){
 	add_action('wp_print_scripts', 'digressit_single_print_scripts');
 }
+*/
 
 
 
+/*
 function digressit_single_print_scripts(){
 	if(is_single()){
 		wp_enqueue_script('digressit.single', get_digressit_media_uri('js/digressit.single.js'), 'jquery', false, true );
 	}
 }
+*/
 
 
 function digressit_single_sidebar_widgets(){

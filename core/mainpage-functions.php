@@ -1,7 +1,7 @@
 <?php
 //add_action('wp', 'mainpage');
 add_action('wp_print_styles', 'mainpage_wp_print_styles');
-add_action('wp_print_scripts', 'mainpage_wp_print_scripts' );
+//add_action('wp_print_scripts', 'mainpage_wp_print_scripts' );
 add_action('wp', 'mainpage_load');
 
 
@@ -12,9 +12,11 @@ function mainpage_wp_print_styles(){
 <?php
 }
 
+/*
 function mainpage_wp_print_scripts(){
 	wp_enqueue_script('digressit.mainpage', get_digressit_media_uri('js/digressit.mainpage.js'), 'jquery', false, true );
 }
+*/
 
 function mainpage_sidebar_widgets(){
 	$options = get_option('digressit');
@@ -42,24 +44,61 @@ function mainpage_load(){
 
 
 
+
 function mainpage_default_menu(){
 
 	$options = get_option('digressit');
+	//$options['front_page_order'] = 'ASC';
+	//$options['front_page_order_by'] = 'date';
 	
 	?>
 	<ol class="navigation <?php echo $options['frontpage_list_style']; ?>">
 
 	 <?php
 	 global $post;
-	 $myposts = get_posts('numberposts=-1&orderby=ID&order=ASC');
-	 foreach($myposts as $post) :
-	   setup_postdata($post);
-		$comment_count = get_post_comment_count($post->ID);
+	 $frontpage_posts = get_posts('numberposts=-1&orderby='.$options['front_page_order_by'].'&order=' . $options['front_page_order']);
+	 foreach($frontpage_posts as $pp) :
+		$comment_count = get_post_comment_count($pp->ID);
 	 ?>
-	    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?> (<?php echo $comment_count;  ?>)</a></li>
+	    <li><a href="<?php echo get_permalink($pp->ID); ?>"><?php echo get_the_title($pp->ID); ?> (<?php echo $comment_count;  ?>)</a></li>
 	 <?php endforeach; ?>
 	 </ol> 
+	<?php mainpage_content_display($frontpage_posts); ?>
 
+<?php
+}
+
+
+global $using_mainpage_nav_walker;
+
+class mainpage_nav_walker extends Walker_Nav_Menu
+{
+	function start_el(&$output, $item, $depth, $args) {
+		global $wp_query, $using_mainpage_nav_walker;		
+		$using_mainpage_nav_walker = true;
+
+		//var_dump($item);
+		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+		$class_names = $value = '';
+		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
+		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item ) );
+		$class_names = '';
+		$output .= $indent . '<li id="menu-item-'. $item->ID . '"' . $value . $class_names .'>';
+		$attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : '';
+		$attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
+		$attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
+		$attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
+		$item_output = $args->before;
+		$item_output .= '<a target="_top"'. $attributes .'>';
+		$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+		$item_output .= '('.get_post_comment_count($item->object_id).')</a>';
+		$item_output .= $args->after;
+		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+	}
+}
+
+function mainpage_content_display($frontpage_posts){
+?>
 	<div class="previews">
 		<div class="bubblearrow"></div>
 		<div class="preview default">
@@ -93,15 +132,29 @@ function mainpage_default_menu(){
 		</div>
 
 		<?php
-			foreach($myposts as $post) :
-		   setup_postdata($post);
+			foreach($frontpage_posts as $p) :
+			//setup_postdata($post);
 		?>
 			<div class="preview">
 				<?php 
+				$p = (array)$p;
 
-				the_excerpt();  
-				global $post;
-				$comment_count = get_post_comment_count($post->ID);
+			
+				if(isset($p['object_id'])){
+					$post_id = $p['object_id'];
+				}
+				else{
+					$post_id = $p['ID'];					
+				}
+				$post_object =  get_post($post_id);
+				$content = substr(strip_tags($post_object->post_content), 0 , 500);
+				echo "<p>".$content;
+				if(strlen($content) > 499){
+					echo " [...]";
+				}
+				echo "</p>";
+				
+				$comment_count = get_post_comment_count($post_object->ID);
 				?>
 
 				<div class="comment-count">
@@ -113,4 +166,6 @@ function mainpage_default_menu(){
 	<?php
 	
 }
+
+
 ?>

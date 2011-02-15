@@ -41,14 +41,6 @@ global $digressit;
 			<a href="<?php bloginfo('home') ?>"><h1><?php bloginfo('name'); ?></h1></a>
 		<?php endif; ?>
 
-		<?php if($digressit['enable_instant_content_search'] == 'true'): ?>
-		<div id="instant-search">
-			<input type="text" value="Search" class="ajax-live live-content-search content-field-area" id="live-content-search">
-			<div class="loading-throbber"></div>
-
-			<div id="live-content-search-result"></div>
-		</div>
-		<?php endif; ?>
 	</div>
 		
 
@@ -75,6 +67,23 @@ global $digressit;
 	</ul>
 	
 	</div>
+
+	<?php if($digressit['enable_instant_content_search'] == 'true'): ?>
+	<div id="instant-content-search">
+		<input type="text" value="Search Content" class="ajax-live live-content-search content-field-area" id="live-content-search">
+		<div class="loading-throbber"></div>
+		<div id="live-content-search-result"></div>
+	</div>
+	
+	<div id="instant-comment-search">
+		<input type="text" value="Search Comments" class="ajax-live live-comment-search content-field-area" id="live-comment-search">
+		<div class="loading-throbber"></div>
+		<div id="live-comment-search-result"></div>
+	</div>
+	
+	<br>
+	<br>
+	<?php endif; ?>
 	
 	<div class="horizontal"></div>
 </div> 

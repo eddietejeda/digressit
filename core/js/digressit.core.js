@@ -1,5 +1,19 @@
 var AjaxResult = {};
 
+var grouping_digressit_commentbox_parser;
+	
+jQuery.fn.highlight = function (str, className)
+{
+    return this.each(function ()
+    {
+        this.innerHTML = this.innerHTML.replace(
+            new RegExp(str, "g"),
+            "<span class=\"" + className + "\">" + str + "</span>"
+        );
+    });
+};
+	
+
 
 jQuery(document).ready(function() {
 
@@ -43,38 +57,6 @@ jQuery(document).ready(function() {
 
 
 
-	AjaxResult.live_content_search = function(data) {
-		jQuery('#live-content-search-result').html(data.message);
-		jQuery('#live-content-search-result').fadeIn();
-	}
-	
-	
-	jQuery('#live-content-search').focus(function(){
-		if(jQuery('#live-content-search').val() == 'Search'){
-			jQuery('#live-content-search').val('');
-		}
-	});
-	
-	
-	AjaxResult.live_comment_search = function(data) {
-		jQuery('.comment').hide();
-		
-		
-		//jQuery('.comment-text').clone().find('span').replaceWith(function() { return this.innerHTML; }).end().html();
-		
-		jQuery(".comment").highlight(jQuery('#live-comment-search').val(), "highlight-class");
-		
-		for (var i in data.message) {  
-			jQuery('#comment-' + current_blog_id + '-' + data.message[i]).show();
-		}  
-	}
-	
-	jQuery('#live-comment-search').focus(function(){
-		if(jQuery('#live-comment-search').val() == 'Search'){
-			jQuery('#live-comment-search').val('');
-		}
-	});
-
 
 
 
@@ -95,6 +77,18 @@ jQuery(document).ready(function() {
 	})
 
 	
+	
+	jQuery("#mainpage .navigation a").hover(function (e) {
+		jQuery('#mainpage .preview').hide();
+		var index = jQuery('#mainpage .navigation a').index(this) + 1;
+		var item = jQuery('#mainpage .preview').get(index);			
+		jQuery(item).show();
+	});
+	
+    jQuery("#mainpage").not('.navigation a').hover(function (e) {
+		jQuery('#mainpage .preview').hide();
+		jQuery('#mainpage .default').show();
+	});
 
 
 	jQuery('.ajax').live('click', function(e) {		
@@ -425,6 +419,1075 @@ jQuery(document).ready(function() {
 			});
 		}
 	});	
+	
+	
+
+
+	if (document.location.hash.length) {
+		var lightbox = '#lightbox-' + document.location.hash.substr(1);
+		jQuery('body').openlightbox(lightbox);
+	}	
+
+
+	if (jQuery('.lightbox-auto-load').length) {
+		var lightbox = '#'+jQuery('.lightbox-auto-load:first').attr('id');
+		jQuery("body").closelightbox();
+
+		jQuery('body').openlightbox(lightbox);
+	}	
+	
+
+	/* we don't want error messages being linked */
+	if (document.location.hash != '#lightbox-no-ie6-support' && jQuery('#lightbox-no-ie6-support').length ) {
+		jQuery('body').openlightbox('#lightbox-no-ie6-support');
+
+	}	
+	
+	
+	
+	jQuery("#search_context").change(function (e) {		
+		jQuery("#searchform").attr('action', jQuery("#search_context option:selected").val());
+	});
+	
+	
+	jQuery('.close').click(function(){
+		jQuery(this).parent().hide();		
+		jQuery('#block-access').hide();
+	});
+	
+	jQuery(".insert-link").click(function (e) {
+		var name = jQuery("#link_name").val();
+		var link = jQuery("#link_url").val();
+		jQuery("#comment").val(jQuery("#comment").val() + '<a href="'+link+'">'+name+'</a>');
+		jQuery("body").closelightbox();
+		
+	});
+	
+	
+	
+	
+	
+    jQuery(".lightbox").click(function (e) {
+
+		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
+			return false;
+		}
+
+		var target = e.target;		
+		var lightbox_name = jQuery(target).attr('class').split(' ');
+		
+		var lightbox, i;
+		for(i = 0; i < lightbox_name.length; i++){
+			if(lightbox_name[i] == 'lightbox'){
+				lightbox = '#' + lightbox_name[i+1];
+				break;				
+			}
+		}
+		
+		jQuery('body').openlightbox(lightbox);
+		
+	});
+	
+	
+
+	
+	jQuery(".lightbox-content input[type=text]").keyup(function(event) {
+
+
+		if (event.keyCode == '13') {
+			//alert(event.keyCode);
+			//alert(jQuery(this).attr('class'));
+			if(jQuery(this).hasClass('ajax')){
+				//alert('ajax');
+		  		/* UNDO COMMENT: */
+				//jQuery(this).add('.lightbox-submit').click();
+			}
+			else{
+				//alert('submit');
+				
+				jQuery(event.target).parentsUntil('form').parent().submit();		
+
+		  		/* UNDO COMMENT: */
+		  		//jQuery(this).parent().submit();
+			}
+		}
+	});
+
+
+    jQuery(".lightbox-close, .lightbox-submit-close").click(function (e) {
+		jQuery('body').closelightbox();
+	});
+	
+	/*
+    jQuery(".lightbox-submit-close").click(function (e) {
+
+		jQuery('body').closelightbox();
+	});
+	*/
+	
+	
+    jQuery(".lightbox-submit").click(function (e) {
+
+		//alert(jQuery(this).attr('class'));
+		if(jQuery(this).hasClass('ajax')){
+	  		//alert(jQuery(this).parent());
+		}
+		else{
+	  		jQuery(this).parent().submit();				
+		}
+
+	});
+
+
+
+    jQuery(".lightbox").hover(function (e) {
+		jQuery(this).css('cursor', 'pointer');
+	},	
+	function (e) {
+		jQuery(this).css('cursor', 'auto');
+	});	
+
+    jQuery(".lightbox-images").click(function (e) {
+		jQuery('#lightbox-images').css('left', '10%');
+		jQuery('#lightbox-images').css('top','5%');
+		
+		jQuery('#lightbox-images .ribbon-title').html(jQuery(this).attr('title'));
+
+		var imagesrc = jQuery(this).attr('src').replace(siteurl, '');
+		
+		jQuery('#lightbox-images .large-lightbox-image').empty();
+						
+		jQuery.post( baseurl + "/ajax/lightbox-image/",		
+			{ blog_id: blog_ID, imagesrc: imagesrc},
+			function( data ) {				
+				//console.log(data);
+				jQuery('#lightbox-images .large-lightbox-image').html('<img src="' +data.message + '">');			
+				
+			}, 'json' );	
+	});
+	
+	
+	
+	var current_slot = 0;
+
+
+    jQuery(".lightbox-previous").click(function (e) {
+		
+		if(current_slot > 0){
+			current_slot--;
+			jQuery('.lightbox-slot').hide();		
+	      	jQuery(jQuery('.lightbox-slot').get(current_slot)).show("slide", { direction: "left" }, 200);
+		}
+
+		if(current_slot == 0){	
+			jQuery('.lightbox-previous').hide();
+			jQuery('.lightbox-next').show();
+			jQuery('.lightbox-submit').hide();
+		}
+		else{
+			jQuery('.lightbox-previous').show();
+			jQuery('.lightbox-next').show();			
+			jQuery('.lightbox-submit').hide();
+		}
+
+	});
+
+    jQuery(".lightbox-next").click(function (e) {
+		
+		if(current_slot < jQuery('.lightbox-slot').length -1){		
+			current_slot++;
+			jQuery('.lightbox-slot').hide();
+	      	jQuery(jQuery('.lightbox-slot').get(current_slot)).show("slide", { direction: "right" }, 200);
+		}
+		
+		if(current_slot == jQuery('.lightbox-slot').length -1){	
+			jQuery('.lightbox-next').hide();
+			jQuery('.lightbox-previous').show();
+			jQuery('.lightbox-submit').show();
+		}
+		else{
+			jQuery('.lightbox-previous').show();
+			jQuery('.lightbox-next').show();			
+		}		
+	});
+	
+	
+	jQuery(".lightbubble").click(function (e) {
+
+
+		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
+			return false;
+		}
+
+
+		var target = e.target;
+
+		//var top = jQuery(target).offset().top;
+		//var left = jQuery(target).offset().left;
+	
+		var lightbubble_name = jQuery(target).attr('class').split(' ');
+	
+		var lightbubble, i;
+		for(i = 0; i < lightbubble_name.length; i++){
+		
+			if(lightbubble_name[i] == 'lightbubble'){
+				lightbubble = '#' + lightbubble_name[i+1];
+				break;				
+			}
+		}
+		//alert(lightbubble);
+
+		jQuery(lightbubble).appendTo(jQuery(this));
+		jQuery(lightbubble).show();
+		//jQuery('body').openlightbubble(lightbubble);
+	
+	});		
+	
+
+    jQuery(".required").change(function (e) {
+
+		var form =jQuery(this).parentsUntil('form').parent();		
+
+		
+		var form_id = jQuery(form).attr('id');
+
+		jQuery('#' + form_id + ' .lightbox-submit').removeClass('button-disabled');			
+		
+		jQuery('#' + form_id + ' .required').each(function(e){
+			
+			//alert(jQuery(this).attr('type') + jQuery(this).val());
+			//input[type='checkbox']
+			//alert(jQuery(this).attr('type') + " " + jQuery('#'+jQuery(this).attr('id') + ':checked').val());
+
+			if( (
+					(
+						jQuery(this).attr('type') == 'text' && jQuery(this).val().length == 0
+					) 
+					|| 
+					(
+						( jQuery(this).attr('type') == 'radio' || jQuery(this).attr('type') == 'checkbox')  
+						&& 
+						( jQuery("input[name='"+jQuery(this).attr('name')+"']").is(':checked') == false )
+					)
+				)
+			  )
+			{
+				jQuery('#' + form_id + ' .lightbox-submit').addClass('button-disabled');			
+			}
+			
+		})
+		
+
+	});
+
+
+	AjaxResult.add_comment = function(data) {
+		var result_id = parseInt(data.message.comment_ID);
+
+
+
+		if(data.status == 0){
+			jQuery('body').displayerrorslightbox(data);
+			return;
+		}
+		var selected_paragraph_number = parseInt(jQuery('#selected_paragraph_number').val());
+
+		var comment_parent  = data.message.comment_parent;
+
+		var comment_id = 'comment-' +  blog_ID + '-' + result_id;
+		var parent_id = 'comment-' +  blog_ID + '-' + data.message.comment_parent;
+		var depth = 'depth-1';
+		if(data.message.comment_parent > 0){
+			depth = 'depth-2';
+		}
+
+		var new_comment = data.message.comment_response;
+		
+		/*
+		 '<div id="'+comment_id+'" class="new-comment comment byuser bypostauthor '+depth+' paragraph-'+selected_paragraph_number+'">' +
+				'<div class="comment-body" id="div-'+comment_id+'">' +
+					'<div class="comment-header">' +
+					'<div class="comment-author vcard">' +
+					'<a href="'+siteurl+'/profile/'+data.message.comment_author+'">'+data.message.comment_author+'</a>'+
+					'</div>'+
+					'<div class="comment-meta">'+
+					'<span title="'+blog_ID+'" class="comment-blog-id"></span>'+
+					'<span title="'+result_id+'" class="comment-id"></span>'+
+					'<span title="0" class="comment-parent"></span>'+
+					'<span title="'+selected_paragraph_number+'" class="comment-paragraph-number"></span>'+
+					'<span class="comment-date">'+data.message.comment_date+'</span>'+
+					'<span class="comment-icon comment-icon-quarantine"></span><span class="comment-icon comment-icon-flag"></span>'+
+					'</div>'+
+					'</div>'+
+					'<div class="comment-text"><p>'+ jQuery('#comment').val() + '</p>' +
+					'</div>' +
+					'<div title="'+result_id+'" class="comment-reply comment-hover small-button" ></div>'+
+					'<div class="comment-respond"></div>' +
+				'</div>' +
+			'</div>';
+		*/
+
+		jQuery('#no-comments').hide();
+
+
+		/* responding to parent */
+		if(comment_parent > 0){
+			//we are grouping comments
+			if(jQuery('#paragraph-block-' + selected_paragraph_number).length){
+				jQuery('#respond').appendTo('#paragraph-block-' + selected_paragraph_number + ' .toplevel-respond');			
+				jQuery('#paragraph-block-' + selected_paragraph_number).append(new_comment);
+				//jQuery('#commentbox').scrollTo('#'+comment_id , 200);
+				jQuery('.comment-reply').html('reply');
+				jQuery('#'+comment_id).fadeIn("#"+comment_id);
+				jQuery('#commentbox').scrollTo('#'+comment_id , 500, {easing:'easeOutBack'});
+				
+			}
+			else{
+				//alert('nogrouping');
+				if( jQuery('#' + parent_id).next().hasClass('children') ){
+					jQuery('#' + parent_id + ' + .children').prepend(new_comment);
+					
+					jQuery('#'+comment_id).fadeIn("#"+comment_id);
+				}
+				else{
+					jQuery('#' + parent_id).after('<ul class="children">' + new_comment + '</ul>');					
+					jQuery('#'+comment_id).fadeIn("#"+comment_id);
+				}
+
+			}
+		}
+		/* new thread */
+		else{
+			//we are grouping comments
+			if(jQuery('#paragraph-block-' + selected_paragraph_number).length){
+				jQuery(new_comment).appendTo('#'+ 'paragraph-block-' + selected_paragraph_number);						
+				jQuery('#'+comment_id).fadeIn("#"+comment_id);
+				jQuery('#commentbox').scrollTo('#'+comment_id , 500, {easing:'easeOutBack'});
+			}
+			else{
+				//alert('nogrouping');
+				jQuery('.commentlist').prepend(new_comment);			
+				jQuery('#'+comment_id).fadeIn("#"+comment_id);
+			}
+
+		}
+
+
+		
+
+		//var current_count = parseInt(jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).html());
+
+
+		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1 ))).html(data.message.paragraph_comment_count);
+		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1))).fadeIn('slow');
+
+
+		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).html(data.message.paragraph_comment_count);
+		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).fadeIn('slow');
+
+		jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).html(data.message.comment_count);
+		jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).fadeIn('slow');
+
+
+
+
+		jQuery('#comment').val('');		
+		jQuery('#comment_parent').val(0);
+		return;
+	}
+
+
+
+
+	function handlePaginationClick(new_page_index, pagination_container) {
+		// This selects 20 elements from a content array
+		for(var i=new_page_index;i<7;i++) {
+			jQuery('#commentbox').append(content[i]);
+		}
+		return false;
+	}
+
+	// First Parameter: number of items
+	// Second Parameter: options object
+/*
+	jQuery("#commentbox").pagination(122, {
+		items_per_page:20, 
+		callback:handlePaginationClick
+	});
+*/
+
+
+	jQuery('.comment').hover(function (e) {
+
+		if(jQuery('body').hasClass('single')){
+			return;
+		}
+		alert('sdf');
+
+		var index = jQuery('.comment').index(this);		
+		if(jQuery('.comment-goto').length){
+			var item = jQuery('.comment-goto').get(index);
+			if(item){
+				jQuery(item).show();			
+			}
+		}
+
+	},	function (e) {
+		if(jQuery('body').hasClass('single')){
+			return;
+		}
+
+		var index = jQuery('.comment').index(this);
+		if(jQuery('.comment-goto').length){
+			var item = jQuery('.comment-goto').get(index);
+			if(item){
+				jQuery(item).hide();			
+			}
+		}
+	});
+
+
+
+	jQuery('.comment').click(function(e){
+
+		var target = e.target;
+
+		var comment =  jQuery(this).attr('id');
+
+
+		var comment_id = jQuery('#' +comment + ' .comment-id').attr('title');
+
+
+		jQuery.cookie('selected_comment', comment_id, { path: '/' , expires: 1} );				
+		jQuery.cookie('selected_comment_id', comment_id, { path: '/' , expires: 1} );				
+
+
+
+		jQuery('#comments-toolbar-sort').addClass('button-disabled');
+
+		jQuery('.comment').removeClass('selected');
+		jQuery('.moderate-comment').removeClass('disabled-button');
+
+/*
+		TEMPORARY DISABLE
+		jQuery(this).addClass('selected');
+		jQuery('#commentbox').scrollTo( jQuery(this), 1000);								
+*/
+
+
+
+
+		if(jQuery('body').hasClass('single')){
+			var selected_blog_id = jQuery.cookie('selected_blog_id');				
+			//document.location.hash = '#comment-' + selected_blog_id + '-' +comment_id;
+		}
+		/*
+
+		if(jQuery(target).hasClass('comment-reply')){
+			return;
+		}
+		*/
+		//alert(jQuery(target).parents().hasClass('comment-respond') );
+		if(!jQuery(target).parents().hasClass('comment-respond') && !jQuery(target).hasClass('comment-reply') && !jQuery('body').hasClass('page-template-moderator-php')){
+			//alert(jQuery(target).hasClass('comment-reply'));
+			//commentbox_open_state();			
+		}
+
+
+
+		if(jQuery('body').hasClass('single') && jQuery('.comment-reply').length){
+			//jQuery('.comment-reply').hide();
+			var index = jQuery('.comment').index(this);				
+			var item = jQuery('.comment-reply').get(index);
+
+			if(jQuery('#' + comment).hasClass('depth-3')){
+				return;
+			}
+			else if(item){
+				jQuery(item).show();			
+			}
+		}
+	});	
+
+	jQuery('.comment').hover(function(e){
+
+		var selected_comment = parseInt(jQuery('#comment_parent').val());
+		var current = parseInt(jQuery('.comment').index(this));	
+		var item = jQuery('.comment-reply').get(current);
+
+
+	}, function(e){
+
+		var selected_comment = parseInt(jQuery('#comment_parent').val());
+		var current = parseInt(jQuery('.comment').index(this));	
+		var item = jQuery('.comment-reply').get(current);
+
+
+
+	});
+
+
+
+	/*
+	jQuery('.comments-toolbar-icon').css('color', '#4A4848');
+
+	jQuery('.comments-toolbar-icon').hover(function(e){
+
+		jQuery(this).css('color', '#BBBBBB');
+	});
+	*/
+
+
+	jQuery("#comment").focus(function (e) {
+
+
+		jQuery("#submit-comment").show();
+
+		//jQuery("#cancel-response").show();
+
+		jQuery(".comment").removeClass('selected');
+		//jQuery("#comment_parent").val('0');
+
+
+
+	});
+
+	//alert('sd');
+
+	jQuery("#comment").focus(function (e) {
+		if( jQuery(this).val() == 'Click here add a new comment...'){
+			jQuery(this).val('');
+		}
+	});
+
+	jQuery("#user_email").focus(function (e) {
+		if( jQuery(this).val() == 'Email'){
+			jQuery(this).val('');
+		}
+	});
+
+	jQuery("#display_name").focus(function (e) {
+		if( jQuery(this).val() == 'Your Name'){
+			jQuery(this).val('');
+		}
+	});
+
+
+	jQuery("#comment").keypress(function (e) {
+
+
+		if(jQuery("#comment").val().length > 10){
+
+			//jQuery('#submit-comment').removeClass('disabled');
+
+		}
+		else{
+
+			//jQuery('#submit-comment').addClass('disabled');
+		}
+
+
+	});
+
+
+
+	jQuery("#comments-toolbar #comment").click(function (e) {
+		//jQuery('.comment-reply').hide();
+	});
+
+
+	jQuery("#comment").click(function (e) {
+		//jQuery('form').submit();
+	});
+
+
+
+
+	var userAgent = navigator.userAgent.toLowerCase();
+
+	// Figure out what browser is being used
+	jQuery.browser = {
+		version: (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
+		chrome: /chrome/.test( userAgent ),
+		safari: /webkit/.test( userAgent ) && !/chrome/.test( userAgent ),
+		opera: /opera/.test( userAgent ),
+		msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
+		mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent )
+	};
+
+
+	var msie7=jQuery.browser.msie && jQuery.browser.version=="7.0";
+	var msie6=jQuery.browser.msie && jQuery.browser.version=="6.0";
+
+
+
+
+
+
+	
+	function isNumber(n) {
+	  return !isNaN(parseFloat(n)) && isFinite(n);
+	}
+
+	grouping_digressit_commentbox_parser = function(data){
+
+		jQuery('.textblock').each(function(i){
+			var paragraphnumber = (i == 0) ? '&nbsp;'  : i;
+			var commentlabel = (i == 0) ? ' general comment'  : ' comment';
+			var commentcount = jQuery('.paragraph-' + (i)).length;
+			
+			commentlabel = (commentcount == 1) ? commentlabel  : commentlabel + 's';
+			
+			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><div class="paragraph-block-button"><span class="paragraph-label">'+(paragraphnumber)+'</span>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></div>');
+			
+			jQuery('.paragraph-' + (i)).appendTo('#paragraph-block-'+(i));				
+			
+		});
+		
+		if(jQuery('.textblock').length > 0){
+
+			var i = jQuery('.textblock').length;
+			var paragraphnumber = (i == 0) ? '&nbsp;'  : i;
+			var commentlabel = (i == 0) ? ' general comment'  : ' comment';
+			var commentcount = jQuery('.paragraph-' + (i)).length;
+			
+			commentlabel = (commentcount == 1) ? commentlabel  : commentlabel + 's';
+			
+			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><div class="paragraph-block-button"><span class="paragraph-label">'+(paragraphnumber)+'</span>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></div>');
+			
+			jQuery('.paragraph-' + (i)).appendTo('#paragraph-block-'+(i));				
+
+		}
+	}
+
+
+	if(typeof(commentbox_function) !== 'undefined'){
+		var dynamic_call = 'typeof(' + commentbox_function + ') != "undefined"';
+		if(eval(dynamic_call)){
+			eval(commentbox_function + '();');
+		}
+	}
+
+
+	var comment_linked;
+
+	jQuery('.comment').click(function(e){
+		var index = jQuery('.comment').index(this);
+
+		//comment-id
+		var selected_blog_id = jQuery(jQuery('.comment .comment-blog-id').get(index)).attr('title');
+		var selected_comment_id = jQuery(jQuery('.comment .comment-id').get(index)).attr('title');
+
+		jQuery.cookie('selected_comment_id', null, { path: request_uri, expires: 1} );
+		jQuery.cookie('selected_blog_id', null, { path: request_uri + '/', expires: 1} );
+
+		jQuery.cookie('selected_comment_id', selected_comment_id, { path: '/', expires: 1} );
+		jQuery.cookie('selected_blog_id', selected_blog_id, { path: '/', expires: 1} );
+	});
+
+	function expand_comment_area(item, paragraphnumber){
+		jQuery('.textblock').removeClass('selected-textblock');
+		jQuery('.commenticonbox').removeClass('selected-paragraph');
+		jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+		jQuery('#textblock-' + paragraphnumber + ' .commenticonbox').addClass('selected-paragraph');
+		jQuery('.comment').removeClass('selected');	
+		jQuery('#selected_paragraph_number').val(paragraphnumber);
+		jQuery("#no-comments").hide();
+		
+		var no_comments = true;
+
+		jQuery(".comment").hide();
+		jQuery("#respond").show();
+		jQuery('textblock-' +paragraphnumber).addClass('selected-textblock');	
+
+		var selectedparagraph  = ".paragraph-" + paragraphnumber;
+		
+		if(jQuery(selectedparagraph).length){
+			jQuery(selectedparagraph).show();
+		}
+		else{
+			if(jQuery('.comment').length){
+				jQuery("#no-comments").show();
+			}			
+		}
+	}
+
+	
+	/****************************************************
+	*	only if we are grouping the paragraphs 
+	****************************************************/
+
+	if(jQuery('.paragraph-block').length){
+
+		//* this only happens when we are using the standard theme */
+		if (isNumber(document.location.hash.substr(1))) {
+			var paragraphnumber = document.location.hash.substr(1);
+			if(paragraphnumber > jQuery('.textblock').length){
+				return;
+			}
+			jQuery('.paragraph-'+(paragraphnumber)).show();			
+			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber));
+		}
+
+		jQuery("#cancel-response").click(function (e) {
+			//jQuery('#comment_parent').val(0);
+			jQuery('#comment').val('Click here add a new comment...');
+		});
+
+
+		jQuery("#menu ul li").click(function (e) {
+			jQuery('#comment_parent').val(0);
+			jQuery('#comment').val('Click here add a new comment...');
+
+			jQuery('#submit-comment').hide();
+			jQuery('#cancel-response').hide();
+
+			jQuery('.textblock').removeClass('selected-textblock');
+			jQuery('.comment'  ).hide();
+			jQuery('#respond').hide();						
+			jQuery('#selected_paragraph_number').val(0);
+		});
+		//jQuery('<li class="page_item"><input class="live-post-search" type="text" value="Search"></li>').appendTo('.menu ul');
+		
+		jQuery('.textblock').toggle(function(e){
+			
+			if(jQuery(e.target).attr('target') && jQuery(e.target).attr('href')){
+				window.open(jQuery(e.target).attr('href').toString());				
+				return;
+			}
+			else if(jQuery(e.target).attr('href')){
+				window.location = jQuery(e.target).attr('href').toString();
+				return;
+			}
+			
+			
+			if(jQuery('.paragraph-block')){
+				jQuery('#respond').hide();			
+				var paragraphnumber = parseInt(jQuery('.textblock').index(this)) +1 ;
+
+				jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+				jQuery('#respond').show();			
+				jQuery('.comment' ).hide();
+				jQuery('.paragraph-' + paragraphnumber ).show();
+
+				jQuery('.textblock').removeClass('selected-textblock');
+				var commentboxtop = jQuery('#commentbox').position().top;
+
+				if(paragraphnumber > 0){
+					jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+
+					var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+					var scrollto = (top > 200)  ? (top - 35) : 0;
+
+					jQuery(window).scrollTo(scrollto , 100);
+
+					jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 1000, {easing:'easeOutBack'});
+				}
+				jQuery('#selected_paragraph_number').val(paragraphnumber);
+				
+				document.location.hash = '#' + paragraphnumber;
+			}
+
+
+		}, function(e){
+			if(jQuery(e.target).attr('target') && jQuery(e.target).attr('href')){
+				window.open(jQuery(e.target).attr('href').toString());				
+				return;
+			}
+			else if(jQuery(e.target).attr('href')){
+				window.location = jQuery(e.target).attr('href').toString();
+				return;
+			}
+
+
+			jQuery('.textblock').removeClass('selected-textblock');
+			jQuery('.comment'  ).hide();
+			jQuery('#respond').hide();						
+			jQuery('#selected_paragraph_number').val(0);
+		});
+
+		jQuery('.paragraph-block-button').toggle(function(e){
+			jQuery('.comment').hide();
+
+			var paragraphnumber = parseInt(jQuery('.paragraph-block-button').index(this));
+			jQuery('#selected_paragraph_number').val(paragraphnumber);
+			jQuery('.paragraph-' + paragraphnumber).show();
+			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+			jQuery('#respond').show();			
+
+			jQuery('.textblock').removeClass('selected-textblock');
+
+			if(paragraphnumber > 0){
+
+				var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+				jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+			
+				var scrollto = (top > 200)  ? (top - 30) : 0;
+				jQuery(window).scrollTo(scrollto , 200);
+				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
+			}
+			
+		}, function(e){
+			jQuery('.comment').hide();
+			jQuery('#respond').hide();
+			jQuery('.textblock').removeClass('selected-textblock');
+			jQuery('#selected_paragraph_number').val(0);
+		});
+	
+	}
+
+
+
+	if ( document.location.hash.substr(1, 7) == 'comment') {
+		var commentname = document.location.hash.substr(1);
+
+		
+		var comment_info = commentname.split('-');
+
+		if(comment_info.length == 2){
+			commentname = 'comment-' + blog_ID + '-'+ comment_info.pop(); 
+		}
+		
+		var paragraphnumber = jQuery('#'+commentname).attr('class').match( /paragraph-([\d.]+)/ )[1];
+		
+		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+		jQuery('#respond').show();
+		jQuery('.comment').hide();
+		jQuery('.paragraph-' + paragraphnumber).show();
+		
+		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
+		
+		
+		if(jQuery('.paragraph-' + paragraphnumber).length == 0){
+			jQuery('#no-comments').show();			
+		}
+		else{
+			jQuery('#no-comments').hide();
+		}
+		
+		
+		//alert('#'+commentname);
+		
+		jQuery('#commentbox').scrollTo('#'+commentname , 500);
+		
+		if(paragraphnumber > 0){
+			//alert('sdf2');		
+				
+			var item = jQuery('.commenticonbox').get((paragraphnumber));
+			var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+
+			var scrollto = (top > 200)  ? (top - 30) : 0;
+			jQuery(window).scrollTo(scrollto , 500);
+		}
+
+	}
+	else if ( document.location.hash.substr(1, 13) == 'search-result') {
+		jQuery(window).scrollTo( jQuery('.search-result:first'), 1000);
+	}
+	else if (isNumber(document.location.hash.substr(1))) {
+		var paragraphnumber = document.location.hash.substr(1);
+
+		if(paragraphnumber > jQuery('.textblock').length){
+			return;
+		}
+		
+		var item = jQuery('.commenticonbox').get((paragraphnumber));
+
+		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+		jQuery('#respond').show();
+		jQuery('.comment').hide();
+		jQuery('.paragraph-' + paragraphnumber).show();
+
+		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
+
+		if(jQuery('.paragraph-' + paragraphnumber).length == 0){
+			jQuery('#no-comments').show();			
+		}
+		else{
+			jQuery('#no-comments').hide();
+		}
+		
+		if(paragraphnumber > 0){
+			var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+			var scrollto = (top > 200)  ? (top - 30) : 0;
+
+			jQuery(window).scrollTo(scrollto , 500);
+		}
+		
+		if(jQuery('#paragraph-block-' + paragraphnumber).length){
+			jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500);
+		}
+
+		if( jQuery('.paragraph-' + paragraphnumber).length > 0 ){
+			jQuery("#no-comments").hide();			
+		}
+	}
+	else{
+		if( parseInt(jQuery('.comment').length) == 0){
+			jQuery("#no-comments").show();			
+		}
+		else{
+			jQuery("#no-comments").hide();	
+		}	
+	}
+
+
+
+	AjaxResult.live_content_search = function(data) {
+		jQuery('#live-content-search-result').empty();
+		jQuery('#live-content-search-result').html(data.message);
+		jQuery('#live-content-search-result').fadeIn();
+	}
+	
+	
+	jQuery('#live-content-search').focus(function(){
+		if(jQuery('#live-content-search').val() == 'Search Content'){
+			jQuery('#live-content-search').val('');
+		}
+	});
+	
+	
+	AjaxResult.live_comment_search = function(data) {
+		jQuery('#live-comment-search-result').empty();
+		jQuery('#live-comment-search-result').html(data.message);
+		jQuery('#live-comment-search-result').fadeIn();
+	}
+	
+	jQuery('#live-comment-search').focus(function(){
+		if(jQuery('#live-comment-search').val() == 'Search Comments'){
+			jQuery('#live-comment-search').val('');
+		}
+	});
+
+
+	
+
+	jQuery('body').click(function (e) {
+
+		//alert(jQuery(e.target).attr('class'));
+		if(!jQuery(e.target).hasClass('ajax-live')){
+				jQuery('#live-content-search-result').hide();
+				jQuery('#live-comment-search-result').hide();
+		}
+		
+	});
+
+	//jQuery.cookie('text_signature', null, { path: '/' , expires: 1} );				
+	if(jQuery("#dynamic-sidebar").hasClass('sidebar-widget-auto-hide')){
+
+		if(jQuery("#dynamic-sidebar").hasClass('sidebar-widget-position-right')){
+
+			jQuery("#dynamic-sidebar").hover(function (e) {
+				var t = setTimeout(function() {
+					jQuery('#dynamic-sidebar').animate({ 
+						right: "0px"
+					}, 200 ); }, 500);
+				jQuery(this).data('timeout', t);
+			},function () {
+			    clearTimeout(jQuery(this).data('timeout'));
+				jQuery('#dynamic-sidebar').animate({ 
+					right: "-260px"
+				}, 200 );
+			});
+			
+		}
+		else{
+
+			jQuery("#dynamic-sidebar").hover(function (e) {
+				var t = setTimeout(function() {
+					jQuery('#dynamic-sidebar').animate({ 
+						left: "0px"
+					}, 200 ); }, 500);
+				jQuery(this).data('timeout', t);
+			},function () {
+			    clearTimeout(jQuery(this).data('timeout'));
+				jQuery('#dynamic-sidebar').animate({ 
+					left: "-260px"
+				}, 200 );
+			});
+			
+		}
+	
+	}
+
+
+	jQuery('.comment-reply').toggle(function (e) {
+
+		var top = 0;
+		var comment_id = jQuery(this).attr('title');
+		var current_comment_id = '#comment-'+ blog_ID +'-'+comment_id;		
+		var paragraphnumber = jQuery(current_comment_id + ' .comment-paragraph-number').attr('title');
+		var comment_id = jQuery(current_comment_id + ' .comment-id').attr('title');
+		var blog_id = jQuery(current_comment_id + ' .comment-blog-id').attr('title');
+
+
+		jQuery('#selected_paragraph_number').attr('value', paragraphnumber);
+		jQuery('#comment_parent').val(comment_id);
+
+		//alert(jQuery('#comment_parent').val());
+		jQuery.cookie('text_signature', paragraphnumber, { path: '/' , expires: 1} );				
+		jQuery.cookie('selected_comment_id', comment_id, { path: '/' , expires: 1} );				
+
+
+
+
+		var item = jQuery('.commenticonbox').get(parseInt(jQuery('.commenticonbox').index(this)));
+
+
+		jQuery('.textblock').removeClass('selected-textblock');
+		jQuery('.commenticonbox').removeClass('selected-paragraph');
+
+		//alert('.textblock-' + paragraphnumber);
+
+
+		if(paragraphnumber > 0){
+			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+			jQuery('#textblock-' + paragraphnumber + ' .commenticonbox').addClass('selected-paragraph');
+
+			var textblockname = "#textblock-" + paragraphnumber;
+			var textblock = jQuery(textblockname);
+
+			var left = textblock.position().left;
+			top = textblock.position().top;
+
+		}			
+		var commentbox = jQuery("#commentbox");
+
+		var scrollto = top;
+		jQuery('#respond').appendTo(current_comment_id + ' .comment-respond');		
+
+		jQuery(window).scrollTo(scrollto, 200);
+		jQuery('#commentbox').scrollTo( jQuery(current_comment_id + ' .comment-respond'), 0)
+
+		document.location.hash = '#' + paragraphnumber;
+
+
+		jQuery('.comment .comment-reply').html('reply');
+		jQuery(current_comment_id + ' .comment-reply').html('cancel response');
+
+		jQuery(this).addClass('cancel-response');
+
+
+	}, function(){
+
+		var paragraphnumber = jQuery('#selected_paragraph_number').attr('value');
+
+		jQuery('#comment_parent').val(0);
+		jQuery('.comment-reply').html('reply');
+		if(jQuery('.paragraph-block').length){
+			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');			
+		}
+		else{	
+			jQuery('#respond').appendTo('#toplevel-commentbox');
+		}
+		jQuery(this).removeClass('cancel-response');
+
+
+	});
+
+	
 });
 
 
@@ -550,6 +1613,89 @@ jQuery.fn.extend({
 	}	
 	
 });
+
+
+jQuery.fn.openlightbox = function (lightbox){
+	if(jQuery(lightbox).length){
+		jQuery('.lightbox-content').hide();
+		var browser_width = jQuery(window).width();
+		var browser_height = jQuery(window).height();
+		var body_width = jQuery('#wrapper').width();
+		var body_height = jQuery('#wrapper').height();
+
+
+		jQuery('.lightbox-submit').removeClass('disabled');
+
+		jQuery('.lightbox-transparency').css('width', body_width  + 'px');
+		jQuery('.lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
+		jQuery('.lightbox-transparency').fadeTo(0, 0.20);				
+
+		var left = (parseInt(browser_width) -  parseInt((jQuery(lightbox).width())))/2.5;
+		var top = (parseInt(browser_height) -  parseInt((jQuery(lightbox).height())))/3;
+	
+		if(top < 45){
+			top = 45;			
+		}
+		if(left < 100){
+			left = 100;
+		}
+		
+		jQuery(lightbox).css('left', left);			
+		jQuery(lightbox).css('top', top);			
+		
+		jQuery('input[type=button]').attr('disabled', false);
+		jQuery('input[type=submit]').attr('disabled', false);
+		jQuery('input[type=text]').attr('readonly', '');
+		jQuery('select').attr('disabled', false);
+		jQuery('textarea').attr('readonly', '');
+		
+
+		//alert(jQuery(lightbox + ' .lightbox-slot').length);
+		if(jQuery(lightbox + ' .lightbox-slot').length > 1){
+			jQuery(lightbox + ' .lightbox-slot').hide();
+			jQuery(lightbox + ' .lightbox-previous').hide();
+			jQuery(lightbox + ' .lightbox-submit').hide();
+
+			//jQuery(jQuery(lightbox + ' .lightbox-slot').get(0)).css('position','relative');
+			//jQuery(lightbox + ' .lightbox-slot').hide();
+			jQuery(jQuery(lightbox + ' .lightbox-slot').get(0)).show();
+			
+		}
+		
+		jQuery(lightbox).fadeIn();
+		
+		if(jQuery(lightbox + ' .lightbox-delay-close').length){
+			var t = setTimeout(function() {
+				jQuery("body").closelightbox();
+ 			}, 3000);
+			jQuery(this).data('timeout', t);			
+		}		
+	}
+	else{
+		//console.log(lightbox + ' not found ');		
+	}
+
+}
+
+
+
+
+jQuery.fn.closelightbox = function (){
+	jQuery('.lightbox-content').hide();
+	jQuery('.lightbox-transparency').css('width', 0);
+	jQuery('.lightbox-transparency').css('height', 0);
+	document.location.hash.length = '';
+}
+
+jQuery.fn.displayerrorslightbox = function (data){
+	if(data.status == 0){
+		var lightbox = '#lightbox-generic-response';
+		jQuery(lightbox + ' > p').html(data.message);
+		jQuery('body').openlightbox(lightbox);	
+	}
+}
+
+
 
 
 

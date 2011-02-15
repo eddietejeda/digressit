@@ -345,13 +345,20 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 		
 	if($options['parse_list_items'] == 1){
 		$html = preg_replace('/<(\/?ul|ol)>/', '', $html);
-		$html = preg_replace('/<li>/', '<p>&bull;   ', $html);
+		$html = preg_replace('/<li>/', '<p>*   ', $html);
 	}
 	
 	
 	$html = wpautop(force_balance_tags($html));
 	$html = str_replace('&nbsp', '', $html);
 	$html = str_replace('&copy;', '(c)', $html);
+
+
+	$html = str_replace('<a <br />;', '<a ', $html);
+	$html = str_replace('<img <br />;', '<img ', $html);
+	
+	
+	
 	
 	$html = preg_replace("/&#?[a-z0-9]{2,8};/i","",$html);
 
@@ -362,6 +369,8 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 			$matches[] = $match->asXML();
 		}
 	}
+
+	//var_dump($result);
 
 	foreach($matches as $key=>$paragraph){
 		$text_signature = $key+1;

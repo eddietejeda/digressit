@@ -3,7 +3,7 @@
 global $blog_id;
 
 add_action('wp_print_styles', 'digress_widgets_print_styles');
-add_action('wp_print_scripts', 'digressit_widgets_print_scripts' );
+//add_action('wp_print_scripts', 'digressit_widgets_print_scripts' );
 
 
 function digress_widgets_print_styles(){
@@ -11,10 +11,11 @@ function digress_widgets_print_styles(){
 <link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/widgets.css'); ?>" type="text/css" media="screen" />
 <?php
 }
-
+/*
 function digressit_widgets_print_scripts(){
 	wp_enqueue_script('digressit.widgets', get_digressit_media_uri('js/digressit.widgets.js'), 'jquery', false, true );
 }
+*/
 
 
 if ( function_exists('register_sidebar') ) {

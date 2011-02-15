@@ -32,6 +32,43 @@ body{
 	text-align:left;
 }
 
+#live-content-search, #live-comment-search{
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+}
+
+#instant-content-search, #instant-comment-search{
+    float: left;
+    left: 20px;
+    position: relative;
+    top: 5px;
+	margin-right: 10px;
+}
+
+#live-content-search-result, #live-comment-search-result{
+    background-color: white;
+    position: absolute;
+    z-index: 100;
+}
+
+
+
+.search-result{
+    border-color: -moz-use-text-color #AAAAAA #AAAAAA;
+    border-right: 1px solid #AAAAAA;
+    border-style: none solid solid;
+    border-width: 0 1px 1px;
+    font-size: 75%;
+    padding: 5px;
+	min-width: 149px;
+}
+.search-result a{
+	text-decoration: none;
+	
+}
+.search-result:hover{
+	background-color: #FEFF9B;
+}
 
 #wrapper{
 	background: transparent repeat scroll 0 0 #E6E6E6;

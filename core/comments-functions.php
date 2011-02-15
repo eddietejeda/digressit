@@ -14,7 +14,7 @@ add_action('template_redirect', 'commentbrowser_template_redirect' );
 
 
 //add_action('wp_print_styles', 'comments_wp_print_styles');
-add_action('wp_print_scripts', 'comments_wp_print_scripts' );
+//add_action('wp_print_scripts', 'comments_wp_print_scripts' );
 add_action('public_ajax_function', 'add_comment_ajax');
 
 add_action('widgets_init', create_function('', 'return register_widget("CommentBrowserLinks");'));
@@ -85,12 +85,13 @@ function commentbrowser_template_redirect() {
 
 
 
-
+/*
 function comments_wp_print_scripts(){		
 	if(is_single()):
 		wp_enqueue_script('digressit.comments', get_digressit_media_uri('js/digressit.comments.js'), 'jquery', false, true );
 	endif;
 }
+*/
 
 
 
@@ -99,7 +100,7 @@ function comments_wp_print_scripts(){
 
 function add_comment_ajax($request_params){
 	//extract($request_params);
-	global $wpdb, $current_user;
+	global $wpdb, $current_user, $blog_id;
 
 	$time = current_time('mysql', $gmt = get_option('gmt_offset')); 
 	$time_gmt = current_time('mysql', $gmt = 0); 
@@ -119,8 +120,8 @@ function add_comment_ajax($request_params){
 	    'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
 	    'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
 	    'comment_date' => $time,
-	    'comment_date_gmt' => $time_gmt,
-	    'comment_approved' => 1, //TODO: we kinda have to approve automatically. because we don't have a way to notify user of approval yet
+	    'comment_date_gmt' => $time_gmt
+	    /*'comment_approved' => 1,*/ //TODO: we kinda have to approve automatically. because we don't have a way to notify user of approval yet
 	);
 	
 	
@@ -183,7 +184,16 @@ function add_comment_ajax($request_params){
 	$message['comment_count'] = $commentcount;
 	$message['paragraph_comment_count'] = count(get_approved_comments_for_paragraph($request_params['comment_post_ID'],  $request_params['selected_paragraph_number']));
 
+
+	ob_start();
+	$data = get_comment($comment_ID);	
+	$data->blog_id = $blog_id;
+	$data->ajax_call = $request_params['comment_parent'] ? true : false;
 	
+	$data->comment_text_signature = $request_params['selected_paragraph_number'];
+	call_user_func(get_digressit_comments_function(), $data, null, null);
+	$message['comment_response'] = ob_get_contents();
+	ob_end_clean();
 	
 	
 	die(json_encode(array('status' => $status, "message" => $message)));
@@ -200,9 +210,9 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 	?>
 	<?php $current_blog_id = is_single() ? $blog_id : $comment->blog_id; ?>
 	<?php $paragraphnumber = is_numeric($comment->comment_text_signature) ? $comment->comment_text_signature : 0; ?>
-	<?php $classes .= " paragraph-".$paragraphnumber; ?>
-	
-	
+	<?php $force_depth = $comment->ajax_call ? " depth-2 " : ''; ?>
+	<?php $classes .= " paragraph-".$paragraphnumber." " .$force_depth; ?>
+		
 	<div <?php comment_class($classes); ?> id="comment-<?php echo $current_blog_id ?>-<?php comment_ID() ?>">
 		<div id="div-comment-<?php echo $current_blog_id; ?>-<?php comment_ID(); ?>" class="comment-body">
 			
@@ -259,13 +269,11 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 			<div class="comment-text">
 				
 				<?php 
-				//
-				if(false){ ?>
-					<p><i>This comment has been quarantined for violating Site Use Guidelines.</i></p><?php
-				}
-				else{
+				if ($comment->comment_approved == '0'): ?>
+					<p><i>This comment is awaiting moderation.</i></p><?php
+				else:
 					comment_text();
-				}	
+				endif;
 				
 				?>						
 				
@@ -510,6 +518,7 @@ $comments_for_counting = null;
 function get_post_comment_count($post_ID, $metatag = null, $metavalue = null){
 	global $wpdb, $comments_for_counting;
 	
+	//echo "postid" . $post_ID;
 	$sql = "SELECT * FROM $wpdb->comments c 
 			WHERE c.comment_post_ID = $post_ID 
 			AND c.comment_approved = 1 
@@ -517,6 +526,7 @@ function get_post_comment_count($post_ID, $metatag = null, $metavalue = null){
 
 	$comments_for_counting = $wpdb->get_results($sql);		
 
+	//var_dump($sql);
 	$count= 0;
 
 	if($metatag){

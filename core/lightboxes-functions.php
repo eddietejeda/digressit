@@ -3,7 +3,7 @@ global $wpdb, $current_user, $post, $current_page_template;
 
 
 add_action('wp_print_styles', 'lightboxes_wp_print_styles', 1000);
-add_action('wp_print_scripts', 'lightboxes_wp_print_scripts' );
+//add_action('wp_print_scripts', 'lightboxes_wp_print_scripts' );
 
 add_action('add_lightbox', 'lightbox_login');
 //add_action('add_lightbox', 'lightbox_register');
@@ -21,10 +21,11 @@ function lightboxes_wp_print_styles(){
 <?php
 }
 
+/*
 function lightboxes_wp_print_scripts(){	
 	wp_enqueue_script('digressit.lightboxes', get_digressit_media_uri('js/digressit.lightboxes.js'), 'jquery', false, true );
 }
-
+*/
 
 
 function get_lightboxes(){

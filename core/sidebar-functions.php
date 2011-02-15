@@ -3,7 +3,7 @@
 
 add_action('widgets_init', create_function('', 'return register_widget("ListPostsWithCommentCount");'));
 //add_action('widgets_init', create_function('', 'return register_widget("ListUsersWithCommentCount");'));
-add_action('widgets_init', create_function('', 'return register_widget("LiveContentSearch");'));
+//add_action('widgets_init', create_function('', 'return register_widget("LiveContentSearch");'));
 
 
 
@@ -81,10 +81,11 @@ class ListPostsWithCommentCount extends WP_Widget {
 				'post_type' => 'post',
 				'post_status' => 'publish',
 				'post_type' => 'post',
-				'order_by' => 'ID',
-				'order' => 'ASC',
+				'order_by' => $options['front_page_order_by'],
+				'order' => $options['front_page_order'],
 				'category' => $cat_id,
 				);
+								
 			$posts = get_posts($args);
 			//var_dump($posts);
 			?>
