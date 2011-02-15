@@ -687,7 +687,9 @@ function mu_get_all_comments($user_id = null, $blog_id = null){
 		$rule_list = $rule;
 	}
 	else{
-		$rule_list = get_blog_list ( 0, 'all' );
+		if(function_exists('get_blog_list')){
+			$rule_list = get_blog_list ( 0, 'all' );
+		}
 	}
 	
 	$comments = array();
