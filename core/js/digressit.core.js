@@ -822,7 +822,7 @@ jQuery(document).ready(function() {
 		if(jQuery('body').hasClass('single')){
 			return;
 		}
-		alert('sdf');
+		//alert('sdf');
 
 		var index = jQuery('.comment').index(this);		
 		if(jQuery('.comment-goto').length){
