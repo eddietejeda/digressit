@@ -51,6 +51,16 @@ global $digressit;
 	<?php else: ?>
 		<?php wp_nav_menu(array('depth'=> 3, 'fallback_cb'=> 'header_default_top_menu', 'echo' => true, 'theme_location' => 'Top Menu', 'menu_class' => 'navigation')); ?>
 		<?php do_action('optional_menu_item'); ?>
+		<?php
+		
+			if($digressit['show_pages_in_menu']==1){
+				echo "<ul>";
+				wp_list_pages('sort_column=menu_order&title_li=');
+				echo "</ul>";
+			}
+		
+		
+		?>
 	<?php endif; ?>
 
 	<!-- this is some login stuff that should always be here -->

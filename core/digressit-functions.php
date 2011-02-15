@@ -16,9 +16,9 @@ function live_content_search_ajax($request_params){
 		$message = null;		
 
 
-		$sql = "SELECT * FROM $wpdb->posts p  WHERE p.post_status = 'publish' AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) AND p.post_content LIKE '%".esc_sql($request_params['value'])."%'  OR p.post_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY p.ID LIMIT 3";
-		
-
+		$sql = "SELECT * FROM $wpdb->posts p  WHERE p.post_status = 'publish' AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) AND ( p.post_content LIKE '%".esc_sql($request_params['value'])."%'  OR p.post_content LIKE '%".esc_sql($request_params['value'])."%' ) GROUP BY p.ID LIMIT 3";
+	
+	
 		$posts = $wpdb->get_results($sql);			
 
 		$message = null;

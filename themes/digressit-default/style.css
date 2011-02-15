@@ -52,6 +52,9 @@ body{
 }
 
 
+#menu-primary .children{
+	display: none;
+}
 
 .search-result{
     border-color: -moz-use-text-color #AAAAAA #AAAAAA;

@@ -188,6 +188,9 @@ function activate_digressit(){
 	$options['enable_sidebar'] = 1;
 	$options['enable_instant_content_search'] = 'false';
 	$options['enable_instant_comment_search'] = 'false';
+	$options['show_pages_in_menu'] = 0;
+
+
 
 
 	$options['table_of_contents_label'] = 'Table of Contents';
@@ -401,13 +404,13 @@ function digressit_theme_options_page() {
 
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Front Page Order');  ?></b></td>
-			<td><?php print_dropdown('front_page_order', array('id' => 'id', 'date' => 'date'), $options['front_page_order']); ?></td>
+			<td><?php print_dropdown('front_page_order_by', array('id' => 'id', 'date' => 'date'), $options['front_page_order_by']); ?></td>
 		</tr>
 
 
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Front Page Order by');  ?></b></td>
-			<td><?php print_dropdown('front_page_order_by', array('ASC' => 'ASC', 'DESC' => 'DESC'), $options['front_page_order_by']); ?></td>
+			<td><?php print_dropdown('front_page_order', array('ASC' => 'ASC', 'DESC' => 'DESC'), $options['front_page_order']); ?></td>
 		</tr>
 
 
@@ -459,6 +462,12 @@ function digressit_theme_options_page() {
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Parse List Items');  ?></b></td>
 			<td><?php print_dropdown('parse_list_items', array('No' => 0, 'Yes' => 1), $options['parse_list_items']); ?></td>
+		</tr>
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Show Pages in Menu');  ?></b></td>
+			<td><?php print_dropdown('show_pages_in_menu', array('No' => 0, 'Yes' => 1), $options['show_pages_in_menu']); ?></td>
 		</tr>
 
 
