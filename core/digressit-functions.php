@@ -48,7 +48,7 @@ function live_comment_search_ajax($request_params){
 	if(strlen($request_params['value']) > 4 && !in_array($request_params['value'], $excluded_words)){
 
 
-		$blog_list = get_blog_list( 0, 'all' );
+		//$blog_list = get_blog_list( 0, 'all' );
 
 		$posts = null;
 		$message = null;		
