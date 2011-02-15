@@ -28,7 +28,7 @@ function digressit_body_class(){
 	}
 	else{
 		$current_page_name .= basename(get_bloginfo('home'));
-		if(is_front_page()){
+		if(is_home()){
 			$current_page_name .= ' site-home ';
 		}	
 	}
