@@ -110,6 +110,10 @@ function add_comment_ajax($request_params){
 	$user_ID = isset($current_user->ID) ? $current_user->ID : '';
 
 //	var_dump($display_name);
+	
+	$comment_moderation = get_option('comment_moderation');
+	
+	
 	$data = array(
 	    'comment_post_ID' => $request_params['comment_post_ID'],
 	    'comment_author' => $display_name,
@@ -120,8 +124,8 @@ function add_comment_ajax($request_params){
 	    'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
 	    'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
 	    'comment_date' => $time,
-	    'comment_date_gmt' => $time_gmt
-	    /*'comment_approved' => 1,*/ //TODO: we kinda have to approve automatically. because we don't have a way to notify user of approval yet
+	    'comment_date_gmt' => $time_gmt,
+	    'comment_approved' => (($comment_moderation) ? 0 : 1), //TODO: we kinda have to approve automatically. because we don't have a way to notify user of approval yet
 	);
 	
 	
