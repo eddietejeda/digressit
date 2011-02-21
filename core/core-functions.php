@@ -370,8 +370,8 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 		}
 	}
 	else{
-		$matches[] = "Sorry! There was a problem parsing your content. Please make each HTML tag is properly nested and closed. 
-		To validate your text, and to try and repair it try the <a href='http://urbangiraffe.com/plugins/tidy-up/'>Tidy Up</a> plugin for WordPress.
+		$matches[] = "Sorry! There was a problem parsing your content. Please make sure that every HTML tag is properly nested and closed. 
+		To validate your text, and to try and repair it, use the <a href='http://urbangiraffe.com/plugins/tidy-up/'>Tidy Up</a> plugin for WordPress.
 		";
 	}
 
