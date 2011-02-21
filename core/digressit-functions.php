@@ -16,10 +16,15 @@ function live_content_search_ajax($request_params){
 		$message = null;		
 
 
-		$sql = "SELECT * FROM $wpdb->posts p  WHERE p.post_status = 'publish' AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) AND ( p.post_content LIKE '%".esc_sql($request_params['value'])."%'  OR p.post_content LIKE '%".esc_sql($request_params['value'])."%' ) GROUP BY p.ID LIMIT 3";
+		$sql = "SELECT * FROM $wpdb->posts p  
+				WHERE p.post_status = 'publish' 
+				AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) 
+				AND ( p.post_content LIKE \"%".esc_sql($request_params['value'])."%\"  OR p.post_content LIKE \"%".esc_sql($request_params['value'])."%\" ) 
+				GROUP BY p.ID LIMIT 3";
 	
 	
 		$posts = $wpdb->get_results($sql);			
+		//var_dump($posts);
 
 		$message = null;
 		foreach($posts as $p){
@@ -57,12 +62,11 @@ function live_comment_search_ajax($request_params){
 		//$sql = "SELECT * FROM $wpdb->posts p,  $wpdb->comments c  WHERE p.ID = c.comment_post_ID AND c.comment_approved = 1 AND p.post_status = 'publish' AND c.comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
 
 		$sql = "SELECT *
-		FROM $wpdb->posts p, $wpdb->comments c
+		FROM $wpdb->comments c, $wpdb->posts p
 		WHERE p.ID = c.comment_post_ID
 		AND c.comment_approved =1
 		AND p.post_status = 'publish'
 		AND c.comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
-		//var_dump($sql);
 		$posts = $wpdb->get_results($sql);			
 		
 		//var_dump($posts);
