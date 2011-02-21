@@ -57,7 +57,7 @@ function live_comment_search_ajax($request_params){
 		//$sql = "SELECT * FROM $wpdb->posts p,  $wpdb->comments c  WHERE p.ID = c.comment_post_ID AND c.comment_approved = 1 AND p.post_status = 'publish' AND c.comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
 
 		$sql = "SELECT *
-		FROM wp_2_posts p, wp_2_comments c
+		FROM $wpdb->posts p, $wpdb->comments c
 		WHERE p.ID = c.comment_post_ID
 		AND c.comment_approved =1
 		AND p.post_status = 'publish'
