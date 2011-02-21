@@ -1241,7 +1241,6 @@ jQuery(document).ready(function() {
 	if ( document.location.hash.substr(1, 7) == 'comment') {
 		var commentname = document.location.hash.substr(1);
 
-		
 		var comment_info = commentname.split('-');
 
 		if(comment_info.length == 2){
