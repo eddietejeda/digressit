@@ -54,7 +54,7 @@ global $digressit;
 		<?php
 		
 			if($digressit['show_pages_in_menu']==1){
-				$front_page_content = $options['front_page_content'];
+				$front_page_content = $digressit['front_page_content'];
 
 				echo "<ul>";
 				wp_list_pages('exclude='.$front_page_content.'=menu_order&title_li=');
