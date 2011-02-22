@@ -178,11 +178,6 @@ h1, h2, h3, h4, h5, h6{
 }
 
 
-.wp-caption-text{
-	font-size: 90%;
-}
-
-
 .commenticonbox{
 	right:-50px;
 	border: 0px;
@@ -1064,3 +1059,18 @@ div#item-header{
 .sidebar-widget-auto-hide {
 	display:block;
 }
+
+
+.wp-caption-text{
+    font-size: 80%;
+    font-style: inherit;
+    text-align: center;
+}
+
+#content  .wp-caption a{
+	border-bottom: none !important;
+}
+#content .wp-caption a:hover{
+	background-color: transparent;
+}
+
