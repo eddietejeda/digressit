@@ -178,6 +178,11 @@ h1, h2, h3, h4, h5, h6{
 }
 
 
+.wp-caption-text{
+	font-size: 90%;
+}
+
+
 .commenticonbox{
 	right:-50px;
 	border: 0px;
