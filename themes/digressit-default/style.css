@@ -171,7 +171,10 @@ h1, h2, h3, h4, h5, h6{
 	-moz-box-shadow: 1px 2px 3px #AAAAAA;
 	-webkit-box-shadow:1px 2px 3px #AAAAAA;
 	box-shadow: 1px 2px 3px #AAAAAA;
+}
 
+.#live-content-search, #live-comment-search, .search-result{
+	width: 150px;
 }
 
 
