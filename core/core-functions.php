@@ -350,18 +350,21 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	
 	
 	$html = wpautop(force_balance_tags($html));
-	$html = str_replace('&nbsp', '', $html);
-	$html = str_replace('&copy;', '(c)', $html);
+	//$html = str_replace('&nbsp', '', $html);
+	//$html = str_replace('&copy;', '(c)', $html);
+
+	//escape &entities;
+	$html = preg_replace('/&[^; ]{0,6}.?/e', "((substr('\\0',-1) == ';') ? '\\0' : '&amp;'.substr('\\0',1))", $html);
+	//$html = preg_replace("/&#?[a-z0-9]{2,8};/i","",$html);
 
 
-	$html = str_replace('<a <br />;', '<a ', $html);
-	$html = str_replace('<img <br />;', '<img ', $html);
-	
-	
-	
-	
-	$html = preg_replace("/&#?[a-z0-9]{2,8};/i","",$html);
 
+	//$html = str_replace('<a <br />;', '<a ', $html);
+	//$html = str_replace('<img <br />;', '<img ', $html);
+	
+	
+	
+	libxml_use_internal_errors(true);
 	//var_dump($html);
 	if($result = @simplexml_load_string(trim('<content>'.$html.'</content>'))){
 		$xml = $result->xpath('/content/'. $tags);
@@ -370,9 +373,35 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 		}
 	}
 	else{
-		$matches[] = "Sorry! There was a problem parsing your content. Please make sure that every HTML tag is properly nested and closed. 
-		To validate your text, and to try and repair it, use the <a href='http://urbangiraffe.com/plugins/tidy-up/'>Tidy Up</a> plugin for WordPress.
-		";
+		if(current_user_can('edit_posts')){
+			
+			$matches[] = "There was a problem parsing your content. Please make sure that every HTML tag is properly nested and closed. 
+			To validate your text, and to try and repair it, use the <a href='https://wordpress.org/extend/plugins/tidy-up/'>Tidy Up</a> plugin for WordPress.";
+
+
+			
+			if (!$result) {
+			    $errors = libxml_get_errors();
+
+				//var_dump($errors);
+			
+
+			    foreach ($errors as $error) {
+			        $error_messages .= display_xml_error($error, $xml). "<br>";
+			    }
+
+			    libxml_clear_errors();
+			}	
+			
+			$matches[] = $error_messages;		
+			
+		}
+		else{
+			$matches[] = "Sorry! There was a problem loading the contents of this post. Please notify the site administrator.";
+			
+			
+		}
+	
 	}
 
 	//var_dump($result);
@@ -434,6 +463,33 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 }
 
 
+function display_xml_error($error, $xml)
+{
+    $return  = $xml[$error->line - 1] . "\n";
+  //  $return .= str_repeat('-', $error->column) . "\n";
+
+    switch ($error->level) {
+        case LIBXML_ERR_WARNING:
+            $return .= "Warning: ";
+            break;
+         case LIBXML_ERR_ERROR:
+            $return .= "Error: ";
+            break;
+        case LIBXML_ERR_FATAL:
+            $return .= "Fatal Error: ";
+            break;
+    }
+
+    $return .= trim($error->message) .
+               "\n  Line: $error->line";
+
+    if ($error->file) {
+        $return .= "\n  File: $error->file";
+    }
+	$return  .= "<br>";
+
+    return "$return\n\n\n\n";
+}
 
 
 
