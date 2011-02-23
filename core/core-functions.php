@@ -354,8 +354,8 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	$html = str_replace('&copy;', '(c)', $html);
 
 	//escape &entities;
-	$html = preg_replace('/&[^; ]{0,6}.?/e', "((substr('\\0',-1) == ';') ? '\\0' : '&amp;'.substr('\\0',1))", $html);
-	//$html = preg_replace("/&#?[a-z0-9]{2,8};/i","",$html);
+	//$html = preg_replace('/&[^; ]{0,6}.?/e', "((substr('\\0',-1) == ';') ? '\\0' : '&amp;'.substr('\\0',1))", $html);
+	$html = preg_replace("/&#?[a-z0-9]{2,8};/i","",$html);
 
 
 
