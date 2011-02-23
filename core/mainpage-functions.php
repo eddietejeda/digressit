@@ -1,6 +1,6 @@
 <?php
 //add_action('wp', 'mainpage');
-add_action('wp_print_styles', 'mainpage_wp_print_styles');
+//add_action('wp_print_styles', 'mainpage_wp_print_styles');
 //add_action('wp_print_scripts', 'mainpage_wp_print_scripts' );
 add_action('wp', 'mainpage_load');
 

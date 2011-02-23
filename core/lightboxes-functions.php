@@ -2,7 +2,7 @@
 global $wpdb, $current_user, $post, $current_page_template;
 
 
-add_action('wp_print_styles', 'lightboxes_wp_print_styles', 1000);
+//add_action('wp_print_styles', 'lightboxes_wp_print_styles', 1000);
 //add_action('wp_print_scripts', 'lightboxes_wp_print_scripts' );
 
 add_action('add_lightbox', 'lightbox_login');

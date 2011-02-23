@@ -2,7 +2,7 @@
 
 global $blog_id;
 
-add_action('wp_print_styles', 'digress_widgets_print_styles');
+//add_action('wp_print_styles', 'digress_widgets_print_styles');
 //add_action('wp_print_scripts', 'digressit_widgets_print_scripts' );
 
 

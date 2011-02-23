@@ -22,7 +22,6 @@ global $digressit_content_function, $digressit_comments_function, $digressit_com
 $browser = current_browser();
 $is_commentbrowser= false;
 
-
 //get_currentuserinfo();
 
 $plugin_name = str_replace("/", "", str_replace(basename( __FILE__),"",plugin_basename(__FILE__))); 
@@ -109,6 +108,45 @@ function digressit_init(){
 }
 
 
+function in_plugin_update_message()
+{
+    $data = w3_http_get(W3TC_README_URL);
+    
+    if ($data) {
+        $matches = null;
+        $regexp = '~==\s*Changelog\s*==\s*=\s*[0-9.]+\s*=(.*)(=\s*' . preg_quote(W3TC_VERSION) . '\s*=|$)~Uis';
+        
+        if (preg_match($regexp, $data, $matches)) {
+            $changelog = (array) preg_split('~[\r\n]+~', trim($matches[1]));
+            
+            echo '<div style="color: #f00;">Take a minute to update, here\'s why:</div><div style="font-weight: normal;">';
+            $ul = false;
+            
+            foreach ($changelog as $index => $line) {
+                if (preg_match('~^\s*\*\s*~', $line)) {
+                    if (!$ul) {
+                        echo '<ul style="list-style: disc; margin-left: 20px;">';
+                        $ul = true;
+                    }
+                    $line = preg_replace('~^\s*\*\s*~', '', htmlspecialchars($line));
+                    echo '<li style="width: 50%; margin: 0; float: left; ' . ($index % 2 == 0 ? 'clear: left;' : '') . '">' . $line . '</li>';
+                } else {
+                    if ($ul) {
+                        echo '</ul><div style="clear: left;"></div>';
+                        $ul = false;
+                    }
+                    echo '<p style="margin: 5px 0;">' . htmlspecialchars($line) . '</p>';
+                }
+            }
+            
+            if ($ul) {
+                echo '</ul><div style="clear: left;"></div>';
+            }
+            
+            echo '</div>';
+        }
+    }
+}
 
 
 
@@ -203,6 +241,7 @@ function activate_digressit(){
 	$options['auto_hide_sidebar'] = 'sidebar-widget-auto-hide';
 	$options['show_comment_count_in_sidebar'] = 1;
 	$options['revision'] = DIGRESSIT_REVISION;
+	$options['version'] = DIGRESSIT_VERSION;
 	
 	$options['custom_style_sheet'] = '';
 	$options['custom_header_image'] = '';

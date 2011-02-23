@@ -1,6 +1,5 @@
 <?php
 
-
 add_action('wp_print_styles', 'digressit_default_stylesheets', 100);
 add_action('init', 'digressit_default_lightboxes', 100);
 
