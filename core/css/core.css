@@ -204,6 +204,10 @@ img{
 	cursor:pointer;cursor:hand;
 }
 
+.comment-reply{
+	position: relative;
+}
+
 
 .menu-frontpage-container .sub-menu{
 	margin-left:0;
