@@ -1567,14 +1567,15 @@ jQuery.fn.extend({
 		var default_top = parseInt(jQuery('#content').position().top);
 		var top =  default_top  + parseInt(jQuery(window).scrollTop());
 		var min_browser_height = (browser_height > 300) ? browser_height : 300; 
-		var new_commentbox_height = ((browser_height - default_top - 150) < 370) ? 370 : (browser_height - default_top - 150);
+		var new_commentbox_height = ((browser_height - default_top - 50) < 370) ? 370 : (browser_height - default_top - 50);
 		var commentbox_top = jQuery(jQuery(".entry").get(0)).offset().top;
 
 		jQuery('#commentbox').css('top',  commentbox_top + 'px' );
 		jQuery('#commentbox').css('height', new_commentbox_height + 'px');
 
 
-		var left = parseInt(jQuery('#content').offset().left) + parseInt( jQuery(jQuery('.entry').get(0)).width() )  + 95;
+
+		var left = parseInt(jQuery('#content').offset().left) + parseInt( jQuery(jQuery('.entry').get(0)).width() ) + parseInt( jQuery(jQuery('.post').get(0)).css('padding-right') );
 
 		if(safari || chrome){
 			//left = left + 210;

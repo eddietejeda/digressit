@@ -156,6 +156,8 @@ h1, h2, h3, h4, h5, h6{
 
 .single .post{
 	padding: 0;
+	padding-right: 65px;
+	width: 55%;
 }
 
 .lightbox-close-icon{
@@ -179,9 +181,9 @@ h1, h2, h3, h4, h5, h6{
 
 
 .commenticonbox{
-	right:-50px;
-	border: 0px;
-	top: 10px;
+    border: 0 none;
+    right: -35px;
+    top: 10px;
 }
 
 .selected-textblock .commenticonbox{
