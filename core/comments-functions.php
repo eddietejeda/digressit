@@ -648,7 +648,7 @@ function get_all_comments($only_approved = true){
 	}
 	
 	$sql = "SELECT * FROM $wpdb->comments WHERE comment_type = '' " . $clause;
-	return $result = $wpdb->get_results($sql);
+	return $wpdb->get_results($sql);
 			
 }
 
