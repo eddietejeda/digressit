@@ -1149,51 +1149,54 @@ jQuery(document).ready(function() {
 		});
 		//jQuery('<li class="page_item"><input class="live-post-search" type="text" value="Search"></li>').appendTo('.menu ul');
 		
-		jQuery('.textblock').toggle(function(e){
+		jQuery('.textblock').click(function(e){
 
 			
 			if(open_if_linked_in_paragraph(e)){
 				return;
 			}
+			var paragraphnumber = parseInt(jQuery('.textblock').index(this)) +1 ;
 			
-			if(jQuery('.paragraph-block')){
-				jQuery('#respond').hide();			
-				var paragraphnumber = parseInt(jQuery('.textblock').index(this)) +1 ;
-
-				jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
-				jQuery('#respond').show();			
-				jQuery('.comment' ).hide();
-				jQuery('.paragraph-' + paragraphnumber ).show();
+			
+			if(parseInt(jQuery('#selected_paragraph_number').val()) == paragraphnumber){
 
 				jQuery('.textblock').removeClass('selected-textblock');
-				var commentboxtop = jQuery('#commentbox').position().top;
+				jQuery('.comment').hide();
+				jQuery('#respond').hide();						
+				jQuery('#selected_paragraph_number').val(0);
+								
+			}
+			else{
+							
+				if(jQuery('.paragraph-block')){
+					jQuery('#respond').hide();			
 
-				if(paragraphnumber > 0){
-					jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+					jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+					jQuery('#respond').show();			
+					jQuery('.comment' ).hide();
+					jQuery('.paragraph-' + paragraphnumber ).show();
 
-					var top = jQuery('#textblock-' + paragraphnumber).offset().top;
-					var scrollto = (top > 200)  ? (top - 35) : 0;
+					jQuery('.textblock').removeClass('selected-textblock');
+					var commentboxtop = jQuery('#commentbox').position().top;
 
-					jQuery(window).scrollTo(scrollto , 100);
+					if(paragraphnumber > 0){
+						jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 
-					jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 1000, {easing:'easeOutBack'});
-				}
-				jQuery('#selected_paragraph_number').val(paragraphnumber);
+						var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+						var scrollto = (top > 200)  ? (top - 35) : 0;
+
+						jQuery(window).scrollTo(scrollto , 100);
+
+						jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 1000, {easing:'easeOutBack'});
+					}
+					jQuery('#selected_paragraph_number').val(paragraphnumber);
 				
-				document.location.hash = '#' + paragraphnumber;
+					document.location.hash = '#' + paragraphnumber;
+				}
 			}
 
 
-		}, function(e){
 
-			if(open_if_linked_in_paragraph(e)){
-				return;
-			}
-
-			jQuery('.textblock').removeClass('selected-textblock');
-			jQuery('.comment'  ).hide();
-			jQuery('#respond').hide();						
-			jQuery('#selected_paragraph_number').val(0);
 		});
 
 		jQuery('.paragraph-block-button').toggle(function(e){
@@ -1563,13 +1566,17 @@ jQuery.fn.extend({
 		var safari=jQuery.browser.safari;
 		var chrome=jQuery.browser.chrome;
 		var mozilla=jQuery.browser.mozilla;
+		var iOS = navigator.platform == 'iPad' || navigator.platform == 'iPhone' || navigator.platform == 'iPod';
 
 
 		var default_top = parseInt(jQuery('#content').position().top);
+		var scroll_top =  parseInt(jQuery(window).scrollTop());
 		var top =  default_top  + parseInt(jQuery(window).scrollTop());
 		var min_browser_height = (browser_height > 300) ? browser_height : 300; 
 		var new_commentbox_height = ((browser_height - default_top - 50) < 370) ? 370 : (browser_height - default_top - 50);
-		var commentbox_top = jQuery(jQuery(".entry").get(0)).offset().top;
+		var commentbox_top = parseInt(jQuery(jQuery(".entry").get(0)).offset().top);
+		
+	//	alert(commentbox_top);
 
 		jQuery('#commentbox').css('top',  commentbox_top + 'px' );
 		jQuery('#commentbox').css('height', new_commentbox_height + 'px');
@@ -1585,38 +1592,73 @@ jQuery.fn.extend({
 
 		var sidebar_fix_point = parseInt(jQuery("#header").outerHeight())  + parseInt(jQuery("#header").css('margin-top'));
 		var commentbox_fix_point = commentbox_top;
+		var comment_header = parseInt(jQuery("#commentbox-header").outerHeight());
+		var header_outerheight = parseInt(jQuery("#header").outerHeight());
+		
+		
+		/*
+		var debug_data = 'top: ' + top + '<br>'+
+						'commentbox_top:' + commentbox_top + '<br>'+
+						'header_outerheight: ' + header_outerheight + '<br>' +
+						'header_outerheight: ' + header_outerheight + '<br>' +
+						'scroll_top' +  scroll_top;
+						
+						
+		jQuery("#debug-message").html(debug_data);
+		*/
+		//iOS
+		if(iOS){
 
-		if(parseInt(jQuery(window).scrollTop()) > sidebar_fix_point){
-			jQuery("#dynamic-sidebar").css('position',  'fixed');			
-			jQuery("#dynamic-sidebar").css('top',  '0px');			
-		}
-		else{
-			jQuery("#dynamic-sidebar").css('position',  'absolute');
-			jQuery("#dynamic-sidebar").css('top',  parseInt(jQuery("#header").outerHeight()));			
-		}
-
-		if(parseInt(jQuery(window).scrollTop()) > commentbox_fix_point - parseInt(jQuery("#header").outerHeight()) ){
-
-			jQuery("#commentbox-header").css('position',  'fixed');			
-			jQuery("#commentbox-header").css('top',  parseInt(jQuery("#header").outerHeight()));			
-
-			jQuery("#commentbox").css('position',  'fixed');			
-			jQuery("#commentbox").css('top',  parseInt(jQuery("#header").outerHeight())  + parseInt(jQuery("#commentbox-header").outerHeight()) );			
-		}
-		else{
-			jQuery("#commentbox-header").css('position',  'absolute');
-			jQuery("#commentbox-header").css('top',  commentbox_top + 'px');			
+			var ipad_scroll_top_position;
 			
-			jQuery("#commentbox").css('position',  'absolute');
-			jQuery("#commentbox").css('top',  (commentbox_top + parseInt(jQuery("#commentbox-header").outerHeight())) + 'px');			
+			ipad_scroll_top_position = (top < 360) ? 260: (top - 100) ;
+
+			//alert(top);
+			jQuery("#commentbox-header").css('position',  'absolute');			
+			jQuery("#commentbox-header").css('top', ipad_scroll_top_position);			
+
+			jQuery("#commentbox").css('position',  'absolute');			
+			jQuery("#commentbox").css('top', ipad_scroll_top_position);
+			
+			jQuery("#dynamic-sidebar").css('position',  'absolute');			
+			jQuery("#dynamic-sidebar").css('top',  ipad_scroll_top_position);			
+			
+			
+		}
+		else{
+
+
+			//sidebar
+			if(scroll_top > sidebar_fix_point){
+				jQuery("#dynamic-sidebar").css('position',  'fixed');			
+				jQuery("#dynamic-sidebar").css('top',  '0px');			
+			}
+			else{
+				jQuery("#dynamic-sidebar").css('position',  'absolute');
+				jQuery("#dynamic-sidebar").css('top',  header_outerheight + 'px');			
+			}
+
+
+			//commentbox
+			if(scroll_top > (commentbox_fix_point - header_outerheight) ){
+
+				jQuery("#commentbox-header").css('position',  'fixed');			
+				jQuery("#commentbox-header").css('top',  header_outerheight+ 'px');
+
+				jQuery("#commentbox").css('position',  'fixed');			
+				jQuery("#commentbox").css('top',  (header_outerheight  + comment_header) + 'px');
+			}
+			else{
+				jQuery("#commentbox-header").css('position',  'absolute');
+				jQuery("#commentbox-header").css('top',  commentbox_top + 'px');			
+
+				jQuery("#commentbox").css('position',  'absolute');
+				jQuery("#commentbox").css('top',  (commentbox_top +  comment_header) + 'px');			
+			}
+
+			
 		}
 		
-		
-		//stick the footer at the bottom of the page if we're on an iPad/iPhone due to viewport/page bugs in mobile webkit
-		if(navigator.platform == 'iPad' || navigator.platform == 'iPhone' || navigator.platform == 'iPod')
-		{
-			 //jQuery("#footer").css("position", "static");
-		};
 
 
 		

@@ -1031,6 +1031,16 @@ ul{
 }
 
 
+#live-content-search, #live-comment-search {
+    background: url("../../../../wp-content/plugins/digressit/core/images/search.png") no-repeat scroll 137px -25px transparent;
+    padding: 5px;
+}
+
+#live-content-search:hover, #live-comment-search:hover {
+    background: url("../../../../wp-content/plugins/digressit/core/images/search.png") no-repeat scroll 137px 4px transparent;
+    padding: 5px;
+}
+
 /*********** PRIMARY MENU **************/
 
 #menu-primary{

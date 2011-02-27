@@ -31,7 +31,7 @@ Digress.it lets you comment paragraph by paragraph in the margins of a text
 * Expandable: Hooks scattered about for expandability
 * New Default theme
 * New Wireframe Theme
-* Support for IE7+, Safari, Chrome, Firefox 
+* Support for IE7+, Safari 3+, Chrome, Firefox 3+
 
 = 2.3.2 =
 * FIXED BUG#61 fixed problem that required user to reset to default settings after install

@@ -16,6 +16,7 @@
 	</div>
 </div>
 
+<div id="debug-message"></div>
 
 </div> <!-- wrapper -->
 

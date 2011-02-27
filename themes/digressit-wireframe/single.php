@@ -2,7 +2,6 @@
 
 <?php $options = get_option('digressit'); ?>
 
-
 <div class="container">
 
 <?php get_single_default_widgets(); ?>

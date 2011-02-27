@@ -1052,7 +1052,14 @@ div#item-header{
 	padding: 0 25px;
 }
 
-
+#debug-message{
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	border: 1px;
+	background-color: red;
+	
+}
 #item-header, #item-nav, #item-body {
 	float:left;
 	padding:20px;
