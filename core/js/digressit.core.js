@@ -15,36 +15,40 @@ jQuery.fn.highlight = function (str, className)
 	
 
 
+var userAgent = navigator.userAgent.toLowerCase();
+
+// Figure out what browser is being used
+jQuery.browser = {
+	version: (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
+	chrome: /chrome/.test( userAgent ),
+	safari: /webkit/.test( userAgent ) && !/chrome/.test( userAgent ),
+	opera: /opera/.test( userAgent ),
+	msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
+	mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent )
+};
+
+var msie=jQuery.browser.msie;
+var msie6=jQuery.browser.msie && jQuery.browser.version=="6.0";
+var msie7=jQuery.browser.msie && jQuery.browser.version=="7.0";
+var msie8=jQuery.browser.msie && jQuery.browser.version=="8.0";
+var safari=jQuery.browser.safari;
+var chrome=jQuery.browser.chrome;
+var mozilla=jQuery.browser.mozilla;
+var iOS = navigator.platform == 'iPad' || navigator.platform == 'iPhone' || navigator.platform == 'iPod';
+
+
+var zi=10000;
+var on_load_selected_paragraph;
+var window_has_focus = true;
+var selected_comment_color = '#3d9ddd';
+var unselected_comment_color = '#DFE4E4';
+var browser_width = jQuery(window).width();
+var browser_height = jQuery(window).height();
+var request_time = 0;
+var request_time_delay = 500; // ms - adjust as you like
+
+
 jQuery(document).ready(function() {
-
-	var userAgent = navigator.userAgent.toLowerCase();
-
-	// Figure out what browser is being used
-	jQuery.browser = {
-		version: (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
-		chrome: /chrome/.test( userAgent ),
-		safari: /webkit/.test( userAgent ) && !/chrome/.test( userAgent ),
-		opera: /opera/.test( userAgent ),
-		msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
-		mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent )
-	};
-
-	var msie=jQuery.browser.msie;
-	var msie6=jQuery.browser.msie && jQuery.browser.version=="6.0";
-	var msie7=jQuery.browser.msie && jQuery.browser.version=="7.0";
-	var msie8=jQuery.browser.msie && jQuery.browser.version=="8.0";
-	var safari=jQuery.browser.safari;
-	var chrome=jQuery.browser.chrome;
-	var mozilla=jQuery.browser.mozilla;
-	var zi=10000;
-	var on_load_selected_paragraph;
-	var window_has_focus = true;
-	var selected_comment_color = '#3d9ddd';
-	var unselected_comment_color = '#DFE4E4';
-	var browser_width = jQuery(window).width();
-	var browser_height = jQuery(window).height();
-	var request_time = 0;
-	var request_time_delay = 500; // ms - adjust as you like
 
 	
 	if(jQuery('.tabs').length){
@@ -1182,16 +1186,22 @@ jQuery(document).ready(function() {
 					if(paragraphnumber > 0){
 						jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 
-						var top = jQuery('#textblock-' + paragraphnumber).offset().top;
-						var scrollto = (top > 200)  ? (top - 35) : 0;
+						var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
+						var scrollto = (top > 200)  ? (top - 100) : 0;
 
-						jQuery(window).scrollTo(scrollto , 100);
+						if(iOS){
+							jQuery('#commentbox').position_main_elements();						
+						}
+						
+						jQuery(window).scrollTo(scrollto , 500);
 
-						jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 1000, {easing:'easeOutBack'});
+
+						jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
 					}
 					jQuery('#selected_paragraph_number').val(paragraphnumber);
 				
 					document.location.hash = '#' + paragraphnumber;
+					
 				}
 			}
 
@@ -1212,10 +1222,10 @@ jQuery(document).ready(function() {
 
 			if(paragraphnumber > 0){
 
-				var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+				var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
 				jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 			
-				var scrollto = (top > 200)  ? (top - 30) : 0;
+				var scrollto = (top > 200)  ? (top - 100) : 0;
 				jQuery(window).scrollTo(scrollto , 200);
 				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
 			}
@@ -1290,10 +1300,10 @@ jQuery(document).ready(function() {
 			//alert('sdf2');		
 				
 			var item = jQuery('.commenticonbox').get((paragraphnumber));
-			var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+			var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
 			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 
-			var scrollto = (top > 200)  ? (top - 30) : 0;
+			var scrollto = (top > 200)  ? (top - 100) : 0;
 			jQuery(window).scrollTo(scrollto , 500);
 		}
 
@@ -1303,42 +1313,51 @@ jQuery(document).ready(function() {
 	}
 	else if (isNumber(document.location.hash.substr(1))) {
 		var paragraphnumber = document.location.hash.substr(1);
-
+		var scrollto;
 		if(paragraphnumber > jQuery('.textblock').length){
 			return;
 		}
 		
-		var item = jQuery('.commenticonbox').get((paragraphnumber));
-
-		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
-		jQuery('#respond').show();
-		jQuery('.comment').hide();
-		jQuery('.paragraph-' + paragraphnumber).show();
-
-		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
-
-		if(jQuery('.paragraph-' + paragraphnumber).length == 0){
-			jQuery('#no-comments').show();			
-		}
-		else{
-			jQuery('#no-comments').hide();
-		}
-		
 		if(paragraphnumber > 0){
-			var top = jQuery('#textblock-' + paragraphnumber).offset().top;
-			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
-			var scrollto = (top > 200)  ? (top - 30) : 0;
-
-			jQuery(window).scrollTo(scrollto , 500);
-		}
 		
-		if(jQuery('#paragraph-block-' + paragraphnumber).length){
-			jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500);
+			var item = jQuery('.commenticonbox').get((paragraphnumber));
+			var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
+
+			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+			jQuery('#respond').show();
+			jQuery('.comment').hide();
+			jQuery('.paragraph-' + paragraphnumber).show();
+			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+			jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
+
+
+			if(jQuery('.paragraph-' + paragraphnumber).length == 0){
+				jQuery('#no-comments').show();			
+			}
+			else{
+				jQuery('#no-comments').hide();
+			}
+		
+			scrollto = (top > 200)  ? (top - 100) : 0;
+		
+			if(jQuery('#paragraph-block-' + paragraphnumber).length){
+				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500);
+			}
+			
+			if(iOS){
+				jQuery(window).scrollTo(scrollto , 0);
+				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 1000, {easing:'easeOutBack'});				
+				jQuery('#commentbox').position_main_elements();						
+			}
+			else{
+				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 1000, {easing:'easeOutBack'});				
+				jQuery(window).scrollTo(scrollto  , 1000, {easing:'easeOutBack'});
+				
+			}
+			
 		}
 
-		if( jQuery('.paragraph-' + paragraphnumber).length > 0 ){
-			jQuery("#no-comments").hide();			
-		}
+		
 	}
 	else{
 		if( parseInt(jQuery('.comment').length) == 0){
@@ -1471,7 +1490,7 @@ jQuery(document).ready(function() {
 		}			
 		var commentbox = jQuery("#commentbox");
 
-		var scrollto = top;
+		var scrollto = (top - 100);
 		jQuery('#respond').appendTo(current_comment_id + ' .comment-respond');		
 
 		jQuery(window).scrollTo(scrollto, 200);
@@ -1545,28 +1564,6 @@ jQuery.fn.extend({
 
 	position_main_elements: function() {
 
-		var browser_width = jQuery(window).width();
-		var browser_height = jQuery(window).height();
-		var userAgent = navigator.userAgent.toLowerCase();
-
-		// Figure out what browser is being used
-		jQuery.browser = {
-			version: (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
-			chrome: /chrome/.test( userAgent ),
-			safari: /webkit/.test( userAgent ) && !/chrome/.test( userAgent ),
-			opera: /opera/.test( userAgent ),
-			msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
-			mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent )
-		};
-
-		var msie=jQuery.browser.msie;
-		var msie6=jQuery.browser.msie && jQuery.browser.version=="6.0";
-		var msie7=jQuery.browser.msie && jQuery.browser.version=="7.0";
-		var msie8=jQuery.browser.msie && jQuery.browser.version=="8.0";
-		var safari=jQuery.browser.safari;
-		var chrome=jQuery.browser.chrome;
-		var mozilla=jQuery.browser.mozilla;
-		var iOS = navigator.platform == 'iPad' || navigator.platform == 'iPhone' || navigator.platform == 'iPod';
 
 
 		var default_top = parseInt(jQuery('#content').position().top);
