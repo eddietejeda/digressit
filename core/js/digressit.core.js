@@ -1213,7 +1213,7 @@ jQuery(document).ready(function() {
 							jQuery('#commentbox').position_main_elements();						
 						}
 				
-						jQuery(window).scrollTo(scrollto , 500);
+						jQuery(window).scrollTo(scrollto , 100);
 
 
 						jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
@@ -1242,7 +1242,6 @@ jQuery(document).ready(function() {
 
 					jQuery('#selected_paragraph_number').val(paragraphnumber);
 
-					document.location.hash = '#' + paragraphnumber;
 
 					if(jQuery('.paragraph-' + paragraphnumber ).length){
 						jQuery("#no-comments").hide();				
@@ -1255,6 +1254,7 @@ jQuery(document).ready(function() {
 					var scrollto = (top > 200)  ? (top - 35) : 0;
 
 					jQuery(window).scrollTo(scrollto , 100);
+					document.location.hash = '#' + paragraphnumber;
 				}
 			}
 
@@ -1474,13 +1474,13 @@ jQuery(document).ready(function() {
 				var t = setTimeout(function() {
 					jQuery('#dynamic-sidebar').animate({ 
 						right: "0px"
-					}, 200 ); }, 500);
+					}, 100 ); }, 200);
 				jQuery(this).data('timeout', t);
 			},function () {
 			    clearTimeout(jQuery(this).data('timeout'));
 				jQuery('#dynamic-sidebar').animate({ 
 					right: "-260px"
-				}, 200 );
+				}, 100 );
 			});
 			
 		}
@@ -1490,13 +1490,13 @@ jQuery(document).ready(function() {
 				var t = setTimeout(function() {
 					jQuery('#dynamic-sidebar').animate({ 
 						left: "0px"
-					}, 200 ); }, 500);
+					}, 200 ); }, 300);
 				jQuery(this).data('timeout', t);
 			},function () {
 			    clearTimeout(jQuery(this).data('timeout'));
 				jQuery('#dynamic-sidebar').animate({ 
 					left: "-260px"
-				}, 200 );
+				}, 100 );
 			});
 			
 		}
