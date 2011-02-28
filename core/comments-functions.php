@@ -247,13 +247,13 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 					
 					<?php if(is_single()):  ?>
 					<?php global $blog_id; ?>
-						<span class="comment-blog-id" title="<?php echo $blog_id; ?>"></span>
+						<span class="comment-blog-id" value="<?php echo $blog_id; ?>"></span>
 					<?php else: ?>
-						<span class="comment-blog-id" title="<?php echo $comment->blog_id; ?>"></span>
+						<span class="comment-blog-id" value="<?php echo $comment->blog_id; ?>"></span>
 					<?php endif; ?>
-					<span class="comment-id" title="<?php comment_ID(); ?>"></span>
-					<span class="comment-parent" title="<?php echo $comment->comment_parent; ?>"></span>
-					<span class="comment-paragraph-number" title="<?php echo $comment->comment_text_signature; ?>"></span>
+					<span class="comment-id" value="<?php comment_ID(); ?>"></span>
+					<span class="comment-parent" value="<?php echo $comment->comment_parent; ?>"></span>
+					<span class="comment-paragraph-number" value="<?php echo $comment->comment_text_signature; ?>"></span>
 
 
 					<span class="comment-date"><a href="<?php get_permalink($comment->comment_post_ID); ?>#comment-<?php echo $current_blog_id ?>-<?php comment_ID() ?>"><?php comment_date('n/j/Y'); ?></a></span>
@@ -285,7 +285,7 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 			
 			
 			<?php if(($depth < get_option('thread_comments_depth') || is_null($comment->comment_parent)) && (is_user_logged_in() || !get_option('comment_registration')) && is_single()): ?>
-			<div class="comment-reply comment-hover small-button" title="<?php comment_ID(); ?>">reply</div>
+			<div class="comment-reply comment-hover small-button" value="<?php comment_ID(); ?>">reply</div>
 			<?php endif; ?>
 
 			<?php do_action('digressit_custom_comment_footer'); ?>

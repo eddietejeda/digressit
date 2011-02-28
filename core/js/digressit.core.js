@@ -1079,8 +1079,8 @@ jQuery(document).ready(function() {
 		var index = jQuery('.comment').index(this);
 
 		//comment-id
-		var selected_blog_id = jQuery(jQuery('.comment .comment-blog-id').get(index)).attr('title');
-		var selected_comment_id = jQuery(jQuery('.comment .comment-id').get(index)).attr('title');
+		var selected_blog_id = jQuery(jQuery('.comment .comment-blog-id').get(index)).attr('value');
+		var selected_comment_id = jQuery(jQuery('.comment .comment-id').get(index)).attr('value');
 
 		jQuery.cookie('selected_comment_id', null, { path: request_uri, expires: 1} );
 		jQuery.cookie('selected_blog_id', null, { path: request_uri + '/', expires: 1} );
@@ -1153,32 +1153,52 @@ jQuery(document).ready(function() {
 		});
 		//jQuery('<li class="page_item"><input class="live-post-search" type="text" value="Search"></li>').appendTo('.menu ul');
 		
+		
 		jQuery('.textblock').click(function(e){
 
-			
 			if(open_if_linked_in_paragraph(e)){
 				return;
 			}
 			var paragraphnumber = parseInt(jQuery('.textblock').index(this)) +1 ;
-			
-			
+	
+	
+			//alert(jQuery('#selected_paragraph_number').val());
 			if(parseInt(jQuery('#selected_paragraph_number').val()) == paragraphnumber){
 
-				jQuery('.textblock').removeClass('selected-textblock');
-				jQuery('.comment').hide();
-				jQuery('#respond').hide();						
-				jQuery('#selected_paragraph_number').val(0);
-								
+				/* PARAGRAPH BLOCKS - UNSELECTED */
+				if(jQuery('.paragraph-block').length){
+					jQuery('.textblock').removeClass('selected-textblock');
+					jQuery('.comment').hide();
+					jQuery('#respond').hide();
+					jQuery("#no-comments").hide();				
+					jQuery('#selected_paragraph_number').val(0);
+				}
+				/* ALL COMMENTS - UNSELECTED */
+				else{
+					if(jQuery('.comment' ).length){
+						jQuery("#no-comments").hide();				
+						jQuery(".comment").show();				
+					}
+					else{
+						jQuery("#no-comments").show();
+					}
+					jQuery('.textblock').removeClass('selected-textblock');
+					jQuery('#selected_paragraph_number').val(0);
+					jQuery('#respond').appendTo(jQuery('#toplevel-commentbox'));						
+				}	
 			}
+	
 			else{
-							
-				if(jQuery('.paragraph-block')){
+		
+				/* PARAGRAPH BLOCKS - SELECTED */
+				if(jQuery('.paragraph-block').length){
 					jQuery('#respond').hide();			
 
 					jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
 					jQuery('#respond').show();			
 					jQuery('.comment' ).hide();
 					jQuery('.paragraph-' + paragraphnumber ).show();
+					jQuery("#no-comments").hide();				
 
 					jQuery('.textblock').removeClass('selected-textblock');
 					var commentboxtop = jQuery('#commentbox').position().top;
@@ -1192,52 +1212,86 @@ jQuery(document).ready(function() {
 						if(iOS){
 							jQuery('#commentbox').position_main_elements();						
 						}
-						
+				
 						jQuery(window).scrollTo(scrollto , 500);
 
 
 						jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
 					}
 					jQuery('#selected_paragraph_number').val(paragraphnumber);
-				
+		
 					document.location.hash = '#' + paragraphnumber;
-					
+
+				}
+				else{
+					/* ALL COMMENTS - SELECTED */
+
+					jQuery('#respond').hide();			
+					var paragraphnumber = parseInt(jQuery('.textblock').index(this)) +1 ;
+
+					jQuery('#respond').appendTo('#toplevel-commentbox');
+					jQuery('#respond').show();			
+					jQuery('.comment' ).hide();
+					jQuery('.paragraph-' + paragraphnumber ).show();
+
+
+					jQuery('#submit-comment').removeClass('disabled');
+
+					jQuery('.textblock').removeClass('selected-textblock');
+					jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+
+					jQuery('#selected_paragraph_number').val(paragraphnumber);
+
+					document.location.hash = '#' + paragraphnumber;
+
+					if(jQuery('.paragraph-' + paragraphnumber ).length){
+						jQuery("#no-comments").hide();				
+					}
+					else{
+						jQuery("#no-comments").show();
+					}
+
+					var top = jQuery('#textblock-' + paragraphnumber).offset().top;
+					var scrollto = (top > 200)  ? (top - 35) : 0;
+
+					jQuery(window).scrollTo(scrollto , 100);
 				}
 			}
 
-
-
 		});
-
-		jQuery('.paragraph-block-button').toggle(function(e){
-			jQuery('.comment').hide();
-
-			var paragraphnumber = parseInt(jQuery('.paragraph-block-button').index(this));
-			jQuery('#selected_paragraph_number').val(paragraphnumber);
-			jQuery('.paragraph-' + paragraphnumber).show();
-			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
-			jQuery('#respond').show();			
-
-			jQuery('.textblock').removeClass('selected-textblock');
-
-			if(paragraphnumber > 0){
-
-				var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
-				jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
-			
-				var scrollto = (top > 200)  ? (top - 100) : 0;
-				jQuery(window).scrollTo(scrollto , 200);
-				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
-			}
-			
-		}, function(e){
-			jQuery('.comment').hide();
-			jQuery('#respond').hide();
-			jQuery('.textblock').removeClass('selected-textblock');
-			jQuery('#selected_paragraph_number').val(0);
-		});
-	
 	}
+
+
+		
+
+	jQuery('.paragraph-block-button').toggle(function(e){
+		jQuery('.comment').hide();
+
+		var paragraphnumber = parseInt(jQuery('.paragraph-block-button').index(this));
+		jQuery('#selected_paragraph_number').val(paragraphnumber);
+		jQuery('.paragraph-' + paragraphnumber).show();
+		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+		jQuery('#respond').show();			
+
+		jQuery('.textblock').removeClass('selected-textblock');
+
+		if(paragraphnumber > 0){
+
+			var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
+			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+		
+			var scrollto = (top > 200)  ? (top - 100) : 0;
+			jQuery(window).scrollTo(scrollto , 200);
+			jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
+		}
+		
+	}, function(e){
+		jQuery('.comment').hide();
+		jQuery('#respond').hide();
+		jQuery('.textblock').removeClass('selected-textblock');
+		jQuery('#selected_paragraph_number').val(0);
+	});
+
 
 
 	function open_if_linked_in_paragraph(e){
@@ -1274,7 +1328,7 @@ jQuery(document).ready(function() {
 			commentname = 'comment-' + blog_ID + '-'+ comment_info.pop(); 
 		}
 		
-		var paragraphnumber = jQuery('#'+commentname).attr('class').match( /paragraph-([\d.]+)/ )[1];
+		var paragraphnumber = jQuery(jQuery('#'+commentname + ' .comment-paragraph-number').get(0)).attr('value');
 		
 		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
 		jQuery('#respond').show();
@@ -1291,9 +1345,7 @@ jQuery(document).ready(function() {
 			jQuery('#no-comments').hide();
 		}
 		
-		
-		//alert('#'+commentname);
-		
+				
 		jQuery('#commentbox').scrollTo('#'+commentname , 500);
 		
 		if(paragraphnumber > 0){
@@ -1328,15 +1380,19 @@ jQuery(document).ready(function() {
 			jQuery('.comment').hide();
 			jQuery('.paragraph-' + paragraphnumber).show();
 			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
-			jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
+			//jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
+			jQuery('#selected_paragraph_number').val(paragraphnumber);
+			
 
-
+			/*
 			if(jQuery('.paragraph-' + paragraphnumber).length == 0){
 				jQuery('#no-comments').show();			
 			}
 			else{
-				jQuery('#no-comments').hide();
 			}
+			*/
+			jQuery('#no-comments').hide();
+			
 		
 			scrollto = (top > 200)  ? (top - 100) : 0;
 		
@@ -1351,7 +1407,7 @@ jQuery(document).ready(function() {
 			}
 			else{
 				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 1000, {easing:'easeOutBack'});				
-				jQuery(window).scrollTo(scrollto  , 1000, {easing:'easeOutBack'});
+				jQuery(window).scrollTo(scrollto  , 500);
 				
 			}
 			
@@ -1448,79 +1504,76 @@ jQuery(document).ready(function() {
 	}
 
 
-	jQuery('.comment-reply').toggle(function (e) {
+	jQuery('.comment-reply').click(function (e) {
 
 		var top = 0;
-		var comment_id = jQuery(this).attr('title');
+		var comment_id = jQuery(this).attr('value');
 		var current_comment_id = '#comment-'+ blog_ID +'-'+comment_id;		
-		var paragraphnumber = jQuery(current_comment_id + ' .comment-paragraph-number').attr('title');
-		var comment_id = jQuery(current_comment_id + ' .comment-id').attr('title');
-		var blog_id = jQuery(current_comment_id + ' .comment-blog-id').attr('title');
+		var paragraphnumber = jQuery(current_comment_id + ' .comment-paragraph-number').attr('value');
+		var comment_id = jQuery(current_comment_id + ' .comment-id').attr('value');
+		var blog_id = jQuery(current_comment_id + ' .comment-blog-id').attr('value');
+
+		var selected_paragraphnumber = jQuery('#selected_paragraph_number').attr('value');
+
+		if(jQuery('#comment_parent').val() == 0){
 
 
-		jQuery('#selected_paragraph_number').attr('value', paragraphnumber);
-		jQuery('#comment_parent').val(comment_id);
+			jQuery('#selected_paragraph_number').attr('value', paragraphnumber);
+			jQuery('#comment_parent').val(comment_id);
 
-		//alert(jQuery('#comment_parent').val());
-		jQuery.cookie('text_signature', paragraphnumber, { path: '/' , expires: 1} );				
-		jQuery.cookie('selected_comment_id', comment_id, { path: '/' , expires: 1} );				
+			//alert(jQuery('#comment_parent').val());
+			jQuery.cookie('text_signature', paragraphnumber, { path: '/' , expires: 1} );				
+			jQuery.cookie('selected_comment_id', comment_id, { path: '/' , expires: 1} );				
 
+			var item = jQuery('.commenticonbox').get(parseInt(jQuery('.commenticonbox').index(this)));
 
+			jQuery('.textblock').removeClass('selected-textblock');
+			jQuery('.commenticonbox').removeClass('selected-paragraph');
 
+			if(paragraphnumber > 0){
+				jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+				jQuery('#textblock-' + paragraphnumber + ' .commenticonbox').addClass('selected-paragraph');
 
-		var item = jQuery('.commenticonbox').get(parseInt(jQuery('.commenticonbox').index(this)));
+				var textblockname = "#textblock-" + paragraphnumber;
+				var textblock = jQuery(textblockname);
 
+				var left = textblock.position().left;
+				top = textblock.position().top;
 
-		jQuery('.textblock').removeClass('selected-textblock');
-		jQuery('.commenticonbox').removeClass('selected-paragraph');
+			}			
+			var commentbox = jQuery("#commentbox");
 
-		//alert('.textblock-' + paragraphnumber);
+			var scrollto = (top - 100);
+			jQuery('#respond').appendTo(current_comment_id + ' .comment-respond');		
 
-
-		if(paragraphnumber > 0){
-			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
-			jQuery('#textblock-' + paragraphnumber + ' .commenticonbox').addClass('selected-paragraph');
-
-			var textblockname = "#textblock-" + paragraphnumber;
-			var textblock = jQuery(textblockname);
-
-			var left = textblock.position().left;
-			top = textblock.position().top;
-
-		}			
-		var commentbox = jQuery("#commentbox");
-
-		var scrollto = (top - 100);
-		jQuery('#respond').appendTo(current_comment_id + ' .comment-respond');		
-
-		jQuery(window).scrollTo(scrollto, 200);
+			jQuery(window).scrollTo(scrollto, 200);
 		
-		jQuery('#commentbox').scrollTo( current_comment_id + ' .comment-reply', 500, {easing:'easeOutBack'});
+			jQuery('#commentbox').scrollTo( current_comment_id + ' .comment-reply', 500, {easing:'easeOutBack'});
 
-		document.location.hash = '#' + paragraphnumber;
-
-
-		jQuery('.comment .comment-reply').html('reply');
-		jQuery(current_comment_id + ' .comment-reply').html('cancel response');
-
-		jQuery(this).addClass('cancel-response');
+			document.location.hash = '#' + paragraphnumber;
 
 
-	}, function(){
+			jQuery('.comment .comment-reply').html('reply');
+			jQuery(current_comment_id + ' .comment-reply').html('cancel response');
 
-		var paragraphnumber = jQuery('#selected_paragraph_number').attr('value');
-
-		jQuery('#comment_parent').val(0);
-		jQuery('.comment-reply').html('reply');
-		if(jQuery('.paragraph-block').length){
-			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');			
+			jQuery(this).addClass('cancel-response');
 		}
-		else{	
-			jQuery('#respond').appendTo('#toplevel-commentbox');
+		else{
+
+
+			jQuery('#comment_parent').val(0);
+			jQuery('.comment-reply').html('reply');
+			if(jQuery('.paragraph-block').length){
+				jQuery('#respond').appendTo('#paragraph-block-'+(selected_paragraphnumber) + ' .toplevel-respond');			
+			}
+			else{	
+				jQuery('#respond').appendTo('#toplevel-commentbox');
+			}
+			jQuery(this).removeClass('cancel-response');
+
+
 		}
-		jQuery(this).removeClass('cancel-response');
-
-
+	
 	});
 
 	
