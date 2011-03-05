@@ -10,17 +10,24 @@ Digress.it lets you comment paragraph by paragraph in the margins of a text
 
 == Description ==
 
-Digress.it lets you comment paragraph by paragraph in the margins of a text
+Digress.it lets you comment paragraph by paragraph in the margins of a text.
 
-** Warning: Users upgrading from 2.x need 
+Since its initial launch Digress.it has been used by universities, publishers and governments across the world and is cited on various academic and scientific journals as an exemplary online collaboration tool.   
 
+*WARNING* Please be aware that the default theme has changed considerably. If you have made any customizations to the theme, those changes might not carry
+over smoothly. Also be aware that some of the backend settings have changed and that some settings are reset.
+
+The there now a documented API that you can expand Digress.it from. More information can be found at http://digress.it/code
+
+Support: 
+https://groups.google.com/group/digressit
 
 
 == Installation ==
 
 1. Upload `digressit` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to the Appearance menu and review the settings. The digress.it theme should have been automatically activated.
+3. Go to the Appearance menu and review the settings. The Digress.it theme should have been automatically activated.
 
 == Changelog ==
 

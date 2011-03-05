@@ -91,10 +91,16 @@ global $current_browser_section, $wp, $blog_id ;
 						</div>
 					</div>
 					<div class="comment-text">
-				
 
-						<?php echo $comment->comment_content; ?>
-				
+						<?php 
+						if ($comment->comment_approved == '0'): ?>
+							<p><i>This comment is awaiting moderation.</i></p><?php
+						else:
+							echo $comment->comment_content; 
+						endif;
+
+						?>						
+
 					</div>
 				</div>
 			</div>

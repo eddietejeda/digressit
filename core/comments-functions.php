@@ -419,7 +419,7 @@ function list_posts($args = array('number' => -1, 'category_name' => null ) )
 	<?php
 	$permalink = get_bloginfo('siteurl')."/".$wp->query_vars['commentbrowser_function'].'/'.$post->ID;
 	?>
-	<li><a href="<?php echo $permalink; ?>"><?php echo get_the_title($post->ID); ?> (<?php echo get_post_comment_count($post->ID); ?>)</a></li>
+	<li><a href="<?php echo $permalink; ?>"><?php echo get_the_title($post->ID); ?> (<?php echo get_post_comment_count($post->ID, null, null, null); ?>)</a></li>
 	<?php endforeach;
 	?>
 	</ol>
