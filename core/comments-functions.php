@@ -519,13 +519,16 @@ function getCommentCount($title)
 
 /* REDO THIS FUNCTION */
 $comments_for_counting = null;
-function get_post_comment_count($post_ID, $metatag = null, $metavalue = null){
+function get_post_comment_count($post_ID, $metatag = null, $metavalue = null, $only_approved = 1){
 	global $wpdb, $comments_for_counting;
 	
+	if($only_approved == 1){
+		$only_approved_sql = " AND c.comment_approved = 1 ";
+	}
 	//echo "postid" . $post_ID;
 	$sql = "SELECT * FROM $wpdb->comments c 
 			WHERE c.comment_post_ID = $post_ID 
-			AND c.comment_approved = 1 
+			$only_approved_sql
 			AND c.comment_type = ''";	
 
 	$comments_for_counting = $wpdb->get_results($sql);		

@@ -58,7 +58,7 @@ function mainpage_default_menu(){
 	 global $post;
 	 $frontpage_posts = get_posts('numberposts=-1&orderby='.$options['front_page_order_by'].'&order=' . $options['front_page_order']);
 	 foreach($frontpage_posts as $pp) :
-		$comment_count = get_post_comment_count($pp->ID);
+		$comment_count = get_post_comment_count($pp->ID, null, null, null);
 	 ?>
 	    <li><a href="<?php echo get_permalink($pp->ID); ?>"><?php echo get_the_title($pp->ID); ?> (<?php echo $comment_count;  ?>)</a></li>
 	 <?php endforeach; ?>
@@ -154,7 +154,7 @@ function mainpage_content_display($frontpage_posts){
 				}
 				echo "</p>";
 				
-				$comment_count = get_post_comment_count($post_object->ID);
+				$comment_count = get_post_comment_count($post_object->ID, null, null, null);
 				?>
 
 				<div class="comment-count">

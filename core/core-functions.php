@@ -804,7 +804,7 @@ function digressit_core_print_scripts(){
 			<?php endif; ?>
 			var blog_ID = <?php echo $blog_id; ?>;
 			var current_blog_id = <?php echo $blog_id; ?>;
-			var request_uri = '<?php echo  $url['path']; ?>';
+			var request_uri = '<?php echo  esc_url(strip_tags($url['path'])); ?>';
 			<?php if(is_single()): ?>
 				var is_single = true;
 				var post_name = '<?php echo $post->post_name; ?>';

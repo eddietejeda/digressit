@@ -9,7 +9,10 @@
 
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
+
+	<?php if(!post_password_required()): ?>
 		<?php comments_template(); ?>
+	<?php endif; ?>
 		<?php get_stylized_title(); ?>
 		<div id="content" class="<?php echo $current_type; ?>">
 
@@ -20,7 +23,17 @@
 					<div class="navigation-previous"><?php previous_post_link('%link', '&laquo; Previous'); ?></div>
 					<div class="navigation-next"><?php next_post_link('%link', 'Next &raquo;'); ?> </div>
 					<div class="clear"></div>
-					<?php the_content(); ?>
+
+					<?php if(post_password_required()): ?>
+						<form method="post" action="http://digwp.com/wp-pass.php">
+						<p>This post is password protected. To view it please enter your password below:</p>
+						<p><label for="pwbox-531">Password:<br/>
+						<input type="password" size="20" id="pwbox-531" name="post_password"/></label><br/>
+						<input type="submit" value="Submit" name="Submit"/></p>
+						</form>
+					<?php else: ?>
+						<?php the_content(); ?>
+					<?php endif; ?>
 					<div class="navigation-previous"><?php previous_post_link('%link', '&laquo; Previous'); ?></div>
 					<div class="navigation-next"><?php next_post_link('%link', 'Next &raquo;'); ?> </div>
 					<div class="clear"></div>
