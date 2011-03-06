@@ -34,6 +34,7 @@ define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
 define("DIGRESSIT_REVISION", 229);
 define("DIGRESSIT_DIR", WP_PLUGIN_DIR ."/". $plugin_name);
 define("DIGRESSIT_CORE_DIR", DIGRESSIT_DIR . '/core');
+define("DIGRESSIT_EXTENSIONS_DIR", DIGRESSIT_DIR . '/extensions');
 define("DIGRESSIT_CORE_JS_DIR", DIGRESSIT_CORE_DIR . '/js');
 define("DIGRESSIT_CORE_IMG_DIR", DIGRESSIT_CORE_DIR . '/images');
 define("DIGRESSIT_CORE_CSS_DIR", DIGRESSIT_CORE_DIR . '/css');
@@ -80,7 +81,7 @@ add_action('init', 'digressit_init');
 
 
 
-//loading core extensions
+//load core files
 if ($handle = opendir(DIGRESSIT_CORE_DIR)) {
 	while (false !== ($file = readdir($handle))) {
 		if (!is_dir($file) && strstr($file, '-functions.php')) {
@@ -89,6 +90,18 @@ if ($handle = opendir(DIGRESSIT_CORE_DIR)) {
 	}
 	closedir($handle);
 }
+
+
+//load extensions
+if ($handle = opendir(DIGRESSIT_EXTENSIONS_DIR)) {
+	while (false !== ($file = readdir($handle))) {
+		if (is_dir(DIGRESSIT_EXTENSIONS_DIR . "/". $file) && file_exists(DIGRESSIT_EXTENSIONS_DIR . '/' . $file  . '/' . $file.".php")) {
+			require_once(DIGRESSIT_EXTENSIONS_DIR . '/' . $file  . '/' . $file.".php");
+		}
+	}
+	closedir($handle);
+}
+
 
 
 
