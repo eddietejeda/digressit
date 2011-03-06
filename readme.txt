@@ -12,16 +12,16 @@ Digress.it lets you comment paragraph by paragraph in the margins of a text
 
 Digress.it lets you comment paragraph by paragraph in the margins of a text.
 
-Since its initial launch Digress.it has been used by universities, publishers and governments across the world and is cited on various academic and scientific journals as an exemplary online collaboration tool.   
+Since its initial launch, Digress.it has been used by universities, publishers and governments across the world and is cited on various academic and scientific journals as an exemplary online collaboration tool.   For some examples check out http://digress.it/sites
 
-*WARNING* Please be aware that the default theme has changed considerably. If you have made any customizations to the theme, those changes might not carry
-over smoothly. Also be aware that some of the backend settings have changed and that some settings are reset.
+*WARNING* Please be aware that the default theme has changed considerably. If you have made customizations to version 2.x, chances are that those changes will not migrate
+over to 3.x smoothly. Also be aware that some settings have changed and are automatically reset during the update. Depending on your settings, after updating, Digress.it might be automatically disabled. This is okay. Just re-enable it and you're good to go.
 
-The there now a documented API that you can expand Digress.it from. More information can be found at http://digress.it/code
-
-Support: 
-https://groups.google.com/group/digressit
-
+* <b>Support</b>  If you have any questions, we have an active mailing list at https://groups.google.com/group/digressit
+* <b>Try it!</b> If you would like to use Digress.it but do not have a hosting service - you can register for free at: http://digress.it/wp-register.php
+* <b>Documentation</b> 
+* <b>Extend</b> There is now a documented API that you can reliably expand Digress.it from. More information can be found at http://digress.it/code
+* <b>Want to Contribute?</a> We are looking for help in a few different areas: Localization (support multiple languages), Documentation, JS optimization, Q&A and outreach. If you would like to help in any of these  areas, contact eddie@digress.it
 
 == Installation ==
 
@@ -32,10 +32,10 @@ https://groups.google.com/group/digressit
 == Changelog ==
 
 = 3.0 ==
-* Partial rewrite of code base
-* Based on WordPress 3.0+ hooks
+* Partial rewrite of code
+* Now everything is based on WordPress 3.0+ hooks
 * Support for Network Multi-site 
-* Expandable: Hooks scattered about for expandability
+* Very Expandable: Hooks scattered everywhere for easy customization
 * New Default theme
 * New Wireframe Theme
 * Support for IE7+, Safari 3+, Chrome, Firefox 3+
