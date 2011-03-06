@@ -525,6 +525,9 @@ function get_post_comment_count($post_ID, $metatag = null, $metavalue = null, $o
 	if($only_approved == 1){
 		$only_approved_sql = " AND c.comment_approved = 1 ";
 	}
+	else{
+		$only_approved_sql = " AND (c.comment_approved = 1 OR c.comment_approved = 0 )";		
+	}
 	//echo "postid" . $post_ID;
 	$sql = "SELECT * FROM $wpdb->comments c 
 			WHERE c.comment_post_ID = $post_ID 
