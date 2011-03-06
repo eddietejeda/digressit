@@ -19,7 +19,7 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 
 * <b>Support</b>  If you have any questions, we have an active mailing list at https://groups.google.com/group/digressit
 * <b>Try it!</b> If you would like to use Digress.it but do not have a hosting service - you can register for free at: http://digress.it/wp-register.php
-* <b>Documentation</b> 
+* <b>Documentation</b>  For more information on how to use digress.it check out http://digress.it/help/
 * <b>Extend</b> There is now a documented API that you can reliably expand Digress.it from. More information can be found at http://digress.it/code
 * <b>Want to Contribute?</a> We are looking for help in a few different areas: Localization (support multiple languages), Documentation, JS optimization, Q&A and outreach. If you would like to help in any of these  areas, contact eddie@digress.it
 

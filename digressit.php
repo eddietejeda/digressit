@@ -31,7 +31,7 @@ load_plugin_textdomain('digressit', 'wp-content/plugins/'.dirname(plugin_basenam
 define("DIGRESSIT_VERSION", '3.0');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
-define("DIGRESSIT_REVISION", 198);
+define("DIGRESSIT_REVISION", 229);
 define("DIGRESSIT_DIR", WP_PLUGIN_DIR ."/". $plugin_name);
 define("DIGRESSIT_CORE_DIR", DIGRESSIT_DIR . '/core');
 define("DIGRESSIT_CORE_JS_DIR", DIGRESSIT_CORE_DIR . '/js');
@@ -95,7 +95,7 @@ if ($handle = opendir(DIGRESSIT_CORE_DIR)) {
 function digressit_init(){
 	$options = get_option('digressit');
 	
-	if(!isset($options['revision']) || (int)$options['revision'] != DIGRESSIT_REVISION ){
+	if(!isset($options['revision']) || (int)$options['revision'] < 198 ){
 		activate_digressit();
 		
 		echo "<meta http-equiv=\"refresh\" content=\"1\" >";
@@ -110,42 +110,7 @@ function digressit_init(){
 
 function in_plugin_update_message()
 {
-    $data = w3_http_get(W3TC_README_URL);
-    
-    if ($data) {
-        $matches = null;
-        $regexp = '~==\s*Changelog\s*==\s*=\s*[0-9.]+\s*=(.*)(=\s*' . preg_quote(W3TC_VERSION) . '\s*=|$)~Uis';
-        
-        if (preg_match($regexp, $data, $matches)) {
-            $changelog = (array) preg_split('~[\r\n]+~', trim($matches[1]));
-            
-            echo '<div style="color: #f00;">Take a minute to update, here\'s why:</div><div style="font-weight: normal;">';
-            $ul = false;
-            
-            foreach ($changelog as $index => $line) {
-                if (preg_match('~^\s*\*\s*~', $line)) {
-                    if (!$ul) {
-                        echo '<ul style="list-style: disc; margin-left: 20px;">';
-                        $ul = true;
-                    }
-                    $line = preg_replace('~^\s*\*\s*~', '', htmlspecialchars($line));
-                    echo '<li style="width: 50%; margin: 0; float: left; ' . ($index % 2 == 0 ? 'clear: left;' : '') . '">' . $line . '</li>';
-                } else {
-                    if ($ul) {
-                        echo '</ul><div style="clear: left;"></div>';
-                        $ul = false;
-                    }
-                    echo '<p style="margin: 5px 0;">' . htmlspecialchars($line) . '</p>';
-                }
-            }
-            
-            if ($ul) {
-                echo '</ul><div style="clear: left;"></div>';
-            }
-            
-            echo '</div>';
-        }
-    }
+
 }
 
 
