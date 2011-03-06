@@ -523,10 +523,10 @@ function get_post_comment_count($post_ID, $metatag = null, $metavalue = null, $o
 	global $wpdb, $comments_for_counting;
 	
 	if($only_approved == 1){
-		$only_approved_sql = " AND c.comment_approved = 1 ";
+		$only_approved_sql = " AND c.comment_approved = '1' ";
 	}
 	else{
-		$only_approved_sql = " AND (c.comment_approved = 1 OR c.comment_approved = 0 )";		
+		$only_approved_sql = " AND (c.comment_approved = '1' OR c.comment_approved = '1' )";		
 	}
 	//echo "postid" . $post_ID;
 	$sql = "SELECT * FROM $wpdb->comments c 
