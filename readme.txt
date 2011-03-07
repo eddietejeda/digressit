@@ -14,20 +14,31 @@ Digress.it lets you comment paragraph by paragraph in the margins of a text.
 
 Since its initial launch, Digress.it has been used by universities, publishers and governments across the world and is cited on various academic and scientific journals as an exemplary online collaboration tool.   For some examples check out http://digress.it/sites
 
-*WARNING* Please be aware that the default theme has changed considerably. If you have made customizations to version 2.x, chances are that those changes will not migrate
-over to 3.x smoothly. Also be aware that some settings have changed and are automatically reset during the update. Depending on your settings, after updating, Digress.it might be automatically disabled. This is okay. Just re-enable it and you're good to go.
 
-* <b>Support</b>  If you have any questions, we have an active mailing list at https://groups.google.com/group/digressit
-* <b>Try it!</b> If you would like to use Digress.it but do not have a hosting service - you can register for free at: http://digress.it/wp-register.php
-* <b>Documentation</b>  For more information on how to use digress.it check out http://digress.it/help/
-* <b>Extend</b> There is now a documented API that you can reliably expand Digress.it from. More information can be found at http://digress.it/code
-* <b>Want to Contribute?</a> We are looking for help in a few different areas: Localization (support multiple languages), Documentation, JS optimization, Q&A and outreach. If you would like to help in any of these  areas, contact eddie@digress.it
+* <b>Support</b> - If you have any questions, we have an active mailing list at https://groups.google.com/group/digressit
+* <b>Try it!</b> - If you would like to use Digress.it but do not have a hosting service - you can register for free at: http://digress.it/wp-register.php
+* <b>Documentation</b> -  For more information on how to use digress.it check out http://digress.it/help/
+* <b>Extend</b> - There is now a documented API that you can reliably expand Digress.it from. More information can be found at http://digress.it/code
+* <b>Want to Contribute?</a> - We are looking for help in a few different areas: Localization (support multiple languages), Documentation, JS optimization, Q&A and outreach. If you would like to help in any of these  areas, contact eddie@digress.it
 
 == Installation ==
 
 1. Upload `digressit` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to the Appearance menu and review the settings. The Digress.it theme should have been automatically activated.
+
+
+== Screenshots ==
+* The front page of the site
+* A selected paragraph with corresponding comments
+* The navigation bar
+* Filter through the comments using the comment browser
+
+== Upgrade Notice == 
+
+Please be aware that the default theme has changed considerably. If you have made customizations to version 2.x, chances are that those changes will not migrate
+over to 3.x smoothly. Also be aware that some settings have changed and are automatically reset during the update. Depending on your settings, after updating, Digress.it might be automatically disabled. This is okay. Just re-enable it and you're good to go.
+
 
 == Changelog ==
 
