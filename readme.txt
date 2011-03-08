@@ -2,9 +2,9 @@
 Contributors: visudo
 Donate link: http://digress.it
 Tags: comments, annotation, discussion, commenting, documents, paragraph, education, government
-Requires at least: 3.0
+Requires at least: 2.9
 Tested up to: 3.1
-Stable tag: 3.0
+Stable tag: 3.0.0
 
 Digress.it lets you comment paragraph by paragraph in the margins of a text
 
@@ -12,14 +12,14 @@ Digress.it lets you comment paragraph by paragraph in the margins of a text
 
 Digress.it lets you comment paragraph by paragraph in the margins of a text.
 
-Since its initial launch, Digress.it has been used by universities, publishers and governments across the world and is cited on various academic and scientific journals as an exemplary online collaboration tool.   For some examples check out http://digress.it/sites
+Since its initial launch, Digress.it has been used by universities, publishers and governments across the world and is cited on various academic and scientific journals as an exemplary online collaboration tool.   For some examples check out http://digress.it/examples
 
 
-* <b>Support</b> - If you have any questions, we have an active mailing list at https://groups.google.com/group/digressit
+* <b>Support</b> - If you have any questions, there is an active mailing list at https://groups.google.com/group/digressit
 * <b>Try it!</b> - If you would like to use Digress.it but do not have a hosting service - you can register for free at: http://digress.it/wp-register.php
-* <b>Documentation</b> -  For more information on how to use digress.it check out http://digress.it/help/
+* <b>Documentation</b> -  For more information on how to use Digress.it check out http://digress.it/help/
 * <b>Extend</b> - There is now a documented API that you can reliably expand Digress.it from. More information can be found at http://digress.it/code
-* <b>Want to Contribute?</a> - We are looking for help in a few different areas: Localization (support multiple languages), Documentation, JS optimization, Q&A and outreach. If you would like to help in any of these  areas, contact eddie@digress.it
+* <b>Want to Contribute?</b> - We are looking for help in a few different areas: Localization (support multiple languages), Documentation, JS optimization, Q&A and outreach. If you would like to help in any of these  areas, contact eddie@digress.it
 
 == Installation ==
 
@@ -42,7 +42,7 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 
 == Changelog ==
 
-= 3.0 ==
+= 3.0.0 =
 * Partial rewrite of code
 * Now everything is based on WordPress 3.0+ hooks
 * Support for Network Multi-site 
@@ -50,6 +50,7 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 * New Default theme
 * New Wireframe Theme
 * Support for IE7+, Safari 3+, Chrome, Firefox 3+
+
 
 = 2.3.2 =
 * FIXED BUG#61 fixed problem that required user to reset to default settings after install
