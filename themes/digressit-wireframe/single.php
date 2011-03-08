@@ -49,5 +49,5 @@
 	<?php endwhile;?>
 <?php endif; ?>
 
-</div>
 <?php get_footer(); ?>
+</div>
