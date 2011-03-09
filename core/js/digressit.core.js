@@ -237,7 +237,7 @@ jQuery(document).ready(function() {
 		}, request_time_delay, this);
 	});
 	
-	jQuery('.ajax-simple').click(function (e) {
+	jQuery('.ajax-simple').live('click', function (e) {
 		if(jQuery(this).hasClass('disabled') || jQuery(this).hasClass('button-disabled')){
 			jQuery(this).css('color', '#DFE4E4');
 			return true;
@@ -273,6 +273,44 @@ jQuery(document).ready(function() {
 			}, 'json' );
 	});
 	
+	
+	//same as above, just a click event. hack fix for tabs not calling ajax.
+	jQuery('.ajax-simple-click').click(function (e) {
+		if(jQuery(this).hasClass('disabled') || jQuery(this).hasClass('button-disabled')){
+			jQuery(this).css('color', '#DFE4E4');
+			return true;
+		}
+		
+		var ajax_simple_classes = jQuery(this).attr('class').split(' ');
+
+		for(var i = 0; i < ajax_simple_classes.length; i++){
+			if(ajax_simple_classes[i] == 'ajax-simple-click'){
+				function_name = ajax_simple_classes[i+1];
+				break;				
+			}
+		}
+
+		//alert(function_name);
+		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
+		jQuery(this).css('cursor', 'wait');
+		jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
+			function( data ) {					
+				function_name = function_name.replace(/-/g, '_');// + "_ajax_result";
+
+				var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
+				if(eval(dynamic_call)){
+					eval('AjaxResult.' + function_name + '(data);');
+				}
+				else{
+					
+				}
+				
+				jQuery(this).css('cursor', 'auto');
+				
+				
+			}, 'json' );
+	});
+		
 	jQuery('.button-green').hover(function(){
 		
 		jQuery(this).css('cursor', 'pointer');
