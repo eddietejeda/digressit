@@ -84,7 +84,7 @@ add_action('init', 'digressit_init');
 //load core files
 if ($handle = opendir(DIGRESSIT_CORE_DIR)) {
 	while (false !== ($file = readdir($handle))) {
-		if (!is_dir($file) && strstr($file, '-functions.php')) {
+		if (!@is_dir($file) && strstr($file, '-functions.php')) {
 			require_once(DIGRESSIT_CORE_DIR . '/' . $file);
 		}
 	}
@@ -95,7 +95,7 @@ if ($handle = opendir(DIGRESSIT_CORE_DIR)) {
 //load extensions
 if ($handle = opendir(DIGRESSIT_EXTENSIONS_DIR)) {
 	while (false !== ($file = readdir($handle))) {
-		if (is_dir(DIGRESSIT_EXTENSIONS_DIR . "/". $file) && file_exists(DIGRESSIT_EXTENSIONS_DIR . '/' . $file  . '/' . $file.".php")) {
+		if (@is_dir(DIGRESSIT_EXTENSIONS_DIR . "/". $file) && file_exists(DIGRESSIT_EXTENSIONS_DIR . '/' . $file  . '/' . $file.".php")) {
 			require_once(DIGRESSIT_EXTENSIONS_DIR . '/' . $file  . '/' . $file.".php");
 		}
 	}
