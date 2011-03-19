@@ -5,14 +5,9 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments-functions.php' == basename(
 endif;
 
 add_action('init', 'commentbrowser_flush_rewrite_rules' );
-
-
 add_filter('query_vars', 'commentbrowser_query_vars' );
 add_action('generate_rewrite_rules', 'commentbrowser_add_rewrite_rules' );
 add_action('template_redirect', 'commentbrowser_template_redirect' );
-
-
-
 //add_action('wp_print_styles', 'comments_wp_print_styles');
 //add_action('wp_print_scripts', 'comments_wp_print_scripts' );
 add_action('public_ajax_function', 'add_comment_ajax');
@@ -167,8 +162,12 @@ function add_comment_ajax($request_params){
 	$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->comments SET comment_text_signature = %s WHERE comment_ID = %d", $request_params['selected_paragraph_number'], $comment_ID) );
 
 
+
+
 	//TODO: FOR FUTURE VERSIONS we will just use comment meta
 	add_metadata('post', $request_params['comment_post_ID'], 'comment_text_signature', $request_params['selected_paragraph_number'], true);
+
+	add_metadata('comment', $comment_ID, 'paragraph', $request_params['selected_paragraph_number'], true) ;
 
 	$comment_date = date('m/d/y');
 	

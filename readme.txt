@@ -42,6 +42,14 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 
 == Changelog ==
 
+= 3.1 =
+* Hide error messages when loading extensions
+* Javascript is now compressed, cutting down the size of the JS download by half
+* body tag now has unique id based out of blog name (in multi-site, for specific css hacks)
+* Future proofing: using add_metadata API for comment paragraph number
+* Adminstrators now get a warning when they do not have permalinks enabled
+* Table of Contents summary is now fixed
+
 = 3.0.0 =
 * Partial rewrite of code
 * Now everything is based on WordPress 3.0+ hooks

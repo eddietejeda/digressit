@@ -132,9 +132,13 @@ h1, h2, h3, h4, h5, h6{
 
 
 .navigation li {
-	line-height: 130%;
+
 }
 
+.previews{
+	position : fixed;
+	right: 170px;
+}
 
 .lightbox-submit, .lightbox-button, .button, .submit {
   -moz-box-shadow: 0 0 1px #AAAAAA;
@@ -408,7 +412,7 @@ z-index:0;
 
 
 .commentcount1 {
-	background:url("images/comment_blue_1digit.png") no-repeat scroll 2px 2px transparent;
+	background:url("images/comment_blue_1digit.png") no-repeat scroll 1px 2px transparent;
 	color:white;
 	font-size:12px;
 	font-weight:bold;
@@ -450,7 +454,11 @@ z-index:0;
 .textblock p{
 	padding: 0px;
 	margin:0px;
-	line-height: 20px;
+	line-height: 24px;
+}
+
+p, li{
+	line-height: 24px;
 }
 
 
@@ -803,8 +811,8 @@ h2 a{
 }
 
 h2{
-	line-height: 30px;
-	padding: 25px;
+	line-height: 35px;
+	padding: 15px 25px 30px;
 }
 
 .entry h2{

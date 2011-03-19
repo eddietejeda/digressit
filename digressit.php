@@ -4,7 +4,7 @@ Plugin Name: Digress.it
 Plugin URI: http://digress.it
 Description:  Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
-Version: 3.0
+Version: 3.1
 Author URI: http://eddietejeda.com
 License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
 
@@ -28,7 +28,7 @@ $plugin_name = str_replace("/", "", str_replace(basename( __FILE__),"",plugin_ba
 
 load_plugin_textdomain('digressit', 'wp-content/plugins/'.dirname(plugin_basename(__FILE__)).'/languages');
 
-define("DIGRESSIT_VERSION", '3.0');
+define("DIGRESSIT_VERSION", '3.1');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
 define("DIGRESSIT_REVISION", 229);
@@ -104,7 +104,11 @@ if ($handle = opendir(DIGRESSIT_EXTENSIONS_DIR)) {
 
 
 
-
+/**
+ * Check to see if this revision requires an reset of options. 
+ * @todo This function should be a bit smarter
+ *
+ */
 function digressit_init(){
 	$options = get_option('digressit');
 	
@@ -114,21 +118,13 @@ function digressit_init(){
 		echo "<meta http-equiv=\"refresh\" content=\"1\" >";
 		
 	}	
-	
-
-	
-	
-}
-
-
-function in_plugin_update_message()
-{
-
 }
 
 
 
-
+/**
+ * Loads default settings into 	add_option('digressit', $options), initializes theme 
+ */
 function activate_digressit(){
 	global $wpdb;
 	$options = get_option('digressit');
@@ -205,49 +201,24 @@ function activate_digressit(){
 	$options['enable_instant_content_search'] = 'false';
 	$options['enable_instant_comment_search'] = 'false';
 	$options['show_pages_in_menu'] = 0;
-
-
-
-
 	$options['table_of_contents_label'] = 'Table of Contents';
 	$options['comments_by_section_label'] = 'Comments by Section';
 	$options['comments_by_users_label'] = 'Comments by Users';
 	$options['general_comments_label'] = 'General Comments';
-
-
 	$options['sidebar_position'] = 'sidebar-widget-position-left';
 	$options['auto_hide_sidebar'] = 'sidebar-widget-auto-hide';
 	$options['show_comment_count_in_sidebar'] = 1;
 	$options['revision'] = DIGRESSIT_REVISION;
 	$options['version'] = DIGRESSIT_VERSION;
-	
 	$options['custom_style_sheet'] = '';
 	$options['custom_header_image'] = '';
 	$options['use_cdn'] = 0;
 	$options['cdn'] = 'http://c0006125.cdn2.cloudfiles.rackspacecloud.com';
-
-
-
-
 	$options['frontpage_list_style'] = 'list-style-decimal';
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-		
 	$options['commentpress_upgraded_to_digress_it'] = $digressit_installation_key;
 	$options['digressit_community_hostname'] = $digressit_community_hostname;
 	$options['digressit_client_password'] = $digressit_client_password;
 	$options['digressit_installation_key'] = $digressit_installation_key;
-
 	$options['content_parser'] = 'standard_digressit_content_parser';
 	$options['comments_parser'] = 'standard_digressit_comment_parser';
 	$options['commentbox_parser'] = 'grouping_digressit_commentbox_parser';
@@ -327,19 +298,38 @@ function activate_digressit(){
 		}
 	}
 	switch_theme('digressit-default', 'digressit-default');	
-	//$ct = current_theme_info();
 }
 
 
+/**
+ * Switches back to default theme
+ */
 function deactivate_digressit(){
 	switch_theme('default', 'default');	
 }
 
 
+/**
+ * Creates menu in the admin page. Also detects permalink status
+ */
 function digressit_add_admin_menu() {
+	global $wp_rewrite;
 	add_submenu_page( 'themes.php', 'Digress.it', 'Digress.it', 'administrator', 'digressit.php', 'digressit_theme_options_page');
+
+	if(!$wp_rewrite->permalink_structure){
+		add_action( 'admin_notices', 'permalink_required_notice' );
+	}
 }
 
+
+function permalink_required_notice(){
+		echo "<div id='permalink-required-notice' class='updated fade'><p>Warning: Digress.it requires permalinks to be enabled. Please go to <a href='".get_bloginfo('url')."/wp-admin/options-permalink.php'>Permalink Settings</a> and make sure that <b>Default</b> is not selected</p></div>";	
+}
+
+/**
+ * Creates the theme options page. Prints out HTML
+ * @todo secure forms
+ */
 
 function digressit_theme_options_page() {
 	global $wpdb, $digressit_content_function, $digressit_comments_function, $digressit_commentbox_function, $blog_id;
@@ -619,7 +609,9 @@ function digressit_theme_options_page() {
 
 
 
-
+/**
+ * This function is to future-proof how media is handled. If we are using CDN it bybasses local media assets
+ */
 function get_digressit_media_uri($filepath){
 	$options = get_option('digressit');
 	
@@ -632,9 +624,16 @@ function get_digressit_media_uri($filepath){
 }
 
 
+/**
+ * Returns the system path where Digress.it is installed
+ */
 function get_digressit_theme_path(){
 	return DIGRESSIT_THEMES_DIR."/".basename(get_template_directory());;
 }
+
+/**
+ * Returns the URL path where Digress.it is installed
+ */
 function get_digressit_theme_uri(){
 	return DIGRESSIT_THEMES_DIR . get_current_theme();
 }
@@ -677,6 +676,10 @@ function print_dropdown($name, $options = array(), $selected, $id=''){
 	echo "</select>";
 }
 
+
+/**
+ * Checks to see if this is Wordpress MU (pre WP 3.0) or WP 3.0+
+ */
 function is_mu_or_network_mode(){
 
 	$is_multiuser = false;
@@ -688,6 +691,9 @@ function is_mu_or_network_mode(){
 	return 	$is_multiuser;
 }
 
+/**
+ * Checks to see if this page is the table of contents
+ */
 function is_frontpage(){
 	global $is_frontpage, $is_mainpage, $blog_id;
 	
@@ -695,8 +701,6 @@ function is_frontpage(){
 		return false;
 	}
 
-	
-	//var_dump(is_front_page());
 	if(is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
 		if(is_home() || is_front_page()){
 			if($blog_id == 1){		
@@ -709,6 +713,9 @@ function is_frontpage(){
 }
 
 
+/**
+ * Checks to see if this page is the table of contents
+ */
 function is_mainpage(){
 	global $is_frontpage, $is_mainpage, $blog_id;
 	
@@ -727,7 +734,9 @@ function is_mainpage(){
 }
 
 
-
+/**
+ * A somewhat crude way to detect user browser
+ */
 function current_browser() {
     $userAgent = strtolower($_SERVER['HTTP_USER_AGENT']);
 
@@ -778,6 +787,9 @@ function current_browser() {
     );
 }
 
+/**
+ * Checks to see if we are in the comment-browser section
+ */
 function is_commentbrowser(){
 	global $is_commentbrowser;
 	return $is_commentbrowser;

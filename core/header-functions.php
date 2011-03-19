@@ -19,17 +19,20 @@ function header_default_top_menu(){
 function digressit_body_class(){
 	global $blog_id ;
 	$request_root = parse_url($_SERVER['REQUEST_URI']);
-	//var_dump(is_commentbrowser());
+	
+	
+	$blog_name_unique = ereg_replace("[^A-Za-z0-9]", "-", strtolower(get_bloginfo('name') ));
+	
 	if(function_exists('is_commentbrowser') && is_commentbrowser()){
-		$current_page_name .= ' comment-browser ';	
+		$current_page_name .= ' comment-browser '. $blog_name_unique . ' ';	
 	}
 	elseif(is_multisite() && $blog_id == 1 && is_frontpage()){
-		$current_page_name = ' frontpage ';	
+		$current_page_name = ' frontpage '. $blog_name_unique . ' ';	
 	}
 	else{
 		$current_page_name .= basename(get_bloginfo('home'));
 		if(is_home()){
-			$current_page_name .= ' site-home ';
+			$current_page_name .= ' site-home '. $blog_name_unique . ' ';
 		}	
 	}
 	return $current_page_name;

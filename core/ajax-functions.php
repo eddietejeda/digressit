@@ -13,13 +13,17 @@ add_action('template_redirect', 'ajax_template' );
 
 
 
-// Flush your rewrite rules if you want pretty permalinks
+/**
+ * Flush your rewrite rules if you want pretty permalinks
+ */
 function ajax_flush_rewrite_rules() {
 	global $wp_rewrite;
 	$wp_rewrite->flush_rules();
 }
 
-// Create some extra variables to accept when passed through the url
+/**
+ * Create some extra variables to accept when passed through the url
+ */
 function ajax_query_vars( $query_vars ) {
 	$myvars = array( 'inc_ajax' );
 	$query_vars = array_merge( $query_vars, $myvars );
@@ -27,7 +31,9 @@ function ajax_query_vars( $query_vars ) {
 }
 
 
-// Create a rewrite rule if you want pretty permalinks
+/**
+ * Create a rewrite rule if you want pretty permalinks
+ */
 function ajax_add_rewrite_rules( $wp_rewrite ) {
 
 	$wp_rewrite->add_rewrite_tag( "%inc_ajax%", "([^/]+)", "inc_ajax=" );
@@ -40,10 +46,9 @@ function ajax_add_rewrite_rules( $wp_rewrite ) {
 	return $wp_rewrite;
 }
 
-
-
-
-// Let's echo out the content we are looking to dynamically grab before we load any template files
+/**
+ * Let's echo out the content we are looking to dynamically grab before we load any template files
+ */
 function ajax_template() {
 	global $wp, $wpdb;
 	global $current_user;
