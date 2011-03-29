@@ -6,7 +6,7 @@ Author: Eddie A Tejeda
 Version: 3.0
 Author URI: http://www.visudo.com
 License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
-Tags: buddypress, annotation, comments, discussion, documents
+Tags: buddypress, comments, annotation, discussion, commenting, paragraph, education, transparency
 
 Special thanks to:	
 The developers of JQuery @ www.jquery.com
@@ -120,7 +120,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .comment-browser .comment-goto{
-	display:block;
+	display:none;
 	font-size:10px;
 	font-weight:bold;
 }

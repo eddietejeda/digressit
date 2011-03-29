@@ -1,7 +1,7 @@
 === Digress.it ===
 Contributors: visudo
 Donate link: http://digress.it
-Tags: comments, annotation, discussion, commenting, documents, paragraph, education, government
+Tags: comments, annotation, discussion, commenting, paragraph, documents, education, government
 Requires at least: 2.9
 Tested up to: 3.1
 Stable tag: 3.0.0

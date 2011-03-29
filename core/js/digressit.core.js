@@ -81,6 +81,8 @@ jQuery(document).ready(function() {
 	})
 
 	
+
+
 	
 	jQuery("#mainpage .navigation a").hover(function (e) {
 		jQuery('#mainpage .preview').hide();
@@ -389,6 +391,7 @@ jQuery(document).ready(function() {
 	
     jQuery(window).scroll(function () { 
 	
+		//this should not fire every single time! do proper checks to help performance
 		if(is_single){
 			jQuery('#commentbox').position_main_elements();
 		}
