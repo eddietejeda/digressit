@@ -74,7 +74,7 @@ body{
 }
 
 #wrapper{
-	background: transparent repeat scroll 0 0 #E6E6E6;
+	background: #E6E6E6 repeat scroll 0 0;
 }
 
 .frontpage .widget-digressit-block h3{
@@ -136,8 +136,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .previews{
-	position : fixed;
-	right: 170px;
+	right: 0;
 }
 
 .lightbox-submit, .lightbox-button, .button, .submit {
@@ -179,7 +178,7 @@ h1, h2, h3, h4, h5, h6{
 	box-shadow: 1px 2px 3px #AAAAAA;
 }
 
-.#live-content-search, #live-comment-search, .search-result{
+#live-content-search, #live-comment-search, .search-result{
 	width: 150px;
 }
 
@@ -739,7 +738,7 @@ a{
 
 #mainpage .navigation a {
 	color:black !important;
-	text-decoration:none !important!;
+	text-decoration:none !important;
 	border: 0 !important;
 }
 
@@ -1021,7 +1020,7 @@ div#item-header{
 	font-weight: normal !important;
 	letter-spacing: auto !important;
 	padding: auto !important;
-	position:relative; !important;
+	position:relative !important;
 	right: auto !important;
 	left: 0 !important;
 	text-align: left !important;
