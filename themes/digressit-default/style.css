@@ -74,7 +74,7 @@ body{
 }
 
 #wrapper{
-	background: #E6E6E6 repeat scroll 0 0;
+	background: transparent repeat scroll 0 0;
 }
 
 .frontpage .widget-digressit-block h3{
@@ -1091,6 +1091,6 @@ div#item-header{
 }
 
 
-#lightbox-login p{
+#lightbox-login {
     margin: 0;
 }
