@@ -580,8 +580,8 @@ function get_users_who_have_commented()
 					WHERE c.comment_approved = 1 
 					AND p.post_status = 'publish'
 					AND c.comment_type = ''
-					GROUP BY c.comment_ID
-					ORDER BY c.comment_ID";
+					GROUP BY c.comment_author
+					ORDER BY c.comment_author";
 	
 	
 	//echo $sql;
