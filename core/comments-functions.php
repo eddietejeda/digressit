@@ -802,6 +802,7 @@ function commentbrowser_comments_by_contributor(){
     else :
         $curauth = get_userdatabylogin(urldecode($wp->query_vars['commentbrowser_params']));
 
+        var_dump($curauth->ID);
         private_print($curauth);
     endif;
 
