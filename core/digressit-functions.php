@@ -16,18 +16,20 @@ function live_content_search_ajax($request_params){
 		$message = null;		
 
 
-        $search_item = esc_sql($request_params['value']);
-
-
-        $sql = "SELECT LOCATE('".$search_item."',post_content) as post_id,post_content,, p.* FROM $wpdb->posts p WHERE p.post_status = 'publish' AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) GROUP BY p.ID LIMIT 3";
-
+		$sql = "SELECT * FROM $wpdb->posts p  
+				WHERE p.post_status = 'publish' 
+				AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) 
+				AND ( p.post_content LIKE \"%".esc_sql($request_params['value'])."%\"  OR p.post_content LIKE \"%".esc_sql($request_params['value'])."%\" ) 
+				GROUP BY p.ID LIMIT 3";
+	
+	
 		$posts = $wpdb->get_results($sql);			
 		//var_dump($posts);
 
 		$message = null;
 		foreach($posts as $p){
 			$message .= "<div class='search-result'>".
-						"<div class='post-title'><a href='".get_permalink($p->ID)."'>".  get_the_title($p->ID)."</a></div>".
+						"<div class='post-title'><a href='".get_permalink($p->ID)."'>".$p->post_title."</a></div>".
 						"</div>";
 		}
 		
@@ -64,11 +66,12 @@ function live_comment_search_ajax($request_params){
 		WHERE p.ID = c.comment_post_ID
 		AND c.comment_approved =1
 		AND p.post_status = 'publish'
-		AND c.comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
+		AND (c.comment_content LIKE '%".esc_sql($request_params['value'])."%'
+              OR c.comment_content LIKE '".esc_sql($request_params['value'])."%' 
+              OR c.comment_content LIKE '%".esc_sql($request_params['value'])."')
+        GROUP BY comment_ID LIMIT 3";
 		$posts = $wpdb->get_results($sql);			
-
-        //$sql = "SELECT LOCATE('".$search_item."',post_content) as ID,post_content FROM $wpdb->posts p WHERE p.post_status = 'publish' AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) ";
-
+		
 		//var_dump($posts);
 
 		foreach($posts as $post){
