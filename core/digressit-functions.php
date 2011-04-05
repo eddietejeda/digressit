@@ -19,7 +19,7 @@ function live_content_search_ajax($request_params){
         $search_item = esc_sql($request_params['value']);
 
 
-        $sql = "SELECT LOCATE('".$search_item."',post_content) as ID,post_content FROM $wpdb->posts p WHERE p.post_status = 'publish' AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) ";
+        $sql = "SELECT LOCATE('".$search_item."',post_content) as ID,post_content FROM $wpdb->posts p WHERE p.post_status = 'publish' AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) GROUP BY p.ID LIMIT 3";
 
 		$posts = $wpdb->get_results($sql);			
 		//var_dump($posts);
@@ -66,7 +66,9 @@ function live_comment_search_ajax($request_params){
 		AND p.post_status = 'publish'
 		AND c.comment_content LIKE '%".esc_sql($request_params['value'])."%' GROUP BY comment_ID LIMIT 3";
 		$posts = $wpdb->get_results($sql);			
-		
+
+        //$sql = "SELECT LOCATE('".$search_item."',post_content) as ID,post_content FROM $wpdb->posts p WHERE p.post_status = 'publish' AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) ";
+
 		//var_dump($posts);
 
 		foreach($posts as $post){
