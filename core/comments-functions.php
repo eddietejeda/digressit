@@ -801,7 +801,7 @@ function commentbrowser_comments_by_contributor(){
         $curauth = get_user_by('id', $wp->query_vars['commentbrowser_params']);
     else :
         echo "by login: ". urldecode($wp->query_vars['commentbrowser_params']);
-    	$curauth = get_user_by('login', urldecode($wp->query_vars['commentbrowser_params']));
+    	$curauth = get_user_by('slug', urldecode($wp->query_vars['commentbrowser_params']));
     endif;
 
     var_dump($curauth->ID);
