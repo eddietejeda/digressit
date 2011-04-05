@@ -804,7 +804,7 @@ function commentbrowser_comments_by_contributor(){
     	$curauth = get_user_by('login', urldecode($wp->query_vars['commentbrowser_params']));
     endif;
 
-
+    echo $curauth->ID;
 	if(isset($curauth->ID)){
 		$identifier = $curauth->ID;
 	}
