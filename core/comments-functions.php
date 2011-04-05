@@ -580,8 +580,8 @@ function get_users_who_have_commented()
 					WHERE c.comment_approved = 1 
 					AND p.post_status = 'publish'
 					AND c.comment_type = ''
-					GROUP BY c.comment_author
-					ORDER BY c.comment_author";
+					GROUP BY c.comment_ID
+					ORDER BY c.comment_ID";
 	
 	
 	//echo $sql;
@@ -801,9 +801,6 @@ function commentbrowser_comments_by_contributor(){
         $curauth = get_user_by('id', $wp->query_vars['commentbrowser_params']);
     else :
         $curauth = get_userdatabylogin(urldecode($wp->query_vars['commentbrowser_params']));
-
-        var_dump($curauth->ID);
-        private_print($curauth);
     endif;
 
 
