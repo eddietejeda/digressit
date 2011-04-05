@@ -445,11 +445,11 @@ function list_users()
 
 			if($user->user_id){
 				$comment_user = get_userdata($user->ID); 
-				$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $user->user_login;
+				$profile_url = get_bloginfo('home')."/comments-by-contributor/" . urlencode($user->user_login);
 				echo "<a href='$profile_url'>$user->display_name ($user->comments_per_user)</a> ";						
 			}
 			else{
-				$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $user->comment_author;						
+				$profile_url = get_bloginfo('home')."/comments-by-contributor/" . urlencode($user->comment_author);
 				echo "<a href='$profile_url'>$user->comment_author ($user->comments_per_user)</a> ";						
 			}
 			?>			
