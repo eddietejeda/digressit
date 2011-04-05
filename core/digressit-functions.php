@@ -9,7 +9,7 @@ function live_content_search_ajax($request_params){
 
 	$excluded_words = array('the','and');
 	//every three letters we give results
-	if(strlen($request_params['value']) > 4 && !in_array($request_params['value'], $excluded_words)){
+	if(strlen($request_params['value']) > 3 && !in_array($request_params['value'], $excluded_words)){
 
 
 		$posts = null;
@@ -50,7 +50,7 @@ function live_comment_search_ajax($request_params){
 
 	$excluded_words = array('the','and');
 	//every three letters we give results
-	if(strlen($request_params['value']) > 4 && !in_array($request_params['value'], $excluded_words)){
+	if(strlen($request_params['value']) > 3 && !in_array($request_params['value'], $excluded_words)){
 
 
 		//$blog_list = get_blog_list( 0, 'all' );
