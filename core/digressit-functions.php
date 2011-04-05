@@ -16,20 +16,18 @@ function live_content_search_ajax($request_params){
 		$message = null;		
 
 
-		$sql = "SELECT * FROM $wpdb->posts p  
-				WHERE p.post_status = 'publish' 
-				AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) 
-				AND ( p.post_content LIKE \"%".esc_sql($request_params['value'])."%\"  OR p.post_content LIKE \"".esc_sql($request_params['value'])."%\" ) 
-				GROUP BY p.ID LIMIT 3";
-	
-	
+        $search_item = esc_sql($request_params['value']);
+
+
+        $sql = "SELECT LOCATE('".$search_item."',post_content) as ID,post_content FROM $wpdb->posts p WHERE p.post_status = 'publish' AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) ";
+
 		$posts = $wpdb->get_results($sql);			
 		//var_dump($posts);
 
 		$message = null;
 		foreach($posts as $p){
 			$message .= "<div class='search-result'>".
-						"<div class='post-title'><a href='".get_permalink($p->ID)."'>".$p->post_title."</a></div>".
+						"<div class='post-title'><a href='".get_permalink($p->ID)."'>".  get_the_title($p->ID)."</a></div>".
 						"</div>";
 		}
 		
