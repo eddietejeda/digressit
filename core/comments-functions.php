@@ -800,7 +800,7 @@ function commentbrowser_comments_by_contributor(){
     if(is_numeric($wp->query_vars['commentbrowser_params'])) :
         $curauth = get_user_by('id', $wp->query_vars['commentbrowser_params']);
     else :
-        echo "by login";
+        echo "by login: ". urldecode($wp->query_vars['commentbrowser_params']);
     	$curauth = get_user_by('login', urldecode($wp->query_vars['commentbrowser_params']));
     endif;
 
