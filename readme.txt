@@ -4,7 +4,7 @@ Donate link: http://digress.it
 Tags: comments, annotation, discussion, commenting, paragraph, documents, education, government
 Requires at least: 2.9
 Tested up to: 3.1
-Stable tag: 3.0.0
+Stable tag: 3.1.1
 
 Digress.it lets you comment paragraph by paragraph in the margins of a text
 
@@ -42,6 +42,9 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 
 == Changelog ==
 
+= 3.1.1 = 
+* Fix issue where minified JS was not in released version
+
 = 3.1 =
 * Hide error messages when loading extensions
 * Javascript is now compressed, cutting down the size of the JS download by half
@@ -49,8 +52,11 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 * Future proofing: using add_metadata API for comment paragraph number
 * Adminstrators now get a warning when they do not have permalinks enabled
 * Table of Contents summary is now fixed
+* Comment/Content search works more reliably
+* Minor CSS fixes through out
 
-= 3.0.0 =
+
+= 3.0 =
 * Partial rewrite of code
 * Now everything is based on WordPress 3.0+ hooks
 * Support for Network Multi-site 
