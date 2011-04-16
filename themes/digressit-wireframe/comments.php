@@ -40,7 +40,7 @@ global $blog_id;
 			$custom_comment_open = true;
 			if(function_exists('custom_conditional_comment_open')){
 				$custom_comment_open = custom_conditional_comment_open();
-			}
+			}			
 			?>
 		
 			<?php if ( comments_open() && $custom_comment_open) : ?>
