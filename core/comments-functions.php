@@ -97,8 +97,8 @@ function add_comment_ajax($request_params){
 	//extract($request_params);
 	global $wpdb, $current_user, $blog_id;
 
-	$time = current_time('mysql', $gmt = get_option('gmt_offset')); 
-	$time_gmt = current_time('mysql', $gmt = 0); 
+	$time = current_time('mysql'); 
+	$time_gmt = current_time('mysql', 1); 
 	
 	$display_name = isset($current_user->display_name) ? $current_user->display_name : $request_params['display_name'];
 	$user_email = isset($request_params['user_email']) ? $request_params['user_email'] : $current_user->user_email;
