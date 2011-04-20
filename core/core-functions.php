@@ -187,8 +187,8 @@ function lightbox_custom_login(){
 function regexp_digressit_content_parser($html){
 	$matches = array();
 	//we need to do this twice in case there are empty tags surrounded by empty p tags
-	$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
-	$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
+	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
+	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 
 	$options = get_option('digressit');
 	if($options['parse_list_items'] == 1){
@@ -314,9 +314,14 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	global $post;
 	$matches = array();
 	$html = strip_selected_tags($html, '<hr>');
+	
+	
 	//we need to do this twice in case there are empty tags surrounded by empty p tags
-	$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
-	$html = preg_replace('/<(?!input|br|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
+	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
+	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
+
+	$html = str_replace("</iframe>", "&nbsp;</iframe>", $html);
+
 
 	$options = get_option('digressit');
 	
@@ -338,6 +343,7 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	
 	
 	$html = wpautop(force_balance_tags($html));
+	
 	$html = str_replace('&nbsp', '', $html);
 	$html = str_replace('&copy;', '(c)', $html);
 

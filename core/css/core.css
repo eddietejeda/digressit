@@ -52,6 +52,15 @@ h1, h2, h3, h4, h5, h6, h7, h8{
 
 
 
+.error404 #content h2{
+    line-height: 35px;
+    padding: 0 35%;	
+}
+
+body.error404 {
+	padding-top: 10px;
+}
+
 
 .widget-header  {
 	background-color:#D5E8F1;

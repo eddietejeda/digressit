@@ -75,9 +75,65 @@ jQuery(document).ready(function() {
 		}
 	});
 	
+
+
+	jQuery(window).keyup(function(e){
+		var UP = 38;
+		var DOWN = 40;
+		var paragraphnumber;
+		var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+
+
+		if ( key == UP || key == DOWN){
+			var selected_paragraph_number = parseInt(jQuery('#selected_paragraph_number').val());
+			if(selected_paragraph_number > 0){
+			}
+			else{
+				selected_paragraph_number = 1;
+			}
+			
+			if(selected_paragraph_number ){			
+				if(key == UP){
+					paragraphnumber = selected_paragraph_number -1;
+				}
+				else if(key == DOWN){
+					paragraphnumber = selected_paragraph_number +1;
+				}
+				
+			
+				jQuery('#respond').hide();			
 	
-	jQuery('.input').keypress(function(e){
-		//alert(e.target);
+				jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+				jQuery('#respond').show();			
+				jQuery('.comment' ).hide();
+				jQuery('.paragraph-' + paragraphnumber ).show();
+				jQuery("#no-comments").hide();				
+	
+				jQuery('.textblock').removeClass('selected-textblock');
+				var commentboxtop = jQuery('#commentbox').position().top;
+	
+				if(paragraphnumber > 0){
+					jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+	
+					var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
+					var scrollto = (top > 200)  ? (top - 100) : 0;
+	
+					if(iOS){
+						jQuery('#commentbox').position_main_elements();						
+					}
+			
+					jQuery(window).scrollTo(scrollto , 100);
+	
+	
+					jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
+				}
+				jQuery('#selected_paragraph_number').val(paragraphnumber);
+	
+				document.location.hash = '#' + paragraphnumber;			
+			}
+		}
+		
+		
 	})
 
 	
