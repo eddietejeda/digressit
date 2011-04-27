@@ -715,17 +715,18 @@ function get_root_domain(){
 
 function digressit_core_print_scripts(){
 	global $current_user, $post, $blog_id;
+	$options = get_option('digressit');
+
 	wp_deregister_script('autosave');
     //wp_deregister_script( 'jquery' );
     //wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js');
-    if (!is_admin()) {
+    if (!is_admin() && $options['debug_mode'] != 1) {
         wp_deregister_script( 'jquery' );
         wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js');
     }
     wp_enqueue_script( 'jquery' );
 
 
-	$options = get_option('digressit');
 
 
 	$url = parse_url(get_root_domain(). $_SERVER["REQUEST_URI"]);

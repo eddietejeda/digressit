@@ -43,6 +43,8 @@ function live_content_search_ajax($request_params){
 
 
 
+
+
 function live_comment_search_ajax($request_params){
 	extract($request_params);
 	global $wpdb, $current_user;

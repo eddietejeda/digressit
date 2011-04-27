@@ -1,4 +1,4 @@
 <?php 
 /* This file exists only for backwards compatability */
-require_once('digressit.pthp');
+require_once('digressit.php');
 ?>

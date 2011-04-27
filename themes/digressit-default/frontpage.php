@@ -21,7 +21,7 @@
 			
 			<h2>Congratulations on installing the Multi-site edition of Digress.it</h2>
 			
-			<p>This is the frontpage to your Multi-site community.</p><br>
+			<p>This is the frontpage to your Multi-site community.</p>
 			<p>To edit this page you can take one of the following actions:<p>
 			<ul style="width: 75%">
 				<li>Login as an the admin and edit your "<a href="<?php bloginfo('url') ?>/wp-admin/options-reading.php">Reading Settings</a>." Choose "A static page" option and select the page you want to display here</li>

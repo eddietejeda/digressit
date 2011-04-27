@@ -4,7 +4,7 @@ Plugin Name: Digress.it
 Plugin URI: http://digress.it
 Description:  Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
-Version: 3.1.1
+Version: 3.1.2
 Author URI: http://eddietejeda.com
 License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
 
@@ -28,7 +28,7 @@ $plugin_name = str_replace("/", "", str_replace(basename( __FILE__),"",plugin_ba
 
 load_plugin_textdomain('digressit', 'wp-content/plugins/'.dirname(plugin_basename(__FILE__)).'/languages');
 
-define("DIGRESSIT_VERSION", '3.1');
+define("DIGRESSIT_VERSION", '3.1.2');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
 define("DIGRESSIT_REVISION", 229);
@@ -437,6 +437,13 @@ function digressit_theme_options_page() {
 			<td style="width: 200px"><b><?php _e('General Comments Label');  ?></b></td>
 			<td><?php print_input_text('general_comments_label', $options['general_comments_label']); ?></td>
 		</tr>
+		
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Keyboard Navigation');  ?></b></td>
+			<td><?php print_dropdown('keyboard_navigation', array('No' => 0, 'Yes' => 1), $options['keyboard_navigation']); ?></td>
+		</tr>
+		
 
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Frontpage List Style');  ?></b></td>
@@ -456,7 +463,7 @@ function digressit_theme_options_page() {
 
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Allow General Comments');  ?></b></td>
-			<td><?php print_dropdown('allow_general_comments', array('No' => 0, 'Yes' => '1'), $options['allow_general_comments']); ?></td>
+			<td><?php print_dropdown('allow_general_comments', array('No' => 0, 'Yes' => 1), $options['allow_general_comments']); ?></td>
 		</tr>
 
 		<tr valign="top">
