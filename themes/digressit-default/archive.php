@@ -22,7 +22,7 @@
 	endif;
 ?>
 
-<div id="content" class="<?php echo $current_type; ?>">
+<div id="content" class="<?php echo $current_type; ?>" role="main">
 
 <?php if (have_posts()) : 
 
@@ -47,7 +47,7 @@ while (have_posts()) : the_post(); ?>
 
 
 			<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
-				<div class="entry">
+				<div class="entry" role="article">
 					<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 
 					<?php the_excerpt('<p class="serif">Read the rest of this entry &raquo;</p>'); ?>
@@ -60,7 +60,7 @@ while (have_posts()) : the_post(); ?>
 
 	<?php endwhile;?>
 
-	<div class="navigation">
+	<div class="navigation" role="navigation">
 		<div class="alignleft"><?php next_posts_link('&laquo; Older Entries') ?></div>
 		<div class="alignright"><?php previous_posts_link('Newer Entries &raquo;') ?></div>
 	</div>

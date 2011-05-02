@@ -3,13 +3,13 @@
 <div class="content-wrapper">
 
 
-<div id="search-wrapper">
+<div id="search-wrapper" role="main">
 <?php get_stylized_title(); ?>
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 
 			<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
-				<div class="entry">
+				<div class="entry" role="article">
 					<a href="<?php the_permalink(); ?>"><h3><?php the_title(); ?></h3></a>
 					<?php 
 
@@ -38,7 +38,7 @@
 <?php else: ?>
 
 			<div class="post" id="post-<?php the_ID(); ?>">
-				<div class="entry">
+				<div class="entry" role="article">
 					No Results
 				</div>	
 			</div>			

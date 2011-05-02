@@ -3,7 +3,7 @@
 
 <head profile="http://gmpg.org/xfn/11">
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8,chrome=1">
 <title><?php wp_title('&laquo;', true, 'right'); ?> <?php bloginfo('name'); ?></title>
 <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
@@ -32,19 +32,19 @@ global $digressit;
 
 <?php do_action('optional_pre_header'); ?>
 <div id="header">
-	<div class="site-title">
+	<div class="site-title" role="banner">
 		<div class="bubblearrow"></div>		
 		<?php if(has_action('add_header_image')): ?>
 			<?php do_action('add_header_image'); ?>
-			<div class="description"><?php bloginfo('description'); ?></div>
+			<div class="description" role="contentinfo"><?php bloginfo('description'); ?></div>
 		<?php else: ?>
-			<a href="<?php bloginfo('home') ?>"><h1><?php bloginfo('name'); ?></h1></a>
+			<a href="<?php bloginfo('home') ?>"><h1 role="heading"><?php bloginfo('name'); ?></h1></a>
 		<?php endif; ?>
 
 	</div>
 		
 
-	<div id="menu-primary">
+	<div id="menu-primary" role="navigation">
 	<?php if(has_action('primary_menu')): ?>
 			<?php do_action('primary_menu'); ?>
 			<?php do_action('optional_menu_item'); ?>
@@ -82,7 +82,7 @@ global $digressit;
 
 	<?php if($digressit['enable_instant_content_search'] == 'true'): ?>
 	<div id="instant-content-search">
-		<input type="text" value="Search Content" class="ajax-live live-content-search content-field-area" id="live-content-search">
+		<input type="search" value="Search Content" class="ajax-live live-content-search content-field-area" id="live-content-search">
 		<div class="loading-throbber"></div>
 		<div id="live-content-search-result"></div>
 	</div>

@@ -5,9 +5,9 @@
 
 <?php get_stylized_title(); ?>
 
-<div id="content">
+<div id="content" role="main">
 	<div id="frontpage">
-		<div class="entry">
+		<div class="entry" role="article">
 		
 		<?php
 		if(is_active_sidebar('frontpage-content')){

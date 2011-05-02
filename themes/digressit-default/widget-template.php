@@ -10,7 +10,7 @@ Template Name: Widgets Page
 	<div id="widget-page">
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-				<div id="content" class="<?php echo $current_type; ?>">
+				<div id="content" class="<?php echo $current_type; ?>" role="main">
 
 					<?php get_widgets(); ?>
 

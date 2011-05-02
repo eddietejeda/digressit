@@ -15,7 +15,7 @@ global $current_browser_section, $wp, $blog_id ;
 <div id="container">
 
 
-	<div id="content">
+	<div id="content" role="main">
 		<div id="mainpage"  class="comment-browser">
 			<?php 
 

@@ -7,10 +7,10 @@
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 		<?php get_stylized_title(); ?>
-		<div id="content" class="<?php echo $current_type; ?>">
+		<div id="content" class="<?php echo $current_type; ?>" role="main">
 
 			<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
-				<div class="entry">
+				<div class="entry" role="article">
 					<?php get_stylized_content_header(); ?>
 					<?php the_content(); ?>
 					<?php dynamic_sidebar('Page Content'); ?>					

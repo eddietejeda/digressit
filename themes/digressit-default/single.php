@@ -13,14 +13,14 @@
 		<?php comments_template(); ?>
 	<?php endif; ?>
 		<?php get_stylized_title(); ?>
-		<div id="content" class="<?php echo $current_type; ?>">
+		<div id="content" class="<?php echo $current_type; ?>" role="main">
 
 			<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
-				<div class="entry">
+				<div class="entry" role="article">
 					<?php get_stylized_content_header(); ?>
 					
-					<div class="navigation-previous"><?php previous_post_link('%link', '&laquo; Previous'); ?></div>
-					<div class="navigation-next"><?php next_post_link('%link', 'Next &raquo;'); ?> </div>
+					<div class="navigation-previous" role="navigation"><?php previous_post_link('%link', '&laquo; Previous'); ?></div>
+					<div class="navigation-next" role="navigation"><?php next_post_link('%link', 'Next &raquo;'); ?> </div>
 					<div class="clear"></div>
 
 					<?php if(post_password_required()): ?>
@@ -33,8 +33,8 @@
 					<?php else: ?>
 						<?php the_content(); ?>
 					<?php endif; ?>
-					<div class="navigation-previous"><?php previous_post_link('%link', '&laquo; Previous'); ?></div>
-					<div class="navigation-next"><?php next_post_link('%link', 'Next &raquo;'); ?> </div>
+					<div class="navigation-previous" role="navigation"><?php previous_post_link('%link', '&laquo; Previous'); ?></div>
+					<div class="navigation-next" role="navigation"><?php next_post_link('%link', 'Next &raquo;'); ?> </div>
 					<div class="clear"></div>
 				</div>	
 				<div class="edit-this"><?php edit_post_link(); ?></div>

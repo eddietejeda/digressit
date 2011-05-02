@@ -1,4 +1,4 @@
-<div id="footer">
+<div id="footer" role="complementary">
 	<?php
 	
 	

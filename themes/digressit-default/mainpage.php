@@ -19,7 +19,7 @@ $digressit_options = get_option('digressit');
 <?php get_dynamic_widgets(); ?>
 <?php get_stylized_title(); ?>
 
-<div id="content">
+<div id="content" role="main">
 	<div id="mainpage">		
 		<h3 class="toc"><?php echo $digressit_options['table_of_contents_label']; ?></h3>
 		<div class="description"><?php echo html_entity_decode(get_bloginfo('description')); ?></div>

@@ -21,7 +21,7 @@ else:
 <?php get_dynamic_widgets(); ?>
 
 
-<div id="content">
+<div id="content" role="main">
 	<div id="frontpage">
 		
 
