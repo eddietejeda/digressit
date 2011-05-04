@@ -72,11 +72,12 @@ jQuery(document).ready(function() {
 		}
 	});
 	
-
 	if(keyboard_navigation == true){
 		jQuery(window).keyup(function(e){
 			var UP = 38;
 			var DOWN = 40;
+			var C = 67;
+			var ESC = 27;
 			var paragraphnumber;
 			var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
 	
@@ -127,7 +128,17 @@ jQuery(document).ready(function() {
 		
 					document.location.hash = '#' + paragraphnumber;			
 				}
-			}		
+			}
+			else if (key == C)
+			{
+				jQuery('#comment').focus().keyup(function(e){
+					var k = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+					if (k == ESC)
+					{
+						jQuery('#comment').blur();
+					}
+				});
+			}	
 		});
 	}
 

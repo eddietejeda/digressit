@@ -755,6 +755,10 @@ function digressit_core_print_scripts(){
 			<?php else: ?>
 				var is_single = false;
 			<?php endif; ?>
+			
+			<?php if($options['debug_mode'] == 1): ?>
+				var keyboard_navigation = true;
+			<?php endif; ?>
 
 		</script>	
 		<?php
