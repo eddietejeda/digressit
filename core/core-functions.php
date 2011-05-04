@@ -116,7 +116,7 @@ function get_dynamic_widgets(){
 function get_single_default_widgets(){
 	
 	$options = get_option('digressit');
-	if ( !is_active_sidebar('single-sidebar') ) : 
+	if ( !is_active_sidebar('single-sidebar') && (int)$options['enable_sidebar'] !== 0) : 
 		
 		?>
 		
