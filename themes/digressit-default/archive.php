@@ -2,26 +2,6 @@
 
 <div class="container">
 
-<?php 
-	if ( !is_dynamic_sidebar('Archive Sidebar') ) : 
-		
-		?>
-		
-		<?php
-	
-		ListPosts::widget($args =array(), array('title' => 'Posts', 
-															'auto_hide' => true, 
-															'position' => 'left', 
-															'order_by' => 'ID', 
-															'order_type' => 'DESC', 
-															'categorize' => false, 
-															'categories' => null, 
-															'show_category_titles' => false));
-	else:
-		get_dynamic_widgets();
-	endif;
-?>
-
 <div id="content" class="<?php echo $current_type; ?>" role="main">
 
 <?php if (have_posts()) : 
