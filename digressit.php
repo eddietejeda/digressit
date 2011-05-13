@@ -102,6 +102,11 @@ if ($handle = opendir(DIGRESSIT_EXTENSIONS_DIR)) {
 	closedir($handle);
 }
 
+if($_REQUEST['digressit-embed']){
+	include_once('core/embed-functions.php');	
+	$digressit_embed = new Digress_It_Embed();
+}
+
 
 
 /**

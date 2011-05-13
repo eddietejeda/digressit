@@ -310,7 +310,7 @@ function is_utf8($string) {
  * @param string $tags Optional
  * @return array An array of each text block with the proper html tags for comment count and extra tags for adding javascript hooks
  */
-function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8'){
+function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8', $return_paragraphs = false){
 	global $post;
 	$matches = array();
 	$html = strip_selected_tags($html, '<hr>');
@@ -366,7 +366,9 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 			$matches[] = $match->asXML();
 		}
 	}
-	else{
+	else
+	{
+	
 		if(current_user_can('edit_posts')){
 			
 			$matches[] = "There was a problem parsing your content. Please make sure that every HTML tag is properly nested and closed. 
@@ -398,6 +400,10 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	
 	}
 
+	if ($return_paragraphs)
+	{
+		return $matches;
+	}
 	//var_dump($result);
 
 	foreach($matches as $key=>$paragraph){
