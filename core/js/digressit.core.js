@@ -56,16 +56,20 @@ jQuery(document).ready(function() {
 
 	//jQuery('#dynamic-sidebar').effect("bounce", { direction: 'right', times:1 }, 1500);
 
+
 	// Paragraph embeds
 	jQuery('.paragraphembed a')
-	.bind('mouseover', function(i){
+	.bind('click', function(e){
+		e.preventDefault();
 		var id = jQuery(this).attr('rel');
 		jQuery('#embedcode-' + id).show();
-		jQuery('#embedcode-' + id + ' textarea').focus().select();
-	})
-	.bind('mouseout', function(i){
-		var id = jQuery(this).attr('rel');
-		jQuery('#embedcode-' + id).hide();
+		return false;
+	});
+	
+	jQuery('.closeme, .textblock').bind('click', function(e){
+		e.preventDefault();
+		jQuery('.embedcode').hide();
+		return false;	
 	});
 
 
@@ -163,7 +167,7 @@ jQuery(document).ready(function() {
 			// Previous
 			else if (key == J)
 			{
-				var prev = jQuery('.navigation-previous').eq(0);
+				var prev = jQuery('.navigation-previous a').eq(0);
 				if (prev.length == 1)
 				{
 					window.location = prev.attr('href');
@@ -173,10 +177,10 @@ jQuery(document).ready(function() {
 			// Next
 			else if (key == K)
 			{
-				var prev = jQuery('.navigation-next').eq(0);
-				if (prev.length == 1)
+				var next = jQuery('.navigation-next a').eq(0);
+				if (next.length == 1)
 				{
-					window.location = prev.attr('href');
+					window.location = next.attr('href');
 				}
 			}	
 		});

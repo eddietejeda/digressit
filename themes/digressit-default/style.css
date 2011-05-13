@@ -1111,10 +1111,14 @@ div#item-header{
 .embedcode {
 	display: none;
 	position: absolute;
-	left: 10px;
-	top: 0px;
-	padding: 5px;
+	left: -2px;
+	top: -2px;
 	z-index: 100;
+	background: white;
+	border: 1px solid #ccc;
+	padding: 5px;
+	min-width: 200px;
 }
-
+.embedcode b { font-size: 13px; }
 .embedcode:hover { display: block; }
+.closeme { position: absolute; font-size: 60%; right: 3px; top: -1px; }

@@ -310,7 +310,8 @@ function is_utf8($string) {
  * @param string $tags Optional
  * @return array An array of each text block with the proper html tags for comment count and extra tags for adding javascript hooks
  */
-function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8', $return_paragraphs = false){
+function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8', $return_paragraphs = false)
+{
 	global $post;
 	$matches = array();
 	$html = strip_selected_tags($html, '<hr>');
@@ -449,7 +450,17 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 		}
 		$block_content = "<div id='textblock-$number' class='textblock'>
 			<span class='paragraphnumber'><a href='$permalink#$number'>$number</a></span>
-			<span class='paragraphembed'><a href='#' rel='$number'>&ldquo;</a><span class='embedcode' id='embedcode-$number'><textarea><blockquote cite='$permalink#$number'>".force_balance_tags($paragraph)."</blockquote></textarea></span></span>
+			
+			<span class='paragraphembed'>
+				<a href='#' rel='$number'>&ldquo;</a>
+				<span class='embedcode' id='embedcode-$number'>
+					<a href='#' class='closeme'>x</a>
+					<b>Cite</b> <input type='text' value='".$post->guid."&digressit-embed=$number&format=html'><br>
+					<b>Embed</b><br>
+					<textarea><blockquote cite='$permalink#$number'>".force_balance_tags($paragraph)."</blockquote></textarea>
+				</span>
+			</span>
+				
 			<span  title='There $numbertext for this paragraph' class='commenticonbox'><small class='commentcount commentcount".$digit_count."'>".$comment_count."</small></span>
 			<span class='paragraphtext'>".force_balance_tags($paragraph)."</span>
 		</div>" .  $morelink;
