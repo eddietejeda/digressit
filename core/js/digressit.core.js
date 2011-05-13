@@ -74,32 +74,38 @@ jQuery(document).ready(function() {
 	
 	if(keyboard_navigation == true){
 		jQuery(window).keyup(function(e){
-			var UP = 38;
-			var DOWN = 40;
-			var C = 67;
-			var ESC = 27;
+			var UP = 38; // Prev paragraph
+			var DOWN = 40; // Next paragraph
+			var C = 67; // Enter comment box
+			var ESC = 27; // Leave comment box
+			var J = 74; // Previous section
+			var K = 75; // Next section
 			var paragraphnumber;
 			var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
-	
-			if ( key == UP || key == DOWN){
+			
+			// Next/prev paragraph
+			if ( key == UP || key == DOWN)
+			{
 				var selected_paragraph_number = parseInt(jQuery('#selected_paragraph_number').val());
-				if(selected_paragraph_number > 0){
+				if(selected_paragraph_number > 0)
+				{
+					// Nothing to do
 				}
-				else{
+				else
+				{
 					selected_paragraph_number = 1;
 				}
 				
-				if(selected_paragraph_number ){			
+				if(selected_paragraph_number ){
+							
 					if(key == UP){
-						paragraphnumber = selected_paragraph_number -1;
+						paragraphnumber = selected_paragraph_number - 1;
 					}
 					else if(key == DOWN){
-						paragraphnumber = selected_paragraph_number +1;
+						paragraphnumber = selected_paragraph_number + 1;
 					}
-					
-				
+									
 					jQuery('#respond').hide();			
-		
 					jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
 					jQuery('#respond').show();			
 					jQuery('.comment' ).hide();
@@ -109,7 +115,8 @@ jQuery(document).ready(function() {
 					jQuery('.textblock').removeClass('selected-textblock');
 					var commentboxtop = jQuery('#commentbox').position().top;
 		
-					if(paragraphnumber > 0){
+					if(paragraphnumber > 0)
+					{
 						jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 		
 						var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
@@ -124,20 +131,44 @@ jQuery(document).ready(function() {
 		
 						jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
 					}
+					
 					jQuery('#selected_paragraph_number').val(paragraphnumber);
-		
 					document.location.hash = '#' + paragraphnumber;			
 				}
 			}
+			
+			// Move to comment field
 			else if (key == C)
 			{
 				jQuery('#comment').focus().keyup(function(e){
 					var k = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+					
+					// Move out of the comment field
 					if (k == ESC)
 					{
 						jQuery('#comment').blur();
 					}
 				});
+			}
+			
+			// Previous
+			else if (key == J)
+			{
+				var prev = jQuery('.navigation-previous').eq(0);
+				if (prev.length == 1)
+				{
+					window.location = prev.attr('href');
+				}
+			}
+			
+			// Next
+			else if (key == K)
+			{
+				var prev = jQuery('.navigation-next').eq(0);
+				if (prev.length == 1)
+				{
+					window.location = prev.attr('href');
+				}
 			}	
 		});
 	}
