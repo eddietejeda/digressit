@@ -56,8 +56,17 @@ jQuery(document).ready(function() {
 
 	//jQuery('#dynamic-sidebar').effect("bounce", { direction: 'right', times:1 }, 1500);
 
-
-
+	// Paragraph embeds
+	jQuery('.paragraphembed a')
+	.bind('mouseover', function(i){
+		var id = jQuery(this).attr('rel');
+		jQuery('#embedcode-' + id).show();
+		jQuery('#embedcode-' + id + ' textarea').focus().select();
+	})
+	.bind('mouseout', function(i){
+		var id = jQuery(this).attr('rel');
+		jQuery('#embedcode-' + id).hide();
+	});
 
 
 
@@ -1985,4 +1994,6 @@ function commentbox_expanded_state(){
 	jQuery('#comment').val('');
 	jQuery('#commentbox').css('overflow-y', 'scroll');
 }
+
+
 
