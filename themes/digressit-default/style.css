@@ -1119,6 +1119,7 @@ div#item-header{
 	padding: 5px;
 	min-width: 200px;
 }
+.embedcode input, .embedcode textarea { z-index: 101; font-size: 100%; }
 .embedcode b { font-size: 13px; }
 .embedcode:hover, .embedcode input:focus, .empedcode textarea:focus { display: block; }
 .closeme { position: absolute; font-size: 60%; right: 3px; top: -1px; }
