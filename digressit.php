@@ -4,16 +4,19 @@ Plugin Name: Digress.it
 Plugin URI: http://digress.it
 Description:  Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
-Version: 3.1.2
+Version: 3.2-beta
 Author URI: http://eddietejeda.com
 License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
 
 Special thanks to:	
-Matteo Bicocchi @ www.open-lab.com
 The developers of JQuery @ www.jquery.com
-Mark James, for the famfamfam iconset @ http://www.famfamfam.com/lab/icons/silk/
-Joss Winn and Tony Hirst @ writetoreply.com
+Joss Winn, Tony Hirst and Alex Bilbie @ University of Lincoln 
 Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
+
+Previous Versions:
+Mark James, for the famfamfam iconset @ http://www.famfamfam.com/lab/icons/silk/
+Matteo Bicocchi @ www.open-lab.com
+
 */
 
 global $commentbrowser, $blog_id, $current_user, $current_user_comments, $development_mode, $testing_mode, $production_mode;
@@ -28,7 +31,7 @@ $plugin_name = str_replace("/", "", str_replace(basename( __FILE__),"",plugin_ba
 
 load_plugin_textdomain('digressit', 'wp-content/plugins/'.dirname(plugin_basename(__FILE__)).'/languages');
 
-define("DIGRESSIT_VERSION", '3.1.2');
+define("DIGRESSIT_VERSION", '3.2');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
 define("DIGRESSIT_REVISION", 229);
@@ -310,7 +313,7 @@ function activate_digressit(){
  * Switches back to default theme
  */
 function deactivate_digressit(){
-	switch_theme('default', 'default');	
+	switch_theme('twentyten', 'twentyten');	
 }
 
 
