@@ -66,7 +66,7 @@ jQuery(document).ready(function() {
 		return false;
 	});
 	
-	jQuery('.closeme, .textblock').bind('click', function(e){
+	jQuery('.closeme').bind('click', function(e){
 		e.preventDefault();
 		jQuery('.embedcode').hide();
 		return false;	
