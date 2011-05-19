@@ -107,9 +107,7 @@ class ListPostsWithCommentCount extends WP_Widget {
 			$sidebar_number = null;
 			if(isset($options['show_comment_count_in_sidebar'] ) && (int)$options['show_comment_count_in_sidebar'] == 0){
 				$sidebar_number = $section_number;
-
 				$commentcountclass  = 'section-number';					
-
 				$section_number++;
 			}
 			else{			
@@ -131,11 +129,8 @@ class ListPostsWithCommentCount extends WP_Widget {
 			}
 			?>
 			<div id="sidebar-item-<?php echo $post->ID; ?>" class="sidebar-item sidebar-<?php echo $rule_discussion_status; ?>">
-				
 				<span class="<?php echo $commentcountclass; ?>"><?php echo $sidebar_number; ; ?></span>
-				
 				<span class="sidebar-text"><a href="<?php echo get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a></span>
-				
 			</div>
 			<?php endforeach; ?>
 		<?php
@@ -181,7 +176,6 @@ class ListPostsWithCommentCount extends WP_Widget {
 		
 		
 		$instance = wp_parse_args( (array) $instance, $defaults ); 
-		//var_dump($instance);
 		?>
 
 		<p>
@@ -193,9 +187,6 @@ class ListPostsWithCommentCount extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'categorize' ); ?>"><?php _e('Categorize?', 'digressit'); ?></label>
 			<input class="checkbox" type="checkbox" <?php echo ($instance['categorize'] == 'on') ? " checked " : ""; ?> id="<?php echo $this->get_field_id( 'categorize' ); ?>" name="<?php echo $this->get_field_name( 'categorize' ); ?>" /> 
 		</p>
-
-
-		
 		<?php
 		
 

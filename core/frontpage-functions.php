@@ -2,8 +2,6 @@
 
 add_action('wp', 'frontpage_load');
 
-
-
 function frontpage_sidebar_widgets(){
 	$options = get_option('digressit');
 

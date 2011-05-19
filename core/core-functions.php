@@ -65,17 +65,11 @@ function digressit_setup(){
 		  'Sidebar' => __('A custom sidebar menu')  
 		)
 	);
-
-	
 }
 	
 
 /**
- * Hooks into the {@the_content} of each posts and breaks the text into an array.
- * *
- * @since 3.0.0
- *
- * @param string $html Required. Comment amount in post if > 0, else total comments blog wide.
+ * Simple wrapper function that prints calls action 'secondary_menu'
  */
 function get_secondary_menu(){
 	do_action('secondary_menu');
@@ -83,11 +77,7 @@ function get_secondary_menu(){
 
 
 /**
- * Hooks into the {@the_content} of each posts and breaks the text into an array.
- * *
- * @since 3.0.0
- *
- * @param string $html Required. Comment amount in post if > 0, else total comments blog wide.
+ * Simple wrapper that gets widgets by name
  */
 function get_widgets($widget_name){
 	return dynamic_sidebar($widget_name);
@@ -95,11 +85,7 @@ function get_widgets($widget_name){
 
 
 /**
- * Hooks into the {@the_content} of each posts and breaks the text into an array.
- * *
- * @since 3.0.0
- *
- * @param string $html Required. Comment amount in post if > 0, else total comments blog wide.
+ * Simple wrapper that gets widgets by the section they are on
  */
 function get_dynamic_widgets(){
 	do_action('add_dynamic_widget');
@@ -107,11 +93,7 @@ function get_dynamic_widgets(){
 
 
 /**
- * Hooks into the {@the_content} of each posts and breaks the text into an array.
- * *
- * @since 3.0.0
- *
- * @param string $html Required. Comment amount in post if > 0, else total comments blog wide.
+ * Gets 
  */
 function get_single_default_widgets(){
 	
@@ -177,13 +159,11 @@ function on_wp_head(){
 
 
 
-function lightbox_custom_login(){
-	//header('Location: /#login');
-	//die();
-}
 
-
-
+/* 
+ * @deprecated
+ * Previous versions of Digress.it used regexp to break apart paragraphs, but it doesn't work too well
+ */
 function regexp_digressit_content_parser($html){
 	$matches = array();
 	//we need to do this twice in case there are empty tags surrounded by empty p tags
@@ -197,11 +177,9 @@ function regexp_digressit_content_parser($html){
 	}
 	$html = html_entity_decode(force_balance_tags($html));
 
-
 	@preg_match_all('#<('.$tags.')>(.*?)</('.$tags.')>#si',$html,$matches_array);
 	$matches = $matches_array[0];
-
-		
+	
 	return  $matches;
 }
 
@@ -212,12 +190,9 @@ function discrete_digressit_content_parser($content){
 	$matches = array();
 	$paragraph_blocks = explode('[break]', $content);
 
-
 	$blocks = null;
 	$text_signatures = null;
 	$permalink = get_permalink($post->ID);
-
-
 
 	$defaults = array('post_id' => $post->ID);
 	$total_comments = get_comments($defaults);
@@ -235,7 +210,6 @@ function discrete_digressit_content_parser($content){
 				$comment_count++;
 			}
 		}
-		
 				
 		$paragraphnumber = '<span class="paragraphnumber">';
 	 	$numbertext = ($comment_count == 1) ?  'is one comment' : 'are '.$comment_count.' comments';
@@ -263,14 +237,11 @@ function discrete_digressit_content_parser($content){
 
 
 /**
- * strip_selected_tags ( string str [, string strip_tags[, strip_content flag]] )
- * ---------------------------------------------------------------------
  * Like strip_tags() but inverse; the strip_tags tags will be stripped, not kept.
  * strip_tags: string with tags to strip, ex: "<a><p><quote>" etc.
  * strip_content flag: TRUE will also strip everything between open and closed tag
  */
-function strip_selected_tags($str, $tags = "", $stripContent = false)
-{
+function strip_selected_tags($str, $tags = "", $stripContent = false){
     preg_match_all("/<([^>]+)>/i",$tags,$allTags,PREG_PATTERN_ORDER);
     foreach ($allTags[1] as $tag){
         if ($stripContent) {
@@ -316,13 +287,10 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	$matches = array();
 	$html = strip_selected_tags($html, '<hr>');
 	
-	
 	//we need to do this twice in case there are empty tags surrounded by empty p tags
 	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
-
 	$html = str_replace("</iframe>", "&nbsp;</iframe>", $html);
-
 
 	$options = get_option('digressit');
 	
@@ -330,37 +298,21 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	$text_signatures = null;
 	$permalink = get_permalink($post->ID);
 
-
-
 	$defaults = array('post_id' => $post->ID);
 	$total_comments = get_comments($defaults);
 	$total_count = count($total_comments);
-	
 		
 	if($options['parse_list_items'] == 1){
 		$html = preg_replace('/<(\/?ul|ol)>/', '', $html);
 		$html = preg_replace('/<li>/', '<p>*   ', $html);
 	}
 	
-	
-	$html = wpautop(force_balance_tags($html));
-	
+	$html = wpautop(force_balance_tags($html));	
 	$html = str_replace('&nbsp', '', $html);
 	$html = str_replace('&copy;', '(c)', $html);
-
-	//escape &entities;
-	//$html = preg_replace('/&[^; ]{0,6}.?/e', "((substr('\\0',-1) == ';') ? '\\0' : '&amp;'.substr('\\0',1))", $html);
 	$html = preg_replace("/&#?[a-z0-9]{2,8};/i","",$html);
-
-
-
-	//$html = str_replace('<a <br />;', '<a ', $html);
-	//$html = str_replace('<img <br />;', '<img ', $html);
-	
-	
 	
 	libxml_use_internal_errors(true);
-	//var_dump($html);
 	if($result = @simplexml_load_string(trim('<content>'.$html.'</content>'))){
 		$xml = $result->xpath('/content/'. $tags);
 		foreach($xml as $match){
@@ -369,43 +321,26 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	}
 	else
 	{
-	
-		if(current_user_can('edit_posts')){
-			
+		if(current_user_can('edit_posts')){		
 			$matches[] = "There was a problem parsing your content. Please make sure that every HTML tag is properly nested and closed. 
 			To validate your text, and to try and repair it, use the <a href='https://wordpress.org/extend/plugins/tidy-up/'>Tidy Up</a> plugin for WordPress.";
-
-
-			
 			if (!$result) {
 			    $errors = libxml_get_errors();
-
-				//var_dump($errors);
-			
-
 			    foreach ($errors as $error) {
 			        $error_messages .= display_xml_error($error, $xml). "<br>";
 			    }
-
 			    libxml_clear_errors();
-			}	
-			
+			}				
 			$matches[] = $error_messages;		
-			
 		}
 		else{
 			$matches[] = "Sorry! There was a problem loading the contents of this post. Please notify the site administrator.";
-			
-			
-		}
-	
+		}	
 	}
 
-	if ($return_paragraphs)
-	{
+	if ($return_paragraphs){
 		return $matches;
 	}
-	//var_dump($result);
 
 	foreach($matches as $key=>$paragraph){
 		$text_signature = $key+1;

@@ -8,8 +8,6 @@ add_action('init', 'commentbrowser_flush_rewrite_rules' );
 add_filter('query_vars', 'commentbrowser_query_vars' );
 add_action('generate_rewrite_rules', 'commentbrowser_add_rewrite_rules' );
 add_action('template_redirect', 'commentbrowser_template_redirect' );
-//add_action('wp_print_styles', 'comments_wp_print_styles');
-//add_action('wp_print_scripts', 'comments_wp_print_scripts' );
 add_action('public_ajax_function', 'add_comment_ajax');
 
 add_action('widgets_init', create_function('', 'return register_widget("CommentBrowserLinks");'));
@@ -21,7 +19,9 @@ add_action('add_commentbrowser', 'commentbrowser_general_comments');
 
 
 
-// Flush your rewrite rules if you want pretty permalinks
+/*
+ * Flush your rewrite rules if you want pretty permalinks
+ */
 function commentbrowser_flush_rewrite_rules() {
     global $wp_rewrite;
 
@@ -29,7 +29,9 @@ function commentbrowser_flush_rewrite_rules() {
 }
 
 
-// Create some extra variables to accept when passed through the url
+/*
+ * Create some extra variables to accept when passed through the url
+ */
 function commentbrowser_query_vars( $query_vars ) {
     $myvars = array('commentbrowser_function', 'commentbrowser_params');
     $query_vars = array_merge( $query_vars, $myvars );
@@ -39,7 +41,9 @@ function commentbrowser_query_vars( $query_vars ) {
 
 
 
-// Create a rewrite rule if you want pretty permalinks
+/*
+ * Create a rewrite rule if you want pretty permalinks
+ */
 function commentbrowser_add_rewrite_rules( $wp_rewrite ) {
 
 
@@ -54,7 +58,9 @@ function commentbrowser_add_rewrite_rules( $wp_rewrite ) {
 	return $wp_rewrite;
 }
 
-// Let's echo out the content we are looking to dynamically grab before we load any template files
+/*
+ * Let's echo out the content we are looking to dynamically grab before we load any template files
+ */
 function commentbrowser_template_redirect() {
     global $wp, $wpdb, $current_user, $current_browser_section, $is_commentbrowser;
 
@@ -75,24 +81,6 @@ function commentbrowser_template_redirect() {
 	
 }
 
-
-
-
-
-
-/*
-function comments_wp_print_scripts(){		
-	if(is_single()):
-		wp_enqueue_script('digressit.comments', get_digressit_media_uri('js/digressit.comments.js'), 'jquery', false, true );
-	endif;
-}
-*/
-
-
-
-
-
-
 function add_comment_ajax($request_params){
 	//extract($request_params);
 	global $wpdb, $current_user, $blog_id;
@@ -103,11 +91,8 @@ function add_comment_ajax($request_params){
 	$display_name = isset($current_user->display_name) ? $current_user->display_name : $request_params['display_name'];
 	$user_email = isset($request_params['user_email']) ? $request_params['user_email'] : $current_user->user_email;
 	$user_ID = isset($current_user->ID) ? $current_user->ID : '';
-
-//	var_dump($display_name);
-	
+		
 	$comment_moderation = get_option('comment_moderation');
-	
 	
 	$data = array(
 	    'comment_post_ID' => $request_params['comment_post_ID'],
@@ -123,8 +108,6 @@ function add_comment_ajax($request_params){
 	    'comment_approved' => (($comment_moderation) ? 0 : 1), //TODO: we kinda have to approve automatically. because we don't have a way to notify user of approval yet
 	);
 	
-	
-	
 
 	if(strlen($display_name) < 2){
 		die(json_encode(array('status' => 0, "message" => 'Please enter a valid name.')));				
@@ -139,34 +122,25 @@ function add_comment_ajax($request_params){
 	}
 	
 	/*
+	@TODO
 	if(digressit_live_spam_check_comment( $data )){
 		die(json_encode(array('status' => 0, "message" => 'Your comment looks like spam. You might want to try again with out links')));						
 	}
 	*/
-
-
 	
 	if($wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) as comment_exists FROM $wpdb->comments WHERE comment_author_email = $user_email AND $comment_content = %s " , $user_email, $request_params['comment']) ) > 0){
 		die(json_encode(array('status' => 0, "message" => 'This comment already exists')));		
 	}
 
 	
-	
-	
 	$comment_ID = wp_insert_comment($data);					
 	
 	$request_params['comment_ID'] = $comment_ID;
 	
 	
-	//TODO: we are moving away from the extra column
+	//TODO: we are moving away from the extra column, in FUTURE VERSIONS we will just use comment meta
 	$result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->comments SET comment_text_signature = %s WHERE comment_ID = %d", $request_params['selected_paragraph_number'], $comment_ID) );
-
-
-
-
-	//TODO: FOR FUTURE VERSIONS we will just use comment meta
 	add_metadata('post', $request_params['comment_post_ID'], 'comment_text_signature', $request_params['selected_paragraph_number'], true);
-
 	add_metadata('comment', $comment_ID, 'paragraph', $request_params['selected_paragraph_number'], true) ;
 
 	$comment_date = date('m/d/y');
@@ -200,9 +174,6 @@ function add_comment_ajax($request_params){
 	
 	
 	die(json_encode(array('status' => $status, "message" => $message)));
-	
-	
-	
 }
 
 function standard_digressit_comment_parser($comment, $args, $depth) {
@@ -218,16 +189,10 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 		
 	<div <?php comment_class($classes); ?> id="comment-<?php echo $current_blog_id ?>-<?php comment_ID() ?>">
 		<div id="div-comment-<?php echo $current_blog_id; ?>-<?php comment_ID(); ?>" class="comment-body">
-			
-			<div class="comment-header">
-				
+			<div class="comment-header">				
 				<div class="comment-author vcard">
-
 					<?php echo get_avatar( $comment, 15 ); ?>
-
-
 					<?php
-
 					if($comment->user_id){
 						$comment_user = get_userdata($comment->user_id); 
 						$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $comment_user->user_login;
@@ -238,12 +203,9 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 						echo "<a href='$profile_url'>$comment->comment_author</a>";						
 					}
 					?>
-					
-
 				</div>
 				
 				<div class="comment-meta">
-					
 					<?php if(is_single()):  ?>
 					<?php global $blog_id; ?>
 						<span class="comment-blog-id" value="<?php echo $blog_id; ?>"></span>
@@ -253,106 +215,86 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 					<span class="comment-id" value="<?php comment_ID(); ?>"></span>
 					<span class="comment-parent" value="<?php echo $comment->comment_parent; ?>"></span>
 					<span class="comment-paragraph-number" value="<?php echo $comment->comment_text_signature; ?>"></span>
-
-
 					<span class="comment-date"><a href="<?php get_permalink($comment->comment_post_ID); ?>#comment-<?php echo $current_blog_id ?>-<?php comment_ID() ?>"><?php comment_date('n/j/Y'); ?></a></span>
-					
-
-					
 					<div class="comment-goto">
 						<a href="<?php echo get_permalink($comment->comment_post_ID); ?>#<?php echo $comment->comment_text_signature; ?>">GO TO TEXT</a>
 					</div>
-
-
 					<?php do_action('digressit_custom_meta_data'); ?>
-
-										
 				</div>
 			</div>
 			<div class="comment-text">
-				
 				<?php 
 				if ($comment->comment_approved == '0'): ?>
 					<p><i>This comment is awaiting moderation.</i></p><?php
 				else:
 					comment_text();
 				endif;
-				
 				?>						
-				
 			</div>
 			
 			
 			<?php if(($depth < get_option('thread_comments_depth') || is_null($comment->comment_parent)) && (is_user_logged_in() || !get_option('comment_registration')) && is_single()): ?>
-			<div class="comment-reply comment-hover small-button" value="<?php comment_ID(); ?>">reply</div>
+				<div class="comment-reply comment-hover small-button" value="<?php comment_ID(); ?>">reply</div>
 			<?php endif; ?>
 
 			<?php do_action('digressit_custom_comment_footer'); ?>
 
 			<div class="comment-respond">
-			</div>
-			
+			</div>		
 		</div>
 	</div>
-	
-
 	<?php
 }
 
 
 function digressit_comment_form(){
-global $blog_id;
-?>
-
-<?php if(function_exists('display_recaptcha')):?>
-<form method="post" action="<?php bloginfo('url') ?>/wp-comments-post.php" id="add-comment">
-<?php else: ?>
-<form method="post" action="/" id="add-comment">
-<?php endif;?>
-
-	<?php if(!is_user_logged_in()): ?>
-
-
-		<?php if(function_exists('display_recaptcha')):?>
-			<p><input type="text" class="comment-field-area" id="display_name"  name="author" value="Your Name" ><p>
-			<p><input type="text" class="comment-field-area" id="user_email" name="email" value="Email"></p>
-
-		<?php else: ?>
-
-			<p><input type="text" class="comment-field-area" id="display_name"  name="display_name" value="Your Name" ><p>
-			<p><input type="text" class="comment-field-area" id="user_email" name="user_email" value="Email"></p>
-
-		<?php endif;?>
-		
-		
-		
-	<?php endif; ?>
-	<div id="textarea-wrapper">
-		<div class="left"></div>
-		<div class="right">
-		<textarea name="comment" class="comment-textarea comment-collapsed" id="comment">Click here add a new comment...</textarea>
-		</div>
-	</div>
-
-	<input name="blog_id" type="hidden"  value="<?php echo $blog_id; ?>" />
-	<input name="selected_paragraph_number" type="hidden" id="selected_paragraph_number"  value="0" />
-
-	<div id="submit-wrapper">
-		<div name="cancel-response" id="cancel-response" class="button link">Cancel</div>
-		<?php if(function_exists('display_recaptcha')):?>
-		<input type="submit" class="recaptcha-submit" name="submit" id="submit" value="submit">
-		<?php else: ?>
-		<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div>Submit Comment</div>
+	global $blog_id;
+	
+	if(function_exists('display_recaptcha')):?>
+	<form method="post" action="<?php bloginfo('url') ?>/wp-comments-post.php" id="add-comment">
+	<?php else: ?>
+	<form method="post" action="/" id="add-comment">
+	<?php endif;?>
+	
+		<?php if(!is_user_logged_in()): ?>
+			<?php if(function_exists('display_recaptcha')):?>
+				<p><input type="text" class="comment-field-area" id="display_name"  name="author" value="Your Name" ><p>
+				<p><input type="text" class="comment-field-area" id="user_email" name="email" value="Email"></p>
+			<?php else: ?>
+				<p><input type="text" class="comment-field-area" id="display_name"  name="display_name" value="Your Name" ><p>
+				<p><input type="text" class="comment-field-area" id="user_email" name="user_email" value="Email"></p>
+			<?php endif;?>
 		<?php endif; ?>
-	</div>
-	<?php comment_id_fields(); ?>
-	<?php do_action('comment_form', $post->ID); ?>
-	<?php do_action('digressit_after_comment_form'); ?>
-</form>
-<?php
+		
+		<div id="textarea-wrapper">
+			<div class="left"></div>
+			<div class="right">
+			<textarea name="comment" class="comment-textarea comment-collapsed" id="comment">Click here add a new comment...</textarea>
+			</div>
+		</div>
+	
+		<input name="blog_id" type="hidden"  value="<?php echo $blog_id; ?>" />
+		<input name="selected_paragraph_number" type="hidden" id="selected_paragraph_number"  value="0" />
+	
+		<div id="submit-wrapper">
+			<div name="cancel-response" id="cancel-response" class="button link">Cancel</div>
+			<?php if(function_exists('display_recaptcha')):?>
+			<input type="submit" class="recaptcha-submit" name="submit" id="submit" value="submit">
+			<?php else: ?>
+			<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div>Submit Comment</div>
+			<?php endif; ?>
+		</div>
+		<?php comment_id_fields(); ?>
+		<?php do_action('comment_form', $post->ID); ?>
+		<?php do_action('digressit_after_comment_form'); ?>
+	</form>
+	<?php
 }
 
 
+/* 
+ * Live checking of comment to determine if spam
+ */
 function digressit_live_spam_check_comment( $comment ) {
 	global $akismet_api_host, $akismet_api_port;
 	
@@ -366,9 +308,7 @@ function digressit_live_spam_check_comment( $comment ) {
 			$comment['blog_lang']  = get_locale();
 			$comment['blog_charset'] = get_option('blog_charset');
 			$comment['permalink']  = get_permalink($comment['comment_post_ID']);
-	
 			$comment['user_role'] = akismet_get_user_roles($comment['user_ID']);
-
 			$ignore = array( 'HTTP_COOKIE' );
 
 			foreach ( $_SERVER as $key => $value )
@@ -402,14 +342,9 @@ function indexOf($needle, $haystack)
 		return -1;
 }
 
-function list_posts($args = array('number' => -1, 'category_name' => null ) )
-{
+function list_posts($args = array('number' => -1, 'category_name' => null ) ){
 	global $wp;
-
-	//var_dump('numberposts='.$args['number']."&category_name=".$args['category_name']);
-	//".$args['category_name']
 	$myposts = get_posts('order=ASC&orderby=post_date&numberposts='.$args['number']."&category_name=".$args['category_name']);
-	
 	?>
 	
 	<ol class="navigation">
