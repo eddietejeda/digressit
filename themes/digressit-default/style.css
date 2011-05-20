@@ -17,7 +17,7 @@ Cynthia Farina, Mary Newhart, and Austin Austice at Cornell University
 
 
 body{
-	font-family: "Times New Roman PS MT","Times New Roman",Times,serif;
+	font-family: Georgia,Cambria,"Times New Roman",Times,serif;
 	font-size: 100%;
 	background-color:#E6E6E6;
 }
@@ -423,14 +423,14 @@ z-index:0;
 }
 
 .commentcount2 {
-	background:url("images/comment_blue_2digit.png") no-repeat scroll 1px 2px transparent;
-	color:white;
-	font-size:12px;
-	font-weight:bold;
-	height:18px;
-	padding:0 1px 0 7px;
-	position:absolute;
-	width:17px;
+    background: url("images/comment_blue_2digit.png") no-repeat scroll 1px 3px transparent;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    height: 21px;
+    padding: 0 0 0 7px;
+    position: absolute;
+    width: 17px;
 }
 
 .commentcount3 {

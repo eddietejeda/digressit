@@ -1235,7 +1235,7 @@ img{
 
 
 .entry{
-	padding: 20px;
+
 }
 .home #content{
 	margin:0 auto;
@@ -1244,13 +1244,16 @@ img{
 	position: relative;
 	min-height:500px;	
 
-	background:none repeat scroll 0 0 #F8F8F8;
+	background:white;
 	border-color:#BDBDBD;
 	border-style:solid;
 	border-width:0px 1px;
 }
 
 
+.embedcode{
+display:none; 
+}
 #wrapper{
 	background:transparent repeat scroll 0 0 #F5F8F8;
 	margin:0 auto;
