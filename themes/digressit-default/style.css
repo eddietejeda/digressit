@@ -3,16 +3,20 @@ Theme Name: Digress.it
 Theme URI: http://digress.it
 Description: Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
-Version: 3.0
-Author URI: http://www.visudo.com
+Version: 3.2
+Author URI: http://eddietejeda.com
 License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
 Tags: buddypress, comments, annotation, discussion, commenting, paragraph, education, transparency
 
 Special thanks to:	
 The developers of JQuery @ www.jquery.com
-Joss Winn and Tony Hirst @ writetoreply.com
+Joss Winn, Tony Hirst and Alex Bilbie @ University of Lincoln 
 Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
-Cynthia Farina, Mary Newhart, and Austin Austice at Cornell University
+
+Previous Versions:
+Mark James, for the famfamfam iconset @ http://www.famfamfam.com/lab/icons/silk/
+Matteo Bicocchi @ www.open-lab.com
+
 */
 
 
@@ -21,9 +25,6 @@ body{
 	font-size: 100%;
 	background-color:#E6E6E6;
 }
-
-
-
 
 #header{
 	height:auto;
@@ -142,19 +143,11 @@ h1, h2, h3, h4, h5, h6{
   -moz-box-shadow: 0 0 1px #AAAAAA;
   -webkit-box-shadow:0 0 1px #AAAAAA;
   box-shadow: 0 0 1px #AAAAAA;
-
-
-
 }
-
-
-
 
 #respond p{
 	text-align: left;
-	
 }
-
 
 .single .post{
 	padding: 0;
@@ -195,7 +188,7 @@ h1, h2, h3, h4, h5, h6{
 
 .selected-textblock {
 	border: 1px solid #ddd !important;
-	background-color: #feff9b;
+	background-color: #FFF6BF;
 }
 
 .site-home  .description{
@@ -216,12 +209,12 @@ h1, h2, h3, h4, h5, h6{
 }
 
 
- h2 {
+h2 {
 	border-width:0 0;
 	padding:20px;
 }
 
- h3 {
+h3 {
 	border-color:#EEEEEE;
 	border-style:solid;
 	border-width:0 0;
@@ -337,7 +330,7 @@ z-index:0;
 	background-color: transparent !important;
 }
 #mainpage{
-	padding-top: 50px;
+	padding-top: 25px;
 }
 
 #footer .foot {
@@ -705,7 +698,7 @@ a{
 
 
 .paragraph-block{
-	background:url("images/comment-background.png") repeat-x;
+	background:url("images/comment-background.png") repeat-x #EFEFEF;
 	border:1px solid #CCCCCC;
 	font-size:15px;
 	margin:1px;

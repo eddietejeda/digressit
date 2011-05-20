@@ -41,6 +41,8 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 
 
 == Changelog ==
+= 3.2 = 
+
 
 = 3.1.1 = 
 * Fix issue where minified JS was not in released version

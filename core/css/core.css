@@ -614,6 +614,7 @@ a:hover{
 	position:absolute;
 	right:0;
 	text-align:right;
+	font-family: Arial;
 }
 
 .submit:hover{
@@ -1183,6 +1184,7 @@ img{
 
 .no-comment-browser{
 	padding-top: 5px;
+	line-height: 23px;
 }
 
 
