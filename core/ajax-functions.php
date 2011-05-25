@@ -11,8 +11,6 @@ add_action('template_redirect', 'ajax_template' );
 //add_action('wp_ajax_my_action', 'my_action_callback');
 //add_action('wp_ajax_nopriv_my_action', 'my_action_callback');
 
-
-
 /**
  * Flush your rewrite rules if you want pretty permalinks
  */
@@ -29,7 +27,6 @@ function ajax_query_vars( $query_vars ) {
 	$query_vars = array_merge( $query_vars, $myvars );
 	return $query_vars;
 }
-
 
 /**
  * Create a rewrite rule if you want pretty permalinks

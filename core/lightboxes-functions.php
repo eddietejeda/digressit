@@ -2,32 +2,28 @@
 global $wpdb, $current_user, $post, $current_page_template;
 
 
-//add_action('wp_print_styles', 'lightboxes_wp_print_styles', 1000);
-//add_action('wp_print_scripts', 'lightboxes_wp_print_scripts' );
-
 add_action('add_lightbox', 'lightbox_login');
-//add_action('add_lightbox', 'lightbox_register');
-//add_action('add_lightbox', 'lightbox_site_register');
-//add_action('add_lightbox', 'lightbox_registering');
 add_action('add_lightbox', 'lightbox_generic_response');
 
 
 
 
 
+/**
+ *
+ */
 function lightboxes_wp_print_styles(){
 ?>
 <link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/lightboxes.css'); ?>" type="text/css" media="screen" />
 <?php
 }
 
-/*
-function lightboxes_wp_print_scripts(){	
-	wp_enqueue_script('digressit.lightboxes', get_digressit_media_uri('js/digressit.lightboxes.js'), 'jquery', false, true );
-}
-*/
 
 
+
+/**
+ *
+ */
 function get_lightboxes(){
 	?>
 	<div class="lightbox-transparency"></div>	
@@ -36,8 +32,10 @@ function get_lightboxes(){
 }
 
 
-function lightbox_login(){ ?>
-	
+/**
+ *
+ */
+function lightbox_login(){ ?>	
 	<?php  /******* THIS IS LOGIN. LOAD ON EVERY PAGE *******/ ?>
 	<?php if(!is_user_logged_in()): ?>
 	<div class="lightbox-content" id="lightbox-login">
@@ -104,129 +102,141 @@ function lightbox_login(){ ?>
 
 
 
+/**
+ *
+ */
 function lightbox_register(){ ?>
-<?php if(!is_user_logged_in()): ?>
-<div class="lightbox-content" id="lightbox-register">	
-	<div class="ribbon">
-		<div class="ribbon-left"></div>
-		<div class="ribbon-title"><?php _e('Register'); ?></div>
-		<div class="ribbon-right"></div>
-	</div>
-	<form name="registerform" id="registerform" action="<?php echo wp_login_url(); ?>?action=register" method="post">		
-		<div class="status-message error"></div>
-
-		<div class="lightbox-slider">
-		<div class="lightbox-slot">
-			<p>
-			<label><?php _e('Choose a username (required)'); ?><br>
-			<input name="user_login" id="user_login" class="input required" value="" size="25" type="text">
+	<?php if(!is_user_logged_in()){ ?>
+	<div class="lightbox-content" id="lightbox-register">	
+		<div class="ribbon">
+			<div class="ribbon-left"></div>
+			<div class="ribbon-title"><?php _e('Register'); ?></div>
+			<div class="ribbon-right"></div>
+		</div>
+		<form name="registerform" id="registerform" action="<?php echo wp_login_url(); ?>?action=register" method="post">		
+			<div class="status-message error"></div>
+	
+			<div class="lightbox-slider">
+			<div class="lightbox-slot">
+				<p>
+				<label><?php _e('Choose a username (required)'); ?><br>
+				<input name="user_login" id="user_login" class="input required" value="" size="25" type="text">
+				<div class="status"></div>
+				</label>
+				</p>
+				<p>
+				<label><?php _e('E-mail (required)'); ?><br>
+				<input name="user_email" id="user_email" class="input required" value="" size="25" type="text"></label>
+				</p>
+	
+				<?php do_action('lightbox_registration_extra_fields_slot_1'); ?>
+			
+			</div>
+	
+			<?php if(has_action('lightbox_registration_extra_fields')): ?>
+			<div class="lightbox-slot">
+			<?php do_action('lightbox_registration_extra_fields'); ?>
+			</div>
+			<?php endif; ?>
+			</div>
+	
+			<input type="hidden" value="1" name="register-event">
 			<div class="status"></div>
-			</label>
-			</p>
-			<p>
-			<label><?php _e('E-mail (required)'); ?><br>
-			<input name="user_email" id="user_email" class="input required" value="" size="25" type="text"></label>
-			</p>
-
-			<?php do_action('lightbox_registration_extra_fields_slot_1'); ?>
-		
-		</div>
-
-		<?php if(has_action('lightbox_registration_extra_fields')): ?>
-		<div class="lightbox-slot">
-		<?php do_action('lightbox_registration_extra_fields'); ?>
-		</div>
-		<?php endif; ?>
-		</div>
-
-		
-		
-		<input type="hidden" value="1" name="register-event">
-		<div class="status"></div>
-		<span class="lightbox-close"></span>
-		
-		<span class="lightbox-button lightbox-previous"><?php _e('Previous'); ?></span>
-		<span id="register-submit" class="lightbox-submit button-disabled"><span class="loading-bars"></span><?php _e('Register'); ?></span>
-		<span class="lightbox-button lightbox-next"><?php _e('Next'); ?></span>
-
-	</form>
-
-</div>
-<?php endif; ?>
-<?php } 
-
-
-
-
-function lightbox_site_register(){ ?>
-<?php if(!is_user_logged_in()): ?>
-<div class="lightbox-content" id="lightbox-register">	
-	<div class="ribbon">
-		<div class="ribbon-left"></div>
-		<div class="ribbon-title"><?php _e('Register'); ?></div>
-		<div class="ribbon-right"></div>
+			<span class="lightbox-close"></span>
+			
+			<span class="lightbox-button lightbox-previous"><?php _e('Previous'); ?></span>
+			<span id="register-submit" class="lightbox-submit button-disabled"><span class="loading-bars"></span><?php _e('Register'); ?></span>
+			<span class="lightbox-button lightbox-next"><?php _e('Next'); ?></span>
+	
+		</form>
+	
 	</div>
-	<form name="registerform" id="registerform" action="<?php echo wp_login_url(); ?>?action=register" method="post">		
-		<div class="status-message error"></div>
+	<?php	
+	}
+} 
 
-		<div class="lightbox-slider">
-		<?php if(has_action('lightbox_registration_extra_fields')): ?>
-		<div class="lightbox-slot">
-		<?php do_action('lightbox_registration_extra_fields'); ?>
+
+
+/**
+ *
+ */
+function lightbox_site_register(){ ?>
+	<?php if(!is_user_logged_in()){ ?>
+	<div class="lightbox-content" id="lightbox-register">	
+		<div class="ribbon">
+			<div class="ribbon-left"></div>
+			<div class="ribbon-title"><?php _e('Register'); ?></div>
+			<div class="ribbon-right"></div>
 		</div>
-		<?php endif; ?>
-		</div>
-
-		
-		
-		<input type="hidden" value="1" name="register-event">
-		<div class="status"></div>
-		<span class="lightbox-close"></span>
-		
-		<span class="lightbox-button lightbox-previous"><?php _e('Previous'); ?></span>
-		<span id="register-submit" class="lightbox-submit button-disabled"><span class="loading-bars"></span><?php _e('Register'); ?></span>
-		<span class="lightbox-button lightbox-next"><?php _e('Next'); ?></span>
-
-	</form>
-
-</div>
-<?php endif; ?>
+		<form name="registerform" id="registerform" action="<?php echo wp_login_url(); ?>?action=register" method="post">		
+			<div class="status-message error"></div>
+	
+			<div class="lightbox-slider">
+			<?php if(has_action('lightbox_registration_extra_fields')): ?>
+			<div class="lightbox-slot">
+			<?php do_action('lightbox_registration_extra_fields'); ?>
+			</div>
+			<?php endif; ?>
+			</div>
+	
+			
+			
+			<input type="hidden" value="1" name="register-event">
+			<div class="status"></div>
+			<span class="lightbox-close"></span>
+			
+			<span class="lightbox-button lightbox-previous"><?php _e('Previous'); ?></span>
+			<span id="register-submit" class="lightbox-submit button-disabled"><span class="loading-bars"></span><?php _e('Register'); ?></span>
+			<span class="lightbox-button lightbox-next"><?php _e('Next'); ?></span>
+	
+		</form>
+	
+	</div>
+	<?php } ?>
 <?php } 
 
 
 
 
+/**
+ *
+ */
 function lightbox_registering(){ ?>
-<div class="lightbox-content" id="lightbox-registering">
-	<p><?php _e('Your account has been created. Check your email for further instructions on how to log in.'); ?></p>
-	<span class="lightbox-close"></span>
-</div>
-<?php } 
+	<div class="lightbox-content" id="lightbox-registering">
+		<p><?php _e('Your account has been created. Check your email for further instructions on how to log in.'); ?></p>
+		<span class="lightbox-close"></span>
+	</div><?php 
+} 
 
 
+/**
+ *
+ */
 function lightbox_login_success(){ ?>
-<div class="lightbox-content" id="lightbox-login-success">
-	<p><?php _e('Login Successful'); ?></p>
-	<span class="lightbox-delay-close"></span>
-</div>
-<?php } 
+	<div class="lightbox-content" id="lightbox-login-success">
+		<p><?php _e('Login Successful'); ?></p>
+		<span class="lightbox-delay-close"></span>
+	</div><?php 
+} 
 
+/**
+ *
+ */
 function lightbox_register_status(){ ?>
-<div class="lightbox-content" id="lightbox-register-status">
-	<p></p>
-	<span class="lightbox-close"></span>
-</div>
-<?php
+	<div class="lightbox-content" id="lightbox-register-status">
+		<p></p>
+		<span class="lightbox-close"></span>
+	</div><?php
 }
 
+/**
+ *
+ */
 function lightbox_generic_response(){ ?>
-
-<div class="lightbox-content" id="lightbox-generic-response">
-	<span class="lightbox-close"></span>
-	<p></p>
-	
-</div>
-<?php 
+	<div class="lightbox-content" id="lightbox-generic-response">
+		<span class="lightbox-close"></span>
+		<p></p>		
+	</div><?php 
 }
 
 ?>

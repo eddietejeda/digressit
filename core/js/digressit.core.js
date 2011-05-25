@@ -56,10 +56,8 @@ jQuery(document).ready(function() {
 
 	//jQuery('#dynamic-sidebar').effect("bounce", { direction: 'right', times:1 }, 1500);
 
-
 	// Paragraph embeds
-	jQuery('.paragraphembed a')
-	.bind('click', function(e){
+	jQuery('.paragraphembed a').bind('click', function(e){
 		e.preventDefault();
 		var id = jQuery(this).attr('rel');
 		jQuery('#embedcode-' + id).show();
@@ -73,6 +71,9 @@ jQuery(document).ready(function() {
 	});
 
 
+	jQuery('.embedcode').click(function(){
+		return 0;
+	});
 
 
 	
@@ -1294,7 +1295,7 @@ jQuery(document).ready(function() {
 			jQuery('#cancel-response').hide();
 
 			jQuery('.textblock').removeClass('selected-textblock');
-			jQuery('.comment'  ).hide();
+			jQuery('.comment').hide();
 			jQuery('#respond').hide();						
 			jQuery('#selected_paragraph_number').val(0);
 		});
@@ -1303,13 +1304,30 @@ jQuery(document).ready(function() {
 		
 		jQuery('.textblock').click(function(e){
 
+			//paragraphembed
+			
+
+			if(jQuery('.paragraphembed').length){
+				if(jQuery(e.target)[0].nodeName == "TEXTAREA" || jQuery(e.target)[0].nodeName == "INPUT"){					
+					jQuery(e.target)[0].focus();
+					jQuery(e.target)[0].select();
+					jQuery.copy(jQuery(jQuery(e.target)[0]).text());
+					jQuery('.text-copied').fadeIn('slow');
+					jQuery('.text-copied').fadeOut('slow');
+
+					return;
+				}
+				else if(jQuery(e.target).hasClass('embedcode')){
+					return;
+				}
+			}
+			
 			if(open_if_linked_in_paragraph(e)){
 				return;
 			}
 			var paragraphnumber = parseInt(jQuery('.textblock').index(this)) +1 ;
 	
 	
-			//alert(jQuery('#selected_paragraph_number').val());
 			if(parseInt(jQuery('#selected_paragraph_number').val()) == paragraphnumber){
 
 				/* PARAGRAPH BLOCKS - UNSELECTED */

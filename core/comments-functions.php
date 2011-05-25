@@ -18,7 +18,6 @@ add_action('add_commentbrowser', 'commentbrowser_comments_by_contributor');
 add_action('add_commentbrowser', 'commentbrowser_general_comments');
 
 
-
 /*
  * Flush your rewrite rules if you want pretty permalinks
  */
@@ -81,6 +80,9 @@ function commentbrowser_template_redirect() {
 	
 }
 
+/**
+ * 
+ */
 function add_comment_ajax($request_params){
 	//extract($request_params);
 	global $wpdb, $current_user, $blog_id;
@@ -176,6 +178,9 @@ function add_comment_ajax($request_params){
 	die(json_encode(array('status' => $status, "message" => $message)));
 }
 
+/**
+ * 
+ */
 function standard_digressit_comment_parser($comment, $args, $depth) {
  	global $current_page_template, $blog_id, $current_user; 
 
@@ -247,6 +252,9 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 }
 
 
+/**
+ * 
+ */
 function digressit_comment_form(){
 	global $blog_id;
 	
@@ -330,18 +338,26 @@ function digressit_live_spam_check_comment( $comment ) {
 	return false;
 }
 
+/**
+ * 
+ */
 function get_comments_toolbar(){
 	do_action('comments_toolbar');
 }
 
-function indexOf($needle, $haystack)
-{
+/**
+ * 
+ */
+function indexOf($needle, $haystack){
 	if(($index =array_search($needle,$haystack)) !==false)
 		return $index;
 	else
 		return -1;
 }
 
+/**
+ * 
+ */
 function list_posts($args = array('number' => -1, 'category_name' => null ) ){
 	global $wp;
 	$myposts = get_posts('order=ASC&orderby=post_date&numberposts='.$args['number']."&category_name=".$args['category_name']);
@@ -362,8 +378,10 @@ function list_posts($args = array('number' => -1, 'category_name' => null ) ){
 
 
 
-function list_users()
-{
+/**
+ * 
+ */
+function list_users(){
 	global $wp;
 	$users = get_users_who_have_commented();
 
@@ -377,7 +395,6 @@ function list_users()
 		?>
 		<li>
 			<?php
-
 			if($user->user_id){
 				$comment_user = get_userdata($user->ID); 
 				$profile_url = get_bloginfo('home')."/comments-by-contributor/" . urlencode($user->user_login);
@@ -387,28 +404,21 @@ function list_users()
 				$profile_url = get_bloginfo('home')."/comments-by-contributor/" . urlencode($user->comment_author);
 				echo "<a href='$profile_url'>$user->comment_author ($user->comments_per_user)</a> ";						
 			}
-			?>			
-		
+			?>		
 		</li>
-	<?php endforeach; 
-	?>
+	<?php endforeach; ?>
 	</ol>
 	<?php
 
 }
 
-
-
-
-function list_general_comments()
-{
+/**
+ * 
+ */
+function list_general_comments(){
 	global $wp;
-	
-
 	$myposts = get_posts('order=ASC&orderby=post_date&numberposts=-1');
-	
 	?>
-	
 	<ol class="navigation">
 	<?php
 	foreach($myposts as $post): ?>
@@ -423,9 +433,9 @@ function list_general_comments()
 }
 
 
-
-
-//the following were imported from CP1.4
+/**
+ * the following were imported from CP1.4
+ */
 function get_approved_general_comments($id){
 	$approved_comments = get_approved_comments($id);
 	
@@ -441,8 +451,10 @@ function get_approved_general_comments($id){
 
 }
 
-function getCommentCount($title)
-{
+/**
+ * 
+ */
+function getCommentCount($title){
 	global $wpdb;
 	$title = strip_tags($title);
 	$title = addslashes($title);
@@ -451,7 +463,10 @@ function getCommentCount($title)
 	return ( count($result) );
 }
 
-/* REDO THIS FUNCTION */
+
+/**
+ * REDO THIS FUNCTION 
+ */
 $comments_for_counting = null;
 function get_post_comment_count($post_ID, $metatag = null, $metavalue = null, $only_approved = 1){
 	global $wpdb, $comments_for_counting;
@@ -482,33 +497,31 @@ function get_post_comment_count($post_ID, $metatag = null, $metavalue = null, $o
 		}
 		return $count;
 	}
-	
-	return count($comments_for_counting);
-	
+	return count($comments_for_counting);	
 }
-function getCommentCountByCategory($cat)
-{
+
+/**
+ *
+ */
+function getCommentCountByCategory($cat){
 	global $wpdb;
 	$cat = strip_tags($cat);
 	$cat = addslashes($cat);
 	$sql = "SELECT * FROM $wpdb->posts, $wpdb->post2cat, $wpdb->categories  WHERE category_nicename = '$cat' AND cat_ID = category_id AND post_id = ID";
 
-
 	$commentCategories = $wpdb->get_results($sql);
 	$count = 0;
-	foreach($commentCategories as $c)
-	{
+	foreach($commentCategories as $c){
 		$count += $c->comment_count;
 	}
-	
 	return $count;
-	
 }
 
 
-
-function get_users_who_have_commented()
-{
+/**
+ *
+ */
+function get_users_who_have_commented(){
 	global $wpdb;
 	$sql = "SELECT *, COUNT( * ) AS comments_per_user  FROM $wpdb->users u RIGHT JOIN $wpdb->comments c ON u.ID=c.user_id
 					LEFT JOIN $wpdb->posts p ON p.ID=c.comment_post_ID
@@ -521,48 +534,47 @@ function get_users_who_have_commented()
 	
 	//echo $sql;
 	$results = $wpdb->get_results($sql);
-	
 	//var_dump($results);
-
 	return $results;
 }
 
 
 
+/**
+ *
+ */
 function get_comments_from_user($id){
  	global $wpdb;	
 
-     $id = urldecode($id);
-
+	$id = urldecode($id);
 	$results = null;
+	
 	if(is_numeric($id)){
 		$sql = "SELECT c.*, u.*, p.post_name, p.post_title FROM $wpdb->comments c, $wpdb->users u, $wpdb->posts p  WHERE p.post_status='publish' AND c.user_id = u.ID AND u.ID=$id AND c.comment_post_ID = p.ID ORDER BY comment_ID DESC";
 		$results = $wpdb->get_results($sql);
-		
 	}
 
 	if(count($results) == 0){
 		$sql = "SELECT c.*, p.post_name, p.post_title FROM $wpdb->comments c, $wpdb->posts p  WHERE p.post_status='publish' AND c.comment_author = '$id' AND c.comment_post_ID = p.ID ORDER BY comment_ID DESC";
 		//echo $sql;
 		$results = $wpdb->get_results($sql);
-		
 	}
-
-
-
-
 	return $results;
-	
 }
 
 
-
+/**
+ *
+ */
 function getContributorsWhoHaveCommented(){
 	global $wpdb;
 	$sql = "SELECT * , COUNT( * ) AS comments_per_user FROM $wpdb->usermeta m, $wpdb->comments c, $wpdb->users u, $wpdb->posts p WHERE  p.ID = c.comment_post_ID AND u.ID = m.user_id  AND p.post_status='publish' AND c.user_id = u.ID GROUP BY u.ID ORDER BY u.user_login";
 	return $wpdb->get_results($sql);              
 }
 
+/**
+ *
+ */
 function getParentPosts(){
 	global $wpdb;
 	$sql = "SELECT * FROM `$wpdb->posts` WHERE post_status='publish' AND post_parent='0' AND post_type = 'post'";
@@ -570,7 +582,9 @@ function getParentPosts(){
 	return $result;
 }
 
-/* this might be useless */
+/**
+ * this might be useless 
+ */
 function getAllCommentCount(){
 	global $wpdb;
 	$sql = "SELECT COUNT(*) as count FROM $wpdb->comments c, $wpdb->posts p WHERE c.comment_approved = '1' AND c.comment_post_ID=p.ID AND p.post_type='post' AND p.post_status='publish'";
@@ -578,6 +592,9 @@ function getAllCommentCount(){
 	return $result;
 }
 
+/**
+ *
+ */
 function get_all_comments($only_approved = true){
 	global $wpdb;
 	
@@ -594,6 +611,9 @@ function get_all_comments($only_approved = true){
 }
 
 
+/**
+ *
+ */
 function getRecentComments($limit = 5, $cleaned = false){
 	global $wpdb;
 	$sql = null;
@@ -607,6 +627,9 @@ function getRecentComments($limit = 5, $cleaned = false){
 }
 
 
+/**
+ *
+ */
 function get_approved_comments_for_paragraph($post_id, $paragraph){
 	$approved_comments = get_approved_comments($post_id);		
 	$filtered = null;
@@ -620,6 +643,9 @@ function get_approved_comments_for_paragraph($post_id, $paragraph){
 
 
 
+/**
+ *
+ */
 function mu_get_all_comments($user_id = null, $blog_id = null){
 	
 	$rule_list = null;
@@ -632,12 +658,10 @@ function mu_get_all_comments($user_id = null, $blog_id = null){
 			$rule_list = get_blog_list ( 0, 'all' );
 		}
 	}
-	
+		
 	$comments = array();
 	foreach($rule_list as $rule){
 		switch_to_blog( $rule['blog_id']);
-		
-		
 		if($user_id){
 			$current_comments= get_comments_from_user($user_id);				
 		}
@@ -648,17 +672,17 @@ function mu_get_all_comments($user_id = null, $blog_id = null){
 		$comments = array_merge($comments, $current_comments);
 		restore_current_blog();
 	}		
-	
 	return $comments;
 }
 
 
 
+/**
+ *
+ */
 function mu_get_comments_from_user($user_id){
 	$rule_list = get_rules();
-	
 	//var_dump($rule_list);
-
 	$comments = array();
 	foreach($rule_list as $rule){
 		switch_to_blog( $rule['blog_id']);
@@ -666,13 +690,15 @@ function mu_get_comments_from_user($user_id){
 		$comments = array_merge($comments, $current_comments);
 		restore_current_blog();
 	}		
-	
 	return $comments;
 }
 
 
 
 
+/**
+ *
+ */
 class CommentBrowserLinks extends WP_Widget {
 	/** constructor */
 	function CommentBrowserLinks() {
@@ -681,13 +707,13 @@ class CommentBrowserLinks extends WP_Widget {
 
 	function widget($args = array(), $defaults) {		
 		extract( $args );
-		$options = get_option('digressit');
+		$digressit_options = get_option('digressit');
 		?>
-		<h4>Comment Browser</h4>
+		<h4><?php _e('Comment Browser', 'digressit'); ?></h4>
 		<ul>
-			<li><a href="<?php bloginfo('url'); ?>/comments-by-section"><?php _e($options['comments_by_section_label'],'digressit'); ?></a></li>
-			<li><a href="<?php bloginfo('url'); ?>/comments-by-contributor"><?php _e($options['comments_by_users_label'],'digressit'); ?></a></li>
-			<li><a href="<?php bloginfo('url'); ?>/general-comments"><?php _e($options['general_comments_label'],'digressit'); ?></a></li>
+			<li><a href="<?php bloginfo('url'); ?>/comments-by-section"><?php echo $digressit_options['comments_by_section_label']; ?></a></li>
+			<li><a href="<?php bloginfo('url'); ?>/comments-by-contributor"><?php echo $digressit_options['comments_by_users_label']; ?></a></li>
+			<li><a href="<?php bloginfo('url'); ?>/general-comments"><?php echo $digressit_options['general_comments_label']; ?></a></li>
 			<?php do_action('add_commentbrowser_link'); ?>
 		</ul>
 		<?php
@@ -698,8 +724,6 @@ class CommentBrowserLinks extends WP_Widget {
 		$instance = $old_instance;
 		return $instance;
 	}
-
-
 
 	/** @see WP_Widget::form */
 	function form($instance) {				
@@ -712,33 +736,42 @@ class CommentBrowserLinks extends WP_Widget {
 
 
 
+/**
+ *
+ */
 function commentbrowser_comments_by_section(){
 	global $wp;
-	$options = get_option('digressit');
+	$digressit_options = get_option('digressit');
 
-	echo "<h3>".__($options['comments_by_section_label'],'digressit')."</h3>";
-	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
+	echo "<h3>".$digressit_options['comments_by_section_label']."</h3>";
+	echo "<div class='comment-count-in-book'>".__("There are ").getAllCommentCount().__(" comments in this document")."</div>";
 	list_posts();
 	return isset($wp->query_vars['commentbrowser_params']) ? get_comments('post_id='.$wp->query_vars['commentbrowser_params']) : array();
 }
 
+/**
+ *
+ */
 function commentbrowser_comments_by_user(){
 	commentbrowser_comments_by_contributor();
 }
 
+/**
+ *
+ */
 function commentbrowser_comments_by_contributor(){
 	global $wp;
 	//var_dump($wp->query_vars);
-	$options = get_option('digressit');
-	echo "<h3>".__($options['comments_by_users_label'],'digressit')."</h3>";
+	$digressit_options = get_option('digressit');
+	echo "<h3>".__($digressit_options['comments_by_users_label'],'digressit')."</h3>";
 	
 	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
-    if(is_numeric($wp->query_vars['commentbrowser_params'])) :
+    if(is_numeric($wp->query_vars['commentbrowser_params'])){
         $curauth = get_user_by('id', $wp->query_vars['commentbrowser_params']);
-    else :
+    }
+    else{
         $curauth = get_userdatabylogin(urldecode($wp->query_vars['commentbrowser_params']));
-    endif;
-
+	}
 
     if(isset($curauth->ID)){
 		$identifier = $curauth->ID;
@@ -746,17 +779,19 @@ function commentbrowser_comments_by_contributor(){
 	else{
 		$identifier = substr($wp->query_vars['commentbrowser_params'], 0 , 50); //lets limit the length of this string to limit funny url stuff.
 	}
-	
 	//var_dump($identifier);
-
 	list_users();
 
 	return get_comments_from_user($identifier);
 }
+
+/**
+ *
+ */
 function commentbrowser_general_comments(){
 	global $wp;
-	$options = get_option('digressit');
-	echo "<h3>".__($options['general_comments_label'],'digressit')."</h3>";	
+	$digressit_options = get_option('digressit');
+	echo "<h3>".__($digressit_options['general_comments_label'],'digressit')."</h3>";	
 	echo "<div class='comment-count-in-book'>There are ".getAllCommentCount()." comments in this document</div>";
 	list_general_comments();
 	return get_approved_general_comments($wp->query_vars['commentbrowser_params']);

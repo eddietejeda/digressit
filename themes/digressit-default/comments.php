@@ -14,7 +14,7 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['
 if ( function_exists('post_password_required')  ) {
 	if( post_password_required() ){
 	 ?>
-	<p class="nocomments">This post is password protected. Enter the password to view comments.</p>
+	<p class="nocomments"><?php _e('This post is password protected. Enter the password to view comments.', 'digressit'); ?></p>
 	<?php
 	return;
 	}
@@ -51,35 +51,22 @@ global $blog_id;
 		?>
 		
 		<?php if ( comments_open() && $custom_comment_open) : ?>
-
 			<?php if ( is_user_logged_in() ) : ?>
-				
 				<?php digressit_comment_form(); ?>
-
-			<?php else : ?>
-
+			<?php else: ?>
 				<?php if(get_option('comment_registration')): ?>
-					
-
 					<div id="must-be-logged-in">
-						You must be logged in to write a comment. 
-						
-						<p><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login">Login</a></p>
-						<p><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account">Create Account</a></p>
-						
+						<?php _e('You must be logged in to write a comment.', 'digressit'); ?>						
+						<p><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login"><?php _e('Login', 'digressit'); ?></a></p>
+						<p><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account"><?php _e('Create Account', 'digressit'); ?></a></p>						
 					</div>
-
 				<?php else: ?>
-
 					<?php digressit_comment_form(); ?>
-					
-				<?php endif; ?>
-	
-				
+				<?php endif; ?>			
 			<?php endif;?>
 		<?php else: ?>
 			<div id="must-be-logged-in">
-			<?php echo strlen(get_post_meta($post->ID, 'discussion_closed', true)) ? get_post_meta($post->ID, 'discussion_closed', true) : 'This discussion is now closed.'; ?>
+			<?php echo strlen(get_post_meta($post->ID, 'discussion_closed', true)) ? get_post_meta($post->ID, 'discussion_closed', true) : __('This discussion is now closed.','digressit'); ?>
 			</div>
 		
 		<?php endif; ?>
@@ -89,18 +76,13 @@ global $blog_id;
 	
 
 
-<div id="comments-sort-all">show all (<?php echo count(get_approved_comments($post->ID)); ?>)</div>	
-<div id="no-comments">There are no comments. Click the text to your left to make a new comment.</div>
+<div id="comments-sort-all"><?php _e('show all', 'digressit'); ?> (<?php echo count(get_approved_comments($post->ID)); ?>)</div>	
+<div id="no-comments"><?php _e('There are no comments. Click the text to your left to make a new comment.', 'digressit') ; ?></div>
 
 
 
 <?php if ( have_comments() ) : ?>
-<!--
-	<div id="comments-sort-asc">asc</div>
-	<div id="comments-sort-desc">desc</div>
--->
-	<?php global $post; ?>
-	
+	<?php global $post; ?>	
 	<div id="commentlist" class="commentlist">
 	<?php wp_list_comments(array('type' => 'comment', 'callback' => get_digressit_comments_function() )); ?>
 	</div>

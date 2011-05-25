@@ -1,19 +1,18 @@
 <?php
 
-class Digress_It_Embed
-{
+/**
+ *
+ */
+class Digress_It_Embed{
 
-	function __construct()
-	{
+	function __construct(){
 
 		if($_REQUEST['digressit-embed'] == 'stylesheet'):
 		header('Content-type: text/plain'); 
 		die();
 		endif;
 
-		if($_REQUEST['digressit-embed'] > 0):
-
-
+		if($_REQUEST['digressit-embed'] > 0){
 			$paranumber = (int)$_REQUEST['digressit-embed'] - 1;
 
 			$id = addslashes($_REQUEST['p']);
@@ -121,7 +120,7 @@ class Digress_It_Embed
 			<?php
 
 			die();
-		endif;
+		}
 	
 	}
 }

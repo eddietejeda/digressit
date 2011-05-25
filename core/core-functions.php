@@ -5,7 +5,7 @@ global $digressit_content_function, $digressit_comments_function, $digressit_com
 global $browser, $post_paragraph_count;
 
 
-$digressit = $options = get_option('digressit');
+$digressit_options = $digressit = $options = get_option('digressit');
 
 //add_action('init', 'digressit_load');
 
@@ -16,7 +16,7 @@ add_action('wp_print_scripts',  'digressit_core_print_scripts', 1);
 add_action('wp_print_styles',  'digressit_core_print_styles', 1) ; 		
 add_action('wp_head',  'on_wp_head') ; 		
 
-if(esc_url($options['custom_header_image'], array('http', 'https'))){
+if(esc_url($digressit_options['custom_header_image'], array('http', 'https'))){
 	add_action('add_header_image', 'custom_digressit_logo');
 }
 add_filter('the_content', 'digressit_parser', 10000);	
@@ -93,17 +93,17 @@ function get_dynamic_widgets(){
 
 
 /**
- * Gets 
+ * 
  */
 function get_single_default_widgets(){
 	
-	$options = get_option('digressit');
-	if ( !is_active_sidebar('single-sidebar') && (int)$options['enable_sidebar'] !== 0) : 
+	$digressit_options = get_option('digressit');
+	if ( !is_active_sidebar('single-sidebar') && (int)$digressit_options['enable_sidebar'] !== 0) : 
 		
 		?>
 		
 		<div class="sidebar-widgets default-list-post">
-		<div id="dynamic-sidebar" class="sidebar <?php echo $options['auto_hide_sidebar']; ?> <?php echo $options['sidebar_position']; ?>">		
+		<div id="dynamic-sidebar" class="sidebar <?php echo $digressit_options['auto_hide_sidebar']; ?> <?php echo $digressit_options['sidebar_position']; ?>">		
 		<?php
 	
 		ListPostsWithCommentCount::widget($args =array(), array('title' => 'Posts', 
@@ -124,7 +124,9 @@ function get_single_default_widgets(){
 }
 
 
-
+/**
+ * 
+ */
 function get_stylized_content_header(){
 	if(has_action('stylized_content_header')){
 		do_action('stylized_content_header');
@@ -133,6 +135,9 @@ function get_stylized_content_header(){
 
 
 
+/**
+ * 
+ */
 function get_stylized_title(){
 	
 	echo "<div id='the_title'  class='the_title'>";	
@@ -149,6 +154,9 @@ function get_stylized_title(){
 
 
 
+/**
+ * 
+ */
 function on_wp_head(){
 ?>
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -170,8 +178,8 @@ function regexp_digressit_content_parser($html){
 	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 
-	$options = get_option('digressit');
-	if($options['parse_list_items'] == 1){
+	$digressit_options = get_option('digressit');
+	if($digressit_options['parse_list_items'] == 1){
 		$html = preg_replace('/<(\/?ul|ol)>/', '', $html);
 		$html = preg_replace('/<li>/', '<p>&bull;   ', $html);
 	}
@@ -184,6 +192,9 @@ function regexp_digressit_content_parser($html){
 }
 
 
+/**
+ * 
+ */
 function discrete_digressit_content_parser($content){
 	global $wpdb, $image_path, $post;
 
@@ -281,8 +292,7 @@ function is_utf8($string) {
  * @param string $tags Optional
  * @return array An array of each text block with the proper html tags for comment count and extra tags for adding javascript hooks
  */
-function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8', $return_paragraphs = false)
-{
+function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul|ol|blockquote|code|h1|h2|h3|h4|h5|h6|h7|h8', $return_paragraphs = false){
 	global $post;
 	$matches = array();
 	$html = strip_selected_tags($html, '<hr>');
@@ -292,7 +302,7 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
 	$html = str_replace("</iframe>", "&nbsp;</iframe>", $html);
 
-	$options = get_option('digressit');
+	$digressit_options = get_option('digressit');
 	
 	$blocks = array();
 	$text_signatures = null;
@@ -302,7 +312,7 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	$total_comments = get_comments($defaults);
 	$total_count = count($total_comments);
 		
-	if($options['parse_list_items'] == 1){
+	if($digressit_options['parse_list_items'] == 1){
 		$html = preg_replace('/<(\/?ul|ol)>/', '', $html);
 		$html = preg_replace('/<li>/', '<p>*   ', $html);
 	}
@@ -370,33 +380,33 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 
 		$matches = null;
 
-		preg_match_all('/class=\"([^"]+)\"/is', $paragraph, $matches);
-		//var_dump($matches);
-		
+		preg_match_all('/class=\"([^"]+)\"/is', $paragraph, $matches);		
 		if(count($matches)){
 			foreach($matches[1] as $match){
-				//var_dump( $match);
 				if(strstr($match, 'wp-image')){		
 					$paragraph = str_replace($match, 'lightbox lightbox-images '.$match, $paragraph);
 				}
 				$paragraph = str_replace(" class=\"$matches\" ", " class=\"lightbox lighbox-images $classes\" ", $paragraph);
-				//break;
 			}
 		}
 		$block_content = "<div id='textblock-$number' class='textblock'>
-			<span class='paragraphnumber'><a href='$permalink#$number'>$number</a></span>
+			<span class='paragraphnumber'><a href='$permalink#$number'>$number</a></span>";
 			
-			<span class='paragraphembed'>
+		if($digressit_options['enable_citation_button'] == 1){
+		$block_content .= "<span class='paragraphembed'>
 				<a href='#' rel='$number'>&ldquo;</a>
 				<span class='embedcode' id='embedcode-$number'>
 					<a href='#' class='closeme'>x</a>
 					<b>Cite</b> <input type='text' value='".$post->guid."&digressit-embed=$number&format=html'><br>
 					<b>Embed</b><br>
 					<textarea><blockquote cite='$permalink#$number'>".force_balance_tags($paragraph)."</blockquote></textarea>
+					<span class='text-copied'>Text copied</span>
 				</span>
-			</span>
+			</span>";
+		}
+			
 				
-			<span  title='There $numbertext for this paragraph' class='commenticonbox'><small class='commentcount commentcount".$digit_count."'>".$comment_count."</small></span>
+		$block_content .=  "<span  title='There $numbertext for this paragraph' class='commenticonbox'><small class='commentcount commentcount".$digit_count."'>".$comment_count."</small></span>
 			<span class='paragraphtext'>".force_balance_tags($paragraph)."</span>
 		</div>" .  $morelink;
 		
@@ -410,6 +420,9 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 }
 
 
+/**
+ * 
+ */
 function display_xml_error($error, $xml)
 {
     $return  = $xml[$error->line - 1] . "\n";
@@ -440,7 +453,9 @@ function display_xml_error($error, $xml)
 
 
 
-
+/**
+ * 
+ */
 function digressit_parser($content){
 	if(is_single()){
 		return implode("\n", (array)digressit_paragraphs($content));
@@ -451,10 +466,16 @@ function digressit_parser($content){
 	
 }
 
+/**
+ * 
+ */
 function digressit_paragraphs($content){	
 	return call_user_func(get_digressit_content_parser_function(), $content); 
 }
 
+/**
+ * 
+ */
 function the_paragraph($number){
 	global $post;
 	
@@ -463,6 +484,9 @@ function the_paragraph($number){
 	
 }
 
+/**
+ * 
+ */
 function get_the_paragraph($number){
 	global $post;
 	
@@ -475,25 +499,30 @@ function get_the_paragraph($number){
 
 
 
-
+/**
+ * 
+ */
 function get_digressit_comments_function(){
-	$options = get_option('digressit');
+	$digressit_options = get_option('digressit');
 	
 
-	if( isset($options['comments_parser']) || function_exists($options['comments_parser']) ){
-		return $options['comments_parser'];
+	if( isset($digressit_options['comments_parser']) || function_exists($digressit_options['comments_parser']) ){
+		return $digressit_options['comments_parser'];
 	}
 	else{
 		return 'standard_digressit_comment_parser';
 	}	
 }
 
+/**
+ * 
+ */
 function get_digressit_content_parser_function(){
-	$options = get_option('digressit');
+	$digressit_options = get_option('digressit');
 
 
-	if( isset($options['content_parser']) || function_exists($options['content_parser']) ){
-		return $options['content_parser'];
+	if( isset($digressit_options['content_parser']) || function_exists($digressit_options['content_parser']) ){
+		return $digressit_options['content_parser'];
 	}
 	else{
 		return 'standard_digressit_content_parser';
@@ -502,9 +531,9 @@ function get_digressit_content_parser_function(){
 
 
 
-
-
-
+/**
+ * 
+ */
 function json_remote_call($webservice, $parameters = null){
 
 	if(is_array($parameters)){
@@ -513,16 +542,10 @@ function json_remote_call($webservice, $parameters = null){
 		}
 	}
 
-
-
 	$params ['format'] = 'json';
-
-
 	$data = http_build_query($params);
-
 	//var_dump($data);
-
-
+	
 	$context_options = array (
 		'http' => array (
 			'method' => 'POST',
@@ -532,19 +555,13 @@ function json_remote_call($webservice, $parameters = null){
 			)
 		);
 
-
-
 	$context = stream_context_create($context_options);
-	
 	
 	$response = null;
 	if($json = file_get_contents($webservice, false, $context)){
 		$response = json_decode($json);
 	}
 	else{
-		
-
-		
 		$response = (object)array('responseCode' => false, 'errorMessage' => __('Server failed to respond. Please try again later'));
 	}
 		
@@ -557,6 +574,9 @@ function json_remote_call($webservice, $parameters = null){
 
 
 
+/**
+ * 
+ */
 function add_comment_change_notice() {	
 	
 	$comments= get_approved_comments($_GET['post']);
@@ -566,45 +586,41 @@ function add_comment_change_notice() {
 	}
 }
 
-
+/**
+ * 
+ */
 function change_content_warning(){
 	?>
 	
-	<div id="register-form" class="updated error" style="padding: 5px; width: 99% <?php echo $hidethis;?>" >
-		
+	<div id="register-form" class="updated error" style="padding: 5px; width: 99% <?php echo $hidethis;?>" >		
 		<?php _e('Warning: There are comments attached to the structure of this page. Changing the structure of this post will break the alignment of comments to their paragraphs'); ?>
-		
 	</div>
 	
 	<?php
 	
 }
 
+/**
+ * 
+ */
 function get_header_images(){	
 	return do_action('add_header_image');
 }
 
 
-
-
-
-
-
-
-
-
-
-
+/**
+ * 
+ */
 function digressit_core_print_styles(){
 	global $current_user, $override_default_theme, $browser, $blog_id;
 	
-	$options = get_option('digressit');
+	$digressit_options = get_option('digressit');
 	
 	wp_register_style('digressit.core', get_digressit_media_uri('css/core.css'));
 
 	
-	if(strlen($options['custom_style_sheet']) > 10 && esc_url($options['custom_style_sheet'], array('http', 'https'))){
-		wp_register_style('digressit.custom', $options['custom_style_sheet']);
+	if(strlen($digressit_options['custom_style_sheet']) > 10 && esc_url($digressit_options['custom_style_sheet'], array('http', 'https'))){
+		wp_register_style('digressit.custom', $digressit_options['custom_style_sheet']);
 	}
 
 	//hacks for IE
@@ -640,15 +656,18 @@ function digressit_core_print_styles(){
 }
 
 
+/**
+ * 
+ */
 function custom_digressit_logo(){
-	$options = get_option('digressit');
+	$digressit_options = get_option('digressit');
 
 	$css_name = preg_replace("/[^a-zA-Z]/", "", get_bloginfo('name'));
 	?>
 	<style>
 
 	#<?php echo $css_name; ?>-logo{
-		background: url(<?php echo $options['custom_header_image']; ?>) no-repeat;
+		background: url(<?php echo $digressit_options['custom_header_image']; ?>) no-repeat;
 		height: 100px;
 	}
 	</style>
@@ -656,6 +675,9 @@ function custom_digressit_logo(){
 	<?php
 }
 
+/**
+ * 
+ */
 function get_root_domain(){
 	global $development_mode,$testing_mode, $production_mode;
 	$development_mode = false;
@@ -666,14 +688,15 @@ function get_root_domain(){
 }
 
 
+/**
+ * 
+ */
 function digressit_core_print_scripts(){
 	global $current_user, $post, $blog_id;
-	$options = get_option('digressit');
+	$digressit_options = get_option('digressit');
 
 	wp_deregister_script('autosave');
-    //wp_deregister_script( 'jquery' );
-    //wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js');
-    if (!is_admin() && $options['debug_mode'] != 1) {
+    if (!is_admin() && $digressit_options['debug_mode'] != 1) {
         wp_deregister_script( 'jquery' );
         wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js');
     }
@@ -697,33 +720,31 @@ function digressit_core_print_scripts(){
 			var blog_ID = <?php echo $blog_id; ?>;
 			var current_blog_id = <?php echo $blog_id; ?>;
 			var request_uri = '<?php echo  esc_url(strip_tags($url['path'])); ?>';
-			<?php if(is_single()): ?>
-				var is_single = true;
-				var post_name = '<?php echo $post->post_name; ?>';
-				var allow_general_comments = <?php echo !is_null($options["allow_general_comments"]) ? $options["allow_general_comments"] : 0; ?>;
-				var allow_comments_search = <?php echo !is_null($options["allow_comments_search"]) ? $options["allow_comments_search"] : 0; ?>;
-				var comment_count = <?php echo count($comment_array); ?>;
-				var commment_text_signature = new Array(); 
-				var commentbox_function = '<?php echo strlen($options['commentbox_parser']) ? $options['commentbox_parser'] : 'grouping_digressit_commentbox_parser'; ?>';
-			<?php else: ?>
-				var is_single = false;
-			<?php endif; ?>
-			
-			<?php if($options['debug_mode'] == 1): ?>
-				var keyboard_navigation = true;
-			<?php endif; ?>
+			<?php if(is_single()){ ?>
+			var is_single = true;
+			var post_name = '<?php echo $post->post_name; ?>';
+			var allow_general_comments = <?php echo !is_null($digressit_options["allow_general_comments"]) ? $digressit_options["allow_general_comments"] : 0; ?>;
+			var allow_comments_search = <?php echo !is_null($digressit_options["allow_comments_search"]) ? $digressit_options["allow_comments_search"] : 0; ?>;
+			var comment_count = <?php echo count($comment_array); ?>;
+			var commment_text_signature = new Array(); 
+			var commentbox_function = '<?php echo strlen($digressit_options['commentbox_parser']) ? $digressit_options['commentbox_parser'] : 'grouping_digressit_commentbox_parser'; ?>';
+			<?php } else{ ?>
+			var is_single = false;
+			<?php } ?>			
+			var keyboard_navigation = <?php echo $digressit_options['keyboard_navigation'] ?>;
 
 		</script>	
 		<?php
 	
 
-		if($options['debug_mode'] == 1){
+		if($digressit_options['debug_mode'] == 1){
 			wp_enqueue_script('digressit.core',		get_digressit_media_uri('js/digressit.core.js'), 'jquery', false, true );	
 			wp_enqueue_script('jquery.easing', 		get_digressit_media_uri('js/jquery.easing.js'), 'jquery', false, true );		
 			wp_enqueue_script('jquery.scrollto',	get_digressit_media_uri('js/jquery.scrollTo.js'), 'jquery', false, true );		
 			wp_enqueue_script('jquery.cookie',		get_digressit_media_uri('js/jquery.cookie.js'), 'jquery', false, true );		
 			wp_enqueue_script('jquery.mousewheel',	get_digressit_media_uri('js/jquery.mousewheel.js'), 'jquery', false, true );		
 			wp_enqueue_script('jquery.em',			get_digressit_media_uri('js/jquery.em.js'), 'jquery', false, true );
+			wp_enqueue_script('jquery.copy',			get_digressit_media_uri('js/jquery.copy.js'), 'jquery', false, true );
 		}		
 		else{
 			wp_enqueue_script('digressit.core',		get_digressit_media_uri('js/digressit.core.min.js'), 'jquery', false, true );				

@@ -42,7 +42,13 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 
 == Changelog ==
 = 3.2 = 
-
+* Re-factoring code for better readability
+* Better inline documentation
+* New, clearer, navigation system
+* Re-introduced support for paragraph citation and embedding
+* Expanded localization support
+* Fix issue with deactivation
+* Keyboard navigation - with corresponding admin option
 
 = 3.1.1 = 
 * Fix issue where minified JS was not in released version

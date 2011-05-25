@@ -1095,6 +1095,10 @@ div#item-header{
 	top: 35px;
 }
 
+.embedcode{
+	box-shadow: 3px 3px 3px #AAAAAA;
+
+}
 .paragraphembed a {
 	border-bottom:none !important;
 	padding: 3px;

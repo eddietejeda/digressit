@@ -1640,7 +1640,6 @@ display:none;
 	border-color:transparent;
 	border-style:solid;
 	border-width:1px 1px 1px 0;
-	height:110px;
 	margin:0;
 	position:absolute;
 	right:-36px;
@@ -1648,6 +1647,11 @@ display:none;
 	width:35px;
 }
 
+.text-copied{
+	font-size: 12px;
+	color: red;
+	display: none;
+}
 
 .link:hover{
 	cursor:pointer;cursor:hand;
@@ -2066,4 +2070,15 @@ display:none;
 
 #instant-search{
 	display: inline;
+}
+
+
+.embedcode input, .embedcode textarea {
+    background-color: #FFFFF0;
+    border: 1px solid #AAAAAA;
+    font-size: 10px;
+    overflow: hidden;
+    padding: 2px;
+    width: 210px;
+    z-index: 101;
 }

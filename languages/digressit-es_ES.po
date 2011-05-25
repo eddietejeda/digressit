@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: Eddie A Tejeda\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,43 +19,32 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: core/comments-functions.php:731
-#: core/comments-functions.php:762
-#: core/header-functions.php:8
+#: core/comments-functions.php:746
 #@ digressit
 msgid "comments_by_section_label"
 msgstr ""
 
-#: core/comments-functions.php:732
-#: core/comments-functions.php:776
-#: core/header-functions.php:9
+#: core/comments-functions.php:766
 #@ digressit
 msgid "comments_by_users_label"
 msgstr ""
 
-#: core/comments-functions.php:733
-#: core/comments-functions.php:802
-#: core/header-functions.php:10
+#: core/comments-functions.php:794
 #@ digressit
 msgid "general_comments_label"
 msgstr ""
 
-#: core/header-functions.php:7
-#@ digressit
-msgid "table_of_contents_label"
-msgstr ""
-
-#: core/lightboxes-functions.php:80
+#: core/lightboxes-functions.php:79
 #@ default
 msgid "Register account"
 msgstr ""
 
-#: core/lightboxes-functions.php:81
+#: core/lightboxes-functions.php:80
 #@ default
 msgid "Lost Password?"
 msgstr ""
 
-#: core/sidebar-functions.php:187
+#: core/sidebar-functions.php:183
 #: themes/digressit-default/forums/index.php:28
 #: themes/digressit-default/groups/single/forum/edit.php:24
 #: themes/digressit-default/groups/single/forum.php:31
@@ -64,129 +53,124 @@ msgstr ""
 #@ digressit
 #@ buddypress
 msgid "Title:"
-msgstr ""
+msgstr "Título:"
 
-#: core/sidebar-functions.php:192
+#: core/sidebar-functions.php:188
 #@ digressit
 msgid "Categorize?"
-msgstr ""
+msgstr "Clasificar?"
 
-#: digressit.php:293
+#: digressit.php:294
 #@ default
 msgid "No write permission on: "
 msgstr ""
 
-#: digressit.php:293
+#: digressit.php:294
 #@ default
 msgid ". Please give the server write permission on this directory"
 msgstr ""
 
-#: digressit.php:352
+#: core/admin-functions.php:62
 #@ default
 msgid "Digress.it Options"
 msgstr ""
 
-#: digressit.php:372
-#@ default
+#: core/admin-functions.php:82
+#@ digressit
 msgid "Front page content"
-msgstr ""
+msgstr "Primera página"
 
-#: digressit.php:382
-#@ default
+#: core/admin-functions.php:92
+#@ digressit
 msgid "Table of Contents Label"
 msgstr ""
 
-#: digressit.php:387
-#@ default
+#: core/admin-functions.php:113
+#@ digressit
 msgid "Comments by Section Label"
-msgstr ""
+msgstr "Comentarios de la Sección"
 
-#: digressit.php:392
-#@ default
+#: core/admin-functions.php:118
+#@ digressit
 msgid "Comments by Users Label"
-msgstr ""
+msgstr "Comentarios de los usuarios"
 
-#: digressit.php:398
-#@ default
+#: core/admin-functions.php:124
+#@ digressit
 msgid "General Comments Label"
-msgstr ""
+msgstr "Observaciones generales"
 
-#: digressit.php:403
-#@ default
+#: core/admin-functions.php:136
+#@ digressit
 msgid "Frontpage List Style"
-msgstr ""
+msgstr "Inicio estilo de lista"
 
-#: digressit.php:419
-#@ default
+#: core/admin-functions.php:149
+#@ digressit
 msgid "Allow General Comments"
 msgstr ""
 
-#: digressit.php:424
-#@ default
+#: core/admin-functions.php:173
+#@ digressit
 msgid "Enable Sidebar"
-msgstr ""
+msgstr "Habilitar barra lateral"
 
-#: digressit.php:430
-#@ default
+#: core/admin-functions.php:179
+#@ digressit
 msgid "Sidebar Position"
-msgstr ""
+msgstr "Coloque la barra lateral"
 
-#: digressit.php:436
-#@ default
+#: core/admin-functions.php:185
+#@ digressit
 msgid "Auto-hide Sidebar"
 msgstr ""
 
-#: digressit.php:441
-#@ default
+#: core/admin-functions.php:190
+#@ digressit
 msgid "In Sidebar Show"
-msgstr ""
+msgstr "Mostrar la barra lateral"
 
-#: digressit.php:447
-#@ default
+#: core/admin-functions.php:196
+#@ digressit
 msgid "Custom Header Image URL"
-msgstr ""
+msgstr "Personalizar encabezado URL de la imagen"
 
-#: digressit.php:458
-#@ default
+#: core/admin-functions.php:208
+#@ digressit
 msgid "Custom Style Sheet"
-msgstr ""
+msgstr "Hoja de estilos"
 
-#: digressit.php:476
-#@ default
+#: core/admin-functions.php:225
+#@ digressit
 msgid "Debug Mode"
 msgstr ""
 
-#: digressit.php:481
-#@ default
+#: core/admin-functions.php:230
+#@ digressit
 msgid "Use CDN"
-msgstr ""
+msgstr "Utilice CDN"
 
-#: digressit.php:491
+#: core/admin-functions.php:240
 #@ default
 msgid "CDN"
 msgstr ""
 
-#: digressit.php:501
-#@ default
+#: core/admin-functions.php:250
+#@ digressit
 msgid "Content Parsing Function"
-msgstr ""
+msgstr "Función de análisis de contenido"
 
-#: digressit.php:506
-#@ default
+#: core/admin-functions.php:255
+#@ digressit
 msgid "Comments Parsing Function"
-msgstr ""
+msgstr "Comentarios de análisis de la función"
 
-#: digressit.php:511
-#@ default
+#: core/admin-functions.php:260
+#@ digressit
 msgid "Comment Box Parsing Function"
-msgstr ""
+msgstr "Caja de Comentarios de análisis de la función"
 
-#: digressit.php:517
-#@ default
-msgid "Allow Comments Search"
-msgstr ""
-
-#: digressit.php:529
+#: core/admin-functions.php:270
 #: themes/digressit-default/groups/single/admin.php:32
 #: themes/digressit-default/groups/single/admin.php:100
 #: themes/digressit-default/groups/single/forum/edit.php:32
@@ -197,15 +181,15 @@ msgstr ""
 #: themes/digressit-wireframe/groups/single/forum/edit.php:32
 #: themes/digressit-wireframe/groups/single/forum/edit.php:50
 #: themes/digressit-wireframe/members/single/profile/edit.php:107
-#@ default
+#@ digressit
 #@ buddypress
 msgid "Save Changes"
-msgstr ""
+msgstr "Guardar cambios"
 
-#: digressit.php:530
-#@ default
+#: core/admin-functions.php:271
+#@ digressit
 msgid "Reset Options"
-msgstr ""
+msgstr "Restablecer Opciones"
 
 #: themes/digressit-default/activity/activity-loop.php:27
 #: themes/digressit-wireframe/activity/activity-loop.php:27
@@ -322,7 +306,7 @@ msgstr ""
 #, php-format
 #@ buddypress
 msgid "My Groups (%s)"
-msgstr ""
+msgstr "Mi Grupos"
 
 #: themes/digressit-default/activity/index.php:45
 #: themes/digressit-wireframe/activity/index.php:45
@@ -492,13 +476,15 @@ msgstr ""
 msgid "My Profile"
 msgstr ""
 
+#: extensions/feeds/paragraph-comments-feed.php:62
+#: extensions/feeds/user-comments-feed.php:63
 #: themes/digressit-default/author-feed.php:46
 #, php-format
 #@ default
 msgid "Comment on %1$s by %2$s"
 msgstr ""
 
-#: themes/digressit-default/author.php:70
+#: themes/digressit-default/author.php:62
 #@ default
 msgid "No posts by this author."
 msgstr ""
@@ -1343,29 +1329,36 @@ msgstr ""
 msgid "Send Invites"
 msgstr ""
 
-#: themes/digressit-default/header.php:57
-#: themes/digressit-wireframe/header.php:56
+#: themes/digressit-default/header.php:70
+#: themes/digressit-wireframe/header.php:65
 #@ default
 msgid "My Account"
 msgstr ""
 
-#: themes/digressit-default/header.php:58
-#: themes/digressit-wireframe/header.php:57
+#: themes/digressit-default/header.php:71
+#: themes/digressit-wireframe/header.php:66
 #@ default
 msgid "Logout"
 msgstr ""
 
-#: themes/digressit-default/header.php:61
-#: themes/digressit-wireframe/header.php:60
+#: core/lightboxes-functions.php:113
+#: core/lightboxes-functions.php:148
+#: core/lightboxes-functions.php:168
+#: core/lightboxes-functions.php:189
+#: themes/digressit-default/header.php:74
+#: themes/digressit-wireframe/header.php:69
 #@ default
 msgid "Register"
 msgstr ""
 
-#: themes/digressit-default/header.php:63
-#: themes/digressit-wireframe/header.php:62
+#: core/lightboxes-functions.php:95
+#: themes/digressit-default/comments.php:60
+#: themes/digressit-default/header.php:76
+#: themes/digressit-wireframe/header.php:71
 #@ default
+#@ digressit
 msgid "Login"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: themes/digressit-default/members/index.php:8
 #: themes/digressit-wireframe/members/index.php:8
@@ -1738,10 +1731,261 @@ msgstr ""
 msgid "We've fetched an avatar for your new account. If you'd like to change this, why not upload a new one?"
 msgstr ""
 
+#: core/sidebar-functions.php:18
 #: themes/digressit-default/search-template.php:19
 #: themes/digressit-default/searchform.php:4
 #@ default
 #@ k2_domain
 msgid "Search"
+msgstr ""
+
+#: core/core-functions.php:63
+#@ default
+msgid "This menu appears in the first page"
+msgstr ""
+
+#: core/core-functions.php:64
+#@ default
+msgid "A custom top menu"
+msgstr ""
+
+#: core/core-functions.php:65
+#@ default
+msgid "A custom sidebar menu"
+msgstr ""
+
+#: core/core-functions.php:562
+#@ default
+msgid "Server failed to respond. Please try again later"
+msgstr ""
+
+#: core/core-functions.php:593
+#@ default
+msgid "Warning: There are comments attached to the structure of this page. Changing the structure of this post will break the alignment of comments to their paragraphs"
+msgstr ""
+
+#: core/lightboxes-functions.php:122
+#@ default
+msgid "Choose a username (required)"
+msgstr ""
+
+#: core/lightboxes-functions.php:128
+#@ default
+msgid "E-mail (required)"
+msgstr ""
+
+#: core/lightboxes-functions.php:147
+#: core/lightboxes-functions.php:188
+#@ default
+msgid "Previous"
+msgstr ""
+
+#: core/lightboxes-functions.php:149
+#: core/lightboxes-functions.php:190
+#@ default
+msgid "Next"
+msgstr ""
+
+#: core/lightboxes-functions.php:206
+#@ default
+msgid "Your account has been created. Check your email for further instructions on how to log in."
+msgstr ""
+
+#: core/lightboxes-functions.php:217
+#@ default
+msgid "Login Successful"
+msgstr ""
+
+#: core/single-functions.php:16
+#@ default
+msgid "Single Sidebar"
+msgstr ""
+
+#: core/admin-functions.php:78
+#@ digressit
+msgid "Presentation"
+msgstr "Presentación"
+
+#: core/admin-functions.php:86
+#@ digressit
+msgid "The content of this page will be the first thing a visitor to your website will see."
+msgstr "El contenido de esta página será la primera cosa que un visitante a su sitio web van a ver."
+
+#: core/admin-functions.php:100
+#@ digressit
+msgid "Front Page Order"
+msgstr "Orden de las páginas"
+
+#: core/admin-functions.php:106
+#@ digressit
+msgid "Front Page Order by"
+msgstr "Orden de las páginas por"
+
+#: core/admin-functions.php:130
+#@ digressit
+msgid "Keyboard Navigation"
+msgstr "Teclado de navegación"
+
+#: core/admin-functions.php:137
+#@ digressit
+msgid "Numbers"
+msgstr "Números"
+
+#: core/admin-functions.php:138
+#@ digressit
+msgid "None"
+msgstr "Ninguno"
+
+#: core/admin-functions.php:139
+#@ digressit
+msgid "Lower Alphabet"
+msgstr "Baja del alfabeto"
+
+#: core/admin-functions.php:140
+#@ digressit
+msgid "Upper Alphabet"
+msgstr "Alta alfabeto"
+
+#: core/admin-functions.php:141
+#@ digressit
+msgid "Lower Roman"
+msgstr "Baja romana"
+
+#: core/admin-functions.php:142
+#@ digressit
+msgid "Upper Roman"
+msgstr "Alta romana"
+
+#: core/admin-functions.php:143
+#@ digressit
+msgid "Square"
+msgstr "Plaza"
+
+#: core/admin-functions.php:144
+#@ digressit
+msgid "Circle"
+msgstr "Círculo"
+
+#: core/admin-functions.php:154
+#@ digressit
+msgid "Enable Instant Content Search"
+msgstr ""
+
+#: core/admin-functions.php:161
+#@ digressit
+msgid "Parse List Items"
+msgstr "Analizar elementos de lista"
+
+#: core/admin-functions.php:167
+#@ digressit
+msgid "Show Pages in Menu"
+msgstr "Mostrar páginas en el menú"
+
+#: core/admin-functions.php:211
+#@ digressit
+msgid ""
+"If you would like to customize the theme, you can upload a stylesheet that can be be loaded after the required stylesheets. \n"
+"\t\t\t\t\tFor heavy customizations you should use the \"Digress.it Wireframe\" theme provided.\n"
+"\t\t\t\t\tFor more information on this feature follow the instructions provided at"
+msgstr ""
+"Si desea personalizar el tema, puede subir una hoja de estilo que se puede cargar después de las hojas de estilo necesarias.  \n"
+"\\\t\\\t\\\t\\\t\\\tpersonalizaciones pesados ​​t \\ tPara t \\ debe utilizar el &quot;Digress.it Wireframe&quot; El tema de siempre. información \\\t\\\t\\\t\\\t\\\tPara más sobre esta función, siga las instrucciones proporcionadas en"
+
+#: core/admin-functions.php:218
+#@ digressit
+msgid "Advanced"
+msgstr "Avanzada"
+
+#: core/admin-functions.php:233
+#@ digressit
+msgid ""
+"This is an experimental feature. The idea is that you can host the media files on a really fast file server. Enabling this now\n"
+"\t\t\t\thas the risk of downloading files that are out of date. Use at your own discretion."
+msgstr "Esta es una característica experimental. La idea es que se pueden alojar los archivos multimedia en un servidor de archivos muy rápido. Al habilitar esta ahora \\ t \\ t \\ t \\ Thas el riesgo de descargar archivos que están fuera de fecha. Utilice a su propia discreción."
+
+#: extensions/feeds/paragraph-comments-feed.php:20
+#: extensions/feeds/user-comments-feed.php:41
+#, php-format
+#@ default
+msgid "Comments on: %s"
+msgstr ""
+
+#: extensions/feeds/paragraph-comments-feed.php:22
+#: extensions/feeds/user-comments-feed.php:43
+#, php-format
+#@ default
+msgid "Comments for %s searching on %s"
+msgstr ""
+
+#: extensions/feeds/paragraph-comments-feed.php:24
+#: extensions/feeds/user-comments-feed.php:45
+#, php-format
+#@ default
+msgid "Comments for %s"
+msgstr ""
+
+#: themes/digressit-default/comments-browser.php:50
+#@ digressit
+msgid "Go to thread"
+msgstr ""
+
+#: themes/digressit-default/comments-browser.php:59
+#@ digressit
+msgid "This comment is awaiting moderation."
+msgstr ""
+
+#: themes/digressit-default/comments-browser.php:76
+#@ digressit
+msgid "No comments"
+msgstr ""
+
+#: themes/digressit-default/comments.php:17
+#@ digressit
+msgid "This post is password protected. Enter the password to view comments."
+msgstr ""
+
+#: themes/digressit-default/comments.php:59
+#@ digressit
+msgid "You must be logged in to write a comment."
+msgstr ""
+
+#: themes/digressit-default/comments.php:61
+#@ digressit
+msgid "Create Account"
+msgstr ""
+
+#: themes/digressit-default/comments.php:69
+#@ digressit
+msgid "This discussion is now closed."
+msgstr ""
+
+#: themes/digressit-default/comments.php:79
+#@ digressit
+msgid "show all"
+msgstr ""
+
+#: themes/digressit-default/comments.php:80
+#@ digressit
+msgid "There are no comments. Click the text to your left to make a new comment."
+msgstr ""
+
+#: themes/digressit-default/footer.php:7
+#@ digressit
+msgid "Powered by "
+msgstr ""
+
+#: themes/digressit-default/frontpage.php:20
+#@ digressit
+msgid "Congratulations on installing the Multi-site edition of Digress.it"
+msgstr ""
+
+#: themes/digressit-default/frontpage.php:22
+#@ digressit
+msgid "This is the frontpage to your Multi-site community."
+msgstr ""
+
+#: themes/digressit-default/frontpage.php:23
+#@ digressit
+msgid "To edit this page you can take one of the following actions:"
 msgstr ""
 

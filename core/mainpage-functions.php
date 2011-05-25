@@ -1,29 +1,23 @@
 <?php
-//add_action('wp', 'mainpage');
-//add_action('wp_print_styles', 'mainpage_wp_print_styles');
-//add_action('wp_print_scripts', 'mainpage_wp_print_scripts' );
 add_action('wp', 'mainpage_load');
+global $using_mainpage_nav_walker;
 
-
-
+/**
+ *
+ */
 function mainpage_wp_print_styles(){
-?>
-<link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/mainpage.css'); ?>" type="text/css" media="screen" />
-<?php
+	?><link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/mainpage.css'); ?>" type="text/css" media="screen" /><?php
 }
 
-/*
-function mainpage_wp_print_scripts(){
-	wp_enqueue_script('digressit.mainpage', get_digressit_media_uri('js/digressit.mainpage.js'), 'jquery', false, true );
-}
-*/
-
+/**
+ *
+ */
 function mainpage_sidebar_widgets(){
-	$options = get_option('digressit');
-	if(is_active_sidebar('mainpage-sidebar') && $options['enable_sidebar'] != 0){
+	$digressit_options = get_option('digressit');
+	if(is_active_sidebar('mainpage-sidebar') && $digressit_options['enable_sidebar'] != 0){
 		?>
 		<div class="sidebar-widgets">
-		<div id="dynamic-sidebar" class="sidebar  <?php echo $options['auto_hide_sidebar']; ?> <?php echo $options['sidebar_position']; ?>">		
+		<div id="dynamic-sidebar" class="sidebar  <?php echo $digressit_options['auto_hide_sidebar']; ?> <?php echo $digressit_options['sidebar_position']; ?>">		
 		<?php
 		get_widgets('Mainpage Sidebar');
 		?>
@@ -35,49 +29,46 @@ function mainpage_sidebar_widgets(){
 	
 }
 
+/**
+ *
+ */
 function mainpage_load(){
-	//var_dump(is_mainpage());
 	if(is_mainpage() && !is_single()){
 		add_action('add_dynamic_widget', 'mainpage_sidebar_widgets');
 	}
 }
 
 
-
-
+/**
+ *
+ */
 function mainpage_default_menu(){
-
-	$options = get_option('digressit');
-	//$options['front_page_order'] = 'ASC';
-	//$options['front_page_order_by'] = 'date';
-	
+	$digressit_options = get_option('digressit');	
 	?>
-	<ol class="navigation <?php echo $options['frontpage_list_style']; ?>">
+	<ol class="navigation <?php echo $digressit_options['frontpage_list_style']; ?>">
 
 	 <?php
 	 global $post;
-	 $frontpage_posts = get_posts('numberposts=-1&orderby='.$options['front_page_order_by'].'&order=' . $options['front_page_order']);
-	 foreach($frontpage_posts as $pp) :
-		$comment_count = get_post_comment_count($pp->ID, null, null, null);
-	 ?>
+	 $frontpage_posts = get_posts('numberposts=-1&orderby='.$digressit_options['front_page_order_by'].'&order=' . $digressit_options['front_page_order']);
+	 foreach($frontpage_posts as $pp){
+		$comment_count = get_post_comment_count($pp->ID, null, null, null); ?>
 	    <li><a href="<?php echo get_permalink($pp->ID); ?>"><?php echo get_the_title($pp->ID); ?> (<?php echo $comment_count;  ?>)</a></li>
-	 <?php endforeach; ?>
+	 <?php } ?>
 	 </ol> 
 	<?php mainpage_content_display($frontpage_posts); ?>
-
 <?php
 }
 
 
-global $using_mainpage_nav_walker;
 
-class mainpage_nav_walker extends Walker_Nav_Menu
-{
+/**
+ *
+ */
+class mainpage_nav_walker extends Walker_Nav_Menu{
 	function start_el(&$output, $item, $depth, $args) {
 		global $wp_query, $using_mainpage_nav_walker;		
 		$using_mainpage_nav_walker = true;
 
-		//var_dump($item);
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 		$class_names = $value = '';
 		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
@@ -97,17 +88,18 @@ class mainpage_nav_walker extends Walker_Nav_Menu
 	}
 }
 
-function mainpage_content_display($frontpage_posts){
-?>
+/**
+ *
+ */
+function mainpage_content_display($frontpage_posts){ ?>
 	<div class="previews">
 		<div class="bubblearrow"></div>
 		<div class="preview default">
 		<?php
 		
-		$options = get_option('digressit');
-		$front_page_content = $options['front_page_content'];
+		$digressit_options = get_option('digressit');
+		$front_page_content = $digressit_options['front_page_content'];
 		
-		//var_dump($front_page_content);
 		if((int)$front_page_content){
 			$page = get_post($front_page_content);
 			$content = $page->post_content;
@@ -131,10 +123,7 @@ function mainpage_content_display($frontpage_posts){
 
 		</div>
 
-		<?php
-			foreach($frontpage_posts as $p) :
-			//setup_postdata($post);
-		?>
+		<?php foreach($frontpage_posts as $p){ ?>
 			<div class="preview">
 				<?php 
 				$p = (array)$p;
@@ -153,7 +142,6 @@ function mainpage_content_display($frontpage_posts){
 					echo " [...]";
 				}
 				echo "</p>";
-				
 				$comment_count = get_post_comment_count($post_object->ID, null, null, null);
 				?>
 
@@ -161,11 +149,10 @@ function mainpage_content_display($frontpage_posts){
 					<?php echo $comment_count ?> Comments
 				</div>	
 			</div>			
-		 <?php endforeach; ?>
+		 <?php } ?>
 		</div>			
 	<?php
 	
 }
-
 
 ?>

@@ -2,9 +2,7 @@
 
 <div id="container">
 <?php get_dynamic_widgets(); ?>
-
 <?php get_stylized_title(); ?>
-
 <div id="content" role="main">
 	<div id="frontpage">
 		<div class="entry" role="article">
@@ -19,10 +17,10 @@
 		else{
 			?>
 			
-			<h2>Congratulations on installing the Multi-site edition of Digress.it</h2>
+			<h2><?php _e('Congratulations on installing the Multi-site edition of Digress.it','digressit'); ?></h2>
 			
-			<p>This is the frontpage to your Multi-site community.</p>
-			<p>To edit this page you can take one of the following actions:<p>
+			<p><?php _e('This is the frontpage to your Multi-site community.', 'digressit'); ?></p>
+			<p><?php _e('To edit this page you can take one of the following actions:', 'digressit'); ?><p>
 			<ul style="width: 75%">
 				<li>Login as an the admin and edit your "<a href="<?php bloginfo('url') ?>/wp-admin/options-reading.php">Reading Settings</a>." Choose "A static page" option and select the page you want to display here</li>
 				<li>You can also edit (as admin) your "<a href="<?php bloginfo('url') ?>/wp-admin/widgets.php">Widgets</a>." Just drag your widgets to the "Frontpage Content" slot.</li>

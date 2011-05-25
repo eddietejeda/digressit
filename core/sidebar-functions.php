@@ -1,12 +1,10 @@
 <?php
-
-
 add_action('widgets_init', create_function('', 'return register_widget("ListPostsWithCommentCount");'));
-//add_action('widgets_init', create_function('', 'return register_widget("ListUsersWithCommentCount");'));
-//add_action('widgets_init', create_function('', 'return register_widget("LiveContentSearch");'));
 
 
-
+/**
+ *
+ */
 class LiveContentSearch extends WP_Widget {
 	function LiveContentSearch() {
 		parent::WP_Widget(false, $name = 'Live Content Search');	
@@ -25,6 +23,9 @@ class LiveContentSearch extends WP_Widget {
 }
 
 
+/**
+ *
+ */
 class ListPostsWithCommentCount extends WP_Widget {
 	function ListPostsWithCommentCount() {
 		parent::WP_Widget(false, $name = 'List Posts with Comment Count');	
@@ -36,7 +37,7 @@ class ListPostsWithCommentCount extends WP_Widget {
 		$currentpost = $post;
 		
 		//var_dump($args);
-		$options = get_option('digressit');
+		$digressit_options = get_option('digressit');
 		
 		if($defaults['categorize']){
 			$categories=  get_categories(); 
@@ -81,13 +82,12 @@ class ListPostsWithCommentCount extends WP_Widget {
 				'post_type' => 'post',
 				'post_status' => 'publish',
 				'post_type' => 'post',
-				'order_by' => $options['front_page_order_by'],
-				'order' => $options['front_page_order'],
+				'order_by' => $digressit_options['front_page_order_by'],
+				'order' => $digressit_options['front_page_order'],
 				'category' => $cat_id,
 				);
 								
 			$posts = get_posts($args);
-			//var_dump($posts);
 			?>
 			<?php foreach($posts as $post ): ?>
 			<?php 
@@ -105,7 +105,7 @@ class ListPostsWithCommentCount extends WP_Widget {
 			<?php 
 			
 			$sidebar_number = null;
-			if(isset($options['show_comment_count_in_sidebar'] ) && (int)$options['show_comment_count_in_sidebar'] == 0){
+			if(isset($digressit_options['show_comment_count_in_sidebar'] ) && (int)$digressit_options['show_comment_count_in_sidebar'] == 0){
 				$sidebar_number = $section_number;
 				$commentcountclass  = 'section-number';					
 				$section_number++;
@@ -193,6 +193,5 @@ class ListPostsWithCommentCount extends WP_Widget {
 	}
 
 }
-
 
 ?>

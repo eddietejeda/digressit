@@ -10,9 +10,6 @@ header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_opt
 global $digressit_commentbrowser, $wp_rewrite, $matches, $wp_query;
 /* FIXME: I can't find a way to get the user var from GET this is a temp hack */
 
-//preg_match('#usercomments/(.+)#', $_SERVER['REQUEST_URI'], $commenter);
-
-//$commenter = $commenter[1];
 
 global $wp;
 
@@ -56,14 +53,6 @@ else{
 	<sy:updateFrequency><?php echo apply_filters( 'rss_update_frequency', '1' ); ?></sy:updateFrequency>
 	<?php do_action('commentsrss2_head'); ?>
 <?php
-
-
-
-
-
-
-
-
 
 if ( $comments_from_user ) : foreach ( $comments_from_user as $comment ) : 
 

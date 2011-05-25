@@ -6,7 +6,6 @@
  */
 
 header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_option('blog_charset'), true);
-//header('Content-Type: text/plain');
 global $digressit_commentbrowser, $wp_rewrite, $matches, $wp_query, $wpdb;
 echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
 ?>
@@ -32,10 +31,8 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
 
 
 /* FIXME: I can't find a way to get the user var from GET this is a temp hack */
-//preg_match('#paragraphlevel/(.+)#', $_SERVER['REQUEST_URI'], $gets);
 
 
-//var_dump($gets);
 if($post = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID=".$wp->query_vars['feed_parameter'] )){
 //	echo "using post id";
 }
@@ -43,15 +40,8 @@ elseif($post = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE post_name='"
 //	echo "using post name";	
 }
 
-
-//var_dump($post);
 $post = $post[0];
-
 $paragraphs = digressit_paragraphs($post->post_content);
-
-
-
-
 
 if ( $paragraphs ) : foreach ( $paragraphs as $key => $paragraph ) : 
 
