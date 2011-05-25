@@ -47,8 +47,8 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 * New, clearer, navigation system
 * Re-introduced support for paragraph citation and embedding
 * Expanded localization support
-* Fix issue with deactivation
-* Keyboard navigation - with corresponding admin options
+* Fix issue with deactivation - the default theme is now detected
+* Added new keyboard navigation option
 
 = 3.1.1 = 
 * Fix issue where minified JS was not in released version
