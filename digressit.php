@@ -115,20 +115,22 @@ if($_REQUEST['digressit-embed']){
 /**
  * Check to see if this revision requires an reset of options. 
  * @todo This function should be a bit smarter
- * @deprecated This is a very bad way to handle upgrades
  *
  */
 function digressit_init(){
 
 	$digressit_options = get_option('digressit');
 
-	/* upgrade D 3.2 */
-	if(is_null($digressit_options['enable_citation_button'])){
+	/* upgrade to Digress.it 3.2 */
+	if(is_null($digressit_options['enable_citation_button'])){		
+		$digressit_options['enable_dropdown_menu'] = 1;
 		$digressit_options['enable_citation_button'] = 0;
+		$digressit_options['keyboard_navigation'] = 0;
 		update_option('digressit', $digressit_options);
 	}
 
 	/*	
+	 @deprecated This is a very bad way to handle upgrades
 	if(!isset($digressit_options['revision']) || (int)$digressit_options['revision'] < 198 ){
 		activate_digressit();
 		
