@@ -146,7 +146,7 @@ function digressit_init(){
  *
  */
 function permalink_required_notice(){
-		echo "<div id='permalink-required-notice' class='updated fade'><p>Warning: Digress.it requires permalinks to be enabled. Please go to <a href='".get_bloginfo('url')."/wp-admin/options-permalink.php'>Permalink Settings</a> and make sure that <b>Default</b> is not selected</p></div>";	
+		echo "<div id='permalink-required-notice' class='updated fade'><p>".__("Warning: Digress.it requires permalinks to be enabled. Please go to <a href='").get_bloginfo('url')."/wp-admin/options-permalink.php'>".__('Permalink Settings</a> and make sure that <b>Default</b> is not selected')."</p></div>";	
 }
 
 

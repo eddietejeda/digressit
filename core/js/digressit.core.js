@@ -807,10 +807,6 @@ jQuery(document).ready(function() {
 		
 		jQuery('#' + form_id + ' .required').each(function(e){
 			
-			//alert(jQuery(this).attr('type') + jQuery(this).val());
-			//input[type='checkbox']
-			//alert(jQuery(this).attr('type') + " " + jQuery('#'+jQuery(this).attr('id') + ':checked').val());
-
 			if( (
 					(
 						jQuery(this).attr('type') == 'text' && jQuery(this).val().length == 0
