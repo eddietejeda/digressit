@@ -1,40 +1,36 @@
 <?php
-add_action('wp', 'mainpage_load');
+add_action('wp', 'digressit_mainpage_load');
 global $using_mainpage_nav_walker;
 
 /**
  *
  */
-function mainpage_wp_print_styles(){
+function digressit_mainpage_wp_print_styles(){
 	?><link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/mainpage.css'); ?>" type="text/css" media="screen" /><?php
 }
 
 /**
  *
  */
-function mainpage_sidebar_widgets(){
-	$digressit_options = get_option('digressit');
+function digressit_mainpage_sidebar_widgets(){
+	global $digressit_options;
 	if(is_active_sidebar('mainpage-sidebar') && $digressit_options['enable_sidebar'] != 0){
 		?>
 		<div class="sidebar-widgets">
 		<div id="dynamic-sidebar" class="sidebar  <?php echo $digressit_options['auto_hide_sidebar']; ?> <?php echo $digressit_options['sidebar_position']; ?>">		
-		<?php
-		get_widgets('Mainpage Sidebar');
-		?>
+		<?php digressit_get_widgets('Mainpage Sidebar'); ?>
 		</div>
 		</div>
 		<?php
 	}
-	
-	
 }
 
 /**
  *
  */
-function mainpage_load(){
-	if(is_mainpage() && !is_single()){
-		add_action('add_dynamic_widget', 'mainpage_sidebar_widgets');
+function digressit_mainpage_load(){
+	if(digressit_is_mainpage() && !is_single()){
+		add_action('add_dynamic_widget', 'digressit_mainpage_sidebar_widgets');
 	}
 }
 
@@ -42,8 +38,8 @@ function mainpage_load(){
 /**
  *
  */
-function mainpage_default_menu(){
-	$digressit_options = get_option('digressit');	
+function digressit_mainpage_default_menu(){
+	global $digressit_options;
 	?>
 	<ol class="navigation <?php echo $digressit_options['frontpage_list_style']; ?>">
 
@@ -51,11 +47,11 @@ function mainpage_default_menu(){
 	 global $post;
 	 $frontpage_posts = get_posts('numberposts=-1&orderby='.$digressit_options['front_page_order_by'].'&order=' . $digressit_options['front_page_order']);
 	 foreach($frontpage_posts as $pp){
-		$comment_count = get_post_comment_count($pp->ID, null, null, null); ?>
+		$comment_count = digressit_get_post_comment_count($pp->ID, null, null, null); ?>
 	    <li><a href="<?php echo get_permalink($pp->ID); ?>"><?php echo get_the_title($pp->ID); ?> (<?php echo $comment_count;  ?>)</a></li>
 	 <?php } ?>
 	 </ol> 
-	<?php mainpage_content_display($frontpage_posts); ?>
+	<?php digressit_mainpage_content_display($frontpage_posts); ?>
 <?php
 }
 
@@ -64,7 +60,7 @@ function mainpage_default_menu(){
 /**
  *
  */
-class mainpage_nav_walker extends Walker_Nav_Menu{
+class digressit_mainpage_nav_walker extends Walker_Nav_Menu{
 	function start_el(&$output, $item, $depth, $args) {
 		global $wp_query, $using_mainpage_nav_walker;		
 		$using_mainpage_nav_walker = true;
@@ -82,7 +78,7 @@ class mainpage_nav_walker extends Walker_Nav_Menu{
 		$item_output = $args->before;
 		$item_output .= '<a target="_top"'. $attributes .'>';
 		$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
-		$item_output .= '('.get_post_comment_count($item->object_id).')</a>';
+		$item_output .= '('.digressit_get_post_comment_count($item->object_id).')</a>';
 		$item_output .= $args->after;
 		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
 	}
@@ -91,13 +87,12 @@ class mainpage_nav_walker extends Walker_Nav_Menu{
 /**
  *
  */
-function mainpage_content_display($frontpage_posts){ ?>
+function digressit_mainpage_content_display($frontpage_posts){ ?>
 	<div class="previews">
 		<div class="bubblearrow"></div>
 		<div class="preview default">
-		<?php
-		
-		$digressit_options = get_option('digressit');
+		<?php		
+		global $digressit_options;
 		$front_page_content = $digressit_options['front_page_content'];
 		
 		if((int)$front_page_content){
@@ -142,7 +137,7 @@ function mainpage_content_display($frontpage_posts){ ?>
 					echo " [...]";
 				}
 				echo "</p>";
-				$comment_count = get_post_comment_count($post_object->ID, null, null, null);
+				$comment_count = digressit_get_post_comment_count($post_object->ID, null, null, null);
 				?>
 
 				<div class="comment-count">

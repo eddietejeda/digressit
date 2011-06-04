@@ -7,71 +7,27 @@ global $browser, $post_paragraph_count;
 
 $digressit_options = $digressit = $options = get_option('digressit');
 
-//add_action('init', 'digressit_load');
-
-add_action('after_setup_theme', 'digressit_setup' );
-add_action('admin_head-post.php', 'add_comment_change_notice');
-
 add_action('wp_print_scripts',  'digressit_core_print_scripts', 1);
 add_action('wp_print_styles',  'digressit_core_print_styles', 1) ; 		
-add_action('wp_head',  'on_wp_head') ; 		
+add_action('wp_head',  'digressit_wp_head') ; 		
 
 if(esc_url($digressit_options['custom_header_image'], array('http', 'https'))){
 	add_action('add_header_image', 'custom_digressit_logo');
 }
+
 add_filter('the_content', 'digressit_parser', 10000);	
+add_action('wp', 'frontpage_load');
+add_action('public_ajax_function', 'live_content_search_ajax');	
+add_action('public_ajax_function', 'live_comment_search_ajax');	
+add_action('add_dynamic_widget', 'digressit_single_sidebar_widgets');
+add_action('add_dynamic_widget', 'digressit_page_sidebar_widgets');
 
-
-
-/**
- * Basic theme setup function
- * *
- * @since 3.0.0
- */
-function digressit_setup(){
-	global $wpdb;
-	// This theme uses post thumbnails
-	add_theme_support( 'post-thumbnails' );
-
-	// This theme uses wp_nav_menu()
-	add_theme_support( 'nav-menus' );
-
-	// Add default posts and comments RSS feed links to head
-	add_theme_support( 'automatic-feed-links' );
-
-	
-	$sql = "SHOW COLUMNS FROM $wpdb->comments";	
-	$columns = $wpdb->get_results($sql);
-
-	$comment_text_signature_exists = false;
-	foreach($columns as $col){
-		if($col->Field == 'comment_text_signature'){
-			$comment_text_signature_exists = true;
-		}
-	}
-	
-	if($comment_text_signature_exists == false){
-		$sql = "ALTER TABLE `$wpdb->comments` ADD `comment_text_signature` VARCHAR( 255 ) NULL;";	
-		$wpdb->query($sql);
-	}
-
-	// This theme allows users to set a custom background
-	add_custom_background();	
-	
-	register_nav_menus(
-		array(
-		  'Main Page' => __('This menu appears in the first page')  ,
-		  'Top Menu' => __('A custom top menu')  ,
-		  'Sidebar' => __('A custom sidebar menu')  
-		)
-	);
-}
 	
 
 /**
  * Simple wrapper function that prints calls action 'secondary_menu'
  */
-function get_secondary_menu(){
+function digressit_get_secondary_menu(){
 	do_action('secondary_menu');
 }
 
@@ -79,7 +35,7 @@ function get_secondary_menu(){
 /**
  * Simple wrapper that gets widgets by name
  */
-function get_widgets($widget_name){
+function digressit_get_widgets($widget_name){
 	return dynamic_sidebar($widget_name);
 }
 
@@ -87,7 +43,7 @@ function get_widgets($widget_name){
 /**
  * Simple wrapper that gets widgets by the section they are on
  */
-function get_dynamic_widgets(){
+function digressit_get_dynamic_widgets(){
 	do_action('add_dynamic_widget');
 }
 
@@ -95,7 +51,7 @@ function get_dynamic_widgets(){
 /**
  * 
  */
-function get_single_default_widgets(){
+function digressit_get_single_default_widgets(){
 	
 	$digressit_options = get_option('digressit');
 	if ( !is_active_sidebar('single-sidebar') && (int)$digressit_options['enable_sidebar'] !== 0) : 
@@ -127,7 +83,7 @@ function get_single_default_widgets(){
 /**
  * 
  */
-function get_stylized_content_header(){
+function digressit_get_stylized_content_header(){
 	if(has_action('stylized_content_header')){
 		do_action('stylized_content_header');
 	}
@@ -138,18 +94,18 @@ function get_stylized_content_header(){
 /**
  * 
  */
-function get_stylized_title(){
+function digressit_get_stylized_title(){
 	
-	echo "<div id='the_title'  class='the_title'>";	
+	echo '<div id="the_title"  class="the_title">';	
 	if(has_action('stylized_title')){
 		do_action('stylized_title');
 	}
 	else{			
 		if(is_single() || is_page() || is_search()){
-			echo "<h2><a href='".get_permalink()."'>".get_the_title()."</a></h2>";
+			echo '<h2><a href="'.get_permalink().'">'.get_the_title().'</a></h2>';
 		}			
 	}
-	echo "</div>";
+	echo '</div>';
 }
 
 
@@ -157,7 +113,7 @@ function get_stylized_title(){
 /**
  * 
  */
-function on_wp_head(){
+function digressit_wp_head(){
 ?>
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
 <?php
@@ -426,7 +382,6 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 function display_xml_error($error, $xml)
 {
     $return  = $xml[$error->line - 1] . "\n";
-  //  $return .= str_repeat('-', $error->column) . "\n";
 
     switch ($error->level) {
         case LIBXML_ERR_WARNING:
@@ -457,7 +412,10 @@ function display_xml_error($error, $xml)
  * 
  */
 function digressit_parser($content){
-	if(is_single()){
+	global $digressit_options;
+	$enabled_for = $digressit_options['digressit_enabled_for'];
+		
+	if(is_single() && $enabled_for == 'posts' || is_page() && $enabled_for == 'pages'){
 		return implode("\n", (array)digressit_paragraphs($content));
 	}
 	else{
@@ -569,37 +527,6 @@ function json_remote_call($webservice, $parameters = null){
 }
 
 
-
-
-
-
-
-/**
- * 
- */
-function add_comment_change_notice() {	
-	
-	$comments= get_approved_comments($_GET['post']);
-	
-	if(count($comments)){
-		add_action('admin_notices', 'change_content_warning' );
-	}
-}
-
-/**
- * 
- */
-function change_content_warning(){
-	?>
-	
-	<div id="register-form" class="updated error" style="padding: 5px; width: 99% <?php echo $hidethis;?>" >		
-		<?php _e('Warning: There are comments attached to the structure of this page. Changing the structure of this post will break the alignment of comments to their paragraphs'); ?>
-	</div>
-	
-	<?php
-	
-}
-
 /**
  * 
  */
@@ -609,12 +536,207 @@ function get_header_images(){
 
 
 /**
+ *
+ */
+function digressit_page_sidebar_widgets(){
+	if(is_page()){
+		global $digressit_options;
+		if(is_active_sidebar('page-sidebar') && $digressit_options['enable_sidebar'] != 0){
+			?>
+			<div class="sidebar-widgets">
+			<div id="dynamic-sidebar" class="sidebar  <?php echo $digressit_options['auto_hide_sidebar']; ?> <?php echo $digressit_options['sidebar_position']; ?>">		
+			<?php
+			dynamic_sidebar('Page Sidebar');		
+			?>
+			</div>
+			</div>
+			<?php
+		}
+	}	
+}
+
+
+/**
+ *
+ */
+function digressit_single_sidebar_widgets(){
+	if(is_single()){	
+		global $digressit_options;
+		if(is_active_sidebar('single-sidebar') && (int)$digressit_options['enable_sidebar'] != 0){
+			?>
+			<div class="sidebar-widgets">
+			<div id="dynamic-sidebar" class="sidebar  <?php echo $digressit_options['auto_hide_sidebar']; ?> <?php echo $digressit_options['sidebar_position']; ?>">		
+			<?php dynamic_sidebar('Single Sidebar'); ?>
+			</div>
+			</div>
+			<?php
+		}
+	}
+}
+
+
+/** 
+ * @description: 
+ * @todo: 
+ *
+ */
+function get_text_signature_count($post_ID, $text_signature){
+	global $wpdb;
+	
+	$comments = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->comments WHERE 	comment_approved = 1 AND comment_post_ID = %d", $post_ID) );
+	$comment_count = count(get_text_signature_filter($comments, $text_signature));
+	return $comment_count; 
+}
+
+
+/**
+ *
+ */
+function header_default_top_menu(){
+	global $digressit_options;
+	?>
+	<ul>
+		<li><a title="<?php echo($digressit_options['table_of_contents_label']); ?>" href="<?php bloginfo('url'); ?>"><?php echo($digressit_options['table_of_contents_label']); ?></a></li>
+		<li><a title="<?php echo($digressit_options['comments_by_section_label']); ?>" href="<?php bloginfo('url'); ?>/comments-by-section"><?php echo($digressit_options['comments_by_section_label']); ?></a></li>
+		<li><a title="<?php echo($digressit_options['comments_by_users_label']); ?>"  href="<?php bloginfo('url'); ?>/comments-by-contributor"><?php echo($digressit_options['comments_by_users_label']); ?></a></li>
+		<li><a title="<?php echo($digressit_options['general_comments_label']); ?>"  href="<?php bloginfo('url'); ?>/general-comments"><?php echo($digressit_options['general_comments_label']); ?></a></li>
+		<?php do_action('add_commentbrowser_link'); ?>		
+	</ul>
+<?php
+}
+
+
+
+/**
+ *
+ */
+function digressit_body_class(){
+	global $blog_id, $post;
+	$request_root = parse_url($_SERVER['REQUEST_URI']);
+	
+	$blog_name_unique = ereg_replace("[^A-Za-z0-9]", "-", strtolower(get_bloginfo('name') ));
+	$post_name_unique = 'post-name-'. $post->post_name;
+	$current_page_name = '';
+	if(function_exists('digressit_is_commentbrowser') && digressit_is_commentbrowser()){
+		$current_page_name .= ' comment-browser '. $blog_name_unique ;
+	}
+	elseif(is_multisite() && $blog_id == 1 && digressit_is_frontpage()){
+		$current_page_name = ' frontpage '. $blog_name_unique ;
+	}
+	else{
+		$current_page_name .= basename(get_bloginfo('home'));
+		if(is_home()){
+			$current_page_name .= ' site-home '. $blog_name_unique ;
+		}	
+	}
+	return $current_page_name. " ". $post_name_unique;
+}
+
+
+/**
+ *
+ */
+function digressit_live_content_search_ajax($request_params){
+	extract($request_params);
+	global $wpdb, $current_user;
+
+	$excluded_words = array('the','and');
+	//every three letters we give results
+	if(strlen($request_params['value']) > 3 && !in_array($request_params['value'], $excluded_words)){
+		$posts = null;
+		$message = null;		
+
+		$sql = "SELECT * FROM $wpdb->posts p  
+				WHERE p.post_status = 'publish' 
+				AND ( p.post_type  = 'post' OR  p.post_type  = 'page' ) 
+				AND ( p.post_content LIKE \"%".esc_sql($request_params['value'])."%\"  OR p.post_content LIKE \"%".esc_sql($request_params['value'])."%\" ) 
+				GROUP BY p.ID LIMIT 3";
+	
+		$posts = $wpdb->get_results($sql);			
+		//var_dump($posts);
+
+		$message = null;
+		foreach($posts as $p){
+			$message .= "<div class='search-result'>".
+						"<div class='post-title'><a href='".get_permalink($p->ID)."'>".$p->post_title."</a></div>".
+						"</div>";
+		}
+		die(json_encode(array('status' => count($posts), "message" => $message)));
+	}
+	die(json_encode(array('status' => 0, "message" => '')));
+}
+
+
+/**
+ *
+ */
+function digressit_live_comment_search_ajax($request_params){
+	extract($request_params);
+	global $wpdb, $current_user;
+
+
+	$excluded_words = array('the','and');
+	//every three letters we give results
+	if(strlen($request_params['value']) > 3 && !in_array($request_params['value'], $excluded_words)){
+		$posts = null;
+		$message = null;		
+		
+		$sql = "SELECT *
+				FROM $wpdb->comments c, $wpdb->posts p
+				WHERE p.ID = c.comment_post_ID
+				AND c.comment_approved =1
+				AND p.post_status = 'publish'
+				AND (c.comment_content LIKE '%".esc_sql($request_params['value'])."%'
+		              OR c.comment_content LIKE '".esc_sql($request_params['value'])."%' 
+		              OR c.comment_content LIKE '%".esc_sql($request_params['value'])."')
+		        GROUP BY comment_ID LIMIT 3";
+		$posts = $wpdb->get_results($sql);			
+		
+		foreach($posts as $post){
+			$message .= "<div class='search-result'>".
+						"<div class='post-title'><a href='".get_permalink($post->ID)."#comment-".$post->comment_ID."'>".substr($post->comment_content, 0, 75)." [...]</a></div>".
+						"</div>";
+		}
+		die(json_encode(array('status' => count($posts), "message" => $message)));
+	}
+	die(json_encode(array('status' => 0, "message" => '')));
+}
+
+/**
+ *
+ */
+function frontpage_sidebar_widgets(){
+	global $digressit_options;
+
+	if(is_active_sidebar('frontpage-sidebar') && $digressit_options['enable_sidebar'] != 0){
+		?>
+		<div class="sidebar-widgets">
+		<div id="dynamic-sidebar" class="sidebar  <?php echo $digressit_options['auto_hide_sidebar']; ?> <?php echo $digressit_options['sidebar_position']; ?>">		
+		<?php
+		dynamic_sidebar('Frontpage Sidebar');
+		?>
+		</div>
+		</div>
+		<?php
+	}
+}
+
+/**
+ *
+ */
+function frontpage_load(){
+	if(digressit_is_frontpage()){
+		add_action('add_dynamic_widget', 'frontpage_sidebar_widgets');
+	}
+}
+
+
+/**
  * 
  */
 function digressit_core_print_styles(){
-	global $current_user, $override_default_theme, $browser, $blog_id;
+	global $current_user, $override_default_theme, $browser, $blog_id, $digressit_options;
 	
-	$digressit_options = get_option('digressit');
 	
 	wp_register_style('digressit.core', get_digressit_media_uri('css/core.css'));
 
@@ -660,7 +782,7 @@ function digressit_core_print_styles(){
  * 
  */
 function custom_digressit_logo(){
-	$digressit_options = get_option('digressit');
+	global $digressit_options;
 
 	$css_name = preg_replace("/[^a-zA-Z]/", "", get_bloginfo('name'));
 	?>
@@ -692,8 +814,7 @@ function get_root_domain(){
  * 
  */
 function digressit_core_print_scripts(){
-	global $current_user, $post, $blog_id;
-	$digressit_options = get_option('digressit');
+	global $current_user, $post, $blog_id, $digressit_options;
 
 	wp_deregister_script('autosave');
     if (!is_admin() && $digressit_options['debug_mode'] != 1) {

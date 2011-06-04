@@ -54,9 +54,16 @@ h1, h2, h3, h4, h5, h6, h7, h8{
 
 .error404 #content h2{
     line-height: 35px;
-    padding: 0 35%;	
+    padding: 0 30%;	
 }
 
+.error404 #content .entry{
+    margin: 0 auto;
+    padding: 25px;
+    width: 400px;
+}
+
+    
 body.error404 {
 	padding-top: 10px;
 }
@@ -101,7 +108,6 @@ body.error404 {
 #mainpage .navigation{
 	float:left;
 	width:30%;
-	min-height:1000px;
 	padding-right:15px;
 	top:0;
 	padding-left:25px;

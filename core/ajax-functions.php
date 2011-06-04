@@ -8,8 +8,6 @@ add_filter('query_vars', 'ajax_query_vars', 0);
 add_action('generate_rewrite_rules', 'ajax_add_rewrite_rules', 0 );
 add_action('template_redirect', 'ajax_template' );
 
-//add_action('wp_ajax_my_action', 'my_action_callback');
-//add_action('wp_ajax_nopriv_my_action', 'my_action_callback');
 
 /**
  * Flush your rewrite rules if you want pretty permalinks

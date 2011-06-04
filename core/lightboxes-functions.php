@@ -5,10 +5,6 @@ global $wpdb, $current_user, $post, $current_page_template;
 add_action('add_lightbox', 'lightbox_login');
 add_action('add_lightbox', 'lightbox_generic_response');
 
-
-
-
-
 /**
  *
  */
@@ -17,8 +13,6 @@ function lightboxes_wp_print_styles(){
 <link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/lightboxes.css'); ?>" type="text/css" media="screen" />
 <?php
 }
-
-
 
 
 /**
@@ -36,7 +30,6 @@ function get_lightboxes(){
  *
  */
 function lightbox_login(){ ?>	
-	<?php  /******* THIS IS LOGIN. LOAD ON EVERY PAGE *******/ ?>
 	<?php if(!is_user_logged_in()): ?>
 	<div class="lightbox-content" id="lightbox-login">
 		<div class="ribbon">
@@ -50,34 +43,31 @@ function lightbox_login(){ ?>
 		global $password_just_reset;
 	
 		$referer_url = parse_url($_SERVER['HTTP_REFERER']);
-	
-		//var_dump($referer_url);
-		//  && $referer_url['scheme']."//".$referer_url['host'] == get_root_domain() 
 		?>
 		<?php if($_GET['account-enabled'] == '0'): ?>
-			<p>Your account has not been enabled. Please check your inbox for your activation code</p>
+			<p><?php _e('Your account has not been enabled. Please check your inbox for your activation code'); ?></p>
 		<?php endif; ?>
 	
 		<?php if($_GET['password_reset_key'] && $password_just_reset): ?>
-			<p>Your password was reset.<br>Check your email for your new password</p>
+			<p><?php _e('Your password was reset.<br>Check your email for your new password'); ?></p>
 		<?php endif; ?>
 	
 		<form method="post" action="<?php echo wp_login_url() ?>" id="login-form" name="loginform">
 			<p>
-				<label>Username<br />
+				<label><?php _e('Username'); ?><br />
 				<input type="text" name="log" id="user_login" class="input required" value="" size="25" tabindex="10" /></label>
 			</p>
 
 			<p>
-				<label>Password<br />
+				<label><?php _e('Password'); ?><br />
 				<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" tabindex="20" /></label>
 			</p>
 			
 			<?php if(has_action('custom_register_links')) :?>
 				<?php do_action('custom_register_links'); ?>
 			<?php else: ?>
-				<p><a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="Register Account"><?php _e('Register account'); ?></a></p>
-				<p><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="Lost Password"><?php _e('Lost Password?'); ?></a></p>
+				<p><a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Register Account'); ?>"><?php _e('Register account'); ?></a></p>
+				<p><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Lost Password'); ?>"><?php _e('Lost Password?'); ?></a></p>
 				
 			<?php endif; ?>
 
@@ -238,5 +228,18 @@ function lightbox_generic_response(){ ?>
 		<p></p>		
 	</div><?php 
 }
+
+
+function lightbubbles_wp_print_styles(){
+	?>
+	<link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/lightbubbles.css'); ?>" type="text/css" media="screen" />
+	<?php
+}
+
+function lightbubbles_wp_print_scripts(){	
+	wp_enqueue_script('digressit.rounded_corners', get_digressit_media_uri('js/rounded_corners.inc.js'), 'jquery', false, true );
+	wp_enqueue_script('digressit.lightbubbles', get_digressit_media_uri('js/digressit.lightbubbles.js'), 'jquery', false, true );
+}
+
 
 ?>

@@ -1,32 +1,6 @@
 var AjaxResult = {};
-
 var grouping_digressit_commentbox_parser;
-	
-jQuery.fn.highlight = function (str, className)
-{
-    return this.each(function ()
-    {
-        this.innerHTML = this.innerHTML.replace(
-            new RegExp(str, "g"),
-            "<span class=\"" + className + "\">" + str + "</span>"
-        );
-    });
-};
-	
-
-
 var userAgent = navigator.userAgent.toLowerCase();
-
-// Figure out what browser is being used
-jQuery.browser = {
-	version: (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
-	chrome: /chrome/.test( userAgent ),
-	safari: /webkit/.test( userAgent ) && !/chrome/.test( userAgent ),
-	opera: /opera/.test( userAgent ),
-	msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
-	mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent )
-};
-
 var msie=jQuery.browser.msie;
 var msie6=jQuery.browser.msie && jQuery.browser.version=="6.0";
 var msie7=jQuery.browser.msie && jQuery.browser.version=="7.0";
@@ -45,16 +19,50 @@ var browser_height = jQuery(window).height();
 var request_time = 0;
 var request_time_delay = 500; // ms - adjust as you like
 
+	
+jQuery.fn.highlight = function (str, className)
+{
+    return this.each(function ()
+    {
+        this.innerHTML = this.innerHTML.replace(
+            new RegExp(str, "g"),
+            "<span class=\"" + className + "\">" + str + "</span>"
+        );
+    });
+};
+	
+
+// Figure out what browser is being used
+jQuery.browser = {
+	version: (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
+	chrome: /chrome/.test( userAgent ),
+	safari: /webkit/.test( userAgent ) && !/chrome/.test( userAgent ),
+	opera: /opera/.test( userAgent ),
+	msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
+	mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent )
+};
+
 
 jQuery(document).ready(function() {
 
-	
-	if(jQuery('.tabs').length){
-		jQuery('.tabs').generate_tabs();
-	}
+	var userAgent = navigator.userAgent.toLowerCase();
+
+	// Figure out what browser is being used
+	jQuery.browser = {
+		version: (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
+		chrome: /chrome/.test( userAgent ),
+		safari: /webkit/.test( userAgent ) && !/chrome/.test( userAgent ),
+		opera: /opera/.test( userAgent ),
+		msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
+		mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent )
+	};
 
 
-	//jQuery('#dynamic-sidebar').effect("bounce", { direction: 'right', times:1 }, 1500);
+	var msie7=jQuery.browser.msie && jQuery.browser.version=="7.0";
+	var msie6=jQuery.browser.msie && jQuery.browser.version=="6.0";
+
+
+
 
 	// Paragraph embeds
 	jQuery('.paragraphembed a').bind('click', function(e){
@@ -1151,25 +1159,6 @@ jQuery(document).ready(function() {
 
 
 
-	var userAgent = navigator.userAgent.toLowerCase();
-
-	// Figure out what browser is being used
-	jQuery.browser = {
-		version: (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
-		chrome: /chrome/.test( userAgent ),
-		safari: /webkit/.test( userAgent ) && !/chrome/.test( userAgent ),
-		opera: /opera/.test( userAgent ),
-		msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
-		mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent )
-	};
-
-
-	var msie7=jQuery.browser.msie && jQuery.browser.version=="7.0";
-	var msie6=jQuery.browser.msie && jQuery.browser.version=="6.0";
-
-
-
-
 
 
 	
@@ -1742,39 +1731,7 @@ jQuery(document).ready(function() {
 
 
 
-jQuery.fn.extend({
-	generate_tabs: function(type, options) {
-		//Default Action
-
-
-		jQuery('ul.tabs').each(function(item){
-			var tab_id = jQuery(this).attr('id');			
-			//alert(tab_id);
-			jQuery("#" +tab_id +" + .tab-container .tab-content").hide();					//Hide all content
-			jQuery("#" +tab_id +"  li:first").addClass("active").show();	//Activate first tab
-			jQuery(".tab-container  .tab-content:first").show();				//Show first tab content
-		});
-
-		//On Click Event
-		jQuery("ul.tabs li").click(function() {
-
-			var tab_id = jQuery(this).parent().attr('id');		
-
-
-			jQuery("#"+tab_id+ " li").removeClass("active"); //Remove any "active" class
-			jQuery(this).addClass("active"); //Add "active" class to selected tab
-
-			jQuery("#"+tab_id+ " + .tab-container .tab-content").hide(); //Hide all tab content
-			jQuery("." +tab_id+" .tab-content").hide(); //Hide all tab content
-
-			
-			var activeTab = jQuery(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-			jQuery(activeTab).show();
-			//alert(activeTab);
-			return false;
-		});
-	},
-	
+jQuery.fn.extend({	
 
 	position_main_elements: function() {
 
@@ -1787,8 +1744,6 @@ jQuery.fn.extend({
 		var new_commentbox_height = ((browser_height - default_top - 50) < 370) ? 370 : (browser_height - default_top - 50);
 		var commentbox_top = parseInt(jQuery(jQuery(".entry").get(0)).offset().top);
 		
-	//	alert(commentbox_top);
-
 		jQuery('#commentbox').css('top',  commentbox_top + 'px' );
 		jQuery('#commentbox').css('height', new_commentbox_height + 'px');
 
@@ -1806,17 +1761,6 @@ jQuery.fn.extend({
 		var comment_header = parseInt(jQuery("#commentbox-header").outerHeight());
 		var header_outerheight = parseInt(jQuery("#header").outerHeight());
 		
-		
-		/*
-		var debug_data = 'top: ' + top + '<br>'+
-						'commentbox_top:' + commentbox_top + '<br>'+
-						'header_outerheight: ' + header_outerheight + '<br>' +
-						'header_outerheight: ' + header_outerheight + '<br>' +
-						'scroll_top' +  scroll_top;
-						
-						
-		jQuery("#debug-message").html(debug_data);
-		*/
 		//iOS
 		if(iOS){
 
@@ -1832,13 +1776,9 @@ jQuery.fn.extend({
 			jQuery("#commentbox").css('top', ipad_scroll_top_position);
 			
 			jQuery("#dynamic-sidebar").css('position',  'absolute');			
-			jQuery("#dynamic-sidebar").css('top',  ipad_scroll_top_position);			
-			
-			
+			jQuery("#dynamic-sidebar").css('top',  ipad_scroll_top_position);				
 		}
 		else{
-
-
 			//sidebar
 			if(scroll_top > sidebar_fix_point){
 				jQuery("#dynamic-sidebar").css('position',  'fixed');			

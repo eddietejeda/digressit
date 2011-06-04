@@ -404,36 +404,38 @@ z-index:0;
 
 .commentcount1 {
 	background:url("images/comment_blue_1digit.png") no-repeat scroll 1px 2px transparent;
-	color:white;
-	font-size:10px;
-	font-weight:bold;
-	height:18px;
-	padding:0 4px;
-	text-align: center;
-	position:absolute;
-	width:15px;
-}
-
-.commentcount2 {
-    background: url("images/comment_blue_2digit.png") no-repeat scroll 1px 3px transparent;
     color: white;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     height: 21px;
     padding: 0 0 0 7px;
     position: absolute;
     width: 17px;
+    font-family: Arial;
+}
+
+.commentcount2 {
+    background: url("images/comment_blue_2digit.png") no-repeat scroll 1px 3px transparent;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    height: 21px;
+    padding: 0 0 0 7px;
+    position: absolute;
+    width: 17px;
+    font-family: Arial;
 }
 
 .commentcount3 {
 	background:url("images/comment_blue_3digit.png") no-repeat scroll 1px 1px transparent;
-	color:white;
-	font-size:12px;
-	font-weight:bold;
-	height:15px;
-	padding:0 10px 0 8px;
-	position:absolute;
-	width:22px;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    height: 21px;
+    padding: 0 0 0 7px;
+    position: absolute;
+    width: 17px;
+    font-family: Arial;
 }
 
 #content a{
@@ -532,7 +534,6 @@ p, li{
 }
 .frontpage #frontpage {
 	background-color:white;
-	min-height:550px;
 }
 
 
@@ -772,7 +773,6 @@ a:hover{
 	margin:0 auto;
 	width:1000px;
 	z-index:90;
-	min-height: 500px;
 	-moz-box-shadow:0 30px 30px #AAAAAA;
 	-webkit-box-shadow:0 30px 30px #AAAAAA;
 	box-shadow:0 30px 30px #AAAAAA;
@@ -859,7 +859,7 @@ h2{
 	border:0px;
 	float:left;
 	margin:10px;
-	padding:5px 10px 20px 15px;
+	padding:10px 10px 20px 15px;
 	width:100%;
 	-moz-box-shadow:3px 3px 7px #bbbcbd;
 	border:1px solid #bbbcbd;	
@@ -1021,7 +1021,7 @@ div#item-header{
 }
 
 .site-home #content, .frontpage #content{
-	min-height:800px;
+
 }
 
 .widecolumn{
@@ -1119,3 +1119,8 @@ div#item-header{
 .embedcode b { font-size: 13px; }
 .embedcode:hover { display: block; }
 .closeme { position: absolute; font-size: 60%; right: 3px; top: -1px; }
+
+
+.entry{
+	
+}

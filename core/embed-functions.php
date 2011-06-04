@@ -7,12 +7,12 @@ class Digress_It_Embed{
 
 	function __construct(){
 
-		if($_REQUEST['digressit-embed'] == 'stylesheet'):
-		header('Content-type: text/plain'); 
-		die();
-		endif;
+		if(isset($_REQUEST['digressit-embed']) && $_REQUEST['digressit-embed'] == 'stylesheet'){
+			header('Content-type: text/plain'); 
+			die();
+		}
 
-		if($_REQUEST['digressit-embed'] > 0){
+		if(isset($_REQUEST['digressit-embed']) && $_REQUEST['digressit-embed'] > 0){
 			$paranumber = (int)$_REQUEST['digressit-embed'] - 1;
 
 			$id = addslashes($_REQUEST['p']);

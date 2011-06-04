@@ -13,7 +13,7 @@ global $current_browser_section, $wp, $blog_id ;
 		<div id="mainpage"  class="comment-browser">
 			<?php 
 			$commentbrowser_function = "commentbrowser_" . str_replace('-','_',$wp->query_vars['commentbrowser_function']);
-			$commentbrowser_params =  $wp->query_vars['commentbrowser_params'];
+			$commentbrowser_params =  (isset($wp->query_vars['commentbrowser_params'])) ? $wp->query_vars['commentbrowser_params'] : null;
 		
 			if(has_action('add_commentbrowser', $commentbrowser_function) && function_exists($commentbrowser_function)){			
 				$comment_list = call_user_func($commentbrowser_function, $commentbrowser_params);
@@ -31,11 +31,11 @@ global $current_browser_section, $wp, $blog_id ;
 							<?php
 							if($comment->user_id){
 								$comment_user = get_userdata($comment->user_id); 
-								$profile_url = get_bloginfo('url')."/comments-by-contributor/" . $comment_user->user_login;
-								echo "<a href='$profile_url'>$comment_user->display_name</a>";
+								$profile_url = get_bloginfo('url').'/comments-by-contributor/' . $comment_user->user_login;
+								echo '<a href="$profile_url">'.$comment_user->display_name.'</a>';
 							}
 							else{
-								$profile_url = get_bloginfo('url')."/comments-by-contributor/" . $comment->comment_author;						
+								$profile_url = get_bloginfo('url').'/comments-by-contributor/' . $comment->comment_author;						
 								echo "<a href='$profile_url'>$comment->comment_author</a>";						
 							}
 							?>					
@@ -46,9 +46,7 @@ global $current_browser_section, $wp, $blog_id ;
 							<span class="comment-parent" title="<?php echo $comment->comment_parent; ?>"></span>
 							<span class="comment-paragraph-number" title="<?php echo $comment->comment_text_signature; ?>"></span>
 							<span class="comment-date"><?php comment_date('n/j/Y'); ?></span>
-							<div class="comment-goto">
-								<a href="<?php echo get_permalink($comment->comment_post_ID); ?>#comment-<?php echo (int)$blog_id ?>-<?php echo $comment->comment_ID; ?>"><?php _e("Go to thread", 'digressit'); ?></a>
-							</div>
+							<div class="comment-goto"><a href="<?php echo get_permalink($comment->comment_post_ID); ?>#comment-<?php echo (int)$blog_id ?>-<?php echo $comment->comment_ID; ?>"><?php _e("Go to thread", 'digressit'); ?></a></div>
 							<?php do_action('digressit_custom_meta_data'); ?>
 						</div>
 					</div>
@@ -56,7 +54,7 @@ global $current_browser_section, $wp, $blog_id ;
 
 						<?php 
 						if ($comment->comment_approved == '0'){ ?>
-							<p><i><?php _e("This comment is awaiting moderation.", 'digressit'); ?></i></p><?php
+							<p><i><?php _e('This comment is awaiting moderation.', 'digressit'); ?></i></p><?php
 						}
 						else{
 							echo $comment->comment_content; 
@@ -76,9 +74,9 @@ global $current_browser_section, $wp, $blog_id ;
 							_e('No comments', 'digressit');
 						}
 						else{
-							_e("This page contains a running transcript of all conversations taking place in ".get_bloginfo('name')."
+							_e('This page contains a running transcript of all conversations taking place in '.get_bloginfo('name').'
 								organized by section. Click through the menu on the left to view the comments in each section of the document. 
-								Click “Go to thread” to see the comment in context.", 'digressit');						
+								Click "Go to thread" to see the comment in context.', 'digressit');						
 						}
 						?>
 					</div>
@@ -90,4 +88,3 @@ global $current_browser_section, $wp, $blog_id ;
 	</div>
 </div>
 <?php get_footer(); ?>
-

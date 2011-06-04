@@ -1,18 +1,14 @@
 <!DOCTYPE HTML>
+<?php global $blog_id, $current_user, $current_page_name, $digressit_options; ?>
 <html <?php language_attributes(); ?>>
-
 <head profile="http://gmpg.org/xfn/11">
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
 <title><?php bloginfo('name'); ?>:<?php wp_title('&raquo;', true, 'left'); ?> </title>
 <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-
-
-<?php global $blog_id, $current_user, $current_page_name, $digressit; ?>
 <?php get_currentuserinfo(); ?>
 <?php wp_head(); ?>
-
 </head>
 
 <?php
