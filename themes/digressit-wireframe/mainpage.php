@@ -1,24 +1,47 @@
 <?php
-$options = get_option('digressit');
+/**
+ * @package WordPress
+ * @subpackage Default_Theme
+ */
+/*
+Template Name: Mainpage
+*/
+
+global $using_mainpage_nav_walker, $digressit_options;
 ?>
 
 
 <?php get_header(); ?>
 
 <div id="container">
-<?php get_dynamic_widgets(); ?>
-<?php get_stylized_title(); ?>
 
-<div id="content">
+<?php 
+digressit_get_dynamic_widgets();
+digressit_get_stylized_title();
+?>
+
+<div id="content" role="main">
 	<div id="mainpage">		
-		<h3 class="toc"><?php echo $options['table_of_contents_label']; ?></h3>
-		<div class="description"><?php html_entity_decode(get_bloginfo('description')); ?></div>
-		<div class='comment-count-in-book'><?php _e('There are '.digressit_get_all_comment_count().'comments in this document'); ?></div>
-
-		<?php wp_nav_menu(array('depth'=> 3, 'fallback_cb'=> 'digressit_mainpage_default_menu', 'echo' => true, 'theme_location' => 'Main Page', 'menu_class' => 'navigation')); ?>
+		<h3 class="toc"><?php echo $digressit_options['table_of_contents_label']; ?></h3>
+		<div class="description"><?php echo html_entity_decode(get_bloginfo('description')); ?></div>
+		<div class='comment-count-in-book'><?php _e('There are '.digressit_get_all_comment_count().' comments in this document'); ?></div>
 
 
-		<?php get_widgets('Mainpage Content'); ?>
+		<?php 		
+			wp_nav_menu(array('walker' => new digressit_mainpage_nav_walker(), 'depth'=> 3, 'fallback_cb'=> 'digressit_mainpage_default_menu', 'echo' => true, 'theme_location' => 'Main Page', 'menu_class' => 'navigation'));
+	
+			if($using_mainpage_nav_walker){
+				if (( $locations = get_nav_menu_locations() ) && isset( $locations[ 'Main Page' ] ) ){
+					$menu = wp_get_nav_menu_object( $locations[ 'Main Page' ] );
+				}
+				$menu_items = wp_get_nav_menu_items( $menu->term_id );
+	
+				digressit_mainpage_content_display($menu_items); 
+			}
+			else{
+				digressit_get_widgets('Mainpage Content');
+			} 
+		?>
 		<div class="clear"></div>
 	</div>
 </div>
@@ -26,4 +49,3 @@ $options = get_option('digressit');
 
 </div>
 <?php get_footer(); ?>
-
