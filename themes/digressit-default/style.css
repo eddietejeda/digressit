@@ -1,5 +1,5 @@
 /*	
-Theme Name: Digress.it
+Theme Name: Digress.it Default
 Theme URI: http://digress.it
 Description: Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
@@ -31,6 +31,8 @@ body{
 	min-height:80px;
 	position:relative;
 	text-align:left;
+	background:none repeat scroll 0 0 white;
+	z-index: 1;
 }
 
 #live-content-search, #live-comment-search{
@@ -128,6 +130,41 @@ h1, h2, h3, h4, h5, h6{
 .comment-browser .comment-goto a{
 	border: 0 !important;
 	text-decoration:none;
+}
+
+
+#menu-site > li > .sub-menu{
+    background-color: white;
+    border: 1px solid #AAAAAA;
+    left: 0;
+    padding: 0;
+    position: absolute;
+    text-align: left;
+    top: 25px;
+    border-bottom: 0px;
+}
+
+#menu-site .sub-menu li{
+	border-bottom: 1px solid #aaa;
+	display: block;
+	padding: 2px;
+	width: 200px;
+	font-size: 12px;
+}
+
+#menu-site > li > .sub-menu > li > .sub-menu{
+    background: none repeat scroll 0 0 yellow;
+    border: 1px solid #AAAAAA;
+    font-size: 12px;
+    left: 200px;
+    padding: 2px;
+    position: absolute;
+    top: 0;
+    width: 200px;
+    border-bottom: 0px;
+    display: block;
+	box-shadow: 1px 1px 3px 0px #ddd;
+    
 }
 
 
@@ -381,7 +418,7 @@ z-index:0;
 	background-color:white;
 	border-color:#BDBDBD;
 	border-style:solid;
-	border-width:0;
+	border-width:0 1px;
 	margin:0 auto;
 	width:1000px;	
 	-moz-box-shadow:0 25px 30px #AAAAAA;
@@ -552,12 +589,6 @@ p, li{
 
 }
 
-#header{
-	background:none repeat scroll 0 0 white;
-	-moz-box-shadow:0 30px 20px 0 #999999;
-	-webkit-box-shadow:0 30px 20px 0 #999999;
-	box-shadow:0 30px 20px 0 #999999;
-}
 
 .image-shadow{
 	-moz-box-shadow:-3px 4px 4px #ddd;
@@ -772,7 +803,6 @@ a:hover{
 	border-width:0 0;
 	margin:0 auto;
 	width:1000px;
-	z-index:90;
 	-moz-box-shadow:0 30px 30px #AAAAAA;
 	-webkit-box-shadow:0 30px 30px #AAAAAA;
 	box-shadow:0 30px 30px #AAAAAA;
@@ -913,14 +943,15 @@ h2{
 	left:0;
 	text-align:left;
 	width:100%;
-	z-index:0;
 	position: relative;
 	clear: both;
 	font-size: 90%;
 }
 
 .container{
-	position: static;
+    margin: 0 auto;
+    position: relative;
+    width: 1000px;
 }
 
 .comment-count-in-book{
@@ -942,6 +973,7 @@ h2{
 	display:inline;
 	list-style:none outside none;
 	padding-right:15px;
+	position: relative;
 }
 
 

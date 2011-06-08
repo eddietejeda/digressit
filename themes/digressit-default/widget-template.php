@@ -15,11 +15,3 @@ Template Name: Widgets Page
 	</div>
 </div>
 <?php get_footer(); ?>
-
-
-
-
-
-
-
-
