@@ -59,6 +59,9 @@ function digressit_theme_options_page_form(){
 	elseif(isset($_POST['update-digressit-options'])){
 		$digressit_options = get_option('digressit');
 		
+		$_POST['digressit_enabled_for_posts'] = (isset($_POST['digressit_enabled_for_posts'])) ? 1 : 0;
+		$_POST['digressit_enabled_for_pages'] = (isset($_POST['digressit_enabled_for_pages'])) ? 1 : 0;
+		
 		foreach($_POST as $key => $value){
 			$digressit_options[$key] = $value;
 		}
@@ -112,13 +115,30 @@ function digressit_theme_options_page() {
 
 
 		<tr valign="top">
-			<td style="width: 200px"><b><?php _e('Enable for', 'digressit');  ?></b></td>
+			<td style="width: 200px"><b><?php _e('Enable Digress.it', 'digressit');  ?></b></td>
 			<td>
-			
-				<?php digressit_print_dropdown('digressit_enabled_for', array('Pages' => 'pages', 'Posts' => 'posts'), $digressit_options['digressit_enabled_for']); ?>
+				<p><input type="checkbox" name="digressit_enabled_for_posts" <?php echo (int)$digressit_options['digressit_enabled_for_posts']==1 ? ' checked ' : ''; ?>/> Posts</p>
+				<p><input type="checkbox" name="digressit_enabled_for_pages" <?php echo (int)$digressit_options['digressit_enabled_for_pages']==1 ? ' checked ' : ''; ?>/> Pages</p>
 				<p><?php _e("The content of this page will be the first thing a visitor to your website will see.", 'digressit'); ?></p>
 			</td>
 		</tr>
+		
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Front Page Order', 'digressit');  ?></b></td>
+			<td><?php digressit_print_dropdown('front_page_order_by', array('ID' => 'id', 'Date' => 'date'), $digressit_options['front_page_order_by']); ?></td>
+		</tr>
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Front Page Order by', 'digressit');  ?></b></td>
+			<td><?php digressit_print_dropdown('front_page_order', array('Ascending' => 'ASC', 'Descending' => 'DESC'), $digressit_options['front_page_order']); ?></td>
+		</tr>
+
+
+
+		
 		
 				
 		<tr valign="top">
@@ -130,25 +150,12 @@ function digressit_theme_options_page() {
 			</td>
 		</tr>
 		
-
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Table of Contents Label' , 'digressit');  ?></b></td>
 			<td><?php digressit_print_input_text('table_of_contents_label', $digressit_options['table_of_contents_label']); ?></td>
 		</tr>
-
-		<tr valign="top">
-			<td style="width: 200px"><b><?php _e('Front Page Order', 'digressit');  ?></b></td>
-			<td><?php digressit_print_dropdown('front_page_order_by', array('id' => 'id', 'date' => 'date'), $digressit_options['front_page_order_by']); ?></td>
-		</tr>
-
-
-		<tr valign="top">
-			<td style="width: 200px"><b><?php _e('Front Page Order by', 'digressit');  ?></b></td>
-			<td><?php digressit_print_dropdown('front_page_order', array('ASC' => 'ASC', 'DESC' => 'DESC'), $digressit_options['front_page_order']); ?></td>
-		</tr>
-
-
-
+		
+		
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Comments by Section Label', 'digressit');  ?></b></td>
 			<td><?php digressit_print_input_text('comments_by_section_label', $digressit_options['comments_by_section_label']); ?></td>
@@ -176,6 +183,19 @@ function digressit_theme_options_page() {
 			<td style="width: 200px"><b><?php _e('Enable Citation Button', 'digressit');  ?></b></td>
 			<td><?php digressit_print_dropdown('enable_citation_button', array('No' => 0, 'Yes' => 1), $digressit_options['enable_citation_button']); ?></td>
 		</tr>
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Enable Comment Tagging', 'digressit');  ?></b></td>
+			<td><?php digressit_print_dropdown('enable_comment_tagging', array('Yes' => 'yes', 'No' => 'no'), $digressit_options['enable_comment_tagging']); ?></td>
+		</tr>
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('BuddyPress Support', 'digressit');  ?></b></td>
+			<td><?php digressit_print_dropdown('buddypress_support', array('Yes' => 'yes', 'No' => 'no'), $digressit_options['enable_comment_tagging']); ?></td>
+		</tr>
+
 
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Frontpage List Style', 'digressit');  ?></b></td>

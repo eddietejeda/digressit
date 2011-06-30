@@ -275,7 +275,6 @@ h4 {
 	border:0 solid #BDBDBD;
 	height:auto;
 	min-height:50px;
-	z-index:1;
 	
 }
 
@@ -962,7 +961,7 @@ h2{
 	padding-top: 0 !important;
 }
 #menu-primary ul:first-child{
-	margin-left: 20px;
+
 }
 #menu-primary ul{
 	margin: 0;

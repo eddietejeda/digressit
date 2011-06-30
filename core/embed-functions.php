@@ -71,7 +71,7 @@ class Digress_It_Embed{
 						<link><?php bloginfo('siteurl'); ?></link>
 						<description><?php bloginfo('description'); ?></description>
 						<lastBuildDate><?php echo date("D M j G:i:s T Y");   ?></lastBuildDate>
-						<generator><?php bloginfo('siteurl'); ?>?v=2.8.4</generator>
+						<generator><?php bloginfo('url'); ?></generator>
 
 						<sy:updatePeriod>hourly</sy:updatePeriod>
 						<sy:updateFrequency>1</sy:updateFrequency>

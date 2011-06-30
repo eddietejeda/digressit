@@ -327,6 +327,7 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 		$digit_count = strlen($comment_count);
 		$commenticon =	'<span  title="There '.$numbertext.' for this paragraph" class="commenticonbox"><small class="commentcount fff commentcount'.$digit_count.'">'.$comment_count.'</small></span>'."\n";
 
+		$morelink = null;
 		if($number == 1){
 			//$morelink = '<span class="morelink"></span>';
 		}
@@ -413,9 +414,8 @@ function display_xml_error($error, $xml)
  */
 function digressit_parser($content){
 	global $digressit_options;
-	$enabled_for = $digressit_options['digressit_enabled_for'];
 		
-	if(is_single() && $enabled_for == 'posts' || is_page() && $enabled_for == 'pages'){
+	if(is_single() && (int)$digressit_options['digressit_enabled_for_posts'] || is_page() && (int)$digressit_options['digressit_enabled_for_pages']){
 		return implode("\n", (array)digressit_paragraphs($content));
 	}
 	else{
@@ -828,21 +828,18 @@ function digressit_core_print_scripts(){
 
 	$url = parse_url(get_root_domain(). $_SERVER["REQUEST_URI"]);
 
-
 	if(!is_admin()){
 		?>
 		<script>	
 			var siteurl = '<?php echo get_option("siteurl"); ?>';
 			var baseurl = '<?php echo get_root_domain() ?>';
 			var user_ID =  <?php echo $current_user->ID; ?>;
-			<?php if(is_single()): ?>
 			var post_ID = <?php echo $post->ID ?>;
-			<?php endif; ?>
 			var blog_ID = <?php echo $blog_id; ?>;
 			var current_blog_id = <?php echo $blog_id; ?>;
-			var request_uri = '<?php echo  esc_url(strip_tags($url['path'])); ?>';
-			<?php if(is_single()){ ?>
-			var is_single = true;
+			var request_uri = '<?php echo  str_replace(get_option("siteurl"), '', get_permalink($post->ID)); ?>';
+			<?php 	if(is_single() && (int)$digressit_options['digressit_enabled_for_posts'] || is_page() && (int)$digressit_options['digressit_enabled_for_pages']){ ?>
+			var digressit_enabled = true;
 			var post_name = '<?php echo $post->post_name; ?>';
 			var allow_general_comments = <?php echo !is_null($digressit_options["allow_general_comments"]) ? $digressit_options["allow_general_comments"] : 0; ?>;
 			var allow_comments_search = <?php echo !is_null($digressit_options["allow_comments_search"]) ? $digressit_options["allow_comments_search"] : 0; ?>;
@@ -850,7 +847,7 @@ function digressit_core_print_scripts(){
 			var commment_text_signature = new Array(); 
 			var commentbox_function = '<?php echo strlen($digressit_options['commentbox_parser']) ? $digressit_options['commentbox_parser'] : 'grouping_digressit_commentbox_parser'; ?>';
 			<?php } else{ ?>
-			var is_single = false;
+			var digressit_enabled = false;
 			<?php } ?>			
 			var keyboard_navigation = <?php echo $digressit_options['keyboard_navigation'] ?>;
 
@@ -866,6 +863,7 @@ function digressit_core_print_scripts(){
 			wp_enqueue_script('jquery.mousewheel',	get_digressit_media_uri('js/jquery.mousewheel.js'), 'jquery', false, true );		
 			wp_enqueue_script('jquery.em',			get_digressit_media_uri('js/jquery.em.js'), 'jquery', false, true );
 			wp_enqueue_script('jquery.copy',			get_digressit_media_uri('js/jquery.copy.js'), 'jquery', false, true );
+			wp_enqueue_script('superfish.js',			get_digressit_media_uri('js/superfish.js'), 'jquery', false, true );
 		}		
 		else{
 			wp_enqueue_script('digressit.core',		get_digressit_media_uri('js/digressit.core.min.js'), 'jquery', false, true );				

@@ -42,8 +42,6 @@ define("DIGRESSIT_CORE_JS_DIR", DIGRESSIT_CORE_DIR . '/js');
 define("DIGRESSIT_CORE_IMG_DIR", DIGRESSIT_CORE_DIR . '/images');
 define("DIGRESSIT_CORE_CSS_DIR", DIGRESSIT_CORE_DIR . '/css');
 define("DIGRESSIT_THEMES_DIR", DIGRESSIT_DIR . '/themes');
-
-
 define("DIGRESSIT_URL", WP_PLUGIN_URL ."/". $plugin_name);
 define("DIGRESSIT_CORE_URL", DIGRESSIT_URL . '/core');
 define("DIGRESSIT_CORE_JS_URL", DIGRESSIT_CORE_URL . '/js');
@@ -56,7 +54,7 @@ register_deactivation_hook(__FILE__, 'deactivate_digressit' );
 
 
 $plugin_dir = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/';
-$plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/themes/';
+$plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/themes';
 
 
 register_theme_directory( $plugin_theme_link );
@@ -201,7 +199,11 @@ function activate_digressit(){
 	$digressit_options['enable_dropdown_menu'] = 0;
 	$digressit_options['enable_citation_button'] = 0;
 	$digressit_options['keyboard_navigation'] = 0;
-	$digressit_options['digressit_enabled_for'] = 'posts';
+	$digressit_options['digressit_enabled_for_posts'] = 1;
+	$digressit_options['digressit_enabled_for_pages'] = 0;
+	
+	
+	
 	
 	if(get_option('digressit')){
 		update_option('digressit', $digressit_options);		
@@ -368,7 +370,8 @@ function digressit_init(){
 		$digressit_options['enable_dropdown_menu'] = 0;
 		$digressit_options['enable_citation_button'] = 0;
 		$digressit_options['keyboard_navigation'] = 0;
-		$digressit_options['pages_or_posts'] = 'posts';
+		$digressit_options['digressit_enabled_for_pages'] = 0;
+		$digressit_options['digressit_enabled_for_posts'] = 1;
 		update_option('digressit', $digressit_options);
 	}
 }

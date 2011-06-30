@@ -58,6 +58,7 @@ if(function_exists('digressit_body_class')){
 	?>
 
 	<!-- this is some login stuff that should always be here -->
+	<div class="menu-site-container">
 	<ul>
 	<?php if(is_user_logged_in()): ?>
 		<li><a href="<?php echo get_bloginfo('url'); ?>/wp-admin/" title="My Account"><?php _e('My Account'); ?></a></li>			
@@ -69,7 +70,7 @@ if(function_exists('digressit_body_class')){
 		<li><a href="<?php echo wp_login_url(); ?>" title="Login"><?php _e('Login'); ?></a></li>
 	<?php endif;?>
 	</ul>
-	
+	</div>	
 	</div>
 
 	<?php if($digressit_options['enable_instant_content_search'] == 'true'): ?>

@@ -20,10 +20,8 @@ var request_time = 0;
 var request_time_delay = 500; // ms - adjust as you like
 
 	
-jQuery.fn.highlight = function (str, className)
-{
-    return this.each(function ()
-    {
+jQuery.fn.highlight = function (str, className){
+    return this.each(function (){
         this.innerHTML = this.innerHTML.replace(
             new RegExp(str, "g"),
             "<span class=\"" + className + "\">" + str + "</span>"
@@ -132,7 +130,7 @@ jQuery(document).ready(function() {
 					jQuery('#respond').show();			
 					jQuery('.comment' ).hide();
 					jQuery('.paragraph-' + paragraphnumber ).show();
-					jQuery("#no-comments").hide();				
+					//jQuery("#no-comments").hide();				
 		
 					jQuery('.textblock').removeClass('selected-textblock');
 					var commentboxtop = jQuery('#commentbox').position().top;
@@ -499,7 +497,7 @@ jQuery(document).ready(function() {
 	}
 	
 
-	if(is_single){
+	if(digressit_enabled){
 		jQuery('#commentbox').position_main_elements();
 	}
 	
@@ -507,7 +505,7 @@ jQuery(document).ready(function() {
     jQuery(window).scroll(function () { 
 	
 		//this should not fire every single time! do proper checks to help performance
-		if(is_single){
+		if(digressit_enabled){
 			jQuery('#commentbox').position_main_elements();
 		}
 		
@@ -515,7 +513,7 @@ jQuery(document).ready(function() {
 
 
 	jQuery(window).resize(function(){
-		if(is_single){
+		if(digressit_enabled){
 			jQuery('#commentbox').position_main_elements();
 		}
 	});
@@ -728,50 +726,6 @@ jQuery(document).ready(function() {
 	
 	
 	
-	var current_slot = 0;
-
-
-    jQuery(".lightbox-previous").click(function (e) {
-		
-		if(current_slot > 0){
-			current_slot--;
-			jQuery('.lightbox-slot').hide();		
-	      	jQuery(jQuery('.lightbox-slot').get(current_slot)).show("slide", { direction: "left" }, 200);
-		}
-
-		if(current_slot == 0){	
-			jQuery('.lightbox-previous').hide();
-			jQuery('.lightbox-next').show();
-			jQuery('.lightbox-submit').hide();
-		}
-		else{
-			jQuery('.lightbox-previous').show();
-			jQuery('.lightbox-next').show();			
-			jQuery('.lightbox-submit').hide();
-		}
-
-	});
-
-    jQuery(".lightbox-next").click(function (e) {
-		
-		if(current_slot < jQuery('.lightbox-slot').length -1){		
-			current_slot++;
-			jQuery('.lightbox-slot').hide();
-	      	jQuery(jQuery('.lightbox-slot').get(current_slot)).show("slide", { direction: "right" }, 200);
-		}
-		
-		if(current_slot == jQuery('.lightbox-slot').length -1){	
-			jQuery('.lightbox-next').hide();
-			jQuery('.lightbox-previous').show();
-			jQuery('.lightbox-submit').show();
-		}
-		else{
-			jQuery('.lightbox-previous').show();
-			jQuery('.lightbox-next').show();			
-		}		
-	});
-	
-	
 	jQuery(".lightbubble").click(function (e) {
 
 
@@ -858,33 +812,6 @@ jQuery(document).ready(function() {
 		}
 
 		var new_comment = data.message.comment_response;
-		
-		/*
-		 '<div id="'+comment_id+'" class="new-comment comment byuser bypostauthor '+depth+' paragraph-'+selected_paragraph_number+'">' +
-				'<div class="comment-body" id="div-'+comment_id+'">' +
-					'<div class="comment-header">' +
-					'<div class="comment-author vcard">' +
-					'<a href="'+siteurl+'/profile/'+data.message.comment_author+'">'+data.message.comment_author+'</a>'+
-					'</div>'+
-					'<div class="comment-meta">'+
-					'<span title="'+blog_ID+'" class="comment-blog-id"></span>'+
-					'<span title="'+result_id+'" class="comment-id"></span>'+
-					'<span title="0" class="comment-parent"></span>'+
-					'<span title="'+selected_paragraph_number+'" class="comment-paragraph-number"></span>'+
-					'<span class="comment-date">'+data.message.comment_date+'</span>'+
-					'<span class="comment-icon comment-icon-quarantine"></span><span class="comment-icon comment-icon-flag"></span>'+
-					'</div>'+
-					'</div>'+
-					'<div class="comment-text"><p>'+ jQuery('#comment').val() + '</p>' +
-					'</div>' +
-					'<div title="'+result_id+'" class="comment-reply comment-hover small-button" ></div>'+
-					'<div class="comment-respond"></div>' +
-				'</div>' +
-			'</div>';
-		*/
-
-		jQuery('#no-comments').hide();
-
 
 		/* responding to parent */
 		if(comment_parent > 0){
@@ -928,12 +855,7 @@ jQuery(document).ready(function() {
 
 		}
 
-
-		
-
 		//var current_count = parseInt(jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).html());
-
-
 		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1 ))).html(data.message.paragraph_comment_count);
 		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1))).fadeIn('slow');
 
@@ -962,15 +884,6 @@ jQuery(document).ready(function() {
 		}
 		return false;
 	}
-
-	// First Parameter: number of items
-	// Second Parameter: options object
-/*
-	jQuery("#commentbox").pagination(122, {
-		items_per_page:20, 
-		callback:handlePaginationClick
-	});
-*/
 
 
 	jQuery('.comment').hover(function (e) {
@@ -1229,7 +1142,7 @@ jQuery(document).ready(function() {
 		jQuery('#textblock-' + paragraphnumber + ' .commenticonbox').addClass('selected-paragraph');
 		jQuery('.comment').removeClass('selected');	
 		jQuery('#selected_paragraph_number').val(paragraphnumber);
-		jQuery("#no-comments").hide();
+		//jQuery("#no-comments").hide();
 		
 		var no_comments = true;
 
@@ -1242,11 +1155,11 @@ jQuery(document).ready(function() {
 		if(jQuery(selectedparagraph).length){
 			jQuery(selectedparagraph).show();
 		}
-		else{
+		/*else{
 			if(jQuery('.comment').length){
 				jQuery("#no-comments").show();
 			}			
-		}
+		}*/
 	}
 
 	
@@ -1320,17 +1233,17 @@ jQuery(document).ready(function() {
 					jQuery('.textblock').removeClass('selected-textblock');
 					jQuery('.comment').hide();
 					jQuery('#respond').hide();
-					jQuery("#no-comments").hide();				
+					//jQuery("#no-comments").hide();				
 					jQuery('#selected_paragraph_number').val(0);
 				}
 				/* ALL COMMENTS - UNSELECTED */
 				else{
 					if(jQuery('.comment' ).length){
-						jQuery("#no-comments").hide();				
+						//jQuery("#no-comments").hide();				
 						jQuery(".comment").show();				
 					}
 					else{
-						jQuery("#no-comments").show();
+						//jQuery("#no-comments").show();
 					}
 					jQuery('.textblock').removeClass('selected-textblock');
 					jQuery('#selected_paragraph_number').val(0);
@@ -1348,7 +1261,7 @@ jQuery(document).ready(function() {
 					jQuery('#respond').show();			
 					jQuery('.comment' ).hide();
 					jQuery('.paragraph-' + paragraphnumber ).show();
-					jQuery("#no-comments").hide();				
+					//jQuery("#no-comments").hide();				
 
 					jQuery('.textblock').removeClass('selected-textblock');
 					var commentboxtop = jQuery('#commentbox').position().top;
@@ -1393,12 +1306,14 @@ jQuery(document).ready(function() {
 					jQuery('#selected_paragraph_number').val(paragraphnumber);
 
 
+					/*
 					if(jQuery('.paragraph-' + paragraphnumber ).length){
 						jQuery("#no-comments").hide();				
 					}
 					else{
 						jQuery("#no-comments").show();
 					}
+					*/
 
 					var top = jQuery('#textblock-' + paragraphnumber).offset().top;
 					var scrollto = (top > 200)  ? (top - 35) : 0;
@@ -1488,12 +1403,14 @@ jQuery(document).ready(function() {
 		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
 		
 		
+		/*
 		if(jQuery('.paragraph-' + paragraphnumber).length == 0){
 			jQuery('#no-comments').show();			
 		}
 		else{
 			jQuery('#no-comments').hide();
 		}
+		*/
 		
 				
 		jQuery('#commentbox').scrollTo('#'+commentname , 500);
@@ -1540,8 +1457,8 @@ jQuery(document).ready(function() {
 			}
 			else{
 			}
-			*/
 			jQuery('#no-comments').hide();
+			*/
 			
 		
 			scrollto = (top > 200)  ? (top - 100) : 0;
@@ -1566,12 +1483,15 @@ jQuery(document).ready(function() {
 		
 	}
 	else{
+		
+		/*
 		if( parseInt(jQuery('.comment').length) == 0){
 			jQuery("#no-comments").show();			
 		}
 		else{
 			jQuery("#no-comments").hide();	
-		}	
+		}
+		*/
 	}
 
 
@@ -1734,15 +1654,13 @@ jQuery(document).ready(function() {
 jQuery.fn.extend({	
 
 	position_main_elements: function() {
-
-
-
+	
 		var default_top = parseInt(jQuery('#content').position().top);
 		var scroll_top =  parseInt(jQuery(window).scrollTop());
 		var top =  default_top  + parseInt(jQuery(window).scrollTop());
 		var min_browser_height = (browser_height > 300) ? browser_height : 300; 
 		var new_commentbox_height = ((browser_height - default_top - 50) < 370) ? 370 : (browser_height - default_top - 50);
-		var commentbox_top = parseInt(jQuery(jQuery(".entry").get(0)).offset().top);
+		var commentbox_top = 50; //parseInt(jQuery(jQuery(".entry").get(0)).offset().top);
 		
 		jQuery('#commentbox').css('top',  commentbox_top + 'px' );
 		jQuery('#commentbox').css('height', new_commentbox_height + 'px');
@@ -1750,10 +1668,6 @@ jQuery.fn.extend({
 
 
 		var left = parseInt(jQuery('#content').offset().left) + parseInt( jQuery(jQuery('.entry').get(0)).width() ) + parseInt( jQuery(jQuery('.post').get(0)).css('padding-right') );
-
-		if(safari || chrome){
-			//left = left + 210;
-		}
 
 
 		var sidebar_fix_point = parseInt(jQuery("#header").outerHeight())  + parseInt(jQuery("#header").css('margin-top'));
@@ -1778,7 +1692,9 @@ jQuery.fn.extend({
 			jQuery("#dynamic-sidebar").css('position',  'absolute');			
 			jQuery("#dynamic-sidebar").css('top',  ipad_scroll_top_position);				
 		}
+		//Browsers
 		else{
+
 			//sidebar
 			if(scroll_top > sidebar_fix_point){
 				jQuery("#dynamic-sidebar").css('position',  'fixed');			
@@ -1786,26 +1702,11 @@ jQuery.fn.extend({
 			}
 			else{
 				jQuery("#dynamic-sidebar").css('position',  'absolute');
-				jQuery("#dynamic-sidebar").css('top',  header_outerheight + 'px');			
+				jQuery("#dynamic-sidebar").css('top',   '0px');			
 			}
 
-
-			//commentbox
-			if(scroll_top > (commentbox_fix_point - header_outerheight) ){
-
-				jQuery("#commentbox-header").css('position',  'fixed');			
-				jQuery("#commentbox-header").css('top',  header_outerheight+ 'px');
-
-				jQuery("#commentbox").css('position',  'fixed');			
-				jQuery("#commentbox").css('top',  (header_outerheight  + comment_header) + 'px');
-			}
-			else{
-				jQuery("#commentbox-header").css('position',  'absolute');
-				jQuery("#commentbox-header").css('top',  commentbox_top + 'px');			
-
-				jQuery("#commentbox").css('position',  'absolute');
-				jQuery("#commentbox").css('top',  (commentbox_top +  comment_header) + 'px');			
-			}
+			jQuery("#commentbox").css({top : commentbox_top+'px',left: left+'px', position :'fixed', top: '0px', display: 'block' });			
+			//jQuery("#commentbox").css('top',  '0px');
 
 			
 		}
@@ -1814,8 +1715,8 @@ jQuery.fn.extend({
 
 		
 		
-		jQuery('#commentbox,#commentbox-header').css('left', left + 'px');
-		jQuery('#commentbox,#commentbox-header').css('display', 'block');
+		//jQuery('#commentbox,#commentbox-header').css('left', left + 'px');
+		//jQuery('#commentbox,#commentbox-header').css('display', 'block');
 		
 
 	}	

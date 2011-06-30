@@ -49,6 +49,10 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 * Expanded localization support
 * Fix issue with deactivation - the default theme is now detected
 * Added new keyboard navigation option
+* New themes
+* New Options: 
+* Enable Digress.it for Pages
+
 
 = 3.1.1 = 
 * Fix issue where minified JS was not in released version

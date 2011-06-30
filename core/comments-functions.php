@@ -39,8 +39,6 @@ function commentbrowser_query_vars( $query_vars ) {
  * Create a rewrite rule if you want pretty permalinks
  */
 function commentbrowser_add_rewrite_rules( $wp_rewrite ) {
-
-
 	$wp_rewrite->add_rewrite_tag( "%commentbrowser_function%", "(general-comments|comments-by-user|comments-by-contributor|comments-by-section|comments-by-tag)", "commentbrowser_function=" );
 	$wp_rewrite->add_rewrite_tag( "%commentbrowser_params%", "(.+?)", "commentbrowser_params=" );
 
@@ -58,19 +56,20 @@ function commentbrowser_add_rewrite_rules( $wp_rewrite ) {
 function commentbrowser_template_redirect() {
     global $wp, $wpdb, $current_user, $current_browser_section, $is_commentbrowser;
 
-	//var_dump($wp->query_vars);
-	$commentbrowser_function = "commentbrowser_" . str_replace('-','_',$wp->query_vars['commentbrowser_function']);
-	$commentbrowser_params =  $wp->query_vars['commentbrowser_params'];
-	
-	if( has_action('add_commentbrowser', $commentbrowser_function) && function_exists($commentbrowser_function)) :
-		$is_commentbrowser = true;
-		if(file_exists(DIGRESSIT_THEMES_DIR .get_current_theme(). '/comments-browser.php')){
-			
-		}
-		else{
-			include(DIGRESSIT_THEMES_DIR . '/digressit-default/comments-browser.php');
-		}
-		exit;
+	if(isset($wp->query_vars['commentbrowser_function'])):
+		$commentbrowser_function = "commentbrowser_" . str_replace('-','_',$wp->query_vars['commentbrowser_function']);
+		$commentbrowser_params =  $wp->query_vars['commentbrowser_params'];
+
+		if( has_action('add_commentbrowser', $commentbrowser_function) && function_exists($commentbrowser_function)) :
+			$is_commentbrowser = true;
+			if(file_exists(DIGRESSIT_THEMES_DIR .get_current_theme(). '/comments-browser.php')){
+				
+			}
+			else{
+				include(DIGRESSIT_THEMES_DIR . '/digressit-default/comments-browser.php');
+			}
+			exit;
+		endif;
 	endif;
 	
 }
@@ -336,14 +335,14 @@ function digressit_live_spam_check_comment( $comment ) {
 /**
  * 
  */
-function get_comments_toolbar(){
+function digresit_get_comments_toolbar(){
 	do_action('comments_toolbar');
 }
 
 /**
  * 
  */
-function indexOf($needle, $haystack){
+function digresit_index_of($needle, $haystack){
 	if(($index =array_search($needle,$haystack)) !==false)
 		return $index;
 	else
