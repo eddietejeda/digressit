@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 
 <div id="container">
-<?php get_dynamic_widgets(); ?>
-<?php get_stylized_title(); ?>
+<?php digressit_get_dynamic_widgets(); ?>
+<?php digressit_get_stylized_title(); ?>
 <div id="content" role="main">
 	<div id="frontpage">
 		<div class="entry" role="article">
