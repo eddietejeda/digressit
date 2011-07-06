@@ -61,13 +61,13 @@ if(function_exists('digressit_body_class')){
 	<div class="menu-site-container">
 	<ul>
 	<?php if(is_user_logged_in()): ?>
-		<li><a href="<?php echo get_bloginfo('url'); ?>/wp-admin/" title="My Account"><?php _e('My Account'); ?></a></li>			
-		<li><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout"><?php _e('Logout'); ?></a></li>			
+		<li class="menu-my-account"><a href="<?php echo get_bloginfo('url'); ?>/wp-admin/" title="My Account"><?php _e('My Account'); ?></a></li>			
+		<li class="menu-logout"><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout"><?php _e('Logout'); ?></a></li>			
 	<?php else: ?>
 		<?php if(get_option('users_can_register')): ?>
-		<li><a href="<?php echo get_bloginfo('url'); ?>/wp-signup.php"   title="Register"><?php _e('Register'); ?></a></li>
+		<li  class="menu-sign-up"><a href="<?php echo get_bloginfo('url'); ?>/wp-signup.php"   title="Register"><?php _e('Register'); ?></a></li>
 		<?php endif; ?>
-		<li><a href="<?php echo wp_login_url(); ?>" title="Login"><?php _e('Login'); ?></a></li>
+		<li class="menu-login"><a href="<?php echo wp_login_url(); ?>" title="Login"><?php _e('Login'); ?></a></li>
 	<?php endif;?>
 	</ul>
 	</div>	
