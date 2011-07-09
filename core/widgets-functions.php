@@ -1,5 +1,7 @@
 <?php
 global $blog_id;
+add_action('widgets_init', create_function('', 'return register_widget("ListPostsWithCommentCount");'));
+
 
 /**
  *
@@ -134,7 +136,6 @@ if ( function_exists('register_sidebar') ) {
 }
 
 
-add_action('widgets_init', create_function('', 'return register_widget("ListPostsWithCommentCount");'));
 
 
 /**

@@ -23,6 +23,8 @@ if ( function_exists('post_password_required')  ) {
 global $blog_id;
 
 
+die('sdf');
+
 
 ?>
 

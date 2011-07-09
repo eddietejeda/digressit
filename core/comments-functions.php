@@ -194,11 +194,11 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 					<?php
 					if($comment->user_id){
 						$comment_user = get_userdata($comment->user_id); 
-						$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $comment_user->user_login;
+						$profile_url = get_bloginfo('url')."/comments-by-contributor/" . $comment_user->user_login;
 						echo "<a href='$profile_url'>$comment_user->display_name</a>";
 					}
 					else{
-						$profile_url = get_bloginfo('home')."/comments-by-contributor/" . $comment->comment_author;						
+						$profile_url = get_bloginfo('url')."/comments-by-contributor/" . $comment->comment_author;						
 						echo "<a href='$profile_url'>$comment->comment_author</a>";						
 					}
 					?>
@@ -388,11 +388,11 @@ function digressit_list_users(){
 			<?php
 			if($user->user_id){
 				$comment_user = get_userdata($user->ID); 
-				$profile_url = get_bloginfo('home')."/comments-by-contributor/" . urlencode($user->user_login);
+				$profile_url = get_bloginfo('url')."/comments-by-contributor/" . urlencode($user->user_login);
 				echo "<a href='$profile_url'>$user->display_name ($user->comments_per_user)</a> ";						
 			}
 			else{
-				$profile_url = get_bloginfo('home')."/comments-by-contributor/" . urlencode($user->comment_author);
+				$profile_url = get_bloginfo('url')."/comments-by-contributor/" . urlencode($user->comment_author);
 				echo "<a href='$profile_url'>$user->comment_author ($user->comments_per_user)</a> ";						
 			}
 			?>		

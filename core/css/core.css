@@ -1162,7 +1162,7 @@ img{
 
 .single #content{
 	min-height:600px;
-	padding-bottom:400px;
+	padding-bottom:100px;
 	max-width:1000px;
 	margin: auto;
 	/* */
@@ -2032,7 +2032,6 @@ display:none;
 	margin:auto;
 	max-width:1000px;
 	min-height:600px;
-	padding-bottom:400px;
 }
 
 
