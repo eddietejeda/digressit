@@ -46,13 +46,12 @@ h1, h2, h3, h4, h5, h6, h7, h8{
 
 .error404 #content h2{
     line-height: 35px;
-    padding: 0 30%;	
+    padding: 0 25px;
 }
 
 .error404 #content .entry{
     margin: 0 auto;
     padding: 25px;
-    width: 400px;
 }
 
    
@@ -1315,10 +1314,10 @@ display:none;
 
 
 .digressit-enabled .post, .digressit-enabled .page{
-/*	margin-top:20px; */
 	width:50%;
 	max-width: 800px;
-	padding: 20px; 
+	padding: 20px;
+	padding-top: 0; 
 	position: relative;
 }
 
@@ -1372,26 +1371,14 @@ display:none;
 .share{
 	padding: 10px;
 }
-/*
-#commentbox{
-	height:365px;
-	margin:0px 0 0;
-	width: 415px;
-	margin-left: 10% + 400px;
-	position: absolute;
-	overflow-x: scroll;
-	z-index: 100;
 
-}
-*/
 .single .entry{
 }
+
 #dynamic-sidebar{
 	position:absolute;
 	text-align:left;
 	z-index:200;
-/*	top: -27px; */
-/*	background-color: #F3F8F8; */
 	background-color: white;
 	height: 100%;
 	z-index: 1000;
@@ -1426,12 +1413,6 @@ display:none;
 
 
 #dynamic-sidebar{
-	/*
-	-moz-box-shadow: 2px 2px 8px #AAAAAA;
-	-webkit-box-shadow:2px 2px 8px #AAAAAA;
-	box-shadow: 2px 2px 8px #AAAAAA;
-	*/
-	border: 1px solid #eee;	
 	overflow-y: auto;
 	padding:10px;
 	width:260px;

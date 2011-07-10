@@ -1477,6 +1477,9 @@ jQuery(document).ready(function() {
 		if(jQuery('#live-content-search').val() == 'Search Content'){
 			jQuery('#live-content-search').val('');
 		}
+		else if(jQuery('#live-content-search').val() == ''){
+			jQuery('#live-content-search').val('Search Content');
+		}
 	});
 	
 	
@@ -1489,6 +1492,9 @@ jQuery(document).ready(function() {
 	jQuery('#live-comment-search').focus(function(){
 		if(jQuery('#live-comment-search').val() == 'Search Comments'){
 			jQuery('#live-comment-search').val('');
+		}
+		else if(jQuery('#live-comment-search').val() == ''){
+			jQuery('#live-comment-search').val('Search Comments');
 		}
 	});
 
