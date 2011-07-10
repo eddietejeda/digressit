@@ -99,6 +99,7 @@ function digressit_theme_options_page() {
 	
 		<form method="post" action="<?php $PHP_SELF; ?>">
 
+		<div class="icon32" id="icon-themes"><br></div>
 		<h2><?php _e('Digress.it Options', 'digressit');  ?></h2>
 
 		<table class="form-table" style="vertical-align: top; width: 800px; padding: 0; margin: 0" >

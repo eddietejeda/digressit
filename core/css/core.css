@@ -13,7 +13,7 @@ body {
 	margin: 0;
 	padding: 0;
 	line-height: 18px;
-	background: #e6e6e6;
+	background: #efefef;
 }
 
 
@@ -866,10 +866,9 @@ ul{
 }
 .sidebar .sidebar-current a{
 	color: black !important;	
-	font-weight: bold;
 }
 
-.single #sidebar{
+.digressit-enabled #sidebar{
 	left: -250px;	
 }
 
@@ -965,21 +964,34 @@ ul{
 }
 
 
+#toplevel-commentbox{
+	display: none;
+}
+.single #content, .page #content{
+	padding-bottom: 150px;
+}
 #comments-toolbar #comment{
 	height: 20px;
 }
 
-.single #commentbox {
-	overflow-x: hidden;
-	overflow-y: scroll;
-/*	background: none repeat scroll 0 0 transparent; */
-	overflow-y: scroll;
-/*	-moz-box-shadow: 5px 10px 1em #CCC; */
-/*	overflow:hidden;
-	overflow-x:hidden; */
-	border:1px solid #B4BDBD;
-
-		
+.digressit-enabled #commentbox {
+    border: 1px solid #B4BDBD;
+    margin-right: 20px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    
+    
+	min-height:365px;
+	height:80%;
+	margin:0px 0 0;
+	width: 415px;
+	z-index: 100;
+	
+    left: 565px;
+    position: absolute;
+    top: 0;	
+    
 }
 
 
@@ -1162,10 +1174,8 @@ img{
 
 .single #content{
 	min-height:600px;
-	padding-bottom:100px;
 	max-width:1000px;
 	margin: auto;
-	/* */
 	background-color: white;	
 }
 
@@ -1219,7 +1229,7 @@ img{
 #menu-primary li, #menu-primary ul {
 	display:inline;
 	list-style:none outside none;
-	padding:0 0 0 10px;
+	padding:0 0 0 0;
 }
 
 
@@ -1304,11 +1314,12 @@ display:none;
 
 
 
-.single .post{
+.digressit-enabled .post, .digressit-enabled .page{
 /*	margin-top:20px; */
 	width:50%;
 	max-width: 800px;
 	padding: 20px; 
+	position: relative;
 }
 
 .comments-toolbar-icon{
@@ -1361,26 +1372,24 @@ display:none;
 .share{
 	padding: 10px;
 }
+/*
 #commentbox{
 	height:365px;
 	margin:0px 0 0;
 	width: 415px;
-	top: 150px;
 	margin-left: 10% + 400px;
-/*	border: 1px solid #DDE0E0;  */
-/*	background: white; */
 	position: absolute;
 	overflow-x: scroll;
 	z-index: 100;
-	display: none;
 
 }
-
-
+*/
+.single .entry{
+}
 #dynamic-sidebar{
 	position:absolute;
 	text-align:left;
-	z-index:100;
+	z-index:200;
 /*	top: -27px; */
 /*	background-color: #F3F8F8; */
 	background-color: white;
@@ -1586,7 +1595,7 @@ display:none;
 .comment{
 	border-color:#B4BDBD;
 	border-style:solid;
-	border-width:1px;
+	border-width:0px;
 	color:black;
 	margin:0 2px 15px;
 	padding:5px 5px 20px;

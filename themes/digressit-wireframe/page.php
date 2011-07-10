@@ -1,14 +1,12 @@
 <?php get_header(); ?>
 
-<div class="container">
-
 <?php digressit_get_single_default_widgets(); ?>
 
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<div class="container">
 
-	<?php if($digressit_options['digressit_enabled_for'] == 'pages'):
-			if(!post_password_required())
-				comments_template();
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+	<?php global $digressit_options; ?>
+	<?php if($digressit_options['digressit_enabled_for_pages']):
 
 			digressit_get_stylized_title(); 
 			?>
@@ -40,8 +38,13 @@
 	
 					<?php do_action('after_post_content'); ?>
 					<?php dynamic_sidebar('Single Content');		 ?>
-					
 				</div>			
+				
+					<?php
+					if(!post_password_required())
+						comments_template();
+					?>
+				
 			</div>
 		<?php else:
 			

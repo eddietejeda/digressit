@@ -219,9 +219,6 @@ jQuery(document).ready(function() {
 		var form = this;
 		form = jQuery(this).parentsUntil('form').parent();		
 		var form_id = jQuery(form).attr('id');
-
-		//alert(function_name);
-
 		var function_name = form_id;
 		var form_class = jQuery(form).attr('class');
 		var fields = {};
@@ -261,7 +258,7 @@ jQuery(document).ready(function() {
 	
 	jQuery('.ajax-auto-submit input').live('keyup', function(e) {
 		if(e.keyCode == 13 && jQuery(this).val().length > 0){
-			//alert('sf');
+
 			//return;
 		}
 		else{
@@ -367,7 +364,6 @@ jQuery(document).ready(function() {
 			}
 		}
 
-		//alert(function_name);
 		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
 		jQuery(this).css('cursor', 'wait');
 		jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
@@ -405,7 +401,6 @@ jQuery(document).ready(function() {
 			}
 		}
 
-		//alert(function_name);
 		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
 		jQuery(this).css('cursor', 'wait');
 		jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
@@ -464,7 +459,6 @@ jQuery(document).ready(function() {
 		}
 		
 		var name_values = jQuery(this).attr('name') + '=' + var_value;
-		//alert(name_values);
 		var function_parameters = parseGetVariables(name_values);
 		
 		jQuery('.' + function_name + '  + .loading-throbber' + ', .' + function_name + '  + .loading-bars').css('display','inline');
@@ -501,12 +495,12 @@ jQuery(document).ready(function() {
 		jQuery('#commentbox').position_main_elements();
 	}
 	
-	
     jQuery(window).scroll(function () { 
 	
 		//this should not fire every single time! do proper checks to help performance
 		if(digressit_enabled){
 			jQuery('#commentbox').position_main_elements();
+			console.log('scroll');
 		}
 		
     });
@@ -514,9 +508,13 @@ jQuery(document).ready(function() {
 
 	jQuery(window).resize(function(){
 		if(digressit_enabled){
-			jQuery('#commentbox').position_main_elements();
+			jQuery('#commentbox').position_main_elements();			
+			console.log('resize');
 		}
 	});
+	
+	
+	
 
 
 	function parseGetVariables(variables) {
@@ -530,6 +528,7 @@ jQuery(document).ready(function() {
 
 		return var_list;
 	}
+	
 	
 	//http://www.idealog.us/2006/06/javascript_to_p.html
 	function getQueryVariable(variable) {
@@ -653,18 +652,12 @@ jQuery(document).ready(function() {
 
 
 		if (event.keyCode == '13') {
-			//alert(event.keyCode);
-			//alert(jQuery(this).attr('class'));
 			if(jQuery(this).hasClass('ajax')){
-				//alert('ajax');
 		  		/* UNDO COMMENT: */
 				//jQuery(this).add('.lightbox-submit').click();
 			}
 			else{
-				//alert('submit');
-				
 				jQuery(event.target).parentsUntil('form').parent().submit();		
-
 		  		/* UNDO COMMENT: */
 		  		//jQuery(this).parent().submit();
 			}
@@ -686,9 +679,7 @@ jQuery(document).ready(function() {
 	
     jQuery(".lightbox-submit").click(function (e) {
 
-		//alert(jQuery(this).attr('class'));
 		if(jQuery(this).hasClass('ajax')){
-	  		//alert(jQuery(this).parent());
 		}
 		else{
 	  		jQuery(this).parent().submit();				
@@ -735,10 +726,6 @@ jQuery(document).ready(function() {
 
 
 		var target = e.target;
-
-		//var top = jQuery(target).offset().top;
-		//var left = jQuery(target).offset().left;
-	
 		var lightbubble_name = jQuery(target).attr('class').split(' ');
 	
 		var lightbubble, i;
@@ -749,11 +736,9 @@ jQuery(document).ready(function() {
 				break;				
 			}
 		}
-		//alert(lightbubble);
 
 		jQuery(lightbubble).appendTo(jQuery(this));
 		jQuery(lightbubble).show();
-		//jQuery('body').openlightbubble(lightbubble);
 	
 	});		
 	
@@ -826,7 +811,6 @@ jQuery(document).ready(function() {
 				
 			}
 			else{
-				//alert('nogrouping');
 				if( jQuery('#' + parent_id).next().hasClass('children') ){
 					jQuery('#' + parent_id + ' + .children').prepend(new_comment);
 					
@@ -848,7 +832,6 @@ jQuery(document).ready(function() {
 				jQuery('#commentbox').scrollTo('#'+comment_id , 500, {easing:'easeOutBack'});
 			}
 			else{
-				//alert('nogrouping');
 				jQuery('.commentlist').prepend(new_comment);			
 				jQuery('#'+comment_id).fadeIn("#"+comment_id);
 			}
@@ -888,10 +871,9 @@ jQuery(document).ready(function() {
 
 	jQuery('.comment').hover(function (e) {
 
-		if(jQuery('body').hasClass('single')){
+		if(jQuery('body').hasClass('digressit-enabled')){
 			return;
 		}
-		//alert('sdf');
 
 		var index = jQuery('.comment').index(this);		
 		if(jQuery('.comment-goto').length){
@@ -902,7 +884,7 @@ jQuery(document).ready(function() {
 		}
 
 	},	function (e) {
-		if(jQuery('body').hasClass('single')){
+		if(jQuery('body').hasClass('digressit-enabled')){
 			return;
 		}
 
@@ -946,25 +928,17 @@ jQuery(document).ready(function() {
 
 
 
-		if(jQuery('body').hasClass('single')){
+		if(jQuery('body').hasClass('digressit-enabled')){
 			var selected_blog_id = jQuery.cookie('selected_blog_id');				
-			//document.location.hash = '#comment-' + selected_blog_id + '-' +comment_id;
 		}
-		/*
 
-		if(jQuery(target).hasClass('comment-reply')){
-			return;
-		}
-		*/
-		//alert(jQuery(target).parents().hasClass('comment-respond') );
 		if(!jQuery(target).parents().hasClass('comment-respond') && !jQuery(target).hasClass('comment-reply') && !jQuery('body').hasClass('page-template-moderator-php')){
-			//alert(jQuery(target).hasClass('comment-reply'));
 			//commentbox_open_state();			
 		}
 
 
 
-		if(jQuery('body').hasClass('single') && jQuery('.comment-reply').length){
+		if(jQuery('body').hasClass('digressit-enabled') && jQuery('.comment-reply').length){
 			//jQuery('.comment-reply').hide();
 			var index = jQuery('.comment').index(this);				
 			var item = jQuery('.comment-reply').get(index);
@@ -1020,8 +994,6 @@ jQuery(document).ready(function() {
 
 
 	});
-
-	//alert('sd');
 
 	jQuery("#comment").focus(function (e) {
 		if( jQuery(this).val() == 'Click here add a new comment...'){
@@ -1416,8 +1388,6 @@ jQuery(document).ready(function() {
 		jQuery('#commentbox').scrollTo('#'+commentname , 500);
 		
 		if(paragraphnumber > 0){
-			//alert('sdf2');		
-				
 			var item = jQuery('.commenticonbox').get((paragraphnumber));
 			var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
 			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
@@ -1526,8 +1496,6 @@ jQuery(document).ready(function() {
 	
 
 	jQuery('body').click(function (e) {
-
-		//alert(jQuery(e.target).attr('class'));
 		if(!jQuery(e.target).hasClass('ajax-live')){
 				jQuery('#live-content-search-result').hide();
 				jQuery('#live-comment-search-result').hide();
@@ -1591,7 +1559,6 @@ jQuery(document).ready(function() {
 			jQuery('#selected_paragraph_number').attr('value', paragraphnumber);
 			jQuery('#comment_parent').val(comment_id);
 
-			//alert(jQuery('#comment_parent').val());
 			jQuery.cookie('text_signature', paragraphnumber, { path: '/' , expires: 1} );				
 			jQuery.cookie('selected_comment_id', comment_id, { path: '/' , expires: 1} );				
 
@@ -1657,7 +1624,8 @@ jQuery.fn.extend({
 	
 		var default_top = parseInt(jQuery('#content').position().top);
 		var scroll_top =  parseInt(jQuery(window).scrollTop());
-		var top =  default_top  + parseInt(jQuery(window).scrollTop());
+		var top =  default_top  + scroll_top;
+		/*
 		var min_browser_height = (browser_height > 300) ? browser_height : 300; 
 		var new_commentbox_height = ((browser_height - default_top - 50) < 370) ? 370 : (browser_height - default_top - 50);
 		var commentbox_top = 50; //parseInt(jQuery(jQuery(".entry").get(0)).offset().top);
@@ -1667,22 +1635,46 @@ jQuery.fn.extend({
 
 
 
-		var left = parseInt(jQuery('#content').offset().left) + parseInt( jQuery(jQuery('.entry').get(0)).width() ) + parseInt( jQuery(jQuery('.post').get(0)).css('padding-right') );
-
-
 		var sidebar_fix_point = parseInt(jQuery("#header").outerHeight())  + parseInt(jQuery("#header").css('margin-top'));
 		var commentbox_fix_point = commentbox_top;
 		var comment_header = parseInt(jQuery("#commentbox-header").outerHeight());
 		var header_outerheight = parseInt(jQuery("#header").outerHeight());
+		*/
+		
+		//console.log("default_top " + default_top);
+		//console.log("scroll_top " + scroll_top);
+		//console.log("top " + top);
+		
+		
+		if(top > 235 && jQuery("#commentbox").css('position') != 'fixed' ){
+			var left = parseInt(jQuery('#content').offset().left) + 565  ;
+			jQuery("#commentbox").css('position', 'fixed');
+			jQuery("#commentbox").css('left', left + 'px');
+			jQuery("#commentbox").css('top', '50px');
+			jQuery("#commentbox").css('height', '100%');
+			//console.log('left' + parseInt(jQuery(parseInt(jQuery('#post-' + post_ID).width()) ))  + parseInt(jQuery(parseInt(jQuery('#content').offset().left) )) + 'px');
+			
+		}
+		else if(top < 235 && jQuery("#commentbox").css('position') != 'absolute' ){
+			jQuery("#commentbox").css('position', 'absolute');
+			jQuery("#commentbox").css('left', '565px'	);
+			jQuery("#commentbox").css('top', '0px');
+			jQuery("#commentbox").css('height', '80%');
+		}
+		
+		//console.log("----");
+
+		
 		
 		//iOS
+
+		/*
 		if(iOS){
 
 			var ipad_scroll_top_position;
 			
 			ipad_scroll_top_position = (top < 360) ? 260: (top - 100) ;
 
-			//alert(top);
 			jQuery("#commentbox-header").css('position',  'absolute');			
 			jQuery("#commentbox-header").css('top', ipad_scroll_top_position);			
 
@@ -1696,27 +1688,18 @@ jQuery.fn.extend({
 		else{
 
 			//sidebar
-			if(scroll_top > sidebar_fix_point){
-				jQuery("#dynamic-sidebar").css('position',  'fixed');			
-				jQuery("#dynamic-sidebar").css('top',  '0px');			
-			}
-			else{
-				jQuery("#dynamic-sidebar").css('position',  'absolute');
-				jQuery("#dynamic-sidebar").css('top',   '0px');			
-			}
-
-			jQuery("#commentbox").css({top : commentbox_top+'px',left: left+'px', position :'fixed', top: '0px', display: 'block' });			
-			//jQuery("#commentbox").css('top',  '0px');
-
-			
+			jQuery("#commentbox").css({position : 'fixed',top: '100px'});			
+			jQuery("#commentbox").css({top : commentbox_top+'px',left: left+'px', position :'fixed', top: '0px', display: 'block' });
 		}
 		
-
-
+		*/
 		
-		
+
 		//jQuery('#commentbox,#commentbox-header').css('left', left + 'px');
 		//jQuery('#commentbox,#commentbox-header').css('display', 'block');
+		
+
+		
 		
 
 	}	
@@ -1759,7 +1742,6 @@ jQuery.fn.openlightbox = function (lightbox){
 		jQuery('textarea').attr('readonly', '');
 		
 
-		//alert(jQuery(lightbox + ' .lightbox-slot').length);
 		if(jQuery(lightbox + ' .lightbox-slot').length > 1){
 			jQuery(lightbox + ' .lightbox-slot').hide();
 			jQuery(lightbox + ' .lightbox-previous').hide();
@@ -1822,15 +1804,10 @@ function commentbox_closed_state(){
 
 function commentbox_reply_state(){
 	
-	//alert(selected_comment_id);
 	var selected_comment_id = jQuery.cookie('selected_comment_id');				
-	var selected_blog_id = jQuery.cookie('selected_blog_id');				
-	
-	//alert(selected_comment_id);
+	var selected_blog_id = jQuery.cookie('selected_blog_id');					
 	var reply_box = '#comment-'+ selected_blog_id + '-' +selected_comment_id + ' .comment-respond';
-	
-	//alert(reply_box);
-	//jQuery(reply_box).hide();
+
 	jQuery('#respond').appendTo(reply_box);		
 	jQuery('#respond').fadeIn();
 	jQuery('.reply_box').show();

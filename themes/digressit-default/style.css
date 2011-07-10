@@ -188,7 +188,6 @@ h1, h2, h3, h4, h5, h6{
 
 .single .post{
 	padding: 0;
-	padding-right: 65px;
 	width: 55%;
 }
 
@@ -406,10 +405,7 @@ z-index:0;
 	border-width:0;
 	margin:0 auto;
 	width:1000px;
-
-	-moz-box-shadow: 0 -25px 30px #AAAAAA;
-	-webkit-box-shadow:0 -25px 30px #AAAAAA;
-	box-shadow: 0 -25px 30px #AAAAAA;
+	position: relative;
 
 }
 
@@ -444,7 +440,7 @@ z-index:0;
     font-size: 10px;
     font-weight: bold;
     height: 21px;
-    padding: 0 0 0 7px;
+    padding: 0 0 0 9px;
     position: absolute;
     width: 17px;
     font-family: Arial;
@@ -509,8 +505,8 @@ p, li{
 	border-color: white;
 }
 
-.entry{
-	padding:25px;
+.post .entry{
+	padding:20px;
 }
 
 .small-button{
@@ -736,7 +732,9 @@ a{
 	padding:10px;	
 }
 .paragraph-label{
-	font-size: 150%;
+    float: left;
+    font-size: 125%;
+    font-weight: bold;
 }
 .comment{
 	display: none;
@@ -938,16 +936,20 @@ h2{
 
 
 #menu-primary {
-	display:block;
-	left:0;
-	text-align:left;
-	width:100%;
-	position: relative;
-	clear: both;
-	font-size: 90%;
+    clear: both;
+    display: block;
+    font-size: 90%;
+    left: 0;
+    padding: 5px 20px;
+    position: relative;
+    text-align: left;
+    width: 100%;
 }
 
 .container{
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-width: 0 1px;
     margin: 0 auto;
     position: relative;
     width: 1000px;
