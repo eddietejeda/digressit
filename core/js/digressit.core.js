@@ -1651,7 +1651,7 @@ jQuery.fn.extend({
 			jQuery("#commentbox").css('position', 'fixed');
 			jQuery("#commentbox").css('left', left + 'px');
 			jQuery("#commentbox").css('top', '50px');
-			jQuery("#commentbox").css('height', '100%');
+			jQuery("#commentbox").css('height', '90%');
 			//console.log('left' + parseInt(jQuery(parseInt(jQuery('#post-' + post_ID).width()) ))  + parseInt(jQuery(parseInt(jQuery('#content').offset().left) )) + 'px');
 			
 		}
@@ -1659,7 +1659,7 @@ jQuery.fn.extend({
 			jQuery("#commentbox").css('position', 'absolute');
 			jQuery("#commentbox").css('left', '565px'	);
 			jQuery("#commentbox").css('top', '0px');
-			jQuery("#commentbox").css('height', '80%');
+			jQuery("#commentbox").css('height', '70%');
 		}
 		
 		//console.log("----");
