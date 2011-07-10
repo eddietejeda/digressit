@@ -123,6 +123,13 @@ function digressit_theme_options_page() {
 				<p><?php _e("The content of this page will be the first thing a visitor to your website will see.", 'digressit'); ?></p>
 			</td>
 		</tr>
+
+
+
+		<tr valign="top">
+			<td style="width: 200px"><b><?php _e('Front Page Menu', 'digressit');  ?></b></td>
+			<td><?php digressit_print_dropdown('front_page_menu', array('Posts' => 'posts', 'Pages' => 'pages'), $digressit_options['front_page_menu']); ?></td>
+		</tr>
 		
 
 

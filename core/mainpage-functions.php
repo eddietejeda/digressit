@@ -39,18 +39,29 @@ function digressit_mainpage_load(){
  *
  */
 function digressit_mainpage_default_menu(){
-	global $digressit_options;
+	global $digressit_options, $post;
 	?>
 	<ol class="navigation <?php echo $digressit_options['frontpage_list_style']; ?>">
 
 	 <?php
-	 global $post;
-	 $frontpage_posts = get_posts('numberposts=-1&orderby='.$digressit_options['front_page_order_by'].'&order=' . $digressit_options['front_page_order']);
-	 foreach($frontpage_posts as $pp){
+	 
+	 if($digressit_options['front_page_menu'] == 'pages'){
+		$frontpage_posts =  get_pages( $args );
+	 }
+	 else{
+		$frontpage_posts = get_posts('numberposts=-1&orderby='.$digressit_options['front_page_order_by'].'&order=' . $digressit_options['front_page_order']);
+	}
+
+	foreach($frontpage_posts as $pp){
 		$comment_count = digressit_get_post_comment_count($pp->ID, null, null, null); ?>
 	    <li><a href="<?php echo get_permalink($pp->ID); ?>"><?php echo get_the_title($pp->ID); ?> (<?php echo $comment_count;  ?>)</a></li>
-	 <?php } ?>
-	 </ol> 
+	 	<?php 
+	}
+	 
+	 
+	 
+	?>
+	</ol> 
 	<?php digressit_mainpage_content_display($frontpage_posts); ?>
 <?php
 }
