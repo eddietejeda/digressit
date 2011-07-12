@@ -1,0 +1,164 @@
+/*	
+Theme Name: Digress.it Research Paper
+Theme URI: http://digress.it
+Description: Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
+Author: Eddie A Tejeda
+Version: 3.2
+Author URI: http://eddietejeda.com
+License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
+Tags: buddypress, comments, annotation, discussion, commenting, paragraph, education, transparency
+
+Special thanks to:	
+The developers of JQuery @ www.jquery.com
+Joss Winn, Tony Hirst and Alex Bilbie @ University of Lincoln 
+Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
+
+Previous Versions:
+Mark James, for the famfamfam iconset @ http://www.famfamfam.com/lab/icons/silk/
+Matteo Bicocchi @ www.open-lab.com
+
+*/
+
+
+body	{
+	margin: 0;
+	padding: 0;
+	height:100%; 
+	width: 100%;
+	overflow-y:auto;
+	}
+h1 {
+	font: 2em/1.15em Georgia, "Times New Roman", Times, serif;
+}
+h2 	{	
+	font: 1.3em Georgia, "Times New Roman", Times, serif;
+	}
+h3 	{
+	font: .9em Georgia, "Times New Roman", Times, serif;
+	text-transform: uppercase;
+	}
+.content	{
+	font: 1em/1.35em Georgia, "Times New Roman", Times, serif;
+	padding-right: 40px;
+	padding-left: 5px;
+	}
+ol.content, ul.content	{
+	padding-left: 45px;
+	}
+ol.content li, ul.content li 	{
+	padding: 4px 0px;
+	}
+a	{
+	color: #777777;
+	text-decoration: none;
+	}
+a:hover	{
+	color: #000000;
+	background-color: #FFFC00;
+	}
+a:visited	{
+	color: #777777;
+	}
+br.clear	{
+	clear: both;
+	}
+h1 a, a h1, h2 a, a h2, h3 a, a h3 {
+	color: #000000;
+	}
+
+#commentbox	{	
+	float: left;
+	width: 500px;
+	margin: 0px 0px 0px 0px;
+	text-align: left;
+	}
+* html #contentContainer {
+	margin-top: 15px;
+	}
+#commentbox	{
+	font: 10pt/13pt Arial, Helvetica, sans-serif;
+	text-align: left;
+	border-bottom: 1px solid #000000; 
+	}
+#commentbox h3 {
+	font: bold 11pt Arial, Helvetica, sans-serif;
+	text-tranform: uppercase;
+	}
+		
+#footer	{
+	clear: both;
+	width: 900px;
+	margin: 20px 5px 30px 30px;
+	padding: 10px 20px 0 20px;
+	text-align: left;
+	}
+
+.selected-textbloc	{
+	background-color: #93D8FF;
+	border: 1px dashed #0097ED;
+	}
+
+.comment	{
+	margin: 1.5em 0;
+	/*border: 1px solid #00FF00;*/
+	}
+.commentDate	{
+	font: 7pt/14pt Arial, Verdana, Helvetica, sans-serif;
+	color: #666666;
+	text-transform: uppercase;
+	/*border: 1px solid #0000FF;*/
+	}
+.commentAuthor	{
+	font-weight: bold;
+	margin: .5em 0px;
+	}
+a.commentToText	{
+	display: block;
+	float: right;
+	margin-right: 0px;
+	}
+a.commentToText img {
+	border: none;
+	}
+
+#footer	{
+	border-top: 1px solid #000000;
+	font: 8pt Arial, Helvetica, sans-serif;
+	}
+	
+#footer a	{}
+#footer a:hover	{}
+#footer a:visited	{}
+
+
+/* Home Page Styles */
+#navigation 	{
+	float: left;
+	font-size: 13pt;
+	line-height: 18pt;
+	}
+#navigation h3	{
+	margin: 0px;
+	padding: 0px 0px 10px 0px;
+	}
+#navigation a	{
+	color: #000000;
+	}
+.previews	{
+
+	}
+.previews h3	{
+	font: bold 10pt Arial, Helvetica, sans-serif;
+	padding-left: 5px;
+	}
+.previews p	{
+	font: 10pt Arial, Helvetica, sans-serif;
+	}
+	
+
+
+
+.selected-textblock	{
+	color: #000000;
+	background-color: #FFFC00;
+}
