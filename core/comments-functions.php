@@ -185,7 +185,7 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 	<?php $paragraphnumber = is_numeric($comment->comment_text_signature) ? $comment->comment_text_signature : 0; ?>
 	<?php $force_depth = $comment->ajax_call ? " depth-2 " : ''; ?>
 	<?php $classes .= " paragraph-".$paragraphnumber." " .$force_depth; ?>
-		
+	<?php $classes .= ($comment->comment_approved) ? " approved " : " in-moderation "; ?>
 	<div <?php comment_class($classes); ?> id="comment-<?php echo $current_blog_id ?>-<?php comment_ID() ?>">
 		<div id="div-comment-<?php echo $current_blog_id; ?>-<?php comment_ID(); ?>" class="comment-body">
 			<div class="comment-header">				

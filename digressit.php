@@ -374,7 +374,28 @@ function digressit_init(){
 		$digressit_options['digressit_enabled_for_posts'] = 1;
 		update_option('digressit', $digressit_options);
 	}
+
+
+
 }
+
+add_action( 'init', 'create_digressit_post_type' );
+function create_digressit_post_type() {
+	register_post_type( 'digressit_type',
+		array(
+			'labels' => array(
+			
+			    'name' => _x('Digress.it', 'post type general name'),
+			    'singular_name' => _x('Digress.it', 'post type singular name'),
+			    'menu_name' => 'Digress.it'
+			),
+			'public' => true,
+			'has_archive' => true,
+			'rewrite' => array('slug' => 'digressit')
+		)
+	);
+}
+
 
 /**
  * This function is to future-proof how media is handled. If we are using CDN it bybasses local media assets

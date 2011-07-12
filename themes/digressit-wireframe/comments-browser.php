@@ -22,6 +22,9 @@ global $current_browser_section, $wp, $blog_id ;
 			<div class="commentlist">			
 			<?php if(count($comment_list)): ?>
 			<?php foreach($comment_list as $comment): ?>
+		
+			<?php $classes = ($comment->comment_approved) ? " approved " : " in-moderation "; ?>
+
 			<div <?php comment_class($classes); ?> id="comment-<?php echo (int)$blog_id ?>-<?php echo $comment->comment_ID; ?>">
 				<div class="bubblearrow"></div>
 				<div id="div-comment-<?php echo (int)$comment->blog_id; ?>-<?php echo $comment->comment_ID;; ?>" class="comment-body">

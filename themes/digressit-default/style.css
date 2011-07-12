@@ -23,7 +23,7 @@ Matteo Bicocchi @ www.open-lab.com
 body{
 	font-family: Georgia,Cambria,"Times New Roman",Times,serif;
 	font-size: 100%;
-	background-color:#E6E6E6;
+	background-color:#fafafa;
 }
 
 #header{
@@ -836,12 +836,27 @@ h2 a{
 
 h2{
 	line-height: 35px;
-	padding: 15px 25px 30px;
+	padding: 15px 25px 10px;
 }
 
 .entry h2{
 	line-height:30px;
 	padding:0 0 10px;	
+}
+
+
+.page h2{
+    line-height: 35px;
+    padding: 15px 25px 0;
+}
+
+.page .entry{
+    padding: 1px 25px;
+}
+
+
+.sidebar .sidebar-current{
+    background-color: #FFF6BF;
 }
 
 

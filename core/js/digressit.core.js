@@ -16,6 +16,8 @@ var selected_comment_color = '#3d9ddd';
 var unselected_comment_color = '#DFE4E4';
 var browser_width = jQuery(window).width();
 var browser_height = jQuery(window).height();
+var content_height = jQuery('#content').height();
+
 var request_time = 0;
 var request_time_delay = 500; // ms - adjust as you like
 
@@ -500,7 +502,7 @@ jQuery(document).ready(function() {
 		//this should not fire every single time! do proper checks to help performance
 		if(digressit_enabled){
 			jQuery('#commentbox').position_main_elements();
-			console.log('scroll');
+			//console.log('scroll');
 		}
 		
     });
@@ -509,7 +511,7 @@ jQuery(document).ready(function() {
 	jQuery(window).resize(function(){
 		if(digressit_enabled){
 			jQuery('#commentbox').position_main_elements();			
-			console.log('resize');
+			//console.log('resize');
 		}
 	});
 	
@@ -1473,27 +1475,37 @@ jQuery(document).ready(function() {
 	}
 	
 	
-	jQuery('#live-content-search').focus(function(){
-		if(jQuery('#live-content-search').val() == 'Search Content'){
-			jQuery('#live-content-search').val('');
-		}
-		else if(jQuery('#live-content-search').val() == ''){
-			jQuery('#live-content-search').val('Search Content');
-		}
-	});
-	
-	
 	AjaxResult.live_comment_search = function(data) {
 		jQuery('#live-comment-search-result').empty();
 		jQuery('#live-comment-search-result').html(data.message);
 		jQuery('#live-comment-search-result').fadeIn();
 	}
 	
+	
+	
+	
+	/* search content */	
+	
+	jQuery('#live-content-search').focus(function(){
+		if(jQuery('#live-content-search').val() == 'Search Content'){
+			jQuery('#live-content-search').val('');
+		}
+	});
+	jQuery('#live-content-search').blur(function(){
+		if(jQuery('#live-content-search').val() == ''){
+			jQuery('#live-content-search').val('Search Content');
+		}
+	});
+	
+	
+	/* search comments */	
 	jQuery('#live-comment-search').focus(function(){
 		if(jQuery('#live-comment-search').val() == 'Search Comments'){
 			jQuery('#live-comment-search').val('');
 		}
-		else if(jQuery('#live-comment-search').val() == ''){
+	});
+	jQuery('#live-comment-search').blur(function(){
+		if(jQuery('#live-comment-search').val() == ''){
 			jQuery('#live-comment-search').val('Search Comments');
 		}
 	});
@@ -1629,8 +1641,10 @@ jQuery.fn.extend({
 	position_main_elements: function() {
 	
 		var default_top = parseInt(jQuery('#content').position().top);
-		var scroll_top =  parseInt(jQuery(window).scrollTop());
-		var top =  default_top  + scroll_top;
+		var scroll_top =  default_top  + parseInt(jQuery(window).scrollTop());
+		var lock_position = jQuery('#post-' + post_ID).offset().top;
+	
+
 		/*
 		var min_browser_height = (browser_height > 300) ? browser_height : 300; 
 		var new_commentbox_height = ((browser_height - default_top - 50) < 370) ? 370 : (browser_height - default_top - 50);
@@ -1652,25 +1666,39 @@ jQuery.fn.extend({
 		//console.log("top " + top);
 		
 		
-		if(top > 235 && jQuery("#commentbox").css('position') != 'fixed' ){
+		if(iOS || msie6 || msie7){
+		
+		
+		}
+		
+		
+		if(scroll_top > lock_position && jQuery("#commentbox").css('position') != 'fixed' ){
 			var left = parseInt(jQuery('#content').offset().left) + 565  ;
 			jQuery("#commentbox").css('position', 'fixed');
 			jQuery("#commentbox").css('left', left + 'px');
 			jQuery("#commentbox").css('top', '50px');
 			jQuery("#commentbox").css('height', '90%');
-			//console.log('left' + parseInt(jQuery(parseInt(jQuery('#post-' + post_ID).width()) ))  + parseInt(jQuery(parseInt(jQuery('#content').offset().left) )) + 'px');
 			
-		}
-		else if(top < 235 && jQuery("#commentbox").css('position') != 'absolute' ){
+		}	
+		else if(scroll_top < lock_position && jQuery("#commentbox").css('position') != 'absolute' ){
 			jQuery("#commentbox").css('position', 'absolute');
 			jQuery("#commentbox").css('left', '565px'	);
 			jQuery("#commentbox").css('top', '0px');
-			jQuery("#commentbox").css('height', '70%');
+			jQuery("#commentbox").css('height', jQuery(window).height() - 250 + 'px');
 		}
-		
-		//console.log("----");
 
 		
+		
+
+		
+		if(scroll_top > (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").css('position') == 'fixed'){
+			jQuery("#commentbox").css('height', '50%');
+			jQuery("#commentbox").addClass('resized');
+		}
+		else if(scroll_top < (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").hasClass('resized')){
+			jQuery("#commentbox").css('height', '90%');			
+			jQuery("#commentbox").removeClass('resized');
+		}
 		
 		//iOS
 
