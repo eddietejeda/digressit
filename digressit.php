@@ -372,6 +372,9 @@ function digressit_init(){
 		$digressit_options['keyboard_navigation'] = 0;
 		$digressit_options['digressit_enabled_for_pages'] = 0;
 		$digressit_options['digressit_enabled_for_posts'] = 1;
+		$digressit_options['digressit_enabled_for_digressit_type'] = 0;
+
+
 		update_option('digressit', $digressit_options);
 	}
 
@@ -381,19 +384,22 @@ function digressit_init(){
 
 add_action( 'init', 'create_digressit_post_type' );
 function create_digressit_post_type() {
-	register_post_type( 'digressit_type',
-		array(
-			'labels' => array(
-			
-			    'name' => _x('Digress.it', 'post type general name'),
-			    'singular_name' => _x('Digress.it', 'post type singular name'),
-			    'menu_name' => 'Digress.it'
-			),
-			'public' => true,
-			'has_archive' => true,
-			'rewrite' => array('slug' => 'digressit')
-		)
-	);
+	global $digressit_options;
+	if((int)$digressit_options['digressit_enabled_for_digressit_type']){
+		register_post_type( 'digressit_type',
+			array(
+				'labels' => array(
+				
+				    'name' => _x('Digress.it', 'post type general name'),
+				    'singular_name' => _x('Digress.it', 'post type singular name'),
+				    'menu_name' => 'Digress.it'
+				),
+				'public' => true,
+				'has_archive' => true,
+				'rewrite' => array('slug' => 'digressit')
+			)
+		);
+	}
 }
 
 

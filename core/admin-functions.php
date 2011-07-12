@@ -61,6 +61,9 @@ function digressit_theme_options_page_form(){
 		
 		$_POST['digressit_enabled_for_posts'] = (isset($_POST['digressit_enabled_for_posts'])) ? 1 : 0;
 		$_POST['digressit_enabled_for_pages'] = (isset($_POST['digressit_enabled_for_pages'])) ? 1 : 0;
+		$_POST['digressit_enabled_for_digressit_type'] = (isset($_POST['digressit_enabled_for_digressit_type'])) ? 1 : 0;
+		
+		
 		
 		foreach($_POST as $key => $value){
 			$digressit_options[$key] = $value;
@@ -121,9 +124,7 @@ function digressit_theme_options_page() {
 			<td>
 				<p><input type="checkbox" name="digressit_enabled_for_posts" <?php echo (int)$digressit_options['digressit_enabled_for_posts']==1 ? ' checked ' : ''; ?>/> Posts</p>
 				<p><input type="checkbox" name="digressit_enabled_for_pages" <?php echo (int)$digressit_options['digressit_enabled_for_pages']==1 ? ' checked ' : ''; ?>/> Pages</p>
-				<?php if($digressit_options['digressit_enabled_for_digressit_type']): ?>
 				<p><input type="checkbox" name="digressit_enabled_for_digressit_type" <?php echo (int)$digressit_options['digressit_enabled_for_digressit_type']==1 ? ' checked ' : ''; ?>/> Custom Digress.it Type</p>
-				<?php endif; ?>
 			</td>
 			<td>
 				<p><?php _e("The content of this page will be the first thing a visitor to your website will see.", 'digressit'); ?></p>			
