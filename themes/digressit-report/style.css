@@ -1,0 +1,166 @@
+/*	
+Theme Name: Digress.it Report
+Theme URI: http://digress.it
+Description: Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
+Author: Eddie A Tejeda
+Version: 3.2
+Author URI: http://eddietejeda.com
+License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
+Tags: buddypress, comments, annotation, discussion, commenting, paragraph, education, transparency
+
+Special thanks to:	
+The developers of JQuery @ www.jquery.com
+Joss Winn, Tony Hirst and Alex Bilbie @ University of Lincoln 
+Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
+
+Previous Versions:
+Mark James, for the famfamfam iconset @ http://www.famfamfam.com/lab/icons/silk/
+Matteo Bicocchi @ www.open-lab.com
+
+*/
+
+
+/* CSS Document */
+/* The President's Address to the Nation */
+/* This style sheet was developed for Mozilla Firefox 2.0 on Win XP
+		It includes hacks for Safari on Mac (noted in comments)
+		IE5,6 style sheet (for IE quirks) is at ./ie6.css
+*/
+
+body{
+	background-color: white;
+}
+
+#content{
+	border: 0px !important;
+	margin-left: 100px;
+}
+
+.the_title{
+	border: 0px !important;
+	margin-left: 100px;
+}
+
+.home #content{
+	margin: 0 10px;
+}
+h1 	{
+	font: 1.5em/1.15em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	margin: 0em 0 .6em 0;
+	text-transform: uppercase;
+	}
+h2 	{	
+	font: 1.25em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	margin: .5em 0 .5em 0 ;
+	border: 1px solid #ffffff;
+	color: #000000;
+	}
+h3 	{
+	font: .90em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	text-transform: uppercase;
+	margin: 2em 0px 0px 0px;
+	}
+ol, ul	{
+	font-size: 1em;
+	padding-left: 45px;
+	padding-right: 40px;
+	}
+ol li, ul li 	{
+	line-height: 1.4em;
+	padding: 5px 0px;
+	}
+a	{
+	color: #000000;
+	text-decoration: none;
+	border-bottom: 1px solid #aeaaa9;
+	}
+a:hover	{
+	border-bottom: none;
+	text-decoration: none;
+	background-color: #FEFF7A;
+	cursor: pointer;
+	}
+a:visited	{
+	text-decoration: none;
+	border-bottom: 1px dotted #aeaaa9;
+	}
+br.clear	{
+	clear: both;
+	}
+p {								/* all content should be in this font 				*/
+	font: 1.05em/1.4em "Times New Roman", "Times New Roman PS MT", Times, serif;
+	margin-bottom: 10px;
+	}
+em {
+	font-style: italic;
+	}
+strong {
+	font-weight: bold;
+	}
+
+/* GENERAL STYLES 
+********************************/	
+.textblock{
+    background-color: white;
+    margin-bottom: 12px;
+    min-height: 100px;
+    padding: 1px 10px;
+    position: relative;
+    border: 0;
+}
+.selected-textblock	{
+	background-color: #FEFF7A;
+	color: #000000;
+	}
+	
+	
+#mainpage{
+	padding: 0;
+}
+
+/* TITLE BAR 
+********************************/	
+#header{			/* titlebarContainer holds the title and the presentedyBy line */
+	width: 100%;
+	position: fixed;			/* IE handles this differently.	*/
+	top: 0;
+	left: 0;
+	display: block;
+	background-color: #ffffff;
+	z-index: 20;
+	border-bottom: 1px solid #a9aaae;
+	margin: 0;
+	}
+	
+.the_title{
+	margin-top: 100px;
+}	
+
+.digressit-enabled .post, .digressit-enabled .page{
+	padding: 0;
+}
+#menu-primary{
+	text-align: left;
+	background-color: #DCDCA9;
+}	
+
+#menu-primary li{
+	padding: 5px;
+}
+.site-title{
+    display: block;
+    float: none;
+    text-decoration: none;
+    padding: 10px;
+}
+	
+.sidebar-widgets{
+    border: 0 none;
+    position: fixed;
+    top: 37px;
+}
+
+#footer{
+	width: 100%;
+	border: 0;
+}
