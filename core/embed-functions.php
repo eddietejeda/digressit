@@ -3,7 +3,7 @@
 /**
  *
  */
-class Digress_It_Embed{
+class Digressit_Embed{
 
 	function __construct(){
 

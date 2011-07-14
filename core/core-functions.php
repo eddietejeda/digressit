@@ -122,123 +122,6 @@ function digressit_wp_head(){
 
 
 
-
-
-/* 
- * @deprecated
- * Previous versions of Digress.it used regexp to break apart paragraphs, but it doesn't work too well
- */
-function regexp_digressit_content_parser($html){
-	$matches = array();
-	//we need to do this twice in case there are empty tags surrounded by empty p tags
-	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
-	$html = preg_replace('/<(?!input|br|iframe|object|param|embed|img|meta|hr|\/)[^>]*>\s*<\/[^>]*>/ ', '', $html);
-
-	$digressit_options = get_option('digressit');
-	if($digressit_options['parse_list_items'] == 1){
-		$html = preg_replace('/<(\/?ul|ol)>/', '', $html);
-		$html = preg_replace('/<li>/', '<p>&bull;   ', $html);
-	}
-	$html = html_entity_decode(force_balance_tags($html));
-
-	@preg_match_all('#<('.$tags.')>(.*?)</('.$tags.')>#si',$html,$matches_array);
-	$matches = $matches_array[0];
-	
-	return  $matches;
-}
-
-
-/**
- * 
- */
-function discrete_digressit_content_parser($content){
-	global $wpdb, $image_path, $post;
-
-	$matches = array();
-	$paragraph_blocks = explode('[break]', $content);
-
-	$blocks = null;
-	$text_signatures = null;
-	$permalink = get_permalink($post->ID);
-
-	$defaults = array('post_id' => $post->ID);
-	$total_comments = get_comments($defaults);
-	$total_count = count($total_comments);
-
-	foreach($paragraph_blocks as $key=>$paragraph){
-		$text_signature = $key+1;
-		$text_signatures[] = $text_signature;
-		$paranumber = $number = ( $key+1 );
-
-		$comment_count = 0;
-
-		foreach($total_comments as $c){
-			if($c->comment_text_signature == $paranumber){
-				$comment_count++;
-			}
-		}
-				
-		$paragraphnumber = '<span class="paragraphnumber">';
-	 	$numbertext = ($comment_count == 1) ?  'is one comment' : 'are '.$comment_count.' comments';
-	 	$numbertext = ($comment_count == 0) ?  'are no comments' : $numbertext;		
-		$digit_count = strlen($comment_count);
-		$commenticon =	'<span  title="There '.$numbertext.' for this paragraph" class="commenticonbox"><small class="commentcount fff commentcount'.$digit_count.'">'.$comment_count.'</small></span>'."\n";
-
-		if($number == 1){
-			//$morelink = '<span class="morelink"></span>';
-		}
-		else{
-			$morelink = null;
-		}
-
-		$block_content = "<div id='textblock-$number' class='textblock'>
-			<span class='paragraphnumber'><a href='$permalink#$number'>$number</a></span>
-			<span  title='There $numbertext for this paragraph' class='commenticonbox'><small class='commentcount commentcount".$digit_count."'>".$comment_count."</small></span>
-			<span class='paragraphtext'>".force_balance_tags($paragraph)."</span>
-		</div>" .  $morelink;
-		
-		$blocks[$paranumber] = $block_content;
-    }	
-	return $blocks;
-}
-
-
-/**
- * Like strip_tags() but inverse; the strip_tags tags will be stripped, not kept.
- * strip_tags: string with tags to strip, ex: "<a><p><quote>" etc.
- * strip_content flag: TRUE will also strip everything between open and closed tag
- */
-function strip_selected_tags($str, $tags = "", $stripContent = false){
-    preg_match_all("/<([^>]+)>/i",$tags,$allTags,PREG_PATTERN_ORDER);
-    foreach ($allTags[1] as $tag){
-        if ($stripContent) {
-            $str = preg_replace("/<".$tag."[^>]*>.*<\/".$tag.">/iU","",$str);
-        }
-        $str = preg_replace("/<\/?".$tag."[^>]*>/iU","",$str);
-    }
-    return $str;
-}
-
-
-
-/**
- * Returns true if $string is valid UTF-8 and false otherwise.
- */
-function is_utf8($string) {
-  
-   // From http://w3.org/International/questions/qa-forms-utf-8.html
-   return preg_match('%^(?:
-         [\x09\x0A\x0D\x20-\x7E]            # ASCII
-       | [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
-       |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
-       | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
-       |  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
-       |  \xF0[\x90-\xBF][\x80-\xBF]{2}    # planes 1-3
-       | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
-       |  \xF4[\x80-\x8F][\x80-\xBF]{2}    # plane 16
-   )*$%xs', $string);
-}
-
 /**
  * Hooks into the {@the_content} of each posts and breaks the text into an array.
  * *
@@ -374,6 +257,98 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 	$post_paragraph_count = count($blocks);
 	return $blocks;
 
+}
+
+
+/**
+ * 
+ */
+function discrete_digressit_content_parser($content){
+	global $wpdb, $image_path, $post;
+
+	$matches = array();
+	$paragraph_blocks = explode('[break]', $content);
+
+	$blocks = null;
+	$text_signatures = null;
+	$permalink = get_permalink($post->ID);
+
+	$defaults = array('post_id' => $post->ID);
+	$total_comments = get_comments($defaults);
+	$total_count = count($total_comments);
+
+	foreach($paragraph_blocks as $key=>$paragraph){
+		$text_signature = $key+1;
+		$text_signatures[] = $text_signature;
+		$paranumber = $number = ( $key+1 );
+
+		$comment_count = 0;
+
+		foreach($total_comments as $c){
+			if($c->comment_text_signature == $paranumber){
+				$comment_count++;
+			}
+		}
+				
+		$paragraphnumber = '<span class="paragraphnumber">';
+	 	$numbertext = ($comment_count == 1) ?  'is one comment' : 'are '.$comment_count.' comments';
+	 	$numbertext = ($comment_count == 0) ?  'are no comments' : $numbertext;		
+		$digit_count = strlen($comment_count);
+		$commenticon =	'<span  title="There '.$numbertext.' for this paragraph" class="commenticonbox"><small class="commentcount fff commentcount'.$digit_count.'">'.$comment_count.'</small></span>'."\n";
+
+		if($number == 1){
+			//$morelink = '<span class="morelink"></span>';
+		}
+		else{
+			$morelink = null;
+		}
+
+		$block_content = "<div id='textblock-$number' class='textblock'>
+			<span class='paragraphnumber'><a href='$permalink#$number'>$number</a></span>
+			<span  title='There $numbertext for this paragraph' class='commenticonbox'><small class='commentcount commentcount".$digit_count."'>".$comment_count."</small></span>
+			<span class='paragraphtext'>".force_balance_tags($paragraph)."</span>
+		</div>" .  $morelink;
+		
+		$blocks[$paranumber] = $block_content;
+    }	
+	return $blocks;
+}
+
+
+/**
+ * Like strip_tags() but inverse; the strip_tags tags will be stripped, not kept.
+ * strip_tags: string with tags to strip, ex: "<a><p><quote>" etc.
+ * strip_content flag: TRUE will also strip everything between open and closed tag
+ */
+function strip_selected_tags($str, $tags = "", $stripContent = false){
+    preg_match_all("/<([^>]+)>/i",$tags,$allTags,PREG_PATTERN_ORDER);
+    foreach ($allTags[1] as $tag){
+        if ($stripContent) {
+            $str = preg_replace("/<".$tag."[^>]*>.*<\/".$tag.">/iU","",$str);
+        }
+        $str = preg_replace("/<\/?".$tag."[^>]*>/iU","",$str);
+    }
+    return $str;
+}
+
+
+
+/**
+ * Returns true if $string is valid UTF-8 and false otherwise.
+ */
+function is_utf8($string) {
+  
+   // From http://w3.org/International/questions/qa-forms-utf-8.html
+   return preg_match('%^(?:
+         [\x09\x0A\x0D\x20-\x7E]            # ASCII
+       | [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
+       |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
+       | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
+       |  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
+       |  \xF0[\x90-\xBF][\x80-\xBF]{2}    # planes 1-3
+       | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
+       |  \xF4[\x80-\x8F][\x80-\xBF]{2}    # plane 16
+   )*$%xs', $string);
 }
 
 

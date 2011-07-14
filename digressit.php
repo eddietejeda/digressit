@@ -70,6 +70,7 @@ register_digressit_commentbox_js('nogrouping_digressit_commentbox_parser');
 
 
 add_action('init', 'digressit_init');
+add_action('init', 'create_digressit_post_type' );
 add_action('after_setup_theme', 'digressit_setup' );
 
 
@@ -98,7 +99,7 @@ if ($handle = opendir(DIGRESSIT_EXTENSIONS_DIR)) {
 
 if(isset($_REQUEST['digressit-embed'])){
 	include_once('core/embed-functions.php');	
-	$digressit_embed = new Digress_It_Embed();
+	$digressit_embed = new Digressit_Embed();
 }
 
 
@@ -239,38 +240,6 @@ function activate_digressit(){
 	if(is_link($theme_link)){
 		unlink($theme_link);
 	}
-	/* Since: 2.9.0 */
-	if(!function_exists( 'register_theme_directory')){
-		if(is_writable( $themes_dir)){
-			//echo "is_writable";
-			$theme_link = $themes_dir . $plugin_name;
-			//CREATE THE THEME DIRECTORY
-			if(is_link($theme_link)){
-				//i think we're good
-				//die( "already link");
-			}
-			elseif(!file_exists($theme_link)){
-				if(symlink($plugin_theme_link,$theme_link)){
-					//we're good
-					//update_option($digressit_options['theme_mode'], 'stylesheet');
-					//die( "Created link");
-				}
-				else{
-					//die( "There was an error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. If the server doesn't have write permission try creating it manually");
-				}
-			}
-			else{
-				//die( "unknown error");
-				//probably a windows person
-				//die( "There was a error creating the symlink of <b>$plugin_theme_link</b> in <b>$theme_link</b>. Maybe a theme named DigressIt already exists?");					
-			}
-		
-		
-		}
-		else{
-			die(__('No write permission on: ').$themes_dir.__('. Please give the server write permission on this directory'));
-		}
-	}
 	switch_theme('digressit-default', 'digressit-default');	
 }
 
@@ -382,7 +351,6 @@ function digressit_init(){
 
 }
 
-add_action( 'init', 'create_digressit_post_type' );
 function create_digressit_post_type() {
 	global $digressit_options;
 	if((int)$digressit_options['digressit_enabled_for_digressit_type']){
