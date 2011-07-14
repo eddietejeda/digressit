@@ -54,10 +54,11 @@ body{
     z-index: 100;
 }
 
-
+/*
 #menu-primary .children{
 	display: none;
 }
+*/
 
 .search-result{
     border-color: -moz-use-text-color #AAAAAA #AAAAAA;
@@ -323,7 +324,7 @@ h4 {
 	top:-20px;
 	padding: 17px;
 }
-
+/*
 #menu-primary{
 
 padding:12px 0 14px;
@@ -339,6 +340,7 @@ z-index:0;
 #menu-primary {
 	padding: 5px 0 5px;
 }
+*/
 #respond{
 	border-top: 1px solid #B4BDBD;
 }
@@ -502,9 +504,11 @@ p, li{
 	display: block;	
 }
 
+/*
 #menu-primary > div{
 	display: inline;
 }
+*/
 .textblock {
 	min-height: 0;
 	border-color: white;
@@ -686,7 +690,7 @@ p, li{
 .site-title h1{
 	font-size:275%;
 	line-height:45px;
-	padding:15px 10px 0 20px;
+	padding:15px 10px 5px 20px;
 	position:relative;
 	line-height: 1.22em;
 	letter-spacing:0.05em;
@@ -777,7 +781,22 @@ a{
 
 
 a:hover{
+
+/*	background-color: #E5E5E5;
+
+
+	background: -moz-linear-gradient(#F9F9F9, #E5E5E5);
+	background: -o-linear-gradient(#F9F9F9, #E5E5E5);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F9F9F9), to(#E5E5E5));
+	background: -webkit-linear-gradient(#F9F9F9, #E5E5E5);
+
+	-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px;
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px;
+	padding: 3px 5px;*/
+
 	background-color: #FEFF9B;
+
 }
 #searchform{
 	padding:2px 7px 5px 0;
@@ -825,10 +844,6 @@ h2 a{
 	background-color: white;
 }
 
-.edit-this{
-	position: relative;
-	left: 25px;
-}
 
 .single .entry{
 	padding-top: 0;
@@ -954,7 +969,7 @@ h2{
 	margin-left: 120px;	
 }
 
-
+/*
 #menu-primary {
     clear: both;
     display: block;
@@ -965,7 +980,7 @@ h2{
     text-align: left;
     width: 100%;
 }
-
+*/
 .container{
     border-color: #CCCCCC;
     border-style: solid;
@@ -982,6 +997,7 @@ h2{
 .comment-browser{
 	padding-top: 0 !important;
 }
+/*
 #menu-primary ul:first-child{
 
 }
@@ -996,7 +1012,7 @@ h2{
 	padding-right:15px;
 	position: relative;
 }
-
+*/
 
 /* buddypress */
 div#item-header{
@@ -1016,6 +1032,7 @@ div#item-header{
 }
 
 
+/*
 #menu-primary li{
 	display: inline;
 	list-style: none;
@@ -1026,7 +1043,7 @@ div#item-header{
 	color: #333;
 	font-style: italic;
 }
-
+*/
 
 #lightbox-login{
 	padding: 25px 50px 0;

@@ -95,14 +95,16 @@ function digressit_get_stylized_content_header(){
  * 
  */
 function digressit_get_stylized_title(){
-	
+	global $post;
 	echo '<div id="the_title"  class="the_title">';	
 	if(has_action('stylized_title')){
 		do_action('stylized_title');
 	}
 	else{			
 		if(is_single() || is_page() || is_search()){
-			echo '<h2><a href="'.get_permalink().'">'.get_the_title().'</a></h2>';
+		
+			echo '<h2><a href="'.get_permalink().'">'.get_the_title().'</a><div class="edit-this"><a href="'.get_edit_post_link($post->ID).'">edit</a></div></h2>';
+
 		}			
 	}
 	echo '</div>';
