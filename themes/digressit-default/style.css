@@ -940,10 +940,11 @@ h2{
 
 
 .comment-reply {
-
-	float:right;
-	font-size:75%;
-	font-weight:bold;
+    box-shadow: 1px 1px 1px #CCCCCC;
+    float: right;
+    font-size: 75%;
+    font-weight: bold;
+    padding: 0 5px;
 }
 
 
