@@ -1,0 +1,41 @@
+/*	
+Theme Name: Digress.it Simple
+Theme URI: http://digress.it
+Description: Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
+Author: Eddie A Tejeda
+Version: 3.2
+Author URI: http://eddietejeda.com
+License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
+Tags: buddypress, comments, annotation, discussion, commenting, paragraph, education, transparency
+
+Special thanks to:	
+The developers of JQuery @ www.jquery.com
+Joss Winn, Tony Hirst and Alex Bilbie @ University of Lincoln 
+Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
+
+Previous Versions:
+Mark James, for the famfamfam iconset @ http://www.famfamfam.com/lab/icons/silk/
+Matteo Bicocchi @ www.open-lab.com
+
+*/
+
+#header {
+    background: none repeat scroll 0 0 white;
+    border: 0 none;
+    height: auto;
+    min-height: 80px;
+    position: relative;
+    text-align: left;
+    z-index: 1;
+}
+
+.single #content, .page #content {
+    background-color: white;
+    border-color: #BDBDBD;
+    border-style: solid;
+    border-width: 0;
+    box-shadow: none;
+    margin: 0 auto;
+    position: relative;
+    width: 1000px;
+}
