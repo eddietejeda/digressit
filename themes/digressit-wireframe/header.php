@@ -39,7 +39,7 @@ if(function_exists('digressit_body_class')){
 		
 
 
-	<div id="menu-primary" role="navigation">
+	<nav id="menu-primary" role="navigation">
 	<?php 
 		if(has_action('primary_menu')){
 			do_action('primary_menu');
@@ -72,7 +72,7 @@ if(function_exists('digressit_body_class')){
 	<?php endif;?>
 	</ul>
 	</div>	
-	</div>
+	</nav>
 
 	<?php if($digressit_options['enable_instant_content_search'] == 'true'): ?>
 	<div id="instant-content-search">

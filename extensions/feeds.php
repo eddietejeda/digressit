@@ -1,13 +1,12 @@
 <?php
-add_action( 'init', 'digressit_add_feeds' );		
 
+add_action( 'init', 'digressit_add_feeds' );		
 
 /**
  *
  */
 function digressit_add_feeds() {
 	global $wp_rewrite;
-
 	add_filter('query_vars', 'digressit_feed_query_vars', 0);
 	add_action('rewrite_rules_array', 'digressit_feed_rewrite_rules_array', 0 );
 	add_action('template_redirect', 'digressit_feed_template' );
@@ -32,8 +31,6 @@ function digressit_feed_rewrite_rules_array( $rules ) {
 	$newrules = array();
 	$newrules['feeds/([^/]+)/([^/]+)$'] = 'index.php?feed_name=$matches[1]&feed_parameter=$matches[2]';
 	return $newrules + $rules;
-
-
 }
 
 
@@ -48,17 +45,17 @@ function digressit_feed_template(){
 		switch($wp->query_vars['feed_name'] ){
 			
 			case 'usercomments':
-				include('user-comments-feed.php');
+				include('feeds/user-comments-feed.php');
 				die();
 			break;
 
 			case 'paragraphcomments':
-				include('paragraph-comments-feed.php');
+				include('feeds/paragraph-comments-feed.php');
 				die();
 			break;
 
 			case 'paragraphlevel':
-				include('paragraph-level-feed.php');
+				include('feeds/paragraph-level-feed.php');
 				die();
 			break;
 			

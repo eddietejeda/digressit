@@ -6,14 +6,8 @@
  */
 
 header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_option('blog_charset'), true);
-//header('Content-Type: text/plain');
-global $digressit_commentbrowser, $wp_rewrite, $matches, $wp_query;
+global $digressit_commentbrowser, $wp_rewrite, $matches, $wp_query, $wp;
 /* FIXME: I can't find a way to get the user var from GET this is a temp hack */
-
-
-global $wp;
-
-
 $comments_from_user = get_comments_from_user($wp->query_vars['feed_parameter']);
 
 $user_print_name = null;

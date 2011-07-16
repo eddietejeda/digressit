@@ -4,18 +4,6 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments-functions.php' == basename(
 	die (':)');
 endif;
 
-add_action('init', 'commentbrowser_flush_rewrite_rules' );
-add_filter('query_vars', 'commentbrowser_query_vars' );
-add_action('generate_rewrite_rules', 'commentbrowser_add_rewrite_rules' );
-add_action('template_redirect', 'commentbrowser_template_redirect' );
-add_action('public_ajax_function', 'add_comment_ajax');
-add_action('widgets_init', create_function('', 'return register_widget("CommentBrowserLinks");'));
-
-add_action('add_commentbrowser', 'commentbrowser_comments_by_section');
-add_action('add_commentbrowser', 'commentbrowser_comments_by_user'); //DEPRECATED
-add_action('add_commentbrowser', 'commentbrowser_comments_by_contributor');
-add_action('add_commentbrowser', 'commentbrowser_general_comments');
-
 
 /*
  * Flush your rewrite rules if you want pretty permalinks

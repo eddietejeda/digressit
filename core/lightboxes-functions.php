@@ -2,9 +2,6 @@
 global $wpdb, $current_user, $post, $current_page_template;
 
 
-add_action('add_lightbox', 'lightbox_login');
-add_action('add_lightbox', 'lightbox_generic_response');
-
 /**
  *
  */

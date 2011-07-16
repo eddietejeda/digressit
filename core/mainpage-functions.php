@@ -1,6 +1,4 @@
 <?php
-add_action('wp', 'digressit_mainpage_load');
-global $using_mainpage_nav_walker;
 
 /**
  *
@@ -14,7 +12,7 @@ function digressit_mainpage_wp_print_styles(){
  */
 function digressit_mainpage_sidebar_widgets(){
 	global $digressit_options;
-	if(is_active_sidebar('mainpage-sidebar') && $digressit_options['enable_sidebar'] != 0){
+	if(is_active_sidebar('mainpage-sidebar') && (int)$digressit_options['enable_sidebar'] != 0){
 		?>
 		<div class="sidebar-widgets">
 		<div id="dynamic-sidebar" class="sidebar  <?php echo $digressit_options['auto_hide_sidebar']; ?> <?php echo $digressit_options['sidebar_position']; ?>">		

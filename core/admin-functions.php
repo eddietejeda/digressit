@@ -1,32 +1,26 @@
 <?php
-add_action('admin_head-post.php', 'digressit_add_comment_change_notice');
-add_action('admin_menu', 'digressit_add_admin_menu');
 
 
 /**
  * 
  */
 function digressit_add_comment_change_notice() {	
-	
 	$comments= get_approved_comments($_GET['post']);
-	
 	if(count($comments)){
 		add_action('admin_notices', 'digressit_change_content_warning' );
 	}
 }
+
 
 /**
  * 
  */
 function digressit_change_content_warning(){
 	?>
-	
 	<div id="register-form" class="updated error" style="padding: 5px; width: 99% <?php echo $hidethis;?>" >		
 		<?php _e('Warning: There are comments attached to the structure of this page. Changing the structure of this post will break the alignment of comments to their paragraphs'); ?>
 	</div>
-	
-	<?php
-	
+	<?php	
 }
 
 
@@ -46,7 +40,7 @@ function digressit_add_admin_menu() {
  *
  */
 function digressit_permalink_required_notice(){
-		echo "<div id='permalink-required-notice' class='updated fade'><p>".__("Warning: Digress.it requires permalinks to be enabled. Please go to <a href='").get_bloginfo('url')."/wp-admin/options-permalink.php'>".__('Permalink Settings</a> and make sure that <b>Default</b> is not selected')."</p></div>";	
+	echo "<div id='permalink-required-notice' class='updated fade'><p>".__("Warning: Digress.it requires permalinks to be enabled. Please go to <a href='").get_bloginfo('url')."/wp-admin/options-permalink.php'>".__('Permalink Settings</a> and make sure that <b>Default</b> is not selected')."</p></div>";	
 }
 
 
@@ -413,9 +407,6 @@ function digressit_theme_options_page() {
 		</form>
 	</div>
 	
-
-	
-
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 	<input type="hidden" name="cmd" value="_s-xclick">
 	<input type="hidden" name="hosted_button_id" value="XYBB4WEBLRHMN">

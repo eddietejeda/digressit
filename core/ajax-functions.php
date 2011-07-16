@@ -3,11 +3,6 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'ajax-functions.php' == basename($_SE
 	die (':)');
 endif;
 
-add_action('init', 'ajax_flush_rewrite_rules', 0 );
-add_filter('query_vars', 'ajax_query_vars', 0);
-add_action('generate_rewrite_rules', 'ajax_add_rewrite_rules', 0 );
-add_action('template_redirect', 'ajax_template' );
-
 
 /**
  * Flush your rewrite rules if you want pretty permalinks
