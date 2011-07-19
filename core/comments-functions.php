@@ -671,44 +671,6 @@ function digressit_mu_get_comments_from_user($user_id){
 
 
 
-/**
- *
- */
-class CommentBrowserLinks extends WP_Widget {
-	/** constructor */
-	function CommentBrowserLinks() {
-		parent::WP_Widget(false, $name = 'Comment Browser Links');	
-	}
-
-	function widget($args = array(), $defaults) {		
-		extract( $args );
-		global $digressit_options;
-		?>
-		<h4><?php _e('Comment Browser', 'digressit'); ?></h4>
-		<ul>
-			<li><a href="<?php bloginfo('url'); ?>/comments-by-section"><?php echo $digressit_options['comments_by_section_label']; ?></a></li>
-			<li><a href="<?php bloginfo('url'); ?>/comments-by-contributor"><?php echo $digressit_options['comments_by_users_label']; ?></a></li>
-			<li><a href="<?php bloginfo('url'); ?>/general-comments"><?php echo $digressit_options['general_comments_label']; ?></a></li>
-			<?php do_action('add_commentbrowser_link'); ?>
-		</ul>
-		<?php
-    }
-
-	/** @see WP_Widget::update */
-	function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
-		return $instance;
-	}
-
-	/** @see WP_Widget::form */
-	function form($instance) {				
-		global $blog_id, $wpdb;
-		return $instance;
-	}
-
-}
-
-
 
 
 /**

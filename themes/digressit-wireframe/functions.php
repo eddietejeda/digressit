@@ -34,10 +34,12 @@ function digressit_default_stylesheets(){
  *
  */
 function digressit_default_lightboxes(){
-	add_action('add_lightbox', 'lightbox_login');
+/*
+	add_action('add_lightbox', 'lightbox_login_ajax');
 	add_action('add_lightbox', 'lightbox_register');
 	add_action('add_lightbox', 'lightbox_site_register');
 	add_action('add_lightbox', 'lightbox_registering');
 	add_action('add_lightbox', 'lightbox_generic_response');
+*/
 }
 ?>

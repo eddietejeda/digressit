@@ -54,6 +54,8 @@ body{
     z-index: 100;
 }
 
+
+
 /*
 #menu-primary .children{
 	display: none;
@@ -386,6 +388,12 @@ z-index:0;
 
 .page .menu, .post .menu{
 	padding:30px 20px;
+}
+
+.comment-browser #content {
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-width: 0 1px;
 }
 
 #cancel-response{

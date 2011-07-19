@@ -3,13 +3,6 @@
 /**
  *
  */
-function digressit_mainpage_wp_print_styles(){
-	?><link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/mainpage.css'); ?>" type="text/css" media="screen" /><?php
-}
-
-/**
- *
- */
 function digressit_mainpage_sidebar_widgets(){
 	global $digressit_options;
 	if(is_active_sidebar('mainpage-sidebar') && (int)$digressit_options['enable_sidebar'] != 0){

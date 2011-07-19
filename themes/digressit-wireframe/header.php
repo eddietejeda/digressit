@@ -25,7 +25,7 @@ if(function_exists('digressit_body_class')){
 <div id="wrapper"> <!-- this is closed in footer -->
 
 <?php do_action('optional_pre_header'); ?>
-<header id="header">
+<div id="header" role="header">
 	<div class="site-title" role="banner">
 		<div class="bubblearrow"></div>		
 		<?php if(has_action('add_header_image')): ?>
@@ -39,7 +39,7 @@ if(function_exists('digressit_body_class')){
 		
 
 
-	<nav id="menu-primary" role="navigation">
+	<div id="menu-primary" role="navigation">
 	<?php 
 		if(has_action('primary_menu')){
 			do_action('primary_menu');
@@ -72,7 +72,7 @@ if(function_exists('digressit_body_class')){
 	<?php endif;?>
 	</ul>
 	</div>	
-	</nav>
+	</div>
 
 	<?php if($digressit_options['enable_instant_content_search'] == 'true'): ?>
 	<div id="instant-content-search">
@@ -92,7 +92,7 @@ if(function_exists('digressit_body_class')){
 	<?php endif; ?>
 	
 	<div class="horizontal"></div>
-</header> 
+</div> 
 <?php
 do_action('secondary_menu');
 ?>

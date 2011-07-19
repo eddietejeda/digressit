@@ -154,7 +154,6 @@ function deactivate_digressit(){
 	if ($handle = opendir($themes_dir)) {
 		while (false !== ($file = readdir($handle))) {
 			if (@is_dir($themes_dir.$file)) {
-
 				switch($file){
 					//3.2
 					case 'twentyeleven':
@@ -243,14 +242,12 @@ function digressit_init(){
 		$digressit_options['digressit_enabled_for_posts'] = 1;
 		$digressit_options['digressit_enabled_for_digressit_type'] = 0;
 
-
 		update_option('digressit', $digressit_options);
 	}
 
-
-
 }
 
+/* create a custom type for digressit */
 function create_digressit_post_type() {
 	global $digressit_options;
 	if((int)$digressit_options['digressit_enabled_for_digressit_type']){
@@ -301,7 +298,7 @@ function get_digressit_theme_uri(){
 }
 
 /**
- *
+ * Registers the function name that will be called to parse the contnet
  */
 function register_digressit_content_function($function_name){
 	global $digressit_content_function;
@@ -309,7 +306,7 @@ function register_digressit_content_function($function_name){
 }
 
 /**
- *
+ * Register the function that will parse the comments on the WP side
  */
 function register_digressit_comments_function($function_name){
 	global $digressit_comments_function;
@@ -317,7 +314,7 @@ function register_digressit_comments_function($function_name){
 }
 
 /**
- *
+ * Registers the function that will be called in JS to parse the comments
  */
 function register_digressit_commentbox_js($function_name){
 	global $digressit_commentbox_function;
@@ -326,7 +323,7 @@ function register_digressit_commentbox_js($function_name){
 
 
 /**
- *
+ * Simple wrapper to print in
  */
 function digressit_print_input_text($name, $value, $attrs =null){
 	echo "<input $attrs style='width: 50%' type='text' name='$name' value='$value'>";
@@ -555,8 +552,9 @@ function digressit_get_stylized_title(){
 
 
 
-/**
- * 
+/*
+ * If Google Frame is supported for IE, use it
+ * More info at http://code.google.com/chrome/chromeframe/
  */
 function digressit_wp_head(){
 ?>
@@ -765,15 +763,17 @@ function discrete_digressit_content_parser($content){
  * strip_tags: string with tags to strip, ex: "<a><p><quote>" etc.
  * strip_content flag: TRUE will also strip everything between open and closed tag
  */
-function strip_selected_tags($str, $tags = "", $stripContent = false){
-    preg_match_all("/<([^>]+)>/i",$tags,$allTags,PREG_PATTERN_ORDER);
-    foreach ($allTags[1] as $tag){
-        if ($stripContent) {
-            $str = preg_replace("/<".$tag."[^>]*>.*<\/".$tag.">/iU","",$str);
-        }
-        $str = preg_replace("/<\/?".$tag."[^>]*>/iU","",$str);
-    }
-    return $str;
+if(!function_exists('strip_selected_tags')){
+	function strip_selected_tags($str, $tags = "", $stripContent = false){
+	    preg_match_all("/<([^>]+)>/i",$tags,$allTags,PREG_PATTERN_ORDER);
+	    foreach ($allTags[1] as $tag){
+	        if ($stripContent) {
+	            $str = preg_replace("/<".$tag."[^>]*>.*<\/".$tag.">/iU","",$str);
+	        }
+	        $str = preg_replace("/<\/?".$tag."[^>]*>/iU","",$str);
+	    }
+	    return $str;
+	}
 }
 
 
@@ -781,24 +781,26 @@ function strip_selected_tags($str, $tags = "", $stripContent = false){
 /**
  * Returns true if $string is valid UTF-8 and false otherwise.
  */
-function is_utf8($string) {
-  
-   // From http://w3.org/International/questions/qa-forms-utf-8.html
-   return preg_match('%^(?:
-         [\x09\x0A\x0D\x20-\x7E]            # ASCII
-       | [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
-       |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
-       | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
-       |  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
-       |  \xF0[\x90-\xBF][\x80-\xBF]{2}    # planes 1-3
-       | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
-       |  \xF4[\x80-\x8F][\x80-\xBF]{2}    # plane 16
-   )*$%xs', $string);
+if(!function_exists('is_utf8')){
+	function is_utf8($string) {
+	  
+	   // From http://w3.org/International/questions/qa-forms-utf-8.html
+	   return preg_match('%^(?:
+	         [\x09\x0A\x0D\x20-\x7E]            # ASCII
+	       | [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
+	       |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
+	       | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
+	       |  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
+	       |  \xF0[\x90-\xBF][\x80-\xBF]{2}    # planes 1-3
+	       | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
+	       |  \xF4[\x80-\x8F][\x80-\xBF]{2}    # plane 16
+	   )*$%xs', $string);
+	}
 }
 
 
-/**
- * 
+/* 
+ *  Displays XML error
  */
 function display_xml_error($error, $xml)
 {
@@ -835,7 +837,8 @@ function display_xml_error($error, $xml)
 function digressit_parser($content){
 	global $digressit_options;
 		
-	if(is_single() && (int)$digressit_options['digressit_enabled_for_posts'] || is_page() && (int)$digressit_options['digressit_enabled_for_pages']){
+	if(	is_single() && (int)$digressit_options['digressit_enabled_for_posts'] || 
+		is_page() && (int)$digressit_options['digressit_enabled_for_pages']){
 		return implode("\n", (array)digressit_paragraphs($content));
 	}
 	else{
@@ -851,13 +854,11 @@ function digressit_paragraphs($content){
 	return call_user_func(get_digressit_content_parser_function(), $content); 
 }
 
-/**
- * 
+/*
+ *  
  */
 function the_paragraph($number){
 	global $post;
-	
-
 	echo get_the_paragraph($number);
 	
 }
@@ -1292,7 +1293,7 @@ function digressit_core_print_scripts(){
 		<?php
 	
 
-		if($digressit_options['debug_mode'] == 1){
+		if(1){
 			wp_enqueue_script('digressit.core',		get_digressit_media_uri('js/digressit.core.js'), 'jquery', false, true );	
 			wp_enqueue_script('jquery.easing', 		get_digressit_media_uri('js/jquery.easing.js'), 'jquery', false, true );		
 			wp_enqueue_script('jquery.scrollto',	get_digressit_media_uri('js/jquery.scrollTo.js'), 'jquery', false, true );		

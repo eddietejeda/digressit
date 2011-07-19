@@ -74,9 +74,8 @@ function ajax_template() {
 					call_user_func($request_action, $request_params);
 				}
 			}
-			die();
 		}
-
+		die();
 	endif;
 }
 ?>

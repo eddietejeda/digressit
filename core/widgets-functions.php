@@ -1,16 +1,8 @@
 <?php
 global $blog_id;
 
-
-/**
- *
- */
-function digress_widgets_print_styles(){
-	?><link rel="stylesheet" href="<?php echo get_digressit_media_uri('css/widgets.css'); ?>" type="text/css" media="screen" /><?php
-}
-
-/**
- *
+/* 
+ * Enable the sidebars widgets
  */
 if ( function_exists('register_sidebar') ) {
 
@@ -137,8 +129,47 @@ if ( function_exists('register_sidebar') ) {
 
 
 
+
+/* 
+ * A simple widget that displays coment browser links
+ */
+class CommentBrowserLinks extends WP_Widget {
+	/** constructor */
+	function CommentBrowserLinks() {
+		parent::WP_Widget(false, $name = 'Comment Browser Links');	
+	}
+
+	function widget($args = array(), $defaults) {		
+		extract( $args );
+		global $digressit_options;
+		?>
+		<h4><?php _e('Comment Browser', 'digressit'); ?></h4>
+		<ul>
+			<li><a href="<?php bloginfo('url'); ?>/comments-by-section"><?php echo $digressit_options['comments_by_section_label']; ?></a></li>
+			<li><a href="<?php bloginfo('url'); ?>/comments-by-contributor"><?php echo $digressit_options['comments_by_users_label']; ?></a></li>
+			<li><a href="<?php bloginfo('url'); ?>/general-comments"><?php echo $digressit_options['general_comments_label']; ?></a></li>
+			<?php do_action('add_commentbrowser_link'); ?>
+		</ul>
+		<?php
+    }
+
+	/** @see WP_Widget::update */
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+		return $instance;
+	}
+
+	/** @see WP_Widget::form */
+	function form($instance) {				
+		global $blog_id, $wpdb;
+		return $instance;
+	}
+
+}
+
+
 /**
- *
+ * A simple search form widget
  */
 class LiveContentSearch extends WP_Widget {
 	function LiveContentSearch() {
@@ -158,8 +189,8 @@ class LiveContentSearch extends WP_Widget {
 }
 
 
-/**
- *
+/* 
+ * A simple widget that lists the posts
  */
 class ListPostsWithCommentCount extends WP_Widget {
 	function ListPostsWithCommentCount() {
@@ -178,7 +209,6 @@ class ListPostsWithCommentCount extends WP_Widget {
 			$categories = array('1');
 		}
 		
-		//var_dump($categories)
 		?>
 		<div id="digress-it-list-posts">
 		<a href="<?php echo get_option('siteurl'); ?>">
@@ -207,8 +237,6 @@ class ListPostsWithCommentCount extends WP_Widget {
 			<?php endif; ?>
 			
 			<?php
-
-			//var_dump($cat);
 			$args = array(
 				'numberposts' => -1,
 				'post_type' => 'post',
@@ -226,7 +254,7 @@ class ListPostsWithCommentCount extends WP_Widget {
 			
 			setup_postdata($post); 
 
-			//TODO
+			//@TODO
 			$rule_discussion_status = 'upcoming';
 			if($currentpost->post_name == $post->post_name){
 				$rule_discussion_status = 'current';
@@ -294,7 +322,7 @@ class ListPostsWithCommentCount extends WP_Widget {
 	function form($instance) {				
 		global $blog_id, $wpdb;
 
-		
+
 		$defaults = array( 	
 			'title' => 'Posts',
 			'auto_hide' => true,

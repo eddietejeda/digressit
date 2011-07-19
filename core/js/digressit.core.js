@@ -10,18 +10,14 @@ var chrome=jQuery.browser.chrome;
 var mozilla=jQuery.browser.mozilla;
 var iOS = navigator.platform == 'iPad' || navigator.platform == 'iPhone' || navigator.platform == 'iPod';
 var zi=10000;
-var on_load_selected_paragraph;
 var window_has_focus = true;
 var selected_comment_color = '#3d9ddd';
 var unselected_comment_color = '#DFE4E4';
-var browser_width = jQuery(window).width();
-var browser_height = jQuery(window).height();
-var content_height = jQuery('#content').height();
-
 var request_time = 0;
 var request_time_delay = 500; // ms - adjust as you like
 
-	
+
+//highlight a block of text
 jQuery.fn.highlight = function (str, className){
     return this.each(function (){
         this.innerHTML = this.innerHTML.replace(
@@ -41,6 +37,16 @@ jQuery.browser = {
 	msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
 	mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent )
 };
+
+
+if(jQuery.browser.msie){
+	(function(){
+		var html5elmeents = "address|article|aside|audio|canvas|command|datalist|details|dialog|figure|figcaption|footer|header|hgroup|keygen|mark|meter|menu|nav|progress|ruby|section|time|video".split('|');	
+		for(var i = 0; i < html5elmeents.length; i++){		
+			document.createElement(html5elmeents[i]);
+		}
+	})();
+}
 
 
 jQuery(document).ready(function() {
@@ -212,6 +218,13 @@ jQuery(document).ready(function() {
 	});
 
 
+
+
+
+
+/*** THE FOLLOWING ARE AJAX FORMS WITH DIFFERENT VARIENTS ON SUBMISSIONS. @TODO THIS COULD BE CONSOLIDATED */
+
+	/* #1)  Ajax form */
 	jQuery('.ajax').live('click', function(e) {		
 		if(jQuery(this).hasClass('disabled') || jQuery(this).hasClass('button-disabled')){
 			jQuery(this).css('color', '#DFE4E4');
@@ -258,6 +271,7 @@ jQuery(document).ready(function() {
 			}, 'json' );
 	});
 	
+	/* #2) Ajax form - after pressing submit button */	
 	jQuery('.ajax-auto-submit input').live('keyup', function(e) {
 		if(e.keyCode == 13 && jQuery(this).val().length > 0){
 
@@ -302,8 +316,7 @@ jQuery(document).ready(function() {
 	});
 	
 
-
-	
+	/* #3) Ajax form - after pressing submit button */	
 	jQuery('.ajax-live').live('keyup', function(e) {
 
 		if(request_time) {
@@ -351,6 +364,8 @@ jQuery(document).ready(function() {
 		}, request_time_delay, this);
 	});
 	
+	
+	/* #4) Clicking a span or div */	
 	jQuery('.ajax-simple').live('click', function (e) {
 		if(jQuery(this).hasClass('disabled') || jQuery(this).hasClass('button-disabled')){
 			jQuery(this).css('color', '#DFE4E4');
@@ -387,6 +402,8 @@ jQuery(document).ready(function() {
 	});
 	
 	
+	/* #5) Ajax form - after pressing submit button */	
+	
 	//same as above, just a click event. hack fix for tabs not calling ajax.
 	jQuery('.ajax-simple-click').click(function (e) {
 		if(jQuery(this).hasClass('disabled') || jQuery(this).hasClass('button-disabled')){
@@ -422,14 +439,7 @@ jQuery(document).ready(function() {
 				
 			}, 'json' );
 	});
-		
-	jQuery('.button-green').hover(function(){
-		
-		jQuery(this).css('cursor', 'pointer');
-		
-		
-	});
-	
+
 	
 	jQuery('.ajax-auto-update').live('change', function(e) {
 		if(jQuery(this).hasClass('disabled') || jQuery(this).hasClass('button-disabled')){
@@ -508,6 +518,8 @@ jQuery(document).ready(function() {
     });
 
 
+
+
 	jQuery(window).resize(function(){
 		if(digressit_enabled){
 			jQuery('#commentbox').position_main_elements();			
@@ -583,7 +595,7 @@ jQuery(document).ready(function() {
 
 
 	if (document.location.hash.length) {
-		var lightbox = '#lightbox-' + document.location.hash.substr(1);
+		var lightbox = 'lightbox-' + document.location.hash.substr(1);
 		jQuery('body').openlightbox(lightbox);
 	}	
 
@@ -593,15 +605,7 @@ jQuery(document).ready(function() {
 		jQuery("body").closelightbox();
 
 		jQuery('body').openlightbox(lightbox);
-	}	
-	
-
-	/* we don't want error messages being linked */
-	if (document.location.hash != '#lightbox-no-ie6-support' && jQuery('#lightbox-no-ie6-support').length ) {
-		jQuery('body').openlightbox('#lightbox-no-ie6-support');
-
-	}	
-	
+	}
 	
 	
 	jQuery("#search_context").change(function (e) {		
@@ -667,7 +671,8 @@ jQuery(document).ready(function() {
 	});
 
 
-    jQuery(".lightbox-close, .lightbox-submit-close").click(function (e) {
+
+    jQuery(".lightbox-close, .lightbox-submit-close").live('click', function(e){
 		jQuery('body').closelightbox();
 	});
 	
@@ -679,7 +684,7 @@ jQuery(document).ready(function() {
 	*/
 	
 	
-    jQuery(".lightbox-submit").click(function (e) {
+    jQuery(".lightbox-submit").live('click', function(e){
 
 		if(jQuery(this).hasClass('ajax')){
 		}
@@ -1570,6 +1575,8 @@ jQuery(document).ready(function() {
 		var blog_id = jQuery(current_comment_id + ' .comment-blog-id').attr('value');
 
 		var selected_paragraphnumber = jQuery('#selected_paragraph_number').attr('value');
+		
+		
 
 		if(jQuery('#comment_parent').val() == 0){
 
@@ -1639,38 +1646,36 @@ jQuery(document).ready(function() {
 jQuery.fn.extend({	
 
 	position_main_elements: function() {
-	
+		var browser_width = jQuery(window).width();
+		var browser_height = jQuery(window).height();
+		var content_height = jQuery('#content').height();
 		var default_top = parseInt(jQuery('#content').position().top);
 		var scroll_top =  default_top  + parseInt(jQuery(window).scrollTop());
 		var lock_position = jQuery('#post-' + post_ID).offset().top;
-	
+		
+		
+		
+		//iOS
 
-		/*
-		var min_browser_height = (browser_height > 300) ? browser_height : 300; 
-		var new_commentbox_height = ((browser_height - default_top - 50) < 370) ? 370 : (browser_height - default_top - 50);
-		var commentbox_top = 50; //parseInt(jQuery(jQuery(".entry").get(0)).offset().top);
-		
-		jQuery('#commentbox').css('top',  commentbox_top + 'px' );
-		jQuery('#commentbox').css('height', new_commentbox_height + 'px');
+		if(iOS){
 
+			var ipad_scroll_top_position = (scroll_top < 360) ? 260: (scroll_top - 100) ;
 
+			jQuery("#commentbox-header").css('position',  'absolute');			
+			jQuery("#commentbox-header").css('top', ipad_scroll_top_position);			
 
-		var sidebar_fix_point = parseInt(jQuery("#header").outerHeight())  + parseInt(jQuery("#header").css('margin-top'));
-		var commentbox_fix_point = commentbox_top;
-		var comment_header = parseInt(jQuery("#commentbox-header").outerHeight());
-		var header_outerheight = parseInt(jQuery("#header").outerHeight());
-		*/
-		
-		//console.log("default_top " + default_top);
-		//console.log("scroll_top " + scroll_top);
-		//console.log("top " + top);
-		
-		
-		if(iOS || msie6 || msie7){
-		
-		
+			jQuery("#commentbox").css('position',  'absolute');			
+			jQuery("#commentbox").css('top', ipad_scroll_top_position);
+			
+			jQuery("#dynamic-sidebar").css('position',  'absolute');			
+			jQuery("#dynamic-sidebar").css('top',  ipad_scroll_top_position);				
+			
+			return;
 		}
-		
+	
+	
+			
+		//top of page
 		
 		if(scroll_top > lock_position && jQuery("#commentbox").css('position') != 'fixed' ){
 			var left = parseInt(jQuery('#content').offset().left) + 565  ;
@@ -1687,9 +1692,8 @@ jQuery.fn.extend({
 			jQuery("#commentbox").css('height', jQuery(window).height() - 250 + 'px');
 		}
 
-		
-		
-
+	
+		//bottom of page
 		
 		if(scroll_top > (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").css('position') == 'fixed'){
 			jQuery("#commentbox").css('height', '50%');
@@ -1699,41 +1703,7 @@ jQuery.fn.extend({
 			jQuery("#commentbox").css('height', '90%');			
 			jQuery("#commentbox").removeClass('resized');
 		}
-		
-		//iOS
 
-		/*
-		if(iOS){
-
-			var ipad_scroll_top_position;
-			
-			ipad_scroll_top_position = (top < 360) ? 260: (top - 100) ;
-
-			jQuery("#commentbox-header").css('position',  'absolute');			
-			jQuery("#commentbox-header").css('top', ipad_scroll_top_position);			
-
-			jQuery("#commentbox").css('position',  'absolute');			
-			jQuery("#commentbox").css('top', ipad_scroll_top_position);
-			
-			jQuery("#dynamic-sidebar").css('position',  'absolute');			
-			jQuery("#dynamic-sidebar").css('top',  ipad_scroll_top_position);				
-		}
-		//Browsers
-		else{
-
-			//sidebar
-			jQuery("#commentbox").css({position : 'fixed',top: '100px'});			
-			jQuery("#commentbox").css({top : commentbox_top+'px',left: left+'px', position :'fixed', top: '0px', display: 'block' });
-		}
-		
-		*/
-		
-
-		//jQuery('#commentbox,#commentbox-header').css('left', left + 'px');
-		//jQuery('#commentbox,#commentbox-header').css('display', 'block');
-		
-
-		
 		
 
 	}	
@@ -1742,73 +1712,59 @@ jQuery.fn.extend({
 
 
 jQuery.fn.openlightbox = function (lightbox){
-	if(jQuery(lightbox).length){
-		jQuery('.lightbox-content').hide();
-		var browser_width = jQuery(window).width();
-		var browser_height = jQuery(window).height();
-		var body_width = jQuery('#wrapper').width();
-		var body_height = jQuery('#wrapper').height();
 
-
-		jQuery('.lightbox-submit').removeClass('disabled');
-
-		jQuery('.lightbox-transparency').css('width', body_width  + 'px');
-		jQuery('.lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
-		jQuery('.lightbox-transparency').fadeTo(0, 0.20);				
-
-		var left = (parseInt(browser_width) -  parseInt((jQuery(lightbox).width())))/2.5;
-		var top = (parseInt(browser_height) -  parseInt((jQuery(lightbox).height())))/3;
-	
-		if(top < 45){
-			top = 45;			
-		}
-		if(left < 100){
-			left = 100;
-		}
-		
-		jQuery(lightbox).css('left', left);			
-		jQuery(lightbox).css('top', top);			
-		
-		jQuery('input[type=button]').attr('disabled', false);
-		jQuery('input[type=submit]').attr('disabled', false);
-		jQuery('input[type=text]').attr('readonly', '');
-		jQuery('select').attr('disabled', false);
-		jQuery('textarea').attr('readonly', '');
-		
-
-		if(jQuery(lightbox + ' .lightbox-slot').length > 1){
-			jQuery(lightbox + ' .lightbox-slot').hide();
-			jQuery(lightbox + ' .lightbox-previous').hide();
-			jQuery(lightbox + ' .lightbox-submit').hide();
-
-			//jQuery(jQuery(lightbox + ' .lightbox-slot').get(0)).css('position','relative');
-			//jQuery(lightbox + ' .lightbox-slot').hide();
-			jQuery(jQuery(lightbox + ' .lightbox-slot').get(0)).show();
+	if(isNaN(lightbox)){
+	jQuery.post( siteurl + "/ajax/" + lightbox +'/', null, 
+		function( data ) {	
 			
-		}
-		
-		jQuery(lightbox).fadeIn();
-		
-		if(jQuery(lightbox + ' .lightbox-delay-close').length){
-			var t = setTimeout(function() {
-				jQuery("body").closelightbox();
- 			}, 3000);
-			jQuery(this).data('timeout', t);			
-		}		
-	}
-	else{
-		//console.log(lightbox + ' not found ');		
-	}
+			if(parseInt(data.status) == 1){
+				jQuery('#lightbox-content').hide();
+				var browser_width = jQuery(window).width();
+				var browser_height = jQuery(window).height();
+				var body_width = jQuery('#wrapper').width();
+				var body_height = jQuery('#wrapper').height();
+			
+			
+				jQuery('.lightbox-submit').removeClass('disabled');
+			
+				jQuery('#lightbox-transparency').css('width', body_width  + 'px');
+				jQuery('#lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
+				jQuery('#lightbox-transparency').fadeTo(0, 0.20);				
+			
+				
+				jQuery('#lightbox-content').css('left', '33%');			
+				jQuery('#lightbox-content').css('top', '20%');			
+				
+				/*
+				jQuery('input[type=button]').attr('disabled', false);
+				jQuery('input[type=submit]').attr('disabled', false);
+				jQuery('input[type=text]').attr('readonly', '');
+				jQuery('select').attr('disabled', false);
+				jQuery('textarea').attr('readonly', '');
+				*/			
+				jQuery('#lightbox-content').html(data.message);
+				jQuery('#lightbox-content').fadeIn('slow');
 
+				if(jQuery('#lightbox-content .lightbox-delay-close').length){
+					var t = setTimeout(function() {
+						jQuery("body").closelightbox();
+						}, 3000);
+					jQuery(this).data('timeout', t);			
+				}
+			}
+			
+		}, 'json' );
+
+	}	
 }
 
 
 
 
 jQuery.fn.closelightbox = function (){
-	jQuery('.lightbox-content').hide();
-	jQuery('.lightbox-transparency').css('width', 0);
-	jQuery('.lightbox-transparency').css('height', 0);
+	jQuery('#lightbox-content').hide();
+	jQuery('#lightbox-transparency').css('width', 0);
+	jQuery('#lightbox-transparency').css('height', 0);
 	document.location.hash.length = '';
 }
 

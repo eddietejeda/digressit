@@ -86,7 +86,7 @@ add_action('admin_menu', 'digressit_add_admin_menu');
 
 
 
-/* ajax functions */
+/* ajax init functions */
 add_action('init', 'ajax_flush_rewrite_rules', 0 );
 add_filter('query_vars', 'ajax_query_vars', 0);
 add_action('generate_rewrite_rules', 'ajax_add_rewrite_rules', 0 );
@@ -120,15 +120,20 @@ add_filter('the_content', 'digressit_parser', 10000);
 add_action('wp', 'frontpage_load');
 
 
+/*ajax function */
 add_action('public_ajax_function', 'live_content_search_ajax');	
 add_action('public_ajax_function', 'live_comment_search_ajax');	
+
+
 add_action('add_dynamic_widget', 'digressit_single_sidebar_widgets');
 add_action('add_dynamic_widget', 'digressit_page_sidebar_widgets');
 
 
 /* lightbox functions */
-add_action('add_lightbox', 'lightbox_login');
-add_action('add_lightbox', 'lightbox_generic_response');
+//add_action('add_lightbox', 'lightbox_login');
+//add_action('add_lightbox', 'lightbox_generic_response');
+
+
 
 
 /* mainpage functions */

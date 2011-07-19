@@ -382,7 +382,7 @@ div#pimped.bubble cite.rounded {
 /************ LIGHTBOX INTERFACE *************/
 
 
-.lightbox-content{
+#lightbox-content{
 	z-index: 1000;
 	 -moz-box-shadow: 0 0 1em #afafaf;
 	-webkit-box-shadow: 0 0 1em #afafaf;	
@@ -400,14 +400,14 @@ div#pimped.bubble cite.rounded {
 	z-index:-1;
 }
 
-.lightbox-content{
+#lightbox-content{
 	display:none;
 	z-index: 1000;
 	background-color: white;
 	text-align: left;
 	position:fixed;
 	text-align:left;
-	padding: 25px 50px 25px 40px;
+/*	padding: 25px 50px 25px 40px; */
 	background-color: #f4f8f8;
 	border: 6px solid white;
 	 -moz-box-shadow: 0 0 1em #afafaf;
@@ -455,7 +455,7 @@ div#pimped.bubble cite.rounded {
 	
 }
 
-.lightbox-content a{
+#lightbox-content a{
 	text-decoration: none;
 	color: #4A4848;
 }
@@ -469,7 +469,7 @@ div#pimped.bubble cite.rounded {
 }
 
 
-.lightbox-content .ribbon{
+#lightbox-content .ribbon{
 	height:50px;
 	left:-16px;
 	min-width:300px;
@@ -478,13 +478,13 @@ div#pimped.bubble cite.rounded {
 	top:-34px;
 }
 
-.lightbox-content  .ribbon-left{
+#lightbox-content  .ribbon-left{
 	height:55px;
 	margin:0;
 	position:absolute;
 	width:10px;
 }
-.lightbox-content .ribbon-title{
+#lightbox-content .ribbon-title{
 	color:white;
 	display:inline;
 	font-size:20px;
@@ -495,7 +495,7 @@ div#pimped.bubble cite.rounded {
 	width: 55%;
 	position:absolute;
 }
-.lightbox-content  .ribbon-right{
+#lightbox-content  .ribbon-right{
 	height:36px;
 	left:68%;
 	margin:0;
@@ -530,7 +530,7 @@ div#pimped.bubble cite.rounded {
 	width:auto
 }
 
-.lightbox-content input{
+#lightbox-content input{
 	background-color:#FEFEE0;
 	color:#666666;
 	font-size:20px;
@@ -560,7 +560,7 @@ div#pimped.bubble cite.rounded {
 
 }
 
-.lightbox-content form{
+#lightbox-content form{
 	z-index: 100;
 	padding-bottom:40px;
 }
@@ -569,7 +569,7 @@ a:hover{
 	cursor:pointer;cursor:hand;
 }
 
-.lightbox-transparency{
+#lightbox-transparency{
 	background-color: black;
 	z-index: 110;
 	position: absolute;
@@ -652,7 +652,7 @@ a:hover{
 }
 
 
-.lightbox-content input, .lightbox-content textarea{
+#lightbox-content input, #lightbox-content textarea{
 	background:none repeat scroll 0 0 #FBFBFB;
 	border:1px solid #E5E5E5;
 	font-size:24px;
@@ -663,13 +663,13 @@ a:hover{
 	width:auto;
 }
 
-.lightbox-slot{
+#lightbox-slot{
 	position: relative;
 	left: 10;
 }
 
 
-.lightbox-content .input{
+#lightbox-content .input{
 	background:none repeat scroll 0 0 #FBFBFB;
 	border:1px solid #E5E5E5;
 	font-size:24px;
@@ -680,16 +680,16 @@ a:hover{
 	width:auto;
 }
 
-.lightbox-content p {
+#lightbox-content p {
 	padding-bottom: 0;
 }
 
 
-.lightbox-content{
+#lightbox-content{
 }
 
 
-.lightbox-content input {
+#lightbox-content input {
 	background-color: white !important;
 	font-size:15px !important;
 }
