@@ -162,3 +162,28 @@ a.commentToText img {
 	color: #000000;
 	background-color: #FFFC00;
 }
+
+
+
+
+
+#paper-1, #paper-2 {
+    background-color: #F9F9F9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    max-height: 1024px;
+    position: absolute;
+    width: 864px;
+}
+
+#paper-2 {
+    -moz-transform: rotate(2deg);
+    margin-left: 5px;
+    z-index: -1;
+}
+
+
+#paper-1 {
+    -moz-transform: rotate(-3deg);
+    margin-left: -10px;
+    z-index: -2;
+}

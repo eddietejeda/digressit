@@ -1654,7 +1654,6 @@ jQuery.fn.extend({
 	
 			
 		//top of page
-		
 		if(scroll_top > lock_position && jQuery("#commentbox").css('position') != 'fixed' ){
 			var left = parseInt(jQuery('#content').offset().left) + 565  ;			
 			jQuery("#commentbox, #commentbox-header").css('position', 'fixed');
@@ -1674,7 +1673,6 @@ jQuery.fn.extend({
 
 	
 		//bottom of page
-		
 		if(scroll_top > (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").css('position') == 'fixed'){
 			jQuery("#commentbox").css('height', '50%');
 			jQuery("#commentbox").addClass('resized');
