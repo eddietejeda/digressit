@@ -428,7 +428,7 @@ z-index:0;
 	background-color:white;
 	border-color:#BDBDBD;
 	border-style:solid;
-	border-width:0 1px;
+	border-width:0 0px;
 	margin:0 auto;
 	width:1000px;	
 	-moz-box-shadow:0 25px 30px #AAAAAA;
@@ -1078,7 +1078,7 @@ div#item-header{
 	color: #111;
 	display: block;
 	line-height: 2.333em;
-	padding: 0 1.2125em;
+	padding: 0 0.2125em;
 	text-decoration: none;
 }
 #menu-primary ul ul {

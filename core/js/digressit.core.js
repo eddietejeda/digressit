@@ -51,25 +51,6 @@ if(jQuery.browser.msie){
 
 jQuery(document).ready(function() {
 
-	var userAgent = navigator.userAgent.toLowerCase();
-
-	// Figure out what browser is being used
-	jQuery.browser = {
-		version: (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
-		chrome: /chrome/.test( userAgent ),
-		safari: /webkit/.test( userAgent ) && !/chrome/.test( userAgent ),
-		opera: /opera/.test( userAgent ),
-		msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
-		mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent )
-	};
-
-
-	var msie7=jQuery.browser.msie && jQuery.browser.version=="7.0";
-	var msie6=jQuery.browser.msie && jQuery.browser.version=="6.0";
-
-
-
-
 	// Paragraph embeds
 	jQuery('.paragraphembed a').bind('click', function(e){
 		e.preventDefault();
@@ -84,12 +65,9 @@ jQuery(document).ready(function() {
 		return false;	
 	});
 
-
 	jQuery('.embedcode').click(function(){
 		return 0;
 	});
-
-
 	
 	jQuery('.submit, .lightbox-submit').click(function(e){
 		if(jQuery(e.target).hasClass('ajax')){
@@ -1678,17 +1656,19 @@ jQuery.fn.extend({
 		//top of page
 		
 		if(scroll_top > lock_position && jQuery("#commentbox").css('position') != 'fixed' ){
-			var left = parseInt(jQuery('#content').offset().left) + 565  ;
-			jQuery("#commentbox").css('position', 'fixed');
-			jQuery("#commentbox").css('left', left + 'px');
-			jQuery("#commentbox").css('top', '50px');
+			var left = parseInt(jQuery('#content').offset().left) + 565  ;			
+			jQuery("#commentbox, #commentbox-header").css('position', 'fixed');
+			jQuery("#commentbox, #commentbox-header").css('left', left + 'px');
+			jQuery("#commentbox-header").css('top', '50px');
+			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').height()) + 50 + 'px');
 			jQuery("#commentbox").css('height', '90%');
 			
 		}	
 		else if(scroll_top < lock_position && jQuery("#commentbox").css('position') != 'absolute' ){
 			jQuery("#commentbox").css('position', 'absolute');
 			jQuery("#commentbox").css('left', '565px'	);
-			jQuery("#commentbox").css('top', '0px');
+			jQuery("#commentbox-header").css('top', '0px');
+			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').height()) + 'px');
 			jQuery("#commentbox").css('height', jQuery(window).height() - 250 + 'px');
 		}
 

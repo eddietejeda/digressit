@@ -151,6 +151,7 @@ function digressit_auto_load_dir($path){
 	if ($handle = opendir($path)) {
 		while (false !== ($file = readdir($handle))) {
 			if (!@is_dir($file) && strstr($file, '.php')) {
+//				echo $path . '/' . $file;
 				require_once($path . '/' . $file);
 			}
 		}
