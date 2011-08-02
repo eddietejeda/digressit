@@ -1624,15 +1624,22 @@ jQuery(document).ready(function() {
 jQuery.fn.extend({	
 
 	position_main_elements: function() {
+		
+		if(typeof override_comment_box != 'undefined'){
+			jQuery("#commentbox").css(override_comment_box_specs);
+			return;
+						
+		}
+	
 		var browser_width = jQuery(window).width();
 		var browser_height = jQuery(window).height();
 		var content_height = jQuery('#content').height();
 		var default_top = parseInt(jQuery('#content').position().top);
 		var scroll_top =  default_top  + parseInt(jQuery(window).scrollTop());
-		var lock_position = jQuery('#post-' + post_ID).offset().top;
+		var lock_position = jQuery('#post-' + post_ID).offset().top + jQuery('#header').height() + jQuery('#the_title').height();
 		
 		
-		
+		console.log(scroll_top + ' - '+ lock_position+"\n");
 		//iOS
 
 		if(iOS){
@@ -1666,7 +1673,7 @@ jQuery.fn.extend({
 		else if(scroll_top < lock_position && jQuery("#commentbox").css('position') != 'absolute' ){
 			jQuery("#commentbox").css('position', 'absolute');
 			jQuery("#commentbox").css('left', '565px'	);
-			jQuery("#commentbox-header").css('top', '0px');
+			jQuery("#commentbox-header").css('top', '20px' );
 			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').height()) + 'px');
 			jQuery("#commentbox").css('height', jQuery(window).height() - 250 + 'px');
 		}

@@ -26,8 +26,8 @@ if('wp-signup.php' == basename($_SERVER['SCRIPT_FILENAME'])){
  *
  */
 function digressit_default_stylesheets(){
-	wp_register_style('digressit.default', get_template_directory_uri()."/style.css");
-	wp_enqueue_style('digressit.default');
+	//wp_register_style('digressit.default', get_template_directory_uri()."/style.css");
+	//wp_enqueue_style('digressit.default');
 }
 
 /*

@@ -19,4 +19,102 @@ Matteo Bicocchi @ www.open-lab.com
 
 */
 
+body {
+    color: #474747;
+    font-family: Arial;
+    font-size: 110%;
+    line-height: 135%;
+}
 
+#wrapper{
+	background: none repeat scroll 0 0 #FF5E43
+}
+
+h1, h2, h2 a {
+    color: #353535;
+    font-size: 150%;
+    font-weight: bold;
+    letter-spacing: -2px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+#header{
+	border: 0
+}
+
+a{
+	color: #353535;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.single #content{
+	background-color: transparent;
+}
+
+
+
+.textblock, #header, #the_title, #footer, #content, .home #content, #mainpage .preview{
+	background: transparent;
+}
+
+.textblock{
+	border: 0px;
+	margin-bottom:0;
+	background-color: white;
+}
+
+.digressit-enabled #commentbox{
+	border: 0px;
+	top: 20px;
+}
+.selected-textblock {
+    background-color: #353535;
+    border: 0 none;
+    color: #FF5E43;
+    margin-bottom: 0;
+}
+
+#comment {
+    color: #353535;
+    width: 99%;
+}
+#textblock-1{
+	margin-bottom: 0;
+}
+
+.paragraph-block {
+    border: 0 solid #AAAAAA;
+    padding: 10px;
+}
+#commentwindow{
+	background-color: white;
+}
+#the_title{
+    background-color: transparent;
+    font-size: 115%;
+    margin: 0 auto;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    position: relative;
+    width: 1000px;
+}
+
+.single #content{
+	border: 0px;
+}
+
+.site-title h1 {
+    font-family: Arial;
+    font-size: 400%;
+    font-weight: bolder;
+    letter-spacing: -5px;
+    padding: 40px 20px;
+}
+
+
+a:hover{
+	background-color: #353535;
+	color: #FF5E43;
+}

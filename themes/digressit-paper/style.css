@@ -26,12 +26,16 @@ body	{
 	height:100%; 
 	width: 100%;
 	overflow-y:auto;
+	background: #E2E1DE;
+	font: 100% Georgia,serif;
 	}
 h1 {
-	font: 2em/1.15em Georgia, "Times New Roman", Times, serif;
+	font: 80px/1.2em Georgia,serif;
+	text-align:center;
 }
 h2 	{	
-	font: 1.3em Georgia, "Times New Roman", Times, serif;
+	font: 40px/1.2em Georgia,serif;
+	padding: 20px;
 	}
 h3 	{
 	font: .9em Georgia, "Times New Roman", Times, serif;
@@ -66,6 +70,10 @@ h1 a, a h1, h2 a, a h2, h3 a, a h3 {
 	color: #000000;
 	}
 
+#header, #the_title, #content{
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	border: 0px;
+}
 #commentbox	{	
 	float: left;
 	width: 500px;
@@ -170,9 +178,12 @@ a.commentToText img {
 #paper-1, #paper-2 {
     background-color: #F9F9F9;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    max-height: 1024px;
+    max-height: 2024px;
     position: absolute;
     width: 864px;
+    height: 100%;
+    top: 20px;
+    left: 10%;
 }
 
 #paper-2 {
@@ -186,4 +197,58 @@ a.commentToText img {
     -moz-transform: rotate(-3deg);
     margin-left: -10px;
     z-index: -2;
+}
+
+
+.textblock {
+    border: 1px solid #F3F3F3;
+    min-height: 100px;
+    padding: 10px;
+    position: relative;
+}
+
+.selected-textblock {
+    background-color: #F3F3F3;
+    color: #000000;
+}
+
+#commentbox {
+    font: 100% Georgia,Serif;
+    text-align: left;
+}
+
+.paragraph-block {
+    border: 1px solid #EEEEEE;
+    padding: 12px 15px;
+}
+
+.commenticonbox {
+    background-color: #DDDDDD;
+    border-color: transparent;
+    border-radius: 5px 5px 5px 5px;
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
+    box-shadow: 1px 1px 1px #CCCCCC;
+    color: white;
+    margin: 0;
+    position: absolute;
+    right: -30px;
+    text-align: center;
+    top: -1px;
+    width: 16px;
+}
+
+.navigation-previous {
+    float: left;
+    font-size: 75%;
+    margin-bottom: 10px;
+}
+
+.previews p{
+	font: 100% Georgia,serif;
+}
+
+#menu-primary {
+    float: right;
+    margin: 0 5px 10px;
 }

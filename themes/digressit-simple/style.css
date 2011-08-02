@@ -19,14 +19,26 @@ Matteo Bicocchi @ www.open-lab.com
 
 */
 
+body{
+	background: white !important;
+}
+body {
+    color: #474747;
+    font-family: Serif;
+    font-size: 100%;
+    line-height: 140%;
+    line-height: 18px;
+    text-align: center;
+}
 #header {
-    background: none repeat scroll 0 0 white;
     border: 0 none;
     height: auto;
     min-height: 80px;
     position: relative;
     text-align: left;
     z-index: 1;
+    font: serif !important;
+    font-size: 100%;
 }
 
 .single #content, .page #content {
@@ -37,5 +49,128 @@ Matteo Bicocchi @ www.open-lab.com
     box-shadow: none;
     margin: 0 auto;
     position: relative;
+	width: 100% !important;
+}
+
+#header, #the_title, #content{
+    margin-left: 0;
+    width: 58%;
+}
+
+.paragraph-block {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-width: 0px 0 0;
+    font-size: 135%;
+    padding: 10px;
+}
+
+.textblock{
+	border: 0px;
+}
+
+.site-title h1 {
+    font-size: 300%;
+    padding: 20px;
+}
+
+.site-title {
+    display: inline;
+    float: none;
+    text-decoration: none;
+}
+
+#menu-primary {
+    float: none;
+    margin: 0 0 0 10px;
+    padding: 0;
+}
+
+#commentwindow {
+    margin-top: 60px;
+}
+
+
+.selected-textblock{
+	background-color: #F5F5FF;
+	border: 1px solid #ccc;
+}
+
+
+.single #content, .page #content{
+	max-width: 100%;
+}
+
+.commenticonbox {
+    background-color: #F5F5FF;
+    border: 1px solid #CCCCCC;
+    border-radius: 15px 15px 15px 15px;
+    height: 17px;
+    margin: 0;
+    padding: 5px 10px;
+    position: absolute;
+    right: -36px;
+    top: -1px;
+    width: auto;
+}
+
+.the_title {
+    background-color: white;
+    font-size: 130%;
+    line-height: 45px;
+    margin: 0 auto 0 20px;
+    position: relative;
     width: 1000px;
+}
+
+.the_title h2{
+	padding: 0px 20px;
+}
+
+
+a{
+	color: black;
+	text-decoration: none;
+}
+
+.submit{
+	margin-right: 22px;
+}
+
+.horizontal {
+    border-bottom: 0 solid #DDDDDD;
+    clear: both;
+    margin: 0 auto;
+    width: 96%;
+}
+
+.digressit-enabled #commentbox {
+    border: 0px solid #B4BDBD;
+    height: 100%;
+    left: auto;
+    right: 0;
+    margin: 0 0 0;
+    min-height: 365px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: absolute;
+    top: 0;
+    width: 415px;
+    z-index: 100;
+    background-color: white;
+
+
+    background-color: #F5F5FF;
+    border-left: 1px solid #CCCCCC;
+    height: 100%;
+    padding-left: 30px;
+    position: fixed;
+    right: 0;
+    width: 40%;
+
 }
