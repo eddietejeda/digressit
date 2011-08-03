@@ -25,7 +25,7 @@ if(function_exists('digressit_body_class')){
 <div id="wrapper"> <!-- this is closed in footer -->
 
 <?php do_action('optional_pre_header'); ?>
-<div id="header" role="header">
+<header id="header" role="header">
 	<div class="site-title" role="banner">
 		<div class="bubblearrow"></div>		
 		<?php if(has_action('add_header_image')): ?>
@@ -92,7 +92,7 @@ if(function_exists('digressit_body_class')){
 	<?php endif; ?>
 	
 	<div class="horizontal"></div>
-</div> 
+</header> 
 <?php
 do_action('secondary_menu');
 ?>

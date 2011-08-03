@@ -39,7 +39,7 @@ body{
 
 .the_title{
 	border: 0px !important;
-	margin-left: 100px;
+	margin-left: 40px;
 }
 
 .home #content{
@@ -138,6 +138,15 @@ strong {
 	
 .the_title{
 	margin-top: 100px;
+	width: 100%;
+}
+
+.the_title h2{
+    border: 1px solid #FFFFFF;
+    color: #000000;
+    font: 2.25em "Times New Roman","Times New Roman PS MT",Times,serif;
+    margin: 0.5em 0;
+    width: 50%;
 }	
 
 .digressit-enabled .post, .digressit-enabled .page{
@@ -156,8 +165,15 @@ strong {
     padding-right: 0;
 }
 
+.horizontal{
+	display:none;
+}
+.menu-site-container{
+	float: left;
+}
 #menu-primary ul {
-    margin-bottom: 10px;
+    float: left;
+    margin-bottom: 3px;
     margin-left: 0;
     margin-top: 5px;
     padding-left: 0;
@@ -165,11 +181,14 @@ strong {
 }
 
 .container{
-	margin-top: 200px;
+	margin-top: 150px;
 }
 #menu-primary{
-	text-align: left;
-	background-color: #DCDCA9;
+    background-color: #DCDCA9;
+    float: left;
+    padding: 0;
+    text-align: left;
+    width: 100%;
 }	
 
 .site-title h1 {
@@ -185,7 +204,7 @@ strong {
     display: block;
     float: none;
     font-size: 180%;
-    padding: 30px 10px 0;
+    padding: 40px 10px 10px;
     text-decoration: none;
 }
 	

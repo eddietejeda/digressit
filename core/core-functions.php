@@ -232,6 +232,12 @@ function digressit_setup(){
 function digressit_init(){
 
 	global $digressit_options;
+	$digressit_options = get_option('digressit');
+
+	//something went wrong. reset settings.
+	if(count($digressit_options) < 15) {
+		activate_digressit();
+	}
 
 	/* upgrade to Digress.it 3.2 */
 	if($digressit_options['version'] != DIGRESSIT_VERSION){		
@@ -244,6 +250,7 @@ function digressit_init(){
 
 		update_option('digressit', $digressit_options);
 	}
+
 
 }
 
@@ -1292,9 +1299,10 @@ function digressit_core_print_scripts(){
 
 		</script>	
 		<?php
+		
 	
 
-		if(1){
+		if($digressit_options['debug_mode'] == 1){
 			wp_enqueue_script('digressit.core',		get_digressit_media_uri('js/digressit.core.js'), 'jquery', false, true );	
 			wp_enqueue_script('jquery.easing', 		get_digressit_media_uri('js/jquery.easing.js'), 'jquery', false, true );		
 			wp_enqueue_script('jquery.scrollto',	get_digressit_media_uri('js/jquery.scrollTo.js'), 'jquery', false, true );		
@@ -1302,7 +1310,7 @@ function digressit_core_print_scripts(){
 			wp_enqueue_script('jquery.mousewheel',	get_digressit_media_uri('js/jquery.mousewheel.js'), 'jquery', false, true );		
 			wp_enqueue_script('jquery.em',			get_digressit_media_uri('js/jquery.em.js'), 'jquery', false, true );
 			wp_enqueue_script('jquery.copy',			get_digressit_media_uri('js/jquery.copy.js'), 'jquery', false, true );
-			wp_enqueue_script('superfish.js',			get_digressit_media_uri('js/superfish.js'), 'jquery', false, true );
+			wp_enqueue_script('html5.js',			get_digressit_media_uri('js/html5.js'), 'jquery', false, true );
 		}		
 		else{
 			wp_enqueue_script('digressit.core',		get_digressit_media_uri('js/digressit.core.min.js'), 'jquery', false, true );				
