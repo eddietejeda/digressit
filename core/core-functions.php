@@ -1015,6 +1015,7 @@ function get_text_signature_count($post_ID, $text_signature){
  */
 function header_default_top_menu(){
 	global $digressit_options;
+	
 	?>
 	<ul>
 		<li><a title="<?php echo($digressit_options['table_of_contents_label']); ?>" href="<?php bloginfo('url'); ?>"><?php echo($digressit_options['table_of_contents_label']); ?></a></li>

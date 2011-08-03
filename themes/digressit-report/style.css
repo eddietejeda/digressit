@@ -29,6 +29,7 @@ Matteo Bicocchi @ www.open-lab.com
 
 body{
 	background-color: white;
+	font:  "Times New Roman","Times New Roman PS MT",Times,serif;
 }
 
 #content{
@@ -108,16 +109,19 @@ strong {
     position: relative;
     border: 0;
 }
-.selected-textblock	{
-	background-color: #FEFF7A;
-	color: #000000;
-	}
-	
+
+.selected-textblock {
+    background-color: #F5D46D;
+    color: #000000;
+}	
 	
 #mainpage{
 	padding: 0;
 }
 
+.sidebar-widgets{
+	display: none;
+}
 /* TITLE BAR 
 ********************************/	
 #header{			/* titlebarContainer holds the title and the presentedyBy line */
@@ -127,7 +131,7 @@ strong {
 	left: 0;
 	display: block;
 	background-color: #ffffff;
-	z-index: 20;
+	z-index: 10000;
 	border-bottom: 1px solid #a9aaae;
 	margin: 0;
 	}
@@ -139,19 +143,50 @@ strong {
 .digressit-enabled .post, .digressit-enabled .page{
 	padding: 0;
 }
+
+.digressit-enabled #commentbox{
+	margin-top: 0px;
+}
+#menu-primary ul {
+    background-color: #DCDCA9;
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-top: 5px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#menu-primary ul {
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-top: 5px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.container{
+	margin-top: 200px;
+}
 #menu-primary{
 	text-align: left;
 	background-color: #DCDCA9;
 }	
 
-#menu-primary li{
-	padding: 5px;
+.site-title h1 {
+    padding: 0px;
+    margin: 0px
 }
-.site-title{
+
+#menu-primary li {
+    padding: 5px;
+}
+
+.site-title {
     display: block;
     float: none;
+    font-size: 180%;
+    padding: 30px 10px 0;
     text-decoration: none;
-    padding: 10px;
 }
 	
 .sidebar-widgets{
@@ -163,4 +198,22 @@ strong {
 #footer{
 	width: 100%;
 	border: 0;
+}
+
+a {
+    border-bottom: 0 solid #AEAAA9;
+    color: #000000;
+    text-decoration: none;
+}
+
+
+.single #content {
+    background-color: white;
+    border-color: #BDBDBD;
+    border-style: solid;
+    border-width: 0 1px;
+    margin: 0 0 0 30px;
+    max-width: 1000px;
+    min-height: 600px;
+    position: relative;
 }
