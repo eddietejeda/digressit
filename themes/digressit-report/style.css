@@ -158,9 +158,9 @@ strong {
 }
 #menu-primary ul {
     background-color: #DCDCA9;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     margin-left: 0;
-    margin-top: 5px;
+    margin-top: 0px;
     padding-left: 0;
     padding-right: 0;
 }
@@ -173,9 +173,7 @@ strong {
 }
 #menu-primary ul {
     float: left;
-    margin-bottom: 3px;
     margin-left: 0;
-    margin-top: 5px;
     padding-left: 0;
     padding-right: 0;
 }
@@ -189,17 +187,53 @@ strong {
     padding: 0;
     text-align: left;
     width: 100%;
+	border: 1px solid #A9AAAE;
 }	
 
+#menu-primary li:hover{
+	background-color: #FEFF7A;
+}
+
+.home #content {
+    background: none repeat scroll 0 0 white;
+    border-color: #BDBDBD;
+    border-style: solid;
+    border-width: 0 1px;
+    margin-bottom: 0;
+    margin-right: auto;
+    margin-top: 0;
+    min-height: 500px;
+    padding-left: 20px;
+    padding-top: 30px;
+    position: relative;
+    width: 1000px;
+}
+
 .site-title h1 {
+    letter-spacing: 5px;
     padding: 0px;
-    margin: 0px
+    margin: 0px;
 }
 
 #menu-primary li {
-    padding: 5px;
+    border-right: 1px solid #AAAAAA;
+    float: left;
+    list-style: none outside none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 25px;
+    padding-right: 35px;
 }
 
+#footer .foot {
+    padding: 20px 20px 0;
+}
+
+h3 {
+    font: 2em "Times New Roman","Times New Roman PS MT",Times,serif;
+    margin: 0 0 15px;
+    text-transform: uppercase;
+}
 .site-title {
     display: block;
     float: none;
@@ -212,6 +246,14 @@ strong {
     border: 0 none;
     position: fixed;
     top: 37px;
+}
+
+#dynamic-sidebar {
+    display: none;
+    overflow-y: auto;
+    padding: 10px;
+    width: 260px;
+    z-index: 100;
 }
 
 #footer{
