@@ -1301,8 +1301,8 @@ function digressit_core_print_scripts(){
 		<?php
 		
 	
-
-		if($digressit_options['debug_mode'] == 1){
+		//@TODO $digressit_options['debug_mode'] == 1
+		if(1){
 			wp_enqueue_script('digressit.core',		get_digressit_media_uri('js/digressit.core.js'), 'jquery', false, true );	
 			wp_enqueue_script('jquery.easing', 		get_digressit_media_uri('js/jquery.easing.js'), 'jquery', false, true );		
 			wp_enqueue_script('jquery.scrollto',	get_digressit_media_uri('js/jquery.scrollTo.js'), 'jquery', false, true );		
