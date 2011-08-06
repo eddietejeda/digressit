@@ -351,7 +351,6 @@ jQuery(document).ready(function() {
 		}
 		
 		var ajax_simple_classes = jQuery(this).attr('class').split(' ');
-		console.log('ajax_simple_classes' + ajax_simple_classes+ "\n")
 
 		for(var i = 0; i < ajax_simple_classes.length; i++){
 			if(ajax_simple_classes[i] == 'ajax-simple'){
@@ -359,9 +358,8 @@ jQuery(document).ready(function() {
 				break;				
 			}
 		}
-		console.log('ajax_simple_classes' + ajax_simple_classes+ "\n")
 
-		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
+		var function_parameters = parseGetVariables( jQuery(this).prop('value'));
 
 		console.log('function_parameters' + function_parameters  + "\n")
 		jQuery(this).css('cursor', 'wait');
