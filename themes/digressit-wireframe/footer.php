@@ -1,4 +1,4 @@
-<div id="footer" role="complementary">	
+<footer id="footer" role="complementary">	
 	<div class="foot">
 	<?php if(has_action('custom_footer')): ?>
 		<?php do_action('custom_footer'); ?>
@@ -9,7 +9,7 @@
 		
 	<?php endif; ?>
 	</div>
-</div>
+</footer>
 
 <div id="debug-message"></div>
 

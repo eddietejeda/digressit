@@ -577,8 +577,11 @@ jQuery(document).ready(function() {
 
 
 	if (document.location.hash.length) {
-		var lightbox = 'lightbox-' + document.location.hash.substr(1);
-		jQuery('body').openlightbox(lightbox);
+		var hashtag = document.location.hash.substr(1);
+		if(isNaN(hashtag)){
+			var lightbox = 'lightbox-' + hashtag;
+			jQuery('body').openlightbox(lightbox);
+		}
 	}	
 
 
@@ -1651,7 +1654,7 @@ jQuery.fn.extend({
 		var content_height = jQuery('#content').height();
 		var default_top = parseInt(jQuery('#content').position().top);
 		var scroll_top =  default_top  + parseInt(jQuery(window).scrollTop());
-		var lock_position = jQuery('#post-' + post_ID).offset().top + jQuery('#header').height() + jQuery('#the_title').height();
+		var lock_position = jQuery('#content').offset().top - 50;
 		
 		
 		//console.log(scroll_top + ' - '+ lock_position+"\n");
@@ -1680,15 +1683,15 @@ jQuery.fn.extend({
 			jQuery("#commentbox, #commentbox-header").css('position', 'fixed');
 			jQuery("#commentbox, #commentbox-header").css('left', left + 'px');
 			jQuery("#commentbox-header").css('top', '50px');
-			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').outerHeight()) + parseInt(jQuery('#commentbox-header').height()) + 'px');
+			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').outerHeight()) + 50 + 'px');
 			jQuery("#commentbox").css('height', '90%');
 			
 		}	
 		else if(scroll_top < lock_position && jQuery("#commentbox").css('position') != 'absolute' ){
 			jQuery("#commentbox, #commentbox-header").css('position', 'absolute');
 			jQuery("#commentbox, #commentbox-header").css('left', '565px'	);
-			jQuery("#commentbox-header").css('top', '20px' );
-			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').outerHeight()) + parseInt(jQuery('#commentbox-header').height()) + 'px');
+			jQuery("#commentbox-header").css('top', '0px' );
+			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').outerHeight()) + 'px');
 			jQuery("#commentbox").css('height', jQuery(window).height() - 250 + 'px');
 		}
 
@@ -1711,7 +1714,7 @@ jQuery.fn.extend({
 
 
 jQuery.fn.openlightbox = function (lightbox){
-
+	
 	if(isNaN(lightbox)){
 	jQuery.post( siteurl + "/ajax/" + lightbox +'/', null, 
 		function( data ) {	

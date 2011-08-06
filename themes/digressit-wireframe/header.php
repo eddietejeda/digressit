@@ -39,7 +39,7 @@ if(function_exists('digressit_body_class')){
 		
 
 
-	<div id="menu-primary" role="navigation">
+	<header id="menu-primary" role="navigation">
 	<?php 
 		if(has_action('primary_menu')){
 			do_action('primary_menu');
@@ -50,7 +50,6 @@ if(function_exists('digressit_body_class')){
 			do_action('optional_menu_item');
 			if($digressit_options['show_pages_in_menu']==1){
 				$front_page_content = $digressit_options['front_page_content'];
-	
 				echo "<ul>";
 				wp_list_pages('exclude='.$front_page_content.'=menu_order&title_li=');
 				echo "</ul>";
@@ -71,8 +70,8 @@ if(function_exists('digressit_body_class')){
 		<li class="menu-login"><a href="<?php echo wp_login_url(); ?>" title="Login"><?php _e('Login'); ?></a></li>
 	<?php endif;?>
 	</ul>
-	</div>	
 	</div>
+	</header>
 
 	<?php if($digressit_options['enable_instant_content_search'] == 'true'): ?>
 	<div id="instant-content-search">

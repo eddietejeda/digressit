@@ -549,9 +549,7 @@ function digressit_get_stylized_title(){
 	}
 	else{			
 		if(is_single() || is_page() || is_search()){
-		
 			echo '<h2><a href="'.get_permalink().'">'.get_the_title().'</a><div class="edit-this"><a href="'.get_edit_post_link($post->ID).'">edit</a></div></h2>';
-
 		}			
 	}
 	echo '</div>';

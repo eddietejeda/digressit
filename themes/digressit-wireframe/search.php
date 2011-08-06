@@ -2,7 +2,7 @@
 
 <div class="content-wrapper">
 <div id="search-wrapper" role="main">
-<?php get_stylized_title(); ?>
+<?php digressit_get_stylized_title(); ?>
 <?php if (have_posts()) : 
 while (have_posts()) : the_post(); ?>
 	<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">

@@ -13,7 +13,7 @@
 			<div id="content" class="<?php echo $current_type; ?>" role="main">
 	
 				<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
-					<div class="entry" role="article">
+					<article class="entry" role="article">
 						<?php digressit_get_stylized_content_header(); ?>
 						
 						<div class="navigation-previous" role="navigation"><?php previous_post_link('%link', '&laquo; Previous'); ?></div>
@@ -38,7 +38,7 @@
 	
 					<?php do_action('after_post_content'); ?>
 					<?php dynamic_sidebar('Single Content');		 ?>
-				</div>			
+				</article>			
 				
 					<?php
 					if(!post_password_required())
@@ -52,12 +52,12 @@
 			<div id="content" class="<?php echo $current_type; ?>" role="main">
 		
 				<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
-					<div class="entry" role="article">
+					<article class="entry" role="article">
 						<?php digressit_get_stylized_content_header(); ?>
 						<?php the_content(); ?>
 						<?php dynamic_sidebar('Page Content'); ?>					
 						<?php edit_post_link(); ?>					
-					</div>	
+					</article>	
 				</div>			
 			</div>
 		<?php endif; ?>
