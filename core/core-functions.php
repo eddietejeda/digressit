@@ -407,7 +407,20 @@ function digressit_is_mainpage(){
 	}
 }
 
-
+/* @TODO : do subdomains as well */
+function get_blog_name_in_url(){
+	global $blog_id;
+	$details = get_blog_details($blog_id, 1);
+	$path = null;
+	if(strlen($details->path)){
+		$path = substr($details->path, 1);
+	}
+	else{
+		//subdomain
+	}
+	return $path;	
+	
+}
 /**
  * A somewhat crude way to detect user browser
  */

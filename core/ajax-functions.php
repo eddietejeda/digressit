@@ -3,13 +3,21 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'ajax-functions.php' == basename($_SE
 	die (':)');
 endif;
 
+add_filter('generate_rewrite_rules','ajax_add_rewrite_rules' );
+add_filter('query_vars','ajax_query_vars' );
+add_action('wp_loaded','ajax_flush_rewrite_rules' );
+add_action('template_redirect', 'ajax_template' );
+
 
 /**
  * Flush your rewrite rules if you want pretty permalinks
  */
 function ajax_flush_rewrite_rules() {
-	global $wp_rewrite;
-	$wp_rewrite->flush_rules();
+	$rules = get_option( 'rewrite_rules' );	
+	if ( ! isset( $rules['ajax/([^/]+)'] ) ) {
+		global $wp_rewrite;
+	   	$wp_rewrite->flush_rules();
+	}
 }
 
 /**
@@ -26,13 +34,18 @@ function ajax_query_vars( $query_vars ) {
  */
 function ajax_add_rewrite_rules( $wp_rewrite ) {
 
+
+//	var_dump($path);
+
 	$wp_rewrite->add_rewrite_tag( "%inc_ajax%", "([^/]+)", "inc_ajax=" );
 
-	$urls = array( "ajax/%inc_ajax%" );
+
+	$urls = array( "ajax/%inc_ajax%");
 	foreach( $urls as $url ) {
 		$rule = $wp_rewrite->generate_rewrite_rules($url, EP_NONE, false, false, false, false, false);
 		$wp_rewrite->rules = array_merge( $rule, $wp_rewrite->rules );
 	}
+//	var_dump($wp_rewrite);	
 	return $wp_rewrite;
 }
 
@@ -40,9 +53,10 @@ function ajax_add_rewrite_rules( $wp_rewrite ) {
  * Let's echo out the content we are looking to dynamically grab before we load any template files
  */
 function ajax_template() {
-	global $wp, $wpdb;
-	global $current_user;
+	global $wp, $wpdb, $current_user;
 
+//	var_dump($wp);
+//	die();
 	if(isset( $wp->query_vars['inc_ajax'] ) && !empty($wp->query_vars['inc_ajax'] ) ):
 
 		$request_action = str_replace('-','_',$wp->query_vars['inc_ajax'])."_ajax"; 

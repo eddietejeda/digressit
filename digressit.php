@@ -87,10 +87,11 @@ add_action('admin_menu', 'digressit_add_admin_menu');
 
 
 /* ajax init functions */
+/*
 add_action('init', 'ajax_flush_rewrite_rules', 0 );
 add_filter('query_vars', 'ajax_query_vars', 0);
-add_action('generate_rewrite_rules', 'ajax_add_rewrite_rules', 0 );
-add_action('template_redirect', 'ajax_template' );
+add_action('rewrite_rules_array', 'ajax_add_rewrite_rules', 0 );
+*/
 
 
 /* comments functions */

@@ -77,6 +77,14 @@ jQuery(document).ready(function() {
 			jQuery(e.target).addClass('disabled');
 		}
 	});
+
+	jQuery(window).keyup(function(e){
+		var ESC = 27; // Leave comment box
+		var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+		if ( key == ESC){
+			jQuery(window).closelightbox();		
+		}
+	});
 	
 	if(keyboard_navigation == true){
 		jQuery(window).keyup(function(e){
@@ -576,7 +584,7 @@ jQuery(document).ready(function() {
 
 	if (document.location.hash.length) {
 		var hashtag = document.location.hash.substr(1);
-		if(isNaN(hashtag)){
+		if(isNaN(hashtag) && hashtag.search('comment-') != 0){
 			var lightbox = 'lightbox-' + hashtag;
 			jQuery('body').openlightbox(lightbox);
 		}
@@ -597,13 +605,33 @@ jQuery(document).ready(function() {
 
 
 	
+	/*
 	jQuery('.lightbox').click(function(){
 		var lightbox_names = jQuery(this).attr('class').split(' ');
 		
 		console.log(lightbox_names[1]);
 		jQuery('body').openlightbox(lightbox_names[1]);
 
-		//jQuery()
+	});
+	*/
+
+    jQuery(".lightbox").click(function (e) {
+
+		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
+			return false;
+		}
+
+		var lightbox_name = jQuery(this).attr('class').split(' ');
+	
+		var lightbox, i;
+		for(i = 0; i < lightbox_name.length; i++){
+			if(lightbox_name[i] == 'lightbox'){
+				lightbox = lightbox_name[i+1];
+				break;				
+			}
+		}	
+		jQuery('body').openlightbox(lightbox);
+	
 	});
 	
 	
@@ -624,26 +652,8 @@ jQuery(document).ready(function() {
 	
 	
 	
-    jQuery(".lightbox").click(function (e) {
-
-		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
-			return false;
-		}
-
-		var target = e.target;		
-		var lightbox_name = jQuery(target).attr('class').split(' ');
-		
-		var lightbox, i;
-		for(i = 0; i < lightbox_name.length; i++){
-			if(lightbox_name[i] == 'lightbox'){
-				lightbox = '#' + lightbox_name[i+1];
-				break;				
-			}
-		}
-		
-		jQuery('body').openlightbox(lightbox);
-		
-	});
+	
+	
 	
 	
 
@@ -1714,55 +1724,54 @@ jQuery.fn.extend({
 jQuery.fn.openlightbox = function (lightbox){
 	
 	if(isNaN(lightbox)){
-	jQuery.post( siteurl + "/ajax/" + lightbox +'/', null, 
-		function( data ) {	
+		jQuery.post( siteurl + "/ajax/" + lightbox +'/', null, 
+			function( data ) {	
+		
+				if(parseInt(data.status) == 1){
+					jQuery('#lightbox-content').hide();
+					var browser_width = jQuery(window).width();
+					var browser_height = jQuery(window).height();
+					var body_width = jQuery('#wrapper').width();
+					var body_height = jQuery('#wrapper').height();
+		
+		
+					jQuery('.lightbox-submit').removeClass('disabled');
+		
+					jQuery('#lightbox-transparency').css('width', body_width  + 'px');
+					jQuery('#lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
+					jQuery('#lightbox-transparency').fadeTo(0, 0.20);				
+		
 			
-			if(parseInt(data.status) == 1){
-				jQuery('#lightbox-content').hide();
-				var browser_width = jQuery(window).width();
-				var browser_height = jQuery(window).height();
-				var body_width = jQuery('#wrapper').width();
-				var body_height = jQuery('#wrapper').height();
+					jQuery('#lightbox-content').css('left', '33%');			
+					jQuery('#lightbox-content').css('top', '20%');			
 			
-			
-				jQuery('.lightbox-submit').removeClass('disabled');
-			
-				jQuery('#lightbox-transparency').css('width', body_width  + 'px');
-				jQuery('#lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
-				jQuery('#lightbox-transparency').fadeTo(0, 0.20);				
-			
-				
-				jQuery('#lightbox-content').css('left', '33%');			
-				jQuery('#lightbox-content').css('top', '20%');			
-				
-				/*
-				jQuery('input[type=button]').attr('disabled', false);
-				jQuery('input[type=submit]').attr('disabled', false);
-				jQuery('input[type=text]').attr('readonly', '');
-				jQuery('select').attr('disabled', false);
-				jQuery('textarea').attr('readonly', '');
-				*/			
-				jQuery('#lightbox-content').html(data.message);
-				jQuery('#lightbox-content').fadeIn('slow');
+					/*
+					jQuery('input[type=button]').attr('disabled', false);
+					jQuery('input[type=submit]').attr('disabled', false);
+					jQuery('input[type=text]').attr('readonly', '');
+					jQuery('select').attr('disabled', false);
+					jQuery('textarea').attr('readonly', '');
+					*/			
+					jQuery('#lightbox-content').html(data.message);
+					jQuery('#lightbox-content').fadeIn('slow');
 
-				if(jQuery('#lightbox-content .lightbox-delay-close').length){
-					var t = setTimeout(function() {
-						jQuery("body").closelightbox();
-						}, 3000);
-					jQuery(this).data('timeout', t);			
+					if(jQuery('#lightbox-content .lightbox-delay-close').length){
+						var t = setTimeout(function() {
+							jQuery("body").closelightbox();
+							}, 3000);
+						jQuery(this).data('timeout', t);			
+					}
 				}
-			}
-			
-		}, 'json' );
-
-	}	
+		
+			}, 'json' );
+	}
 }
 
 
 
 
 jQuery.fn.closelightbox = function (){
-	jQuery('#lightbox-content').hide();
+	jQuery('#lightbox-content').fadeOut();
 	jQuery('#lightbox-transparency').css('width', 0);
 	jQuery('#lightbox-transparency').css('height', 0);
 	document.location.hash.length = '';
