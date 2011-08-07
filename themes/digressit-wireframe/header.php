@@ -75,13 +75,15 @@ if(function_exists('digressit_body_class')){
 
 	<?php if($digressit_options['enable_instant_content_search'] == 'true'): ?>
 	<div id="instant-content-search">
+	  	<label for="live-comment-search">Search</label>
 		<input alt="Search Content" type="search" value="Search Content" class="ajax-live live-content-search content-field-area" id="live-content-search">
 		<div class="loading-throbber"></div>
 		<div id="live-content-search-result"></div>
 	</div>
 	
 	<div id="instant-comment-search">
-		<input alt="Search Content" value="Search Comments" class="ajax-live live-comment-search content-field-area" id="live-comment-search">
+	  	<label for="live-comment-search">Search</label>
+		<input value="Search Comments" class="ajax-live live-comment-search content-field-area" id="live-comment-search">
 		<div class="loading-throbber"></div>
 		<div id="live-comment-search-result"></div>
 	</div>
