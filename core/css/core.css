@@ -375,7 +375,7 @@ div#pimped.bubble cite.rounded {
 }
 
 .lightbox-close{
-	cursor:pointer;cursor:hand;
+	cursor:pointer;
 	position:absolute;
 	right:0;
 	top:0;
@@ -441,7 +441,7 @@ div#pimped.bubble cite.rounded {
 	min-width:auto;
 	padding:10px;
 	text-align:right;
-	width:auto
+	width:auto;
 }
 
 #lightbox-content input{
@@ -452,7 +452,7 @@ div#pimped.bubble cite.rounded {
 }
 
 .lightbox-button:hover, .lightbox-submit:hover{
-	cursor:pointer;cursor:hand;
+	cursor:pointer;
 }
 
 .lightbox-submit{
@@ -480,7 +480,7 @@ div#pimped.bubble cite.rounded {
 }
 
 a:hover{
-	cursor:pointer;cursor:hand;
+	cursor:pointer;
 }
 
 #lightbox-transparency{
@@ -634,7 +634,7 @@ a:hover{
 }
 
 .submit:hover{
-	cursor:pointer;cursor:hand;
+	cursor:pointer;
 }
 
 .submit{
@@ -1219,7 +1219,7 @@ img{
 
 
 .comment-reply:hover{
-	cursor:pointer;cursor:hand;
+	cursor:pointer;
 }
 
 .comment-reply{
@@ -1258,7 +1258,7 @@ img{
 display:none; 
 }
 #wrapper{
-	background:transparent repeat scroll 0 0 #F5F8F8;
+	background:transparent #F5F8F8;
 	margin:0 auto;
 	min-height:100%;
 	position:absolute;
@@ -1422,7 +1422,7 @@ display:none;
 	padding:10px;
 	width:260px;
 	z-index: 100;
-	top: 100;
+	top: 100px;
 }
 
 .sidebar-widget-position-left{
@@ -1623,7 +1623,7 @@ display:none;
 }
 
 .link:hover{
-	cursor:pointer;cursor:hand;
+	cursor:pointer;
 	text-decoration: underline;
 }
 
@@ -1661,7 +1661,7 @@ display:none;
 /* #348ACE !important */
 
 .commenticonbox:hover{
-	cursor:pointer;cursor:hand;
+	cursor:pointer;
 }
 .paragraphtext{
 

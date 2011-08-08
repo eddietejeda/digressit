@@ -1614,7 +1614,7 @@ jQuery(document).ready(function() {
 
 			jQuery(window).scrollTo(scrollto, 200);
 		
-			jQuery('#commentbox').scrollTo( current_comment_id + ' .comment-reply', 500, {easing:'easeOutBack'});
+			jQuery('#commentbox').scrollTo( current_comment_id , 500, {easing:'easeOutBack'});
 
 			document.location.hash = '#' + paragraphnumber;
 
@@ -1742,8 +1742,6 @@ jQuery.fn.openlightbox = function (lightbox){
 					jQuery('#lightbox-transparency').fadeTo(0, 0.20);				
 		
 			
-					jQuery('#lightbox-content').css('left', '33%');			
-					jQuery('#lightbox-content').css('top', '20%');			
 			
 					/*
 					jQuery('input[type=button]').attr('disabled', false);
@@ -1753,7 +1751,12 @@ jQuery.fn.openlightbox = function (lightbox){
 					jQuery('textarea').attr('readonly', '');
 					*/			
 					jQuery('#lightbox-content').html(data.message);
+
+					jQuery('#lightbox-content').css('left', (browser_width - jQuery('#lightbox-content').width()) /2.5  );
+					jQuery('#lightbox-content').css('top', '20%');			
+
 					jQuery('#lightbox-content').fadeIn('slow');
+
 
 					if(jQuery('#lightbox-content .lightbox-delay-close').length){
 						var t = setTimeout(function() {
