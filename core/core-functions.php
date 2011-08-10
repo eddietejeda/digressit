@@ -556,6 +556,7 @@ function digressit_get_stylized_content_header(){
  */
 function digressit_get_stylized_title(){
 	global $post;
+	
 	echo '<div id="the_title"  class="the_title">';	
 	if(has_action('stylized_title')){
 		do_action('stylized_title');

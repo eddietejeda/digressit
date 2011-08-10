@@ -24,6 +24,7 @@ function digressit_change_content_warning(){
 }
 
 
+
 /**
  * Creates menu in the admin page. Also detects permalink status
  */

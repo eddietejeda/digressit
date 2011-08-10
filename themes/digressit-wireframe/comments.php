@@ -48,8 +48,8 @@ global $blog_id;
 				<?php if(get_option('comment_registration')): ?>
 					<div id="must-be-logged-in">
 						<?php _e('You must be logged in to write a comment.', 'digressit'); ?>						
-						<p><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login"><?php _e('Login', 'digressit'); ?></a></p>
-						<p><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account"><?php _e('Create Account', 'digressit'); ?></a></p>						
+						<div id="login-button"><a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login"><?php _e('Login', 'digressit'); ?></a></div>
+						<div id="register-button"><a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>" title="Create Account"><?php _e('Create Account', 'digressit'); ?></a></div>						
 					</div>
 				<?php else: ?>
 					<?php digressit_comment_form(); ?>

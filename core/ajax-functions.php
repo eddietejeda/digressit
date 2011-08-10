@@ -3,11 +3,12 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'ajax-functions.php' == basename($_SE
 	die (':)');
 endif;
 
+/*
 add_filter('generate_rewrite_rules','ajax_add_rewrite_rules' );
 add_filter('query_vars','ajax_query_vars' );
 add_action('wp_loaded','ajax_flush_rewrite_rules' );
 add_action('template_redirect', 'ajax_template' );
-
+*/
 
 /**
  * Flush your rewrite rules if you want pretty permalinks
@@ -35,7 +36,7 @@ function ajax_query_vars( $query_vars ) {
 function ajax_add_rewrite_rules( $wp_rewrite ) {
 
 
-//	var_dump($path);
+	//var_dump($wp_rewrite);
 
 	$wp_rewrite->add_rewrite_tag( "%inc_ajax%", "([^/]+)", "inc_ajax=" );
 
