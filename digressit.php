@@ -87,14 +87,14 @@ add_action('admin_menu', 'digressit_add_admin_menu');
 
 
 /* ajax init functions */
-add_filter('generate_rewrite_rules','ajax_add_rewrite_rules' );
-add_filter('query_vars','ajax_query_vars' );
-add_action('wp_loaded','ajax_flush_rewrite_rules' );
+//add_action('init', 'ajax_flush_rewrite_rules', 0 );
+add_filter('query_vars', 'ajax_query_vars', 0);
+add_action('generate_rewrite_rules', 'ajax_add_rewrite_rules', 0 );
 add_action('template_redirect', 'ajax_template' );
 
 
 /* comments functions */
-add_action('init', 'commentbrowser_flush_rewrite_rules' );
+//add_action('init', 'commentbrowser_flush_rewrite_rules' );
 add_filter('query_vars', 'commentbrowser_query_vars' );
 add_action('generate_rewrite_rules', 'commentbrowser_add_rewrite_rules' );
 add_action('template_redirect', 'commentbrowser_template_redirect' );

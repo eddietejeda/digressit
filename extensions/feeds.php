@@ -10,7 +10,7 @@ function digressit_add_feeds() {
 	add_filter('query_vars', 'digressit_feed_query_vars', 0);
 	add_action('rewrite_rules_array', 'digressit_feed_rewrite_rules_array', 0 );
 	add_action('template_redirect', 'digressit_feed_template' );
-	$wp_rewrite->flush_rules();
+//	$wp_rewrite->flush_rules();
 }
 
 /**

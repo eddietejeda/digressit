@@ -86,7 +86,7 @@ jQuery(document).ready(function() {
 		}
 	});
 	
-	if(keyboard_navigation == true){
+	if(typeof keyboard_navigation != 'undefined' && keyboard_navigation == true){
 		jQuery(window).keyup(function(e){
 			var UP = 38; // Prev paragraph
 			var DOWN = 40; // Next paragraph
@@ -491,7 +491,7 @@ jQuery(document).ready(function() {
 	}
 	
 
-	if(digressit_enabled){
+	if(typeof digressit_enabled != 'undefined' && digressit_enabled){
 		jQuery('#commentbox').position_main_elements();
 	}
 	
@@ -615,7 +615,7 @@ jQuery(document).ready(function() {
 	});
 	*/
 
-    jQuery(".lightbox").click(function (e) {
+    jQuery(".lightbox").live('click', function(e){
 
 		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
 			return false;
@@ -635,7 +635,7 @@ jQuery(document).ready(function() {
 	});
 	
 	
-	jQuery('.close').click(function(){
+	jQuery('.close').live('click', function(e){
 		jQuery(this).parent().hide();		
 		jQuery('#block-access').hide();
 	});

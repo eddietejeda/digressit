@@ -9,7 +9,7 @@ global $browser, $post_paragraph_count;
  * Loads default settings into 	add_option('digressit', $digressit_options), initializes theme 
  */
 function activate_digressit(){
-	global $wpdb;
+	global $wpdb, $wp_rewrite;
 	$digressit_options = get_option('digressit');
 
 	//PRE-3.0
@@ -140,6 +140,10 @@ function activate_digressit(){
 	if(is_link($theme_link)){
 		unlink($theme_link);
 	}
+	
+
+    $wp_rewrite->flush_rules();
+	
 	switch_theme('digressit-default', 'digressit-default');	
 }
 
@@ -1290,28 +1294,27 @@ function digressit_core_print_scripts(){
 
 	if(!is_admin()){
 		?>
-		<script>	
-			var siteurl = '<?php echo get_option("siteurl"); ?>';
-			var baseurl = '<?php echo get_root_domain() ?>';
-			var user_ID =  <?php echo $current_user->ID; ?>;
-			var post_ID = <?php echo $post->ID ?>;
-			var blog_ID = <?php echo $blog_id; ?>;
-			var current_blog_id = <?php echo $blog_id; ?>;
-			var request_uri = '<?php echo  str_replace(get_option("siteurl"), '', get_permalink($post->ID)); ?>';
-			<?php 	if(is_single() && (int)$digressit_options['digressit_enabled_for_posts'] || is_page() && (int)$digressit_options['digressit_enabled_for_pages']){ ?>
-			var digressit_enabled = 1;
-			var post_name = '<?php echo $post->post_name; ?>';
-			var allow_general_comments = <?php echo !is_null($digressit_options["allow_general_comments"]) ? $digressit_options["allow_general_comments"] : 0; ?>;
-			var allow_comments_search = <?php echo !is_null($digressit_options["allow_comments_search"]) ? $digressit_options["allow_comments_search"] : 0; ?>;
-			var comment_count = <?php echo count($comment_array); ?>;
-			var commment_text_signature = new Array(); 
-			var commentbox_function = '<?php echo strlen($digressit_options['commentbox_parser']) ? $digressit_options['commentbox_parser'] : 'grouping_digressit_commentbox_parser'; ?>';
-			<?php } else{ ?>
-			var digressit_enabled = 0;
-			<?php } ?>			
-			var keyboard_navigation = <?php echo $digressit_options['keyboard_navigation'] ?>;
-
-		</script>	
+<script type='text/javascript'>	
+var siteurl = '<?php echo get_option("url"); ?>';
+var baseurl = '<?php echo get_root_domain() ?>';
+var user_ID =  <?php echo $current_user->ID; ?>;
+var post_ID = <?php echo isset($post->ID) ? $post->ID : 0 ?>;
+var blog_ID = <?php echo $blog_id; ?>;
+var current_blog_id = <?php echo $blog_id; ?>;
+var request_uri = '<?php echo  str_replace(get_option("siteurl"), '', get_permalink($post->ID)); ?>';
+<?php 	if(is_single() && (int)$digressit_options['digressit_enabled_for_posts'] || is_page() && (int)$digressit_options['digressit_enabled_for_pages']){ ?>
+var digressit_enabled = 1;
+var post_name = '<?php echo $post->post_name; ?>';
+var allow_general_comments = <?php echo !is_null($digressit_options["allow_general_comments"]) ? $digressit_options["allow_general_comments"] : 0; ?>;
+var allow_comments_search = <?php echo !is_null($digressit_options["allow_comments_search"]) ? $digressit_options["allow_comments_search"] : 0; ?>;
+var comment_count = <?php echo isset($comment_array) ? count($comment_array): 0; ?>;
+var commment_text_signature = new Array(); 
+var commentbox_function = '<?php echo strlen($digressit_options['commentbox_parser']) ? $digressit_options['commentbox_parser'] : 'grouping_digressit_commentbox_parser'; ?>';
+<?php } else{ ?>
+var digressit_enabled = 0;
+<?php } ?>
+var keyboard_navigation = <?php echo $digressit_options['keyboard_navigation'] ?>;
+</script>	
 		<?php
 		
 	

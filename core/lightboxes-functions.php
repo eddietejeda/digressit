@@ -100,7 +100,7 @@ function lightbox_login_ajax(){ ?>
 function lightbox_login_success_ajax(){
 
 	ob_start();
-	if(!is_user_logged_in()): 
+	if(is_user_logged_in()): 
 		$status  = 1;
 	?>
 		<div class="lightbox-content" id="lightbox-login-success">
