@@ -40,6 +40,21 @@ if(function_exists('digressit_body_class')){
 
 
 	<nav id="menu-primary" role="navigation">
+	<!-- this is some login stuff that should always be here -->
+	<div class="menu-site-container menu-login-list">
+	<ul>
+	<?php if(is_user_logged_in()): ?>
+		<li class="menu-my-account"><a href="<?php echo get_bloginfo('url'); ?>/wp-admin/" title="My Account"><?php _e('My Account'); ?></a></li>			
+		<li class="menu-logout"><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout"><?php _e('Logout'); ?></a></li>			
+	<?php else: ?>
+		<?php if(get_option('users_can_register')): ?>
+		<li  class="menu-sign-up"><a href="<?php echo get_bloginfo('url'); ?>/wp-signup.php"   title="Register"><?php _e('Register'); ?></a></li>
+		<?php endif; ?>
+		<li class="menu-login"><a href="<?php echo wp_login_url(); ?>" title="Login"><?php _e('Login'); ?></a></li>
+	<?php endif;?>
+	</ul>
+	</div>
+
 	<?php 
 		if(has_action('primary_menu')){
 			do_action('primary_menu');
@@ -57,20 +72,6 @@ if(function_exists('digressit_body_class')){
 		} 
 	?>
 
-	<!-- this is some login stuff that should always be here -->
-	<div class="menu-site-container">
-	<ul>
-	<?php if(is_user_logged_in()): ?>
-		<li class="menu-my-account"><a href="<?php echo get_bloginfo('url'); ?>/wp-admin/" title="My Account"><?php _e('My Account'); ?></a></li>			
-		<li class="menu-logout"><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="Logout"><?php _e('Logout'); ?></a></li>			
-	<?php else: ?>
-		<?php if(get_option('users_can_register')): ?>
-		<li  class="menu-sign-up"><a href="<?php echo get_bloginfo('url'); ?>/wp-signup.php"   title="Register"><?php _e('Register'); ?></a></li>
-		<?php endif; ?>
-		<li class="menu-login"><a href="<?php echo wp_login_url(); ?>" title="Login"><?php _e('Login'); ?></a></li>
-	<?php endif;?>
-	</ul>
-	</div>
 	</nav>
 
 	<?php if($digressit_options['enable_instant_content_search'] == 'true'): ?>
