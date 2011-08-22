@@ -1,6 +1,4 @@
 <?php
-
-
 if(isset($_REQUEST['digressit-embed'])){
 	include_once(DIGRESSIT_CORE_DIR .'/core/embed-functions.php');	
 	$digressit_embed = new Digressit_Embed();

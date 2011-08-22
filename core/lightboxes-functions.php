@@ -1,5 +1,10 @@
 <?php
 
+
+add_action('public_ajax_function', 'lightbox_login_ajax');
+add_action('public_ajax_function', 'lightbox_login_success_ajax');
+
+
 /**
  *
  */
@@ -10,12 +15,6 @@ function get_lightboxes(){
 	<?php
 	do_action('add_lightbox');
 }
-
-
-
-add_action('public_ajax_function', 'lightbox_login_ajax');
-add_action('public_ajax_function', 'lightbox_login_success_ajax');
-
 
 /**
  *

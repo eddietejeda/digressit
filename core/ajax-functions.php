@@ -4,19 +4,6 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'ajax-functions.php' == basename($_SE
 endif;
 
 
-//add_action('wp_ajax_my_action', 'my_action_callback');
-//add_action('wp_ajax_nopriv_my_action', 'my_action_callback');
-
-
-
-/**
- * Flush your rewrite rules if you want pretty permalinks
- */
-function ajax_flush_rewrite_rules() {
-	global $wp_rewrite;
-	$wp_rewrite->flush_rules();
-}
-
 /**
  * Create some extra variables to accept when passed through the url
  */

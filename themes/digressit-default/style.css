@@ -992,11 +992,12 @@ h2{
 */
 .container{
 	border-color: #BDBDBD;
-    border-style: solid;
-    border-width: 0 1px;
-    margin: 0 auto;
-    position: relative;
-    width: 1000px;
+	border-style: solid;
+	border-width: 0 1px;
+	margin: 0 auto;
+	position: relative;
+	width: 1000px;
+	background-color: white;
 }
 
 .comment-count-in-book{
@@ -1067,7 +1068,7 @@ div#item-header{
 #menu-primary a {
 	color: #111;
 	display: block;
-	line-height: 2.333em;
+	line-height: 1.333em;
 	padding: 0 0.2125em;
 	text-decoration: none;
 }

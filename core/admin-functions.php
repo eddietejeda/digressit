@@ -47,25 +47,28 @@ function digressit_permalink_required_notice(){
 
 
 function digressit_theme_options_page_form(){
-	if($_GET['page'] == 'digressit.php' && isset($_POST['reset']) && $_POST['reset'] == 'Reset Options'){
-		delete_option('digressit');
-		activate_digressit();		
-	}
-	elseif(isset($_POST['update-digressit-options'])){
-		$digressit_options = get_option('digressit');
+	
+	if($_POST && is_admin()){
 		
-		$_POST['digressit_enabled_for_posts'] = (isset($_POST['digressit_enabled_for_posts'])) ? 1 : 0;
-		$_POST['digressit_enabled_for_pages'] = (isset($_POST['digressit_enabled_for_pages'])) ? 1 : 0;
-		$_POST['digressit_enabled_for_digressit_type'] = (isset($_POST['digressit_enabled_for_digressit_type'])) ? 1 : 0;
-		
-		
-		
-		foreach($_POST as $key => $value){
-			$digressit_options[$key] = $value;
+		if($_GET['page'] == 'digressit.php' && isset($_POST['reset']) && $_POST['reset'] == 'Reset Options'){
+			delete_option('digressit');
+			activate_digressit();		
 		}
+		elseif($_GET['page'] == 'digressit.php' && isset($_POST['update-digressit-options'])){
+			$digressit_options = get_option('digressit');
+			
+			$_POST['digressit_enabled_for_posts'] = ($_POST['digressit_enabled_for_posts']) ? 1 : 0;
+			$_POST['digressit_enabled_for_pages'] = ($_POST['digressit_enabled_for_pages']) ? 1 : 0;
+			$_POST['digressit_enabled_for_digressit_type'] = ($_POST['digressit_enabled_for_digressit_type']) ? 1 : 0;
+
 		
-		delete_option('digressit');
-		add_option('digressit', $digressit_options);
+			foreach($_POST as $key => $value){
+				$digressit_options[$key] = $value;
+			}
+		
+			delete_option('digressit');
+			add_option('digressit', $digressit_options);
+		}
 	}
 }
 
@@ -117,9 +120,9 @@ function digressit_theme_options_page() {
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Enable Digress.it', 'digressit');  ?></b></td>
 			<td>
-				<p><input type="checkbox" name="digressit_enabled_for_posts" <?php echo (int)$digressit_options['digressit_enabled_for_posts']==1 ? ' checked ' : ''; ?>/> Posts</p>
-				<p><input type="checkbox" name="digressit_enabled_for_pages" <?php echo (int)$digressit_options['digressit_enabled_for_pages']==1 ? ' checked ' : ''; ?>/> Pages</p>
-				<p><input type="checkbox" name="digressit_enabled_for_digressit_type" <?php echo (int)$digressit_options['digressit_enabled_for_digressit_type']==1 ? ' checked ' : ''; ?>/> Custom Digress.it Type</p>
+				<p><input type="checkbox" name="digressit_enabled_for_posts" <?php echo (int)$digressit_options['digressit_enabled_for_posts']===1 ? ' checked ' : ''; ?>/> Posts</p>
+				<p><input type="checkbox" name="digressit_enabled_for_pages" <?php echo (int)$digressit_options['digressit_enabled_for_pages']===1 ? ' checked ' : ''; ?>/> Pages</p>
+				<p><input type="checkbox" name="digressit_enabled_for_digressit_type" <?php echo (int)$digressit_options['digressit_enabled_for_digressit_type']===1 ? ' checked ' : ''; ?>/> Custom Digress.it Type</p>
 			</td>
 			<td>
 				<p><?php _e("The content of this page will be the first thing a visitor to your website will see.", 'digressit'); ?></p>			

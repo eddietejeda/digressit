@@ -102,7 +102,7 @@ function activate_digressit(){
 	$digressit_options['keyboard_navigation'] = 0;
 	$digressit_options['digressit_enabled_for_posts'] = 1;
 	$digressit_options['digressit_enabled_for_pages'] = 0;
-	
+	$digressit_options['digressit_enabled_for_digressit_type'] = 0;
 	
 	
 	
@@ -243,7 +243,7 @@ function digressit_init(){
 		activate_digressit();
 	}
 
-	/* upgrade to Digress.it 3.2 */
+	/* upgrade to latest Digress.it 3.2 */
 	if($digressit_options['version'] != DIGRESSIT_VERSION){		
 		$digressit_options['enable_dropdown_menu'] = 0;
 		$digressit_options['enable_citation_button'] = 0;
@@ -272,6 +272,7 @@ function create_digressit_post_type() {
 				),
 				'public' => true,
 				'has_archive' => true,
+				'supports' => array('title','editor','author','thumbnail','excerpt','comments'),
 				'rewrite' => array('slug' => 'digressit')
 			)
 		);

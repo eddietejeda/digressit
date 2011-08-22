@@ -56,10 +56,15 @@
 				<div class="entry" role="article">
 					<?php digressit_get_stylized_content_header(); ?>
 					<?php the_content(); ?>
-					<?php dynamic_sidebar('Page Content'); ?>					
+					<?php dynamic_sidebar('Single Content'); ?>					
 				</div>	
 			</div>			
 		</div>
+		
+		<?php
+		if(!post_password_required())
+			comments_template();
+		?>		
 	<?php endif; ?>
 	<?php endwhile;?>
 <?php endif; ?>

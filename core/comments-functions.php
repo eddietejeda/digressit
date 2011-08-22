@@ -6,15 +6,6 @@ endif;
 
 
 /*
- * Flush your rewrite rules if you want pretty permalinks
- */
-function commentbrowser_flush_rewrite_rules() {
-    global $wp_rewrite;
-
-    $wp_rewrite->flush_rules();
-}
-
-/*
  * Create some extra variables to accept when passed through the url
  */
 function commentbrowser_query_vars( $query_vars ) {
@@ -64,6 +55,7 @@ function commentbrowser_template_redirect() {
 
 /**
  * 
+ * This handles submission of comment form. 
  */
 function add_comment_ajax($request_params){
 	//extract($request_params);
@@ -161,7 +153,7 @@ function add_comment_ajax($request_params){
 }
 
 /**
- * 
+ *  This is how the comments are displayed. Overriding the default comments function. Includes new custom hooks for adding metadata
  */
 function standard_digressit_comment_parser($comment, $args, $depth) {
  	global $current_page_template, $blog_id, $current_user; 
@@ -235,7 +227,7 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 
 
 /**
- * 
+ *  This is how the comment form will look
  */
 function digressit_comment_form(){
 	global $blog_id;
@@ -411,27 +403,30 @@ function digressit_list_general_comments(){
 	<?php
 }
 
-
 /**
- * the following were imported from CommentPress 1.4. We should not use them any more
+ *  get comments that are not attached to a specific paragraph
  */
 function digressit_get_approved_general_comments($id){
 	$approved_comments = get_approved_comments($id);
-	
 	$general_comments = null;
-
 	foreach($approved_comments as $comment){
 		if(!$comment->comment_text_signature){
 			$general_comments[] = $comment;
 		}
 	}
-	
 	return $general_comments;
-
 }
 
+
+/******************************************************************************************************
+ * the following functions were imported from CommentPress 1.4. We should not use them any more
+ ******************************************************************************************************/
+
+
+
 /**
- * 
+ * @DEPRECATED
+ *  get comment count by the comment title
  */
 function digressit_get_comment_count($title){
 	global $wpdb;
@@ -444,6 +439,7 @@ function digressit_get_comment_count($title){
 
 
 /**
+ * @DEPRECATED
  * REDO THIS FUNCTION 
  */
 $comments_for_counting = null;
@@ -480,7 +476,7 @@ function digressit_get_post_comment_count($post_ID, $metatag = null, $metavalue 
 }
 
 /**
- *
+ * get  comment count by category
  */
 function digressit_get_comment_count_by_category($cat){
 	global $wpdb;
@@ -498,7 +494,7 @@ function digressit_get_comment_count_by_category($cat){
 
 
 /**
- *
+ * get only the users who have commented
  */
 function digressit_get_users_who_have_commented(){
 	global $wpdb;
@@ -516,7 +512,8 @@ function digressit_get_users_who_have_commented(){
 
 
 /**
- *
+ * @DEPRECATED
+ * get the comments by a specific user
  */
 function digressit_get_comments_from_user($id){
  	global $wpdb;	
@@ -587,7 +584,8 @@ function digressit_get_all_comments($only_approved = true){
 
 
 /**
- *
+ * @DEPRECATED
+ * get recent comments. Not used anymore
  */
 function digressit_get_recent_comments($limit = 5, $cleaned = false){
 	global $wpdb;
@@ -603,7 +601,7 @@ function digressit_get_recent_comments($limit = 5, $cleaned = false){
 
 
 /**
- *
+* @DEPRECATED
  */
 function digressit_get_approved_comments_for_paragraph($post_id, $paragraph){
 	$approved_comments = get_approved_comments($post_id);		
@@ -619,7 +617,8 @@ function digressit_get_approved_comments_for_paragraph($post_id, $paragraph){
 
 
 /**
- *
+ * @DEPRECATED
+ * very slow function to get all the comments on the MU installation.
  */
 function digressit_mu_get_all_comments($user_id = null, $blog_id = null){
 	
@@ -653,7 +652,8 @@ function digressit_mu_get_all_comments($user_id = null, $blog_id = null){
 
 
 /**
- *
+ * @DEPRECATED
+ * very slow function to get all the comments of a specific user on the MU installation.
  */
 function digressit_mu_get_comments_from_user($user_id){
 	//$rule_list = get_rules();
@@ -668,13 +668,8 @@ function digressit_mu_get_comments_from_user($user_id){
 	return $comments;
 }
 
-
-
-
-
-
 /**
- *
+ * @DEPRECATED
  */
 function commentbrowser_comments_by_section(){
 	global $wp, $digressit_options;
@@ -686,7 +681,7 @@ function commentbrowser_comments_by_section(){
 }
 
 /**
- *
+ * @DEPRECATED
  */
 function commentbrowser_comments_by_user(){
 	commentbrowser_comments_by_contributor();

@@ -1532,9 +1532,7 @@ jQuery(document).ready(function() {
 
 	//jQuery.cookie('text_signature', null, { path: '/' , expires: 1} );				
 	if(jQuery("#dynamic-sidebar").hasClass('sidebar-widget-auto-hide')){
-
 		if(jQuery("#dynamic-sidebar").hasClass('sidebar-widget-position-right')){
-
 			jQuery("#dynamic-sidebar").hover(function (e) {
 				var t = setTimeout(function() {
 					jQuery('#dynamic-sidebar').animate({ 
@@ -1547,10 +1545,8 @@ jQuery(document).ready(function() {
 					right: "-260px"
 				}, 100 );
 			});
-			
 		}
 		else{
-
 			jQuery("#dynamic-sidebar").hover(function (e) {
 				var t = setTimeout(function() {
 					jQuery('#dynamic-sidebar').animate({ 
@@ -1565,7 +1561,6 @@ jQuery(document).ready(function() {
 			});
 			
 		}
-	
 	}
 
 
@@ -1662,7 +1657,7 @@ jQuery.fn.extend({
 		var content_height = jQuery('#content').height();
 		var default_top = parseInt(jQuery('#content').position().top);
 		var scroll_top =  default_top  + parseInt(jQuery(window).scrollTop());
-		var lock_position = jQuery('#content').offset().top - 50;
+		var lock_position = jQuery('#content').offset().top;
 		
 		
 		//console.log(scroll_top + ' - '+ lock_position+"\n");

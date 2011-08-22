@@ -79,15 +79,12 @@ add_action('init', 'create_digressit_post_type' );
 add_action('after_setup_theme', 'digressit_setup' );
 
 
-
 /* admin functions */
 add_action('admin_head-post.php', 'digressit_add_comment_change_notice');
 add_action('admin_menu', 'digressit_add_admin_menu');
-
-
+add_action('admin_init', 'digressit_theme_options_page_form');
 
 /* ajax init functions */
-//add_action('init', 'ajax_flush_rewrite_rules', 0 );
 add_filter('query_vars', 'ajax_query_vars', 0);
 add_action('generate_rewrite_rules', 'ajax_add_rewrite_rules', 0 );
 add_action('template_redirect', 'ajax_template' );
