@@ -1000,6 +1000,13 @@ h2{
 	background-color: white;
 }
 
+#search-wrapper{
+	width: 1000px;
+	margin: 0 auto;
+	background-color: white;
+	border: solid #BDBDBD;
+	border-width: 0 1px;
+}
 .comment-count-in-book{
 	font-size: 80%;
 	clear: left;

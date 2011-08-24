@@ -1,14 +1,8 @@
 <?php
-/**
- * @package Digress.it
- * @subpackage Digress.it.Default
- */
-
 // Do not delete these lines
 if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
 	die ('Please do not load this page directly. Thanks!');
-
-
+	
 if ( function_exists('post_password_required')  ) {
 	if( post_password_required() ){
 	 ?>
@@ -17,17 +11,13 @@ if ( function_exists('post_password_required')  ) {
 	return;
 	}
 }
-global $blog_id;
 ?>
-
 <div id="commentbox-header">
 	<?php do_action('commenbox_header'); ?>
 </div>
 
-
 <div id="commentbox">
 <div id="commentwindow">
-
 	<?php do_action('digressit_custom_commenbox_header'); ?>
 	
 	<div id="toplevel-commentbox">
@@ -65,25 +55,20 @@ global $blog_id;
 	<?php do_action('digressit_toplevel_commentbox'); ?>
 	</div>
 	
+	<div id="comments-sort-all"><?php _e('show all', 'digressit'); ?> (<?php echo count(get_approved_comments($post->ID)); ?>)</div>	
+	<div id="no-comments"><?php _e('There are no comments. Click the text to your left to make a new comment.', 'digressit') ; ?></div>
+	<?php if ( have_comments() ) : ?>
+		<?php global $post; ?>	
+		<div id="commentlist" class="commentlist">
+		<?php wp_list_comments(array('type' => 'comment', 'callback' => get_digressit_comments_function() )); ?>
+		</div>
 
-
-<div id="comments-sort-all"><?php _e('show all', 'digressit'); ?> (<?php echo count(get_approved_comments($post->ID)); ?>)</div>	
-<div id="no-comments"><?php _e('There are no comments. Click the text to your left to make a new comment.', 'digressit') ; ?></div>
-
-
-
-<?php if ( have_comments() ) : ?>
-	<?php global $post; ?>	
-	<div id="commentlist" class="commentlist">
-	<?php wp_list_comments(array('type' => 'comment', 'callback' => get_digressit_comments_function() )); ?>
-	</div>
-
-	<?php if ( function_exists('previous_comments_link')  ):  ?>
-	<div class="navigation">
-		<div class="alignleft"><?php previous_comments_link() ?></div>
-		<div class="alignright"><?php next_comments_link() ?></div>
-	</div>
-<?php endif; ?>
+		<?php if ( function_exists('previous_comments_link')  ):  ?>
+		<div class="navigation">
+			<div class="alignleft"><?php previous_comments_link() ?></div>
+			<div class="alignright"><?php next_comments_link() ?></div>
+		</div>
+	<?php endif; ?>
 
 <?php else : // this is displayed if there are no comments so far ?>
 

@@ -24,9 +24,7 @@ digressit_get_stylized_title();
 	<div id="mainpage">		
 		<h3 class="toc"><?php echo $digressit_options['table_of_contents_label']; ?></h3>
 		<div class="description"><?php echo html_entity_decode(get_bloginfo('description')); ?></div>
-		<div class='comment-count-in-book'><?php _e('There are '.digressit_get_all_comment_count().' comments in this document'); ?></div>
-
-
+		<div class='comment-count-in-book'><?php _e('There are '.count(digressit_get_all_comments(false)).' comments in this document'); ?></div>
 		<?php 		
 			wp_nav_menu(array('walker' => new digressit_mainpage_nav_walker(), 'depth'=> 3, 'fallback_cb'=> 'digressit_mainpage_default_menu', 'echo' => true, 'theme_location' => 'Main Page', 'menu_class' => 'navigation'));
 	
