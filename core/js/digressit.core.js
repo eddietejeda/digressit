@@ -1685,8 +1685,8 @@ jQuery.fn.extend({
 			var left = parseInt(jQuery('#content').offset().left) + 565  ;			
 			jQuery("#commentbox, #commentbox-header").css('position', 'fixed');
 			jQuery("#commentbox, #commentbox-header").css('left', left + 'px');
-			jQuery("#commentbox-header").css('top', '50px');
-			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').outerHeight()) + 50 + 'px');
+			jQuery("#commentbox-header").css('top', '5px');
+			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').outerHeight()) + 5 + 'px');
 			jQuery("#commentbox").css('height', '90%');
 			
 		}	
@@ -1769,7 +1769,7 @@ jQuery.fn.openlightbox = function (lightbox){
 					if(jQuery('#lightbox-content .lightbox-delay-close').length){
 						var t = setTimeout(function() {
 							jQuery("body").closelightbox();
-							}, 3000);
+							}, 1000);
 						jQuery(this).data('timeout', t);			
 					}
 				}

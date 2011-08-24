@@ -1,3 +1,8 @@
+<?php
+/*
+Template Name: Archive
+*/
+?>
 <?php get_header(); ?>
 
 <div class="container">
