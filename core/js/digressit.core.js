@@ -1753,6 +1753,19 @@ jQuery.fn.openlightbox = function (lightbox){
 					jQuery('#lightbox-content').fadeIn('slow');
 
 
+                                function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";
+        
+                                var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
+            
+          
+                                if(eval(dynamic_call)){
+                                        eval('AjaxResult.' + function_name + '(data);');
+                                }
+                                else{
+
+                                }
+        
+
 					if(jQuery('#lightbox-content .lightbox-delay-close').length){
 						var t = setTimeout(function() {
 							jQuery("body").closelightbox();
