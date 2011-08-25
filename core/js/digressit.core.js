@@ -367,7 +367,7 @@ jQuery(document).ready(function() {
 			}
 		}
 
-		var function_parameters = parseGetVariables( jQuery(this).prop('value'));
+		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
 
 		console.log('function_parameters' + function_parameters  + "\n")
 		jQuery(this).css('cursor', 'wait');
@@ -1686,7 +1686,7 @@ jQuery.fn.extend({
 			jQuery("#commentbox, #commentbox-header").css('position', 'fixed');
 			jQuery("#commentbox, #commentbox-header").css('left', left + 'px');
 			jQuery("#commentbox-header").css('top', '5px');
-			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').outerHeight()) + 5 + 'px');
+			jQuery("#commentbox").css('top',  parseInt(jQuery('#wpadminbar').outerHeight()) +  parseInt(jQuery('#commentbox-header').outerHeight()) + 5 + 'px');
 			jQuery("#commentbox").css('height', '90%');
 			
 		}	

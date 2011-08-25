@@ -343,7 +343,7 @@ function digressit_list_posts($args = array('number' => -1, 'category_name' => n
 	<?php
 	$permalink = get_bloginfo('url')."/".$wp->query_vars['commentbrowser_function'].'/'.$post->ID;
 	?>
-	<li><a href="<?php echo $permalink; ?>"><?php echo get_the_title($post->ID); ?> (<?php echo digressit_get_post_comment_count($post->ID, null, null, null); ?>)</a></li>
+	<li><a href="<?php echo $permalink; ?>"><?php echo get_the_title($post->ID); ?> (<?php echo digressit_get_post_comment_count($post->ID, null, null, 1); ?>)</a></li>
 	<?php endforeach;
 	?>
 	</ol>
@@ -569,14 +569,12 @@ function digressit_get_all_comment_count(){
  */
 function digressit_get_all_comments($only_approved = true){
 	global $wpdb;
-	
 	if($only_approved){
 		$clause = "AND comment_approved='1'";
 	}
 	else{
 		$clause = '';
 	}
-	
 	$sql = "SELECT * FROM $wpdb->comments WHERE comment_type = '' " . $clause;
 	return $wpdb->get_results($sql);
 			
@@ -640,7 +638,7 @@ function digressit_mu_get_all_comments($user_id = null, $blog_id = null){
 			$current_comments= digressit_get_comments_from_user($user_id);				
 		}
 		else{
-			$current_comments= digressit_get_all_comments();
+			$current_comments= digressit_get_all_comments(false);
 		}
 		
 		$comments = array_merge($comments, $current_comments);
@@ -675,7 +673,7 @@ function commentbrowser_comments_by_section(){
 	global $wp, $digressit_options;
 
 	echo '<h3>'.$digressit_options['comments_by_section_label'].'</h3>';
-	echo '<div class="comment-count-in-book">'.__('There are ').digressit_get_all_comment_count().__(' comments in this document').'</div>';
+	echo '<div class="comment-count-in-book">'.__('There are ').count(digressit_get_all_comments(false)).__(' comments in this document').'</div>';
 	digressit_list_posts();
 	return isset($wp->query_vars['commentbrowser_params']) ? get_comments('post_id='.$wp->query_vars['commentbrowser_params']) : array();
 }
@@ -695,7 +693,7 @@ function commentbrowser_comments_by_contributor(){
 
 	echo '<h3>'.__($digressit_options['comments_by_users_label'],'digressit').'</h3>';
 	
-	echo '<div class="comment-count-in-book">There are '.digressit_get_all_comment_count().' comments in this document</div>';
+	echo '<div class="comment-count-in-book">There are '.count(digressit_get_all_comments(false)).' comments in this document</div>';
     if(is_numeric($wp->query_vars['commentbrowser_params'])){
         $curauth = get_user_by('id', $wp->query_vars['commentbrowser_params']);
     }
@@ -720,7 +718,7 @@ function commentbrowser_comments_by_contributor(){
 function commentbrowser_general_comments(){
 	global $wp, $digressit_options;
 	echo '<h3>'.__($digressit_options['general_comments_label'],'digressit').'</h3>';	
-	echo '<div class="comment-count-in-book">There are '.digressit_get_all_comment_count().' comments in this document</div>';
+	echo '<div class="comment-count-in-book">There are '.count(digressit_get_all_comment_count()).' comments in this document</div>';
 	digressit_list_general_comments();
 	return digressit_get_approved_general_comments($wp->query_vars['commentbrowser_params']);
 }
