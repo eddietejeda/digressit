@@ -7,7 +7,7 @@
 while (have_posts()) : the_post(); ?>
 	<div <?php if(function_exists('post_class')){ post_class(); } ?> id="post-<?php the_ID(); ?>">
 		<div class="entry" role="article">
-			<a href="<?php the_permalink(); ?>"><h3><?php the_title(); ?></h3></a>
+			<a href="<?php the_permalink(); ?>"><h2><?php the_title(); ?></h2></a>
 			<?php 
 	
 			$post_content = str_replace('[dig]','',strip_tags($post->post_content));

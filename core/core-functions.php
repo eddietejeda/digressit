@@ -1058,7 +1058,14 @@ function header_default_top_menu(){
  */
 function digressit_body_class(){
 	global $blog_id, $post;
-	$request_root = parse_url($_SERVER['REQUEST_URI']);
+
+	$parse_url = parse_url($_SERVER['REQUEST_URI']);
+	$pieces = explode("/", $parse_url['path']);
+
+//	var_dump($pieces);
+		
+	$request_root = ereg_replace("[^A-Za-z0-9]", "-",  $pieces[1]);
+	
 	
 	$blog_name_unique = ereg_replace("[^A-Za-z0-9]", "-", strtolower(get_bloginfo('name') ));
 	$post_name_unique = 'post-name-'. $post->post_name;
@@ -1072,7 +1079,7 @@ function digressit_body_class(){
 	else{
 		$current_page_name .= basename(get_bloginfo('home'));
 		if(is_home()){
-			$current_page_name .= ' site-home '. $blog_name_unique ;
+			$current_page_name .= ' site-home '. $blog_name_unique;
 		}	
 	}
 	
@@ -1081,7 +1088,7 @@ function digressit_body_class(){
 	
 	}
 	
-	return $current_page_name. " ". $post_name_unique;
+	return $current_page_name. " ". $post_name_unique . " " .$request_root;
 }
 
 
