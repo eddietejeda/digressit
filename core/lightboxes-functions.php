@@ -73,7 +73,7 @@ function lightbox_login_ajax(){ ?>
 				<input type="hidden" name="testcookie" value="1" />
 	
 				<?php do_action('digressit_login_form'); ?>	
-				<span id="login-submit" class="lightbox-submit"><span class="loading-bars"></span><?php _e('Login'); ?></span>
+				<span id="login-submit" class="lightbox-submit lightbox-button"><span class="loading-bars"></span><?php _e('Login'); ?></span>
 				<span class="lightbox-close"></span>
 			
 			</form>

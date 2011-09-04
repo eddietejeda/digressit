@@ -22,7 +22,6 @@ if ( function_exists('post_password_required')  ) {
 	
 	<div id="toplevel-commentbox">
 	<div name="respond-form" id="respond">
-		<div class='lightbox lightbox-comments-link '></div>
 
 		<?php
 		$custom_comment_open = true;
