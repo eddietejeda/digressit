@@ -1735,37 +1735,23 @@ jQuery.fn.openlightbox = function (lightbox){
 					jQuery('#lightbox-transparency').css('width', body_width  + 'px');
 					jQuery('#lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
 					jQuery('#lightbox-transparency').fadeTo(0, 0.20);				
-		
-			
-			
-					/*
-					jQuery('input[type=button]').attr('disabled', false);
-					jQuery('input[type=submit]').attr('disabled', false);
-					jQuery('input[type=text]').attr('readonly', '');
-					jQuery('select').attr('disabled', false);
-					jQuery('textarea').attr('readonly', '');
-					*/			
 					jQuery('#lightbox-content').html(data.message);
 
-					jQuery('#lightbox-content').css('left', (browser_width - jQuery('#lightbox-content').width()) /2.5  );
-					jQuery('#lightbox-content').css('top', '20%');			
-
+					jQuery('#lightbox-content').css('left', (browser_width - jQuery('#lightbox-content').width()) /2  );
+					jQuery('#lightbox-content').css('top', '20%');
 					jQuery('#lightbox-content').fadeIn('slow');
 
 
-                                function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";
-        
-                                var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
-            
-          
-                                if(eval(dynamic_call)){
-                                        eval('AjaxResult.' + function_name + '(data);');
-                                }
-                                else{
+					function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";
 
-                                }
-        
-
+					var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
+					
+					if(eval(dynamic_call)){
+					eval('AjaxResult.' + function_name + '(data);');
+					}
+					else{
+					}
+					
 					if(jQuery('#lightbox-content .lightbox-delay-close').length){
 						var t = setTimeout(function() {
 							jQuery("body").closelightbox();
