@@ -58,14 +58,14 @@ function lightbox_login_ajax(){ ?>
 					<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" tabindex="20" /></label>
 				</p>
 				
+				<div class="custom_register_links">
 				<?php if(has_action('custom_register_links')) :?>
 					<?php do_action('custom_register_links'); ?>
 				<?php else: ?>
-					<p><a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Register Account'); ?>"><?php _e('Register account'); ?></a></p>
-					<p><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Lost Password'); ?>"><?php _e('Lost Password?'); ?></a></p>
-					
+					<p class="register-account-link"><a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Register Account'); ?>"><?php _e('Register account'); ?></a></p>
+					<p class="lost-password-link"><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Lost Password'); ?>"><?php _e('Lost Password?'); ?></a></p>
 				<?php endif; ?>
-	
+				</div>
 				<!--<input type="submit" name="wp-submit" id="wp-submit" value="Log In" tabindex="100" />-->
 			
 				<input type="hidden" name="wp-submit" value="Log In" id="wp-submit">
