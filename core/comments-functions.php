@@ -61,6 +61,12 @@ function add_comment_ajax($request_params){
 	//extract($request_params);
 	global $wpdb, $current_user, $blog_id;
 
+	if(function_exists('switch_to_blog')){
+		if($request_params['blog_id']){
+			switch_to_blog($request_params['blog_id']);
+		}
+	}
+	
 	$time = current_time('mysql'); 
 	$time_gmt = current_time('mysql', 1); 
 	
@@ -148,6 +154,12 @@ function add_comment_ajax($request_params){
 	$message['comment_response'] = ob_get_contents();
 	ob_end_clean();
 	
+	
+	if(function_exists('switch_to_blog')){
+		if($request_params['blog_id']){
+			restore_current_blog();
+		}
+	}
 	
 	die(json_encode(array('status' => $status, "message" => $message)));
 }

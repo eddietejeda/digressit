@@ -19,12 +19,9 @@ var request_time_delay = 500; // ms - adjust as you like
 
 //highlight a block of text
 jQuery.fn.highlight = function (str, className){
-    return this.each(function (){
-        this.innerHTML = this.innerHTML.replace(
-            new RegExp(str, "g"),
-            "<span class=\"" + className + "\">" + str + "</span>"
-        );
-    });
+	return this.each(function (){
+		this.innerHTML = this.innerHTML.replace(new RegExp(str, "g"), "<span class=\"" + className + "\">" + str + "</span>");
+	});
 };
 	
 
@@ -369,7 +366,7 @@ jQuery(document).ready(function() {
 
 		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
 
-		console.log('function_parameters' + function_parameters  + "\n")
+//		console.log('function_parameters' + function_parameters  + "\n")
 		jQuery(this).css('cursor', 'wait');
 		jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
 			function( data ) {					
@@ -640,7 +637,7 @@ jQuery(document).ready(function() {
 		jQuery('#block-access').hide();
 	});
 	
-	jQuery(".insert-link").click(function (e) {
+	jQuery(".insert-link").live('click', function(e){
 		var name = jQuery("#link_name").val();
 		var link = jQuery("#link_url").val();
 		jQuery("#comment").val(jQuery("#comment").val() + '<a href="'+link+'">'+name+'</a>');
@@ -649,27 +646,18 @@ jQuery(document).ready(function() {
 	});
 	
 	
-	
-	
-	
-	
-	
-	
-	
+	jQuery(".lightbox-content input[type=text], .lightbox-content input[type=password]").live('keyup', function(e){
 
-	
-	jQuery(".lightbox-content input[type=text]").keyup(function(event) {
-
-
-		if (event.keyCode == '13') {
+		if (e.keyCode == '13') {
 			if(jQuery(this).hasClass('ajax')){
 		  		/* UNDO COMMENT: */
 				//jQuery(this).add('.lightbox-submit').click();
 			}
 			else{
-				jQuery(event.target).parentsUntil('form').parent().submit();		
+				jQuery(e.target).parentsUntil('form').parent().submit();		
+				//alert(jQuery(e.target).parentsUntil('form').parent().attr('id'));
 		  		/* UNDO COMMENT: */
-		  		//jQuery(this).parent().submit();
+				//jQuery(this).submit();	
 			}
 		}
 	});
@@ -796,7 +784,9 @@ jQuery(document).ready(function() {
 			jQuery('body').displayerrorslightbox(data);
 			return;
 		}
-		var selected_paragraph_number = parseInt(jQuery('#selected_paragraph_number').val());
+		
+		console.log(jQuery('#selected_paragraph_number').val());
+		var selected_paragraph_number = parseInt(  jQuery('#selected_paragraph_number').val()  );
 
 		var comment_parent  = data.message.comment_parent;
 
@@ -859,9 +849,6 @@ jQuery(document).ready(function() {
 
 		jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).html(data.message.comment_count);
 		jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).fadeIn('slow');
-
-
-
 
 		jQuery('#comment').val('');		
 		jQuery('#comment_parent').val(0);
@@ -1009,6 +996,7 @@ jQuery(document).ready(function() {
 	jQuery("#comment").focus(function (e) {
 		if( jQuery(this).val() == 'Click here add a new comment...'){
 			jQuery(this).val('');
+			jQuery('#submit-comment').removeClass('disabled');			
 		}
 	});
 
@@ -1165,6 +1153,8 @@ jQuery(document).ready(function() {
 		jQuery("#cancel-response").click(function (e) {
 			//jQuery('#comment_parent').val(0);
 			jQuery('#comment').val('Click here add a new comment...');
+			jQuery('#submit-comment').addClass('disabled');
+			
 		});
 
 
@@ -1734,7 +1724,7 @@ jQuery.fn.openlightbox = function (lightbox){
 		
 					jQuery('#lightbox-transparency').css('width', body_width  + 'px');
 					jQuery('#lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
-					jQuery('#lightbox-transparency').fadeTo(0, 0.20);				
+					jQuery('#lightbox-transparency').fadeTo(0, 0.70);				
 					jQuery('#lightbox-content').html(data.message);
 
 					jQuery('#lightbox-content').css('left', (browser_width - jQuery('#lightbox-content').width()) /2  );
@@ -1779,6 +1769,33 @@ jQuery.fn.displayerrorslightbox = function (data){
 		var lightbox = '#lightbox-generic-response';
 		jQuery(lightbox + ' > p').html(data.message);
 		jQuery('body').openlightbox(lightbox);	
+	}
+}
+
+jQuery.fn.load_in_lightbox = function (data){
+	if(parseInt(data.status) == 1){
+		jQuery('#lightbox-content').hide();
+		var browser_width = jQuery(window).width();
+		var browser_height = jQuery(window).height();
+		var body_width = jQuery('#wrapper').width();
+		var body_height = jQuery('#wrapper').height();
+
+
+		jQuery('.lightbox-submit').removeClass('disabled');
+
+		jQuery('#lightbox-transparency').css('width', body_width  + 'px');
+		jQuery('#lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
+		jQuery('#lightbox-transparency').fadeTo(0, 0.70);				
+		if(data.message.content){
+			jQuery('#lightbox-content').html(data.message.content);						
+		}
+		else{
+			jQuery('#lightbox-content').html(data.message);			
+		}
+
+		jQuery('#lightbox-content').css('left', (browser_width - jQuery('#lightbox-content').width()) /2  );
+		jQuery('#lightbox-content').css('top', '20%');
+		jQuery('#lightbox-content').fadeIn('slow');
 	}
 }
 
