@@ -252,11 +252,11 @@ function digressit_comment_form(){
 	
 		<?php if(!is_user_logged_in()): ?>
 			<?php if(function_exists('display_recaptcha')):?>
-				<p><input type="text" class="comment-field-area" id="display_name"  name="author" value="Your Name" ><p>
-				<p><input type="text" class="comment-field-area" id="user_email" name="email" value="Email"></p>
+				<p><input type="text" class="comment-field-area" id="display_name"  name="author" value="Your Name" ><label for="display_name">Display Name</label><p>
+				<p><input type="text" class="comment-field-area" id="user_email" name="email" value="Email"><label for="user_email">Email</label><p>
 			<?php else: ?>
-				<p><input type="text" class="comment-field-area" id="display_name"  name="display_name" value="Your Name" ><p>
-				<p><input type="text" class="comment-field-area" id="user_email" name="user_email" value="Email"></p>
+				<p><input type="text" class="comment-field-area" id="display_name"  name="display_name" value="Your Name" ><label for="display_name">Display Name</label><p>
+				<p><input type="text" class="comment-field-area" id="user_email" name="user_email" value="Email"><label for="user_email">Email</label><p>
 			<?php endif;?>
 		<?php endif; ?>
 		
@@ -272,11 +272,7 @@ function digressit_comment_form(){
 	
 		<div id="submit-wrapper">
 			<div name="cancel-response" id="cancel-response" class="button link"><?php _e('Cancel'); ?></div>
-			<?php if(function_exists('display_recaptcha')):?>
-			<input type="submit" class="recaptcha-submit" name="submit" id="submit" value="submit">
-			<?php else: ?>
-			<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div><?php _e('Submit Comment'); ?></div>
-			<?php endif; ?>
+			<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div><input id="submit-button" type="button" value="<?php _e('Submit Comment'); ?>"></div>
 		</div>
 		<?php comment_id_fields(); ?>
 		<?php do_action('comment_form', $post->ID); ?>
