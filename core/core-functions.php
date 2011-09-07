@@ -1271,14 +1271,11 @@ function get_root_domain(){
 
 function digressit_enabled(){
 	global $digressit_options;
-	
 	if(	is_single() && (int)$digressit_options['digressit_enabled_for_posts'] || is_page() && (int)$digressit_options['digressit_enabled_for_pages']){
-		
-		return true;
-				
+		return true;			
 	}
-
 }
+
 
 /**
  * 

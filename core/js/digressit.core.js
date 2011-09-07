@@ -1684,7 +1684,7 @@ jQuery.fn.extend({
 			jQuery("#commentbox, #commentbox-header").css('position', 'absolute');
 			jQuery("#commentbox, #commentbox-header").css('left', '565px'	);
 			jQuery("#commentbox-header").css('top', '0px' );
-			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').outerHeight()) + 'px');
+			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').top) + parseInt(jQuery('#commentbox-header').outerHeight()) + 'px');
 			jQuery("#commentbox").css('height', jQuery(window).height() - 250 + 'px');
 		}
 
@@ -1706,13 +1706,13 @@ jQuery.fn.extend({
 });
 
 
-jQuery.fn.openlightbox = function (lightbox){
+jQuery.fn.openlightbox = function (lightbox, params){
 	
 	if(isNaN(lightbox)){
-		jQuery.post( siteurl + "/ajax/" + lightbox +'/', null, 
+		jQuery.post( siteurl + "/ajax/" + lightbox +'/', params, 
 			function( data ) {	
 		
-				if(parseInt(data.status) == 1){
+				if(data && parseInt(data.status) == 1){
 					jQuery('#lightbox-content').hide();
 					var browser_width = jQuery(window).width();
 					var browser_height = jQuery(window).height();
