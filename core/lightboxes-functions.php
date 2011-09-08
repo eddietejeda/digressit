@@ -64,12 +64,12 @@ function lightbox_login_ajax(){
 		
 			<form method="post" action="<?php echo wp_login_url() ?>" id="login-form" name="loginform">
 				<p>
-					<label><?php _e('Username'); ?><br />
+					<label for="user_login"><?php _e('Username'); ?><br />
 					<input type="text" name="log" id="user_login" class="input required" value="" size="25" tabindex="1" /></label>
 				</p>
 	
 				<p>
-					<label><?php _e('Password'); ?><br />
+					<label for="user_pass"><?php _e('Password'); ?><br />
 					<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" tabindex="2" /></label>
 				</p>
 				
@@ -88,7 +88,9 @@ function lightbox_login_ajax(){
 				<input type="hidden" name="testcookie" value="1" />
 	
 				<?php do_action('digressit_login_form'); ?>	
-				<span id="login-submit" class="lightbox-submit lightbox-button"><span class="loading-bars"></span><?php _e('Log in'); ?></span>
+				<span class="loading-bars"></span>
+				<input type="button" id="login-submit" class="lightbox-submit lightbox-button" value="<?php _e('Log in'); ?>">
+
 				<span class="lightbox-close"></span>
 			
 			</form>

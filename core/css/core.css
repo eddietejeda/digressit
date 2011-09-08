@@ -398,8 +398,12 @@ div.bubble cite.rounded {
     margin: 0;
     padding: 0;
     text-transform: uppercase;
+	font-weight: bold;
 }
 
+.transparent-submit-button:hover{
+	cursor: pointer;
+}
 
 #lightbox-content input{
 	background-color:#FEFEE0;
@@ -481,7 +485,7 @@ a:hover{
 }
 
 
-#lightbox-content input, #lightbox-content textarea{
+#lightbox-content input[type=text], #lightbox-content textarea{
 	background:none repeat scroll 0 0 #FBFBFB;
 	border:1px solid #E5E5E5;
 	font-size:24px;

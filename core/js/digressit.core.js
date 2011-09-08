@@ -1748,7 +1748,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 
 					var focus = setTimeout(function() {
 						jQuery('#lightbox-content input:first').focus();				    
-						}, 1000);
+					}, 1000);
 
 					
 					if(jQuery('#lightbox-content .lightbox-delay-close').length){
