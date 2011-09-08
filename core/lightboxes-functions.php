@@ -16,20 +16,35 @@ function get_lightboxes(){
 	do_action('add_lightbox');
 }
 
+function start_lightbox($lightbox_name = 'Lightbox: Generic'){
+	global $blog_id;
+	ob_start();
+	do_action('digressit_start_lightbox', $lightbox_name);
+	//This is for Accessability support
+	echo '<span class="hidden-offscreen"> Beginning of dialog content </span>';
+}
+
+function end_lightbox($status = 1){
+	//This is for Accessability support
+	echo '<span class="hidden-offscreen"> End of dialog content </span>';
+	do_action('digressit_end_lightbox', $lightbox_name);
+	$html = ob_get_contents();
+	ob_end_clean();
+	die(json_encode(array('status' => $status, "message" => $html)) );	
+}
+
 /**
  *
  */
-function lightbox_login_ajax(){ ?>
-	<?php 
-	
-	ob_start();
+function lightbox_login_ajax(){ 
+	start_lightbox('Lightbox: Login');	
 	if(!is_user_logged_in()): 
 		$status  = 1;
 		?>
 		<div class="lightbox-content" id="lightbox-login">
 			<div class="ribbon">
 				<div class="ribbon-left"></div>
-				<div class="ribbon-title">Login</div>
+				<div class="ribbon-title">Log in</div>
 				<div class="ribbon-right"></div>
 			</div>
 		
@@ -50,19 +65,19 @@ function lightbox_login_ajax(){ ?>
 			<form method="post" action="<?php echo wp_login_url() ?>" id="login-form" name="loginform">
 				<p>
 					<label><?php _e('Username'); ?><br />
-					<input type="text" name="log" id="user_login" class="input required" value="" size="25" tabindex="10" /></label>
+					<input type="text" name="log" id="user_login" class="input required" value="" size="25" tabindex="1" /></label>
 				</p>
 	
 				<p>
 					<label><?php _e('Password'); ?><br />
-					<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" tabindex="20" /></label>
+					<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" tabindex="2" /></label>
 				</p>
 				
 				<div class="custom_register_links">
 				<?php if(has_action('custom_register_links')) :?>
 					<?php do_action('custom_register_links'); ?>
 				<?php else: ?>
-					<p class="register-account-link"><a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Register Account'); ?>"><?php _e('Register account'); ?></a></p>
+					<p class="register-account-link"><a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Create Account'); ?>"><?php _e('Create Account'); ?></a></p>
 					<p class="lost-password-link"><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Lost Password'); ?>"><?php _e('Lost Password?'); ?></a></p>
 				<?php endif; ?>
 				</div>
@@ -73,22 +88,17 @@ function lightbox_login_ajax(){ ?>
 				<input type="hidden" name="testcookie" value="1" />
 	
 				<?php do_action('digressit_login_form'); ?>	
-				<span id="login-submit" class="lightbox-submit lightbox-button"><span class="loading-bars"></span><?php _e('Login'); ?></span>
+				<span id="login-submit" class="lightbox-submit lightbox-button"><span class="loading-bars"></span><?php _e('Log in'); ?></span>
 				<span class="lightbox-close"></span>
 			
 			</form>
 		</div>
 	<?php 
-		else: 
-			$status = 0;
-		endif;
+	else: 
+		$status = 0;
+	endif;
 	
-	
-	$html = ob_get_contents();
-	ob_end_clean();
-	die(json_encode(array('status' => $status, "message" => $html)) );				
-
-	
+	end_lightbox($status);
 	
 } 
 
@@ -97,8 +107,7 @@ function lightbox_login_ajax(){ ?>
  *
  */
 function lightbox_login_success_ajax(){
-
-	ob_start();
+	start_lightbox('Lightbox: Login Success');	
 	if(is_user_logged_in()): 
 		$status  = 1;
 	?>
@@ -109,11 +118,7 @@ function lightbox_login_success_ajax(){
 	else:
 		$status = 0;	
 	endif;
-	
-	$html = ob_get_contents();
-	ob_end_clean();
-	die(json_encode(array('status' => $status, "message" => $html)) );				
-	
+	end_lightbox($status);
 } 
 
 

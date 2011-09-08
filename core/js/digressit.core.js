@@ -252,6 +252,10 @@ jQuery(document).ready(function() {
 				jQuery('.loading, .loading-bars, .loading-bar, .loading-throbber').hide();
 				
 			}, 'json' );
+
+
+
+			
 	});
 	
 	/* #2) Ajax form - after pressing submit button */	
@@ -1737,10 +1741,15 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
 					
 					if(eval(dynamic_call)){
-					eval('AjaxResult.' + function_name + '(data);');
+						eval('AjaxResult.' + function_name + '(data);');
 					}
 					else{
 					}
+
+					var focus = setTimeout(function() {
+						jQuery('#lightbox-content input:first').focus();				    
+						}, 1000);
+
 					
 					if(jQuery('#lightbox-content .lightbox-delay-close').length){
 						var t = setTimeout(function() {

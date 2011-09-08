@@ -391,6 +391,16 @@ div.bubble cite.rounded {
 	width:auto;
 }
 
+.transparent-submit-button{
+    background: none repeat scroll 0 0 transparent;
+    border: 1px none;
+    color: #576F7F;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+}
+
+
 #lightbox-content input{
 	background-color:#FEFEE0;
 	color:#666666;

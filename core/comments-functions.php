@@ -263,7 +263,7 @@ function digressit_comment_form(){
 		<div id="textarea-wrapper">
 			<div class="left"></div>
 			<div class="right">
-			<textarea name="comment" class="comment-textarea comment-collapsed" id="comment"><?php _e('Click here add a new comment...'); ?></textarea>
+			<textarea name="comment" tabindex="1" class="comment-textarea comment-collapsed" id="comment"><?php _e('Click here add a new comment...'); ?></textarea>
 			</div>
 		</div>
 	
@@ -272,7 +272,7 @@ function digressit_comment_form(){
 	
 		<div id="submit-wrapper">
 			<div name="cancel-response" id="cancel-response" class="button link"><?php _e('Cancel'); ?></div>
-			<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div><input id="submit-button" type="button" value="<?php _e('Submit Comment'); ?>"></div>
+			<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div><input class="transparent-submit-button" type="button" value="<?php _e('Submit Comment'); ?>"></div>
 		</div>
 		<?php comment_id_fields(); ?>
 		<?php do_action('comment_form', $post->ID); ?>
