@@ -1,3 +1,4 @@
+//lots of legacy vars. should be cleaned up soon.
 var AjaxResult = {};
 var grouping_digressit_commentbox_parser;
 var userAgent = navigator.userAgent.toLowerCase();
@@ -48,6 +49,42 @@ if(jQuery.browser.msie){
 
 jQuery(document).ready(function() {
 
+
+
+	/*** 
+	 *		RENDERING PAGE
+	 *
+	 *		
+	 */
+
+	if(typeof digressit_enabled != 'undefined' && digressit_enabled){
+		jQuery('#commentbox').position_main_elements();
+	}
+	
+    jQuery(window).scroll(function () { 
+	
+		//this should not fire every single time! do proper checks to help performance
+		if(digressit_enabled){
+			jQuery('#commentbox').position_main_elements();
+			//console.log('scroll');
+		}
+		
+    });
+
+	jQuery(window).resize(function(){
+		if(digressit_enabled){
+			jQuery('#commentbox').position_main_elements();			
+			//console.log('resize');
+		}
+	});
+	
+	
+	
+	/*** 
+	 *		USER INTERACTION
+	 *
+	 *		
+	 */
 	// Paragraph embeds
 	jQuery('.paragraphembed a').bind('click', function(e){
 		e.preventDefault();
@@ -75,6 +112,8 @@ jQuery(document).ready(function() {
 		}
 	});
 
+
+	//Keyboard navigation
 	jQuery(window).keyup(function(e){
 		var ESC = 27; // Leave comment box
 		var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
@@ -95,20 +134,16 @@ jQuery(document).ready(function() {
 			var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
 			
 			// Next/prev paragraph
-			if ( key == UP || key == DOWN)
-			{
+			if ( key == UP || key == DOWN){
 				var selected_paragraph_number = parseInt(jQuery('#selected_paragraph_number').val());
-				if(selected_paragraph_number > 0)
-				{
+				if(selected_paragraph_number > 0){
 					// Nothing to do
 				}
-				else
-				{
+				else{
 					selected_paragraph_number = 1;
 				}
 				
-				if(selected_paragraph_number ){
-							
+				if(selected_paragraph_number ){		
 					if(key == UP){
 						paragraphnumber = selected_paragraph_number - 1;
 					}
@@ -121,25 +156,18 @@ jQuery(document).ready(function() {
 					jQuery('#respond').show();			
 					jQuery('.comment' ).hide();
 					jQuery('.paragraph-' + paragraphnumber ).show();
-					//jQuery("#no-comments").hide();				
-		
+					//jQuery("#no-comments").hide();
 					jQuery('.textblock').removeClass('selected-textblock');
 					var commentboxtop = jQuery('#commentbox').position().top;
 		
-					if(paragraphnumber > 0)
-					{
+					if(paragraphnumber > 0){
 						jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
-		
 						var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
 						var scrollto = (top > 200)  ? (top - 100) : 0;
-		
 						if(iOS){
 							jQuery('#commentbox').position_main_elements();						
 						}
-				
 						jQuery(window).scrollTo(scrollto , 100);
-		
-		
 						jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
 					}
 					
@@ -147,37 +175,29 @@ jQuery(document).ready(function() {
 					document.location.hash = '#' + paragraphnumber;			
 				}
 			}
-			
 			// Move to comment field
-			else if (key == C)
-			{
+			else if (key == C){
 				jQuery('#comment').focus().keyup(function(e){
 					var k = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
-					
 					// Move out of the comment field
-					if (k == ESC)
-					{
+					if (k == ESC){
 						jQuery('#comment').blur();
 					}
 				});
 			}
 			
 			// Previous
-			else if (key == J)
-			{
+			else if (key == J){
 				var prev = jQuery('.navigation-previous a').eq(0);
-				if (prev.length == 1)
-				{
+				if (prev.length == 1){
 					window.location = prev.attr('href');
 				}
 			}
 			
 			// Next
-			else if (key == K)
-			{
+			else if (key == K){
 				var next = jQuery('.navigation-next a').eq(0);
-				if (next.length == 1)
-				{
+				if (next.length == 1){
 					window.location = next.attr('href');
 				}
 			}	
@@ -202,10 +222,297 @@ jQuery(document).ready(function() {
 
 
 
+	/*** 
+	 *		LIGHTBOXES
+	 *
+	 *		
+	 */
 
 
 
-/*** THE FOLLOWING ARE AJAX FORMS WITH DIFFERENT VARIENTS ON SUBMISSIONS. @TODO THIS COULD BE CONSOLIDATED */
+	if (document.location.hash.length) {
+		var hashtag = document.location.hash.substr(1);
+		if(isNaN(hashtag) && hashtag.search('comment-') != 0){
+			var lightbox = 'lightbox-' + hashtag;
+			jQuery('body').openlightbox(lightbox);
+		}
+	}	
+
+
+	if (jQuery('.lightbox-auto-load').length) {
+		var lightbox = '#'+jQuery('.lightbox-auto-load:first').attr('id');
+		jQuery("body").closelightbox();
+		jQuery('body').openlightbox(lightbox);
+	}
+
+
+
+	/*
+	jQuery('.lightbox').click(function(){
+		var lightbox_names = jQuery(this).attr('class').split(' ');
+
+		console.log(lightbox_names[1]);
+		jQuery('body').openlightbox(lightbox_names[1]);
+
+	});
+	*/
+
+    jQuery(".lightbox").live('click', function(e){
+
+		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
+			return false;
+		}
+
+		var lightbox_name = jQuery(this).attr('class').split(' ');
+
+		var lightbox, i;
+		for(i = 0; i < lightbox_name.length; i++){
+			if(lightbox_name[i] == 'lightbox'){
+				lightbox = lightbox_name[i+1];
+				break;				
+			}
+		}	
+		jQuery('body').openlightbox(lightbox);
+
+	});
+
+
+	jQuery('.close').live('click', function(e){
+		jQuery(this).parent().hide();		
+		jQuery('#block-access').hide();
+	});
+
+	jQuery(".insert-link").live('click', function(e){
+		var name = jQuery("#link_name").val();
+		var link = jQuery("#link_url").val();
+		jQuery("#comment").val(jQuery("#comment").val() + '<a href="'+link+'">'+name+'</a>');
+		jQuery("body").closelightbox();
+
+	});
+
+
+	jQuery(".lightbox-content input[type=text], .lightbox-content input[type=password]").live('keyup', function(e){
+
+		if (e.keyCode == '13') {
+			if(jQuery(this).hasClass('ajax')){
+		  		/* UNDO COMMENT: */
+				//jQuery(this).add('.lightbox-submit').click();
+			}
+			else{
+				jQuery(e.target).parentsUntil('form').parent().submit();		
+				//alert(jQuery(e.target).parentsUntil('form').parent().attr('id'));
+		  		/* UNDO COMMENT: */
+				//jQuery(this).submit();	
+			}
+		}
+	});
+
+
+
+    jQuery(".lightbox-close, .lightbox-submit-close").live('click', function(e){
+		jQuery('body').closelightbox();
+	});
+
+	/*
+    jQuery(".lightbox-submit-close").click(function (e) {
+
+		jQuery('body').closelightbox();
+	});
+	*/
+
+
+    jQuery(".lightbox-submit").live('click', function(e){
+
+		if(jQuery(this).hasClass('ajax')){
+		}
+		else{
+	  		jQuery(this).parent().submit();				
+		}
+
+	});
+
+
+
+    jQuery(".lightbox").hover(function (e) {
+		jQuery(this).css('cursor', 'pointer');
+	},	
+	function (e) {
+		jQuery(this).css('cursor', 'auto');
+	});	
+
+    jQuery(".lightbox-images").click(function (e) {
+		jQuery('#lightbox-images').css('left', '10%');
+		jQuery('#lightbox-images').css('top','5%');
+
+		jQuery('#lightbox-images .ribbon-title').html(jQuery(this).attr('title'));
+
+		var imagesrc = jQuery(this).attr('src').replace(siteurl, '');
+
+		jQuery('#lightbox-images .large-lightbox-image').empty();
+
+		jQuery.post( baseurl + "/ajax/lightbox-image/",		
+			{ blog_id: blog_ID, imagesrc: imagesrc},
+			function( data ) {				
+				//console.log(data);
+				jQuery('#lightbox-images .large-lightbox-image').html('<img src="' +data.message + '">');			
+
+			}, 'json' );	
+	});
+
+
+
+	jQuery(".lightbubble").click(function (e) {
+
+
+		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
+			return false;
+		}
+
+
+		var target = e.target;
+		var lightbubble_name = jQuery(target).attr('class').split(' ');
+
+		var lightbubble, i;
+		for(i = 0; i < lightbubble_name.length; i++){
+
+			if(lightbubble_name[i] == 'lightbubble'){
+				lightbubble = '#' + lightbubble_name[i+1];
+				break;				
+			}
+		}
+
+		jQuery(lightbubble).appendTo(jQuery(this));
+		jQuery(lightbubble).show();
+
+	});		
+
+
+    jQuery(".required").change(function (e) {
+
+		var form =jQuery(this).parentsUntil('form').parent();		
+
+
+		var form_id = jQuery(form).attr('id');
+
+		jQuery('#' + form_id + ' .lightbox-submit').removeClass('button-disabled');			
+
+		jQuery('#' + form_id + ' .required').each(function(e){
+
+			if( (
+					(
+						jQuery(this).attr('type') == 'text' && jQuery(this).val().length == 0
+					) 
+					|| 
+					(
+						( jQuery(this).attr('type') == 'radio' || jQuery(this).attr('type') == 'checkbox')  
+						&& 
+						( jQuery("input[name='"+jQuery(this).attr('name')+"']").is(':checked') == false )
+					)
+				)
+			  )
+			{
+				jQuery('#' + form_id + ' .lightbox-submit').addClass('button-disabled');			
+			}
+
+		})
+
+
+	});
+
+
+	/*** 
+	 *		AJAX RESPONSES -
+	 *
+	 *		
+	 */
+	
+	AjaxResult.add_comment = function(data) {
+		var result_id = parseInt(data.message.comment_ID);
+
+
+
+		if(data.status == 0){
+			jQuery('body').displayerrorslightbox(data);
+			return;
+		}
+
+		console.log(jQuery('#selected_paragraph_number').val());
+		var selected_paragraph_number = parseInt(  jQuery('#selected_paragraph_number').val()  );
+
+		var comment_parent  = data.message.comment_parent;
+
+		var comment_id = 'comment-' +  blog_ID + '-' + result_id;
+		var parent_id = 'comment-' +  blog_ID + '-' + data.message.comment_parent;
+		var depth = 'depth-1';
+		if(data.message.comment_parent > 0){
+			depth = 'depth-2';
+		}
+
+		var new_comment = data.message.comment_response;
+
+		/* responding to parent */
+		if(comment_parent > 0){
+			//we are grouping comments
+			if(jQuery('#paragraph-block-' + selected_paragraph_number).length){
+				jQuery('#respond').appendTo('#paragraph-block-' + selected_paragraph_number + ' .toplevel-respond');			
+				jQuery('#paragraph-block-' + selected_paragraph_number).append(new_comment);
+				//jQuery('#commentbox').scrollTo('#'+comment_id , 200);
+				jQuery('.comment-reply').html('reply');
+				jQuery('#'+comment_id).fadeIn("#"+comment_id);
+				jQuery('#commentbox').scrollTo('#'+comment_id , 500, {easing:'easeOutBack'});
+
+			}
+			else{
+				if( jQuery('#' + parent_id).next().hasClass('children') ){
+					jQuery('#' + parent_id + ' + .children').prepend(new_comment);
+
+					jQuery('#'+comment_id).fadeIn("#"+comment_id);
+				}
+				else{
+					jQuery('#' + parent_id).after('<ul class="children">' + new_comment + '</ul>');					
+					jQuery('#'+comment_id).fadeIn("#"+comment_id);
+				}
+
+			}
+		}
+		/* new thread */
+		else{
+			//we are grouping comments
+			if(jQuery('#paragraph-block-' + selected_paragraph_number).length){
+				jQuery(new_comment).appendTo('#'+ 'paragraph-block-' + selected_paragraph_number);						
+				jQuery('#'+comment_id).fadeIn("#"+comment_id);
+				jQuery('#commentbox').scrollTo('#'+comment_id , 500, {easing:'easeOutBack'});
+			}
+			else{
+				jQuery('.commentlist').prepend(new_comment);			
+				jQuery('#'+comment_id).fadeIn("#"+comment_id);
+			}
+
+		}
+
+		//var current_count = parseInt(jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).html());
+		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1 ))).html(data.message.paragraph_comment_count);
+		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1))).fadeIn('slow');
+
+
+		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).html(data.message.paragraph_comment_count);
+		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).fadeIn('slow');
+
+		jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).html(data.message.comment_count);
+		jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).fadeIn('slow');
+
+		jQuery('#comment').val('');		
+		jQuery('#comment_parent').val(0);
+		return;
+	}
+	
+
+	/*** 
+	 *		AJAX FUNCTIONS
+	 *
+	 *		THE FOLLOWING ARE AJAX FORMS WITH DIFFERENT VARIENTS ON SUBMISSIONS. @TODO THIS COULD BE CONSOLIDATED 
+	 *		
+	 */
 
 	/* #1)  Ajax form */
 	jQuery('.ajax').live('click', function(e) {		
@@ -492,33 +799,6 @@ jQuery(document).ready(function() {
 	}
 	
 
-	if(typeof digressit_enabled != 'undefined' && digressit_enabled){
-		jQuery('#commentbox').position_main_elements();
-	}
-	
-    jQuery(window).scroll(function () { 
-	
-		//this should not fire every single time! do proper checks to help performance
-		if(digressit_enabled){
-			jQuery('#commentbox').position_main_elements();
-			//console.log('scroll');
-		}
-		
-    });
-
-
-
-
-	jQuery(window).resize(function(){
-		if(digressit_enabled){
-			jQuery('#commentbox').position_main_elements();			
-			//console.log('resize');
-		}
-	});
-	
-	
-	
-
 
 	function parseGetVariables(variables) {
 		var var_list = {};
@@ -579,285 +859,15 @@ jQuery(document).ready(function() {
 			});
 		}
 	});	
-	
-	
 
-
-	if (document.location.hash.length) {
-		var hashtag = document.location.hash.substr(1);
-		if(isNaN(hashtag) && hashtag.search('comment-') != 0){
-			var lightbox = 'lightbox-' + hashtag;
-			jQuery('body').openlightbox(lightbox);
-		}
-	}	
-
-
-	if (jQuery('.lightbox-auto-load').length) {
-		var lightbox = '#'+jQuery('.lightbox-auto-load:first').attr('id');
-		jQuery("body").closelightbox();
-
-		jQuery('body').openlightbox(lightbox);
-	}
-	
 	
 	jQuery("#search_context").change(function (e) {		
 		jQuery("#searchform").attr('action', jQuery("#search_context option:selected").val());
 	});
 
-
-	
-	/*
-	jQuery('.lightbox').click(function(){
-		var lightbox_names = jQuery(this).attr('class').split(' ');
-		
-		console.log(lightbox_names[1]);
-		jQuery('body').openlightbox(lightbox_names[1]);
-
-	});
-	*/
-
-    jQuery(".lightbox").live('click', function(e){
-
-		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
-			return false;
-		}
-
-		var lightbox_name = jQuery(this).attr('class').split(' ');
-	
-		var lightbox, i;
-		for(i = 0; i < lightbox_name.length; i++){
-			if(lightbox_name[i] == 'lightbox'){
-				lightbox = lightbox_name[i+1];
-				break;				
-			}
-		}	
-		jQuery('body').openlightbox(lightbox);
-	
-	});
 	
 	
-	jQuery('.close').live('click', function(e){
-		jQuery(this).parent().hide();		
-		jQuery('#block-access').hide();
-	});
-	
-	jQuery(".insert-link").live('click', function(e){
-		var name = jQuery("#link_name").val();
-		var link = jQuery("#link_url").val();
-		jQuery("#comment").val(jQuery("#comment").val() + '<a href="'+link+'">'+name+'</a>');
-		jQuery("body").closelightbox();
-		
-	});
-	
-	
-	jQuery(".lightbox-content input[type=text], .lightbox-content input[type=password]").live('keyup', function(e){
 
-		if (e.keyCode == '13') {
-			if(jQuery(this).hasClass('ajax')){
-		  		/* UNDO COMMENT: */
-				//jQuery(this).add('.lightbox-submit').click();
-			}
-			else{
-				jQuery(e.target).parentsUntil('form').parent().submit();		
-				//alert(jQuery(e.target).parentsUntil('form').parent().attr('id'));
-		  		/* UNDO COMMENT: */
-				//jQuery(this).submit();	
-			}
-		}
-	});
-
-
-
-    jQuery(".lightbox-close, .lightbox-submit-close").live('click', function(e){
-		jQuery('body').closelightbox();
-	});
-	
-	/*
-    jQuery(".lightbox-submit-close").click(function (e) {
-
-		jQuery('body').closelightbox();
-	});
-	*/
-	
-	
-    jQuery(".lightbox-submit").live('click', function(e){
-
-		if(jQuery(this).hasClass('ajax')){
-		}
-		else{
-	  		jQuery(this).parent().submit();				
-		}
-
-	});
-
-
-
-    jQuery(".lightbox").hover(function (e) {
-		jQuery(this).css('cursor', 'pointer');
-	},	
-	function (e) {
-		jQuery(this).css('cursor', 'auto');
-	});	
-
-    jQuery(".lightbox-images").click(function (e) {
-		jQuery('#lightbox-images').css('left', '10%');
-		jQuery('#lightbox-images').css('top','5%');
-		
-		jQuery('#lightbox-images .ribbon-title').html(jQuery(this).attr('title'));
-
-		var imagesrc = jQuery(this).attr('src').replace(siteurl, '');
-		
-		jQuery('#lightbox-images .large-lightbox-image').empty();
-						
-		jQuery.post( baseurl + "/ajax/lightbox-image/",		
-			{ blog_id: blog_ID, imagesrc: imagesrc},
-			function( data ) {				
-				//console.log(data);
-				jQuery('#lightbox-images .large-lightbox-image').html('<img src="' +data.message + '">');			
-				
-			}, 'json' );	
-	});
-	
-	
-	
-	jQuery(".lightbubble").click(function (e) {
-
-
-		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
-			return false;
-		}
-
-
-		var target = e.target;
-		var lightbubble_name = jQuery(target).attr('class').split(' ');
-	
-		var lightbubble, i;
-		for(i = 0; i < lightbubble_name.length; i++){
-		
-			if(lightbubble_name[i] == 'lightbubble'){
-				lightbubble = '#' + lightbubble_name[i+1];
-				break;				
-			}
-		}
-
-		jQuery(lightbubble).appendTo(jQuery(this));
-		jQuery(lightbubble).show();
-	
-	});		
-	
-
-    jQuery(".required").change(function (e) {
-
-		var form =jQuery(this).parentsUntil('form').parent();		
-
-		
-		var form_id = jQuery(form).attr('id');
-
-		jQuery('#' + form_id + ' .lightbox-submit').removeClass('button-disabled');			
-		
-		jQuery('#' + form_id + ' .required').each(function(e){
-			
-			if( (
-					(
-						jQuery(this).attr('type') == 'text' && jQuery(this).val().length == 0
-					) 
-					|| 
-					(
-						( jQuery(this).attr('type') == 'radio' || jQuery(this).attr('type') == 'checkbox')  
-						&& 
-						( jQuery("input[name='"+jQuery(this).attr('name')+"']").is(':checked') == false )
-					)
-				)
-			  )
-			{
-				jQuery('#' + form_id + ' .lightbox-submit').addClass('button-disabled');			
-			}
-			
-		})
-		
-
-	});
-
-
-	AjaxResult.add_comment = function(data) {
-		var result_id = parseInt(data.message.comment_ID);
-
-
-
-		if(data.status == 0){
-			jQuery('body').displayerrorslightbox(data);
-			return;
-		}
-		
-		console.log(jQuery('#selected_paragraph_number').val());
-		var selected_paragraph_number = parseInt(  jQuery('#selected_paragraph_number').val()  );
-
-		var comment_parent  = data.message.comment_parent;
-
-		var comment_id = 'comment-' +  blog_ID + '-' + result_id;
-		var parent_id = 'comment-' +  blog_ID + '-' + data.message.comment_parent;
-		var depth = 'depth-1';
-		if(data.message.comment_parent > 0){
-			depth = 'depth-2';
-		}
-
-		var new_comment = data.message.comment_response;
-
-		/* responding to parent */
-		if(comment_parent > 0){
-			//we are grouping comments
-			if(jQuery('#paragraph-block-' + selected_paragraph_number).length){
-				jQuery('#respond').appendTo('#paragraph-block-' + selected_paragraph_number + ' .toplevel-respond');			
-				jQuery('#paragraph-block-' + selected_paragraph_number).append(new_comment);
-				//jQuery('#commentbox').scrollTo('#'+comment_id , 200);
-				jQuery('.comment-reply').html('reply');
-				jQuery('#'+comment_id).fadeIn("#"+comment_id);
-				jQuery('#commentbox').scrollTo('#'+comment_id , 500, {easing:'easeOutBack'});
-				
-			}
-			else{
-				if( jQuery('#' + parent_id).next().hasClass('children') ){
-					jQuery('#' + parent_id + ' + .children').prepend(new_comment);
-					
-					jQuery('#'+comment_id).fadeIn("#"+comment_id);
-				}
-				else{
-					jQuery('#' + parent_id).after('<ul class="children">' + new_comment + '</ul>');					
-					jQuery('#'+comment_id).fadeIn("#"+comment_id);
-				}
-
-			}
-		}
-		/* new thread */
-		else{
-			//we are grouping comments
-			if(jQuery('#paragraph-block-' + selected_paragraph_number).length){
-				jQuery(new_comment).appendTo('#'+ 'paragraph-block-' + selected_paragraph_number);						
-				jQuery('#'+comment_id).fadeIn("#"+comment_id);
-				jQuery('#commentbox').scrollTo('#'+comment_id , 500, {easing:'easeOutBack'});
-			}
-			else{
-				jQuery('.commentlist').prepend(new_comment);			
-				jQuery('#'+comment_id).fadeIn("#"+comment_id);
-			}
-
-		}
-
-		//var current_count = parseInt(jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).html());
-		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1 ))).html(data.message.paragraph_comment_count);
-		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1))).fadeIn('slow');
-
-
-		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).html(data.message.paragraph_comment_count);
-		jQuery(jQuery('#commentbox .commentcount').get((selected_paragraph_number))).fadeIn('slow');
-
-		jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).html(data.message.comment_count);
-		jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).fadeIn('slow');
-
-		jQuery('#comment').val('');		
-		jQuery('#comment_parent').val(0);
-		return;
-	}
 
 
 
@@ -1110,7 +1120,8 @@ jQuery(document).ready(function() {
 		jQuery.cookie('selected_blog_id', selected_blog_id, { path: '/', expires: 1} );
 	});
 
-	function expand_comment_area(item, paragraphnumber){
+	/*
+	var expand_comment_area = function (item, paragraphnumber){
 		jQuery('.textblock').removeClass('selected-textblock');
 		jQuery('.commenticonbox').removeClass('selected-paragraph');
 		jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
@@ -1130,12 +1141,8 @@ jQuery(document).ready(function() {
 		if(jQuery(selectedparagraph).length){
 			jQuery(selectedparagraph).show();
 		}
-		/*else{
-			if(jQuery('.comment').length){
-				jQuery("#no-comments").show();
-			}			
-		}*/
 	}
+	*/
 
 	
 	/****************************************************
@@ -1336,7 +1343,7 @@ jQuery(document).ready(function() {
 
 
 
-	function open_if_linked_in_paragraph(e){
+	var open_if_linked_in_paragraph = function(e){
 		
 		if(jQuery(e.target).attr('target') && jQuery(e.target).attr('href')){
 			window.open(jQuery(e.target).attr('href').toString());				
@@ -1813,7 +1820,7 @@ jQuery.fn.load_in_lightbox = function (data){
 
 
 
-
+/*
 function commentbox_closed_state(){
 	//jQuery('#respond').appendTo('#comments-toolbar');
 	jQuery('#comment_parent').val(0);
@@ -1823,6 +1830,7 @@ function commentbox_closed_state(){
 
 	jQuery('#comments-toolbar').show();
 }
+
 
 function commentbox_reply_state(){
 	
@@ -1852,6 +1860,7 @@ function commentbox_expanded_state(){
 	jQuery('#comment').val('');
 	jQuery('#commentbox').css('overflow-y', 'scroll');
 }
+*/
 
 
 
