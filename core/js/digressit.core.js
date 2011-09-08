@@ -1487,16 +1487,16 @@ jQuery(document).ready(function() {
 	
 	
 	
-	/* search content */	
+	/* Search */	
 	
 	jQuery('#live-content-search').focus(function(){
-		if(jQuery('#live-content-search').val() == 'Search Content'){
+		if(jQuery('#live-content-search').val() == 'Search'){
 			jQuery('#live-content-search').val('');
 		}
 	});
 	jQuery('#live-content-search').blur(function(){
 		if(jQuery('#live-content-search').val() == ''){
-			jQuery('#live-content-search').val('Search Content');
+			jQuery('#live-content-search').val('Search');
 		}
 	});
 	
