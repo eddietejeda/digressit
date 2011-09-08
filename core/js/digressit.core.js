@@ -1346,11 +1346,11 @@ jQuery(document).ready(function() {
 	var open_if_linked_in_paragraph = function(e){
 		
 		if(jQuery(e.target).attr('target') && jQuery(e.target).attr('href')){
-			window.open(jQuery(e.target).attr('href').toString());				
+//			window.open(jQuery(e.target).attr('href').toString());				
 			return 1;
 		}
 		else if(jQuery(e.target).attr('href')){
-			window.location = jQuery(e.target).attr('href').toString();
+//			window.location = jQuery(e.target).attr('href').toString();
 			return 1;
 		}
 		else if(jQuery(e.target).parent().attr('href')){
