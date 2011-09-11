@@ -114,7 +114,7 @@ function lightbox_login_success_ajax(){
 		$status  = 1;
 	?>
 		<div class="lightbox-content" id="lightbox-login-success">
-			<p><?php _e('Login Successful'); ?></p>
+			<h2><?php _e('Login Successful'); ?></h2>
 			<span class="lightbox-delay-close"></span>
 		</div><?php 
 	else:

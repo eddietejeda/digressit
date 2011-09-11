@@ -3,7 +3,6 @@
 <html <?php language_attributes(); ?>>
 <head profile="http://gmpg.org/xfn/11">
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8,chrome=1" />
 <title><?php wp_title('&laquo;', true, 'right'); ?> <?php bloginfo('name'); ?></title>
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 <?php get_currentuserinfo(); ?>
