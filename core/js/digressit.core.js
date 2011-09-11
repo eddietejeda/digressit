@@ -165,10 +165,10 @@ jQuery(document).ready(function() {
 				
 				//if(selected_paragraph_number ){		
 					if(key == UP){
-						paragraphnumber = (selected_paragraph_number > 1) ? selected_paragraph_number - 1 : 0;
+						paragraphnumber = (selected_paragraph_number > 2) ? selected_paragraph_number - 1 : 1;
 					}
 					else if(key == DOWN){
-						paragraphnumber = selected_paragraph_number + 1;
+						paragraphnumber = (selected_paragraph_number < jQuery('.textblock').length) ? selected_paragraph_number + 1 : jQuery('.textblock').length;
 					}
 									
 					jQuery('#respond').hide();			
