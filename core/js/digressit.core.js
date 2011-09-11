@@ -154,16 +154,18 @@ jQuery(document).ready(function() {
 			// Next/prev paragraph
 			if ( key == UP || key == DOWN){
 				var selected_paragraph_number = parseInt(jQuery('#selected_paragraph_number').val());
+				/*
 				if(selected_paragraph_number > 0){
 					// Nothing to do
 				}
 				else{
 					selected_paragraph_number = 1;
 				}
+				*/
 				
-				if(selected_paragraph_number ){		
+				//if(selected_paragraph_number ){		
 					if(key == UP){
-						paragraphnumber = selected_paragraph_number - 1;
+						paragraphnumber = (selected_paragraph_number > 1) ? selected_paragraph_number - 1 : 0;
 					}
 					else if(key == DOWN){
 						paragraphnumber = selected_paragraph_number + 1;
@@ -191,7 +193,7 @@ jQuery(document).ready(function() {
 					
 					jQuery('#selected_paragraph_number').val(paragraphnumber);
 					document.location.hash = '#' + paragraphnumber;			
-				}
+				//}
 			}
 			// Move to comment field
 			else if (key == C){
@@ -1170,7 +1172,7 @@ jQuery(document).ready(function() {
 	if(jQuery('.paragraph-block').length){
 
 		//* this only happens when we are using the standard theme */
-		if (isNumber(document.location.hash.substr(1))) {
+		if (isNumber(document.location.hash.substr(1)) && parseInt(document.location.hash.substr(1)) > 0 ) {
 			var paragraphnumber = document.location.hash.substr(1);
 			if(paragraphnumber > jQuery('.textblock').length){
 				return;
@@ -1403,17 +1405,6 @@ jQuery(document).ready(function() {
 		
 		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
 		
-		
-		/*
-		if(jQuery('.paragraph-' + paragraphnumber).length == 0){
-			jQuery('#no-comments').show();			
-		}
-		else{
-			jQuery('#no-comments').hide();
-		}
-		*/
-		
-				
 		jQuery('#commentbox').scrollTo('#'+commentname , 500);
 		
 		if(paragraphnumber > 0){
@@ -1429,7 +1420,7 @@ jQuery(document).ready(function() {
 	else if ( document.location.hash.substr(1, 13) == 'search-result') {
 		jQuery(window).scrollTo( jQuery('.search-result:first'), 1000);
 	}
-	else if (isNumber(document.location.hash.substr(1))) {
+	else if (isNumber(document.location.hash.substr(1)) && parseInt(document.location.hash.substr(1)) > 0) {
 		var paragraphnumber = document.location.hash.substr(1);
 		var scrollto;
 		if(paragraphnumber > jQuery('.textblock').length){

@@ -1301,8 +1301,8 @@ function digressit_core_print_scripts(){
 	if(!is_admin()){
 		?>
 <script type='text/javascript'>	
-var siteurl = '<?php echo get_option("url"); ?>';
-var baseurl = '<?php echo get_root_domain() ?>';
+var siteurl = '<?php echo get_bloginfo("url"); ?>';
+var baseurl = '<?php echo get_root_domain(); ?>';
 var user_ID =  <?php echo $current_user->ID; ?>;
 var post_ID = <?php echo isset($post->ID) ? $post->ID : 0 ?>;
 var blog_ID = <?php echo $blog_id; ?>;
