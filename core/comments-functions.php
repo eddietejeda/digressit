@@ -271,8 +271,11 @@ function digressit_comment_form(){
 		<input name="selected_paragraph_number" type="hidden" id="selected_paragraph_number"  value="0" />
 	
 		<div id="submit-wrapper">
-			<div name="cancel-response" id="cancel-response" class="button link"><?php _e('Cancel'); ?></div>
-			<div name="submit" id="submit-comment"  class="submit ajax"><div class="loading-bars"></div><input class="transparent-submit-button" type="button" value="<?php _e('Submit Comment'); ?>"></div>
+			<input name="cancel-response" id="cancel-response"  type="button" value="<?php _e('Cancel'); ?>">
+			
+			
+			
+			<div class="loading-bars"></div><input name="submit" id="submit-comment"  class="submit ajax" type="button" value="<?php _e('Submit Comment'); ?>">
 		</div>
 		<?php comment_id_fields(); ?>
 		<?php do_action('comment_form', $post->ID); ?>

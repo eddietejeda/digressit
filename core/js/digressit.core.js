@@ -121,6 +121,24 @@ jQuery(document).ready(function() {
 			jQuery(window).closelightbox();		
 		}
 	});
+
+	jQuery(window).keyup(function(e){
+		var TAB = 9; // Leave comment box
+		var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+		if ( key == TAB){
+
+			if(jQuery('#lightbox-transparency').hasClass('enabled')){
+//				jQuery('#lightbox-content').focus();
+//				alert(1);
+			}
+			
+		}
+	});
+	
+	
+
+	//jQuery('#lightbox-transparency').hasClass('enabled');
+	
 	
 	if(typeof keyboard_navigation != 'undefined' && keyboard_navigation == true){
 		jQuery(window).keyup(function(e){
@@ -1168,13 +1186,12 @@ jQuery(document).ready(function() {
 			
 		});
 
-
 		jQuery("#menu ul li").click(function (e) {
 			jQuery('#comment_parent').val(0);
 			jQuery('#comment').val('Click here add a new comment...');
 
 			jQuery('#submit-comment').hide();
-			jQuery('#cancel-response').hide();
+//			jQuery('#cancel-response').hide();
 
 			jQuery('.textblock').removeClass('selected-textblock');
 			jQuery('.comment').hide();
@@ -1522,13 +1539,13 @@ jQuery(document).ready(function() {
 
 
 	
+	
 
 	jQuery('body').click(function (e) {
 		if(!jQuery(e.target).hasClass('ajax-live')){
 				jQuery('#live-content-search-result').hide();
 				jQuery('#live-comment-search-result').hide();
-		}
-		
+		}	
 	});
 
 	//jQuery.cookie('text_signature', null, { path: '/' , expires: 1} );				
@@ -1618,7 +1635,7 @@ jQuery(document).ready(function() {
 			jQuery('.comment .comment-reply').html('reply');
 			jQuery(current_comment_id + ' .comment-reply').html('cancel response');
 
-			jQuery(this).addClass('cancel-response');
+//			jQuery(this).addClass('cancel-response');
 		}
 		else{
 
@@ -1631,7 +1648,7 @@ jQuery(document).ready(function() {
 			else{	
 				jQuery('#respond').appendTo('#toplevel-commentbox');
 			}
-			jQuery(this).removeClass('cancel-response');
+//			jQuery(this).removeClass('cancel-response');
 
 
 		}
@@ -1733,6 +1750,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 		
 					jQuery('.lightbox-submit').removeClass('disabled');
 		
+					jQuery('#lightbox-transparency').addClass('enabled');
 					jQuery('#lightbox-transparency').css('width', body_width  + 'px');
 					jQuery('#lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
 					jQuery('#lightbox-transparency').fadeTo(0, 0.70);				
@@ -1754,7 +1772,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					}
 
 					var focus = setTimeout(function() {
-						jQuery('#lightbox-content input:first').focus();				    
+						jQuery('#lightbox-content input:first, #lightbox-content a').focus();				    
 					}, 1000);
 
 					
@@ -1777,6 +1795,7 @@ jQuery.fn.closelightbox = function (){
 	jQuery('#lightbox-content').fadeOut();
 	jQuery('#lightbox-transparency').css('width', 0);
 	jQuery('#lightbox-transparency').css('height', 0);
+	jQuery('#lightbox-transparency').removeClass('enabled');
 	document.location.hash.length = '';
 }
 
