@@ -272,9 +272,6 @@ function digressit_comment_form(){
 	
 		<div id="submit-wrapper">
 			<input name="cancel-response" id="cancel-response"  type="button" value="<?php _e('Cancel'); ?>">
-			
-			
-			
 			<div class="loading-bars"></div><input name="submit" id="submit-comment"  class="submit ajax" type="button" value="<?php _e('Submit Comment'); ?>">
 		</div>
 		<?php comment_id_fields(); ?>

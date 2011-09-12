@@ -195,6 +195,7 @@ jQuery(document).ready(function() {
 					document.location.hash = '#' + paragraphnumber;			
 				//}
 			}
+			/*
 			// Move to comment field
 			else if (key == C){
 				jQuery('#comment').focus().keyup(function(e){
@@ -220,7 +221,8 @@ jQuery(document).ready(function() {
 				if (next.length == 1){
 					window.location = next.attr('href');
 				}
-			}	
+			}
+			*/	
 		});
 	}
 
@@ -1694,7 +1696,7 @@ jQuery.fn.extend({
 			jQuery("#commentbox, #commentbox-header").css('left', left + 'px');
 			jQuery("#commentbox-header").css('top', '0px');
 			jQuery("#commentbox").css('top',  parseInt(jQuery('#wpadminbar').outerHeight()) +  parseInt(jQuery('#commentbox-header').outerHeight()) + 5 + 'px');
-			jQuery("#commentbox").css('height', '90%');
+			jQuery("#commentbox").css('height', '85%');
 			
 		}	
 		else if(scroll_top < lock_position && jQuery("#commentbox").css('position') != 'absolute' ){
@@ -1712,7 +1714,7 @@ jQuery.fn.extend({
 			jQuery("#commentbox").addClass('resized');
 		}
 		else if(scroll_top < (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").hasClass('resized')){
-			jQuery("#commentbox").css('height', '90%');			
+			jQuery("#commentbox").css('height', '85%');			
 			jQuery("#commentbox").removeClass('resized');
 		}
 
