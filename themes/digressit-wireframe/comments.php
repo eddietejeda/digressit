@@ -36,9 +36,20 @@ if ( function_exists('post_password_required')  ) {
 			<?php else: ?>
 				<?php if(get_option('comment_registration')): ?>
 					<div id="must-be-logged-in">
-						<?php _e('You must be logged in to write a comment.', 'digressit'); ?>						
-						<a href="<?php echo wp_login_url( get_bloginfo('url') ); ?>" title="Login"><input type='button' class="transparent-submit-button" id="login-button" value="<?php _e('Log In', 'digressit'); ?>"></a>
-						<a href="<?php echo get_bloginfo('url')."/wp-register.php"; ?>"  title="Register"><input type='button' class="transparent-submit-button" id="register-button" value="<?php _e('Create Account', 'digressit'); ?>"></a>
+						<?php _e('You must be logged in to write a comment.', 'digressit'); ?>
+						<?php
+						
+						if(function_exists('lightbox_login_ajax')){
+							$lightbox_login_class = 'lightbox lightbox-login';
+						}
+						if(function_exists('lightbox_register_ajax')){
+							$lightbox_register_class = 'lightbox lightbox-register';
+						}
+						
+						?>
+						<input type='button' class="<?php echo $lightbox_login_class; ?> transparent-submit-button" id="login-button" value="<?php _e('Sign In', 'digressit'); ?>">
+						<input type='button' class="<?php echo $lightbox_register_class; ?> transparent-submit-button" id="register-button" value="<?php _e('Create Account', 'digressit'); ?>">
+						<input name="selected_paragraph_number" type="hidden" id="selected_paragraph_number"  value="0" />
 					</div>
 				<?php else: ?>
 					<?php digressit_comment_form(); ?>

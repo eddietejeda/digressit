@@ -1206,7 +1206,6 @@ jQuery(document).ready(function() {
 		jQuery('.textblock').click(function(e){
 
 			//paragraphembed
-			
 
 			if(jQuery('.paragraphembed').length){
 				if(jQuery(e.target)[0].nodeName == "TEXTAREA" || jQuery(e.target)[0].nodeName == "INPUT"){					
@@ -1227,7 +1226,6 @@ jQuery(document).ready(function() {
 				return;
 			}
 			var paragraphnumber = parseInt(jQuery('.textblock').index(this)) +1 ;
-	
 	
 			if(parseInt(jQuery('#selected_paragraph_number').val()) == paragraphnumber){
 
@@ -1694,7 +1692,7 @@ jQuery.fn.extend({
 			var left = parseInt(jQuery('#content').offset().left) + 565  ;			
 			jQuery("#commentbox, #commentbox-header").css('position', 'fixed');
 			jQuery("#commentbox, #commentbox-header").css('left', left + 'px');
-			jQuery("#commentbox-header").css('top', '5px');
+			jQuery("#commentbox-header").css('top', '0px');
 			jQuery("#commentbox").css('top',  parseInt(jQuery('#wpadminbar').outerHeight()) +  parseInt(jQuery('#commentbox-header').outerHeight()) + 5 + 'px');
 			jQuery("#commentbox").css('height', '90%');
 			
