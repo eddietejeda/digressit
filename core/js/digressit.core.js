@@ -227,6 +227,22 @@ jQuery(document).ready(function() {
 	}
 
 	
+	
+	var smoothscroll=function(e){
+		//prevent the "normal" behaviour which would be a "hard" jump
+		e.preventDefault();
+		//Get the target
+		var target = jQuery(this).attr("href").substr(1);
+	
+	
+
+		//perform animated scrolling
+		jQuery('html,body').animate({
+			scrollTop: jQuery('a[name='+target+']').offset().top
+			},1000,function(){
+				location.hash = target;
+			});
+	}
 
 
 	
@@ -777,7 +793,7 @@ jQuery(document).ready(function() {
 		var var_value;
 		
 		if(jQuery(this).attr('type') == 'checkbox'){
-			if(jQuery(this).attr("checked")){
+			if(jQuery(this).prop("checked")){
 				var_value = jQuery(this).attr('value');				
 			}
 			else{
@@ -1030,7 +1046,7 @@ jQuery(document).ready(function() {
 	});
 
 	jQuery("#comment").focus(function (e) {
-		if( jQuery(this).val() == 'Click here add a new comment...'){
+		if( jQuery(this).val() == 'Click here to add a new comment...'){
 			jQuery(this).val('');
 			jQuery('#submit-comment').removeClass('disabled');			
 		}
@@ -1413,7 +1429,7 @@ jQuery(document).ready(function() {
 			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 
 			var scrollto = (top > 200)  ? (top - 100) : 0;
-			jQuery(window).scrollTo(scrollto , 500);
+			jQuery(window).scrollTo(scrollto , 1000);
 		}
 
 	}
@@ -1454,7 +1470,7 @@ jQuery(document).ready(function() {
 			scrollto = (top > 200)  ? (top - 100) : 0;
 		
 			if(jQuery('#paragraph-block-' + paragraphnumber).length){
-				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500);
+				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 1000);
 			}
 			
 			if(iOS){
@@ -1763,7 +1779,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					}
 
 					var focus = setTimeout(function() {
-						jQuery('#lightbox-content input:first, #lightbox-content a').focus();				    
+						jQuery('#lightbox-content input:first').focus();				    
 					}, 1000);
 
 					
