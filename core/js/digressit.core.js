@@ -284,17 +284,6 @@ jQuery(document).ready(function() {
 	}
 
 
-
-	/*
-	jQuery('.lightbox').click(function(){
-		var lightbox_names = jQuery(this).attr('class').split(' ');
-
-		console.log(lightbox_names[1]);
-		jQuery('body').openlightbox(lightbox_names[1]);
-
-	});
-	*/
-
     jQuery(".lightbox").live('click', function(e){
 
 		if(jQuery(e.target).hasClass('button-disabled') || jQuery(e.target).hasClass('disabled')){
@@ -313,6 +302,37 @@ jQuery(document).ready(function() {
 		jQuery('body').openlightbox(lightbox);
 
 	});
+	
+	
+
+
+/*
+	jQuery("#lightbox-content .required").live('click', function(e) {
+		jQuery("#lightbox-submit").removeClass('disabled');
+		jQuery("#lightbox-submit").prop('disabled', true);
+
+		alert('1');
+		jQuery('#lightbox-content .required').each(function(index){
+			if(!jQuery(this).val().length){
+				jQuery("#lightbox-submit").prop('disabled', false);
+				jQuery("#lightbox-submit").addClass('disabled');
+			}
+		});
+    });     
+*/
+
+
+
+	/*
+	jQuery('.lightbox').click(function(){
+		var lightbox_names = jQuery(this).attr('class').split(' ');
+
+		console.log(lightbox_names[1]);
+		jQuery('body').openlightbox(lightbox_names[1]);
+
+	});
+	*/
+
 
 
 	jQuery('.close').live('click', function(e){
@@ -329,19 +349,46 @@ jQuery(document).ready(function() {
 	});
 
 
+
+    jQuery(".required").live('keyup', function(e){
+
+		var form =jQuery(this).parentsUntil('form').parent();		
+
+
+		var form_id = jQuery(form).attr('id');
+
+		jQuery('#' + form_id + ' .lightbox-submit').removeClass('disabled');			
+		jQuery('#' + form_id + ' .lightbox-submit').prop('disabled', true);			
+
+		jQuery('#' + form_id + ' .required').each(function(e){
+
+			if(((jQuery(this).attr('type') == 'text' && jQuery(this).val().length == 0)  || 
+				(jQuery(this).attr('type') == 'password' && jQuery(this).val().length == 0)  || 
+				((jQuery(this).attr('type') == 'radio' || jQuery(this).attr('type') == 'checkbox')  && 
+				(jQuery("input[name='"+jQuery(this).attr('name')+"']").is(':checked') == false )))){
+						
+				jQuery('#' + form_id + ' .lightbox-submit').prop('disabled', true);			
+				jQuery('#' + form_id + ' .lightbox-submit').addClass('disabled');
+			}
+
+		})
+	});
+
 	jQuery(".lightbox-content input[type=text], .lightbox-content input[type=password]").live('keyup', function(e){
 
-		if (e.keyCode == '13') {
-			if(jQuery(this).hasClass('ajax')){
-		  		/* UNDO COMMENT: */
-				//jQuery(this).add('.lightbox-submit').click();
-			}
-			else{
-				jQuery(e.target).parentsUntil('form').parent().submit();		
-				//alert(jQuery(e.target).parentsUntil('form').parent().attr('id'));
-		  		/* UNDO COMMENT: */
-				//jQuery(this).submit();	
-			}
+		if(!jQuery('.lightbox-content .lightbox-submit').hasClass('disabled')){
+			if (e.keyCode == '13') {
+				if(jQuery(this).hasClass('ajax')){
+			  		/* UNDO COMMENT: */
+					//jQuery(this).add('.lightbox-submit').click();
+				}
+				else{
+					jQuery(e.target).parentsUntil('form').parent().submit();		
+					//alert(jQuery(e.target).parentsUntil('form').parent().attr('id'));
+			  		/* UNDO COMMENT: */
+					//jQuery(this).submit();	
+				}
+			}			
 		}
 	});
 
@@ -425,37 +472,6 @@ jQuery(document).ready(function() {
 	});		
 
 
-    jQuery(".required").change(function (e) {
-
-		var form =jQuery(this).parentsUntil('form').parent();		
-
-
-		var form_id = jQuery(form).attr('id');
-
-		jQuery('#' + form_id + ' .lightbox-submit').removeClass('button-disabled');			
-
-		jQuery('#' + form_id + ' .required').each(function(e){
-
-			if( (
-					(
-						jQuery(this).attr('type') == 'text' && jQuery(this).val().length == 0
-					) 
-					|| 
-					(
-						( jQuery(this).attr('type') == 'radio' || jQuery(this).attr('type') == 'checkbox')  
-						&& 
-						( jQuery("input[name='"+jQuery(this).attr('name')+"']").is(':checked') == false )
-					)
-				)
-			  )
-			{
-				jQuery('#' + form_id + ' .lightbox-submit').addClass('button-disabled');			
-			}
-
-		})
-
-
-	});
 
 
 	/*** 
@@ -1267,7 +1283,8 @@ jQuery(document).ready(function() {
 					jQuery('.textblock').removeClass('selected-textblock');
 					jQuery('#selected_paragraph_number').val(0);
 					jQuery('#respond').appendTo(jQuery('#toplevel-commentbox'));						
-				}	
+				}
+				jQuery('#commentbox').scrollTo(0 , 500, {easing:'easeOutBack'});				
 			}
 	
 			else{
@@ -1348,32 +1365,40 @@ jQuery(document).ready(function() {
 
 		
 
-	jQuery('.paragraph-block-button').toggle(function(e){
-		jQuery('.comment').hide();
-
+	jQuery('.paragraph-block-button').click(function(e){
 		var paragraphnumber = parseInt(jQuery('.paragraph-block-button').index(this));
-		jQuery('#selected_paragraph_number').val(paragraphnumber);
-		jQuery('.paragraph-' + paragraphnumber).show();
-		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
-		jQuery('#respond').show();			
-
-		jQuery('.textblock').removeClass('selected-textblock');
-
-		if(paragraphnumber > 0){
-
-			var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
-			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+		var selected_paragraphnumber = parseInt(jQuery('#selected_paragraph_number').val());
 		
-			var scrollto = (top > 200)  ? (top - 100) : 0;
-			jQuery(window).scrollTo(scrollto , 200);
-			jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
+		if(paragraphnumber > 0 && paragraphnumber == selected_paragraphnumber){
+			jQuery('.comment').hide();
+			jQuery('#respond').hide();
+			jQuery('.textblock').removeClass('selected-textblock');
+			jQuery('#selected_paragraph_number').val(0);
+			
+			jQuery('#commentbox').scrollTo(0 , 500, {easing:'easeOutBack'});
+			
+		}
+		else{
+			jQuery('.comment').hide();
+			jQuery('#selected_paragraph_number').val(paragraphnumber);
+			jQuery('.paragraph-' + paragraphnumber).show();
+			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
+			jQuery('#respond').show();			
+
+			jQuery('.textblock').removeClass('selected-textblock');
+
+			if(paragraphnumber > 0){
+
+				var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
+				jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+	
+				var scrollto = (top > 200)  ? (top - 100) : 0;
+				jQuery(window).scrollTo(scrollto , 200);
+				jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
+			}
+			
 		}
 		
-	}, function(e){
-		jQuery('.comment').hide();
-		jQuery('#respond').hide();
-		jQuery('.textblock').removeClass('selected-textblock');
-		jQuery('#selected_paragraph_number').val(0);
 	});
 
 
@@ -1712,7 +1737,7 @@ jQuery.fn.extend({
 			jQuery("#commentbox, #commentbox-header").css('left', left + 'px');
 			jQuery("#commentbox-header").css('top', '0px');
 			jQuery("#commentbox").css('top',  parseInt(jQuery('#wpadminbar').outerHeight()) +  parseInt(jQuery('#commentbox-header').outerHeight()) + 5 + 'px');
-			jQuery("#commentbox").css('height', '85%');
+			jQuery("#commentbox").css('height', '90%');
 			
 		}	
 		else if(scroll_top < lock_position && jQuery("#commentbox").css('position') != 'absolute' ){
@@ -1730,7 +1755,7 @@ jQuery.fn.extend({
 			jQuery("#commentbox").addClass('resized');
 		}
 		else if(scroll_top < (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").hasClass('resized')){
-			jQuery("#commentbox").css('height', '85%');			
+			jQuery("#commentbox").css('height', '90%');			
 			jQuery("#commentbox").removeClass('resized');
 		}
 

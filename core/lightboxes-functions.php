@@ -38,6 +38,8 @@ function end_lightbox($status = 1){
  */
 function lightbox_login_ajax(){ 
 	start_lightbox('Lightbox: Login');	
+	global $password_just_reset;
+
 	if(!is_user_logged_in()): 
 		$status  = 1;
 		?>
@@ -50,7 +52,6 @@ function lightbox_login_ajax(){
 		
 			<?php
 	
-			global $password_just_reset;
 		
 			$referer_url = parse_url($_SERVER['HTTP_REFERER']);
 			?>
@@ -61,16 +62,20 @@ function lightbox_login_ajax(){
 			<?php if($_GET['password_reset_key'] && $password_just_reset): ?>
 				<p><?php _e('Your password was reset.<br>Check your email for your new password'); ?></p>
 			<?php endif; ?>
+			
+			<?php if(has_action('custom_login_header')) :?>
+				<?php do_action('custom_login_header'); ?>
+			<?php endif; ?>
 		
 			<form method="post" action="<?php echo wp_login_url() ?>" id="login-form" name="loginform">
 				<p>
-					<label for="user_login"><?php _e('Username'); ?><br />
-					<input type="text" name="log" id="user_login" class="input required" value="" size="25" tabindex="1" /></label>
+					<label for="user_login"><?php _e('Username'); ?></label><br />
+					<input type="text" name="log" id="user_login" class="input required" value="" size="25" tabindex="1" />
 				</p>
 	
 				<p>
-					<label for="user_pass"><?php _e('Password'); ?><br />
-					<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" tabindex="2" /></label>
+					<label for="user_pass"><?php _e('Password'); ?></label><br />
+					<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" tabindex="2" />
 				</p>
 				
 				<div class="custom_register_links">
@@ -84,12 +89,12 @@ function lightbox_login_ajax(){
 				<!--<input type="submit" name="wp-submit" id="wp-submit" value="Log In" tabindex="100" />-->
 			
 				<input type="hidden" name="wp-submit" value="Log In" id="wp-submit">
-				<input type="hidden" name="redirect_to" value="<?php bloginfo('url') ?>#login-success" />
+				<input type="hidden" name="redirect_to" value="<?php echo bloginfo('url'); ?>#login-success" />
 				<input type="hidden" name="testcookie" value="1" />
 	
 				<?php do_action('digressit_login_form'); ?>	
 				<span class="loading-bars"></span>
-				<input type="button" id="login-submit" class="lightbox-submit lightbox-button" value="<?php _e('Log in'); ?>">
+				<input type="button" id="login-submit" tabindex="5" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">
 
 				<span class="lightbox-close"></span>
 			
