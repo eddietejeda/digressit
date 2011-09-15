@@ -177,11 +177,15 @@ jQuery(document).ready(function() {
 					jQuery('.comment' ).hide();
 					jQuery('.paragraph-' + paragraphnumber ).show();
 					//jQuery("#no-comments").hide();
+
+					jQuery('.paragraph-block').removeClass('selected-paragraph-block');					
 					jQuery('.textblock').removeClass('selected-textblock');
 					var commentboxtop = jQuery('#commentbox').position().top;
 		
 					if(paragraphnumber > 0){
 						jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+						jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');					
+
 						var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
 						var scrollto = (top > 200)  ? (top - 100) : 0;
 						if(iOS){
@@ -1231,6 +1235,7 @@ jQuery(document).ready(function() {
 			jQuery('#submit-comment').hide();
 //			jQuery('#cancel-response').hide();
 
+			jQuery('.paragraph-block').removeClass('selected-paragraph-block');
 			jQuery('.textblock').removeClass('selected-textblock');
 			jQuery('.comment').hide();
 			jQuery('#respond').hide();						
@@ -1268,6 +1273,8 @@ jQuery(document).ready(function() {
 				/* PARAGRAPH BLOCKS - UNSELECTED */
 				if(jQuery('.paragraph-block').length){
 					jQuery('.textblock').removeClass('selected-textblock');
+					jQuery('.paragraph-block').removeClass('selected-paragraph-block');
+
 					jQuery('.comment').hide();
 					jQuery('#respond').hide();
 					//jQuery("#no-comments").hide();				
@@ -1282,6 +1289,7 @@ jQuery(document).ready(function() {
 					else{
 						//jQuery("#no-comments").show();
 					}
+					jQuery('.paragraph-block').removeClass('selected-paragraph-block');
 					jQuery('.textblock').removeClass('selected-textblock');
 					jQuery('#selected_paragraph_number').val(0);
 					jQuery('#respond').appendTo(jQuery('#toplevel-commentbox'));						
@@ -1301,10 +1309,12 @@ jQuery(document).ready(function() {
 					jQuery('.paragraph-' + paragraphnumber ).show();
 					//jQuery("#no-comments").hide();				
 
+					jQuery('.paragraph-block').removeClass('selected-paragraph-block');
 					jQuery('.textblock').removeClass('selected-textblock');
 					var commentboxtop = jQuery('#commentbox').position().top;
 
 					if(paragraphnumber > 0){
+						jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');					
 						jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 
 						var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
@@ -1319,8 +1329,8 @@ jQuery(document).ready(function() {
 
 						jQuery('#commentbox').scrollTo('#paragraph-block-'+(paragraphnumber) , 500, {easing:'easeOutBack'});
 					}
+					
 					jQuery('#selected_paragraph_number').val(paragraphnumber);
-		
 					document.location.hash = '#' + paragraphnumber;
 
 				}
@@ -1340,6 +1350,9 @@ jQuery(document).ready(function() {
 
 					jQuery('.textblock').removeClass('selected-textblock');
 					jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+
+					jQuery('.paragraph-block').removeClass('selected-paragraph-block');
+					jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');					
 
 					jQuery('#selected_paragraph_number').val(paragraphnumber);
 
@@ -1370,11 +1383,13 @@ jQuery(document).ready(function() {
 	jQuery('.paragraph-block-button').click(function(e){
 		var paragraphnumber = parseInt(jQuery('.paragraph-block-button').index(this));
 		var selected_paragraphnumber = parseInt(jQuery('#selected_paragraph_number').val());
+		//jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');					
 		
 		if(paragraphnumber > 0 && paragraphnumber == selected_paragraphnumber){
 			jQuery('.comment').hide();
 			jQuery('#respond').hide();
 			jQuery('.textblock').removeClass('selected-textblock');
+			jQuery('.paragraph-block').removeClass('selected-paragraph-block');					
 			jQuery('#selected_paragraph_number').val(0);
 			
 			jQuery('#commentbox').scrollTo(0 , 500, {easing:'easeOutBack'});
@@ -1387,12 +1402,14 @@ jQuery(document).ready(function() {
 			jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
 			jQuery('#respond').show();			
 
+			jQuery('.paragraph-block').removeClass('selected-paragraph-block');
 			jQuery('.textblock').removeClass('selected-textblock');
 
 			if(paragraphnumber > 0){
 
 				var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
 				jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+				jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');					
 	
 				var scrollto = (top > 200)  ? (top - 100) : 0;
 				jQuery(window).scrollTo(scrollto , 200);
@@ -1454,6 +1471,7 @@ jQuery(document).ready(function() {
 			var item = jQuery('.commenticonbox').get((paragraphnumber));
 			var top = parseInt(jQuery('#textblock-' + paragraphnumber).offset().top);
 			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+			jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');					
 
 			var scrollto = (top > 200)  ? (top - 100) : 0;
 			jQuery(window).scrollTo(scrollto , 1000);
@@ -1480,6 +1498,7 @@ jQuery(document).ready(function() {
 			jQuery('.comment').hide();
 			jQuery('.paragraph-' + paragraphnumber).show();
 			jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
+			jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');					
 			//jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
 			jQuery('#selected_paragraph_number').val(paragraphnumber);
 			
@@ -1640,12 +1659,14 @@ jQuery(document).ready(function() {
 
 			var item = jQuery('.commenticonbox').get(parseInt(jQuery('.commenticonbox').index(this)));
 
+			jQuery('.paragraph-block').removeClass('selected-paragraph-block');
 			jQuery('.textblock').removeClass('selected-textblock');
 			jQuery('.commenticonbox').removeClass('selected-paragraph');
 
 			if(paragraphnumber > 0){
 				jQuery('#textblock-' + paragraphnumber).addClass('selected-textblock');
 				jQuery('#textblock-' + paragraphnumber + ' .commenticonbox').addClass('selected-paragraph');
+				jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');					
 
 				var textblockname = "#textblock-" + paragraphnumber;
 				var textblock = jQuery(textblockname);
@@ -1753,7 +1774,7 @@ jQuery.fn.extend({
 	
 		//bottom of page
 		if(scroll_top > (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").css('position') == 'fixed'){
-			jQuery("#commentbox").css('height', '50%');
+			jQuery("#commentbox").css('height', '90%');
 			jQuery("#commentbox").addClass('resized');
 		}
 		else if(scroll_top < (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").hasClass('resized')){
