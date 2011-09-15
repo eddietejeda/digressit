@@ -1774,7 +1774,7 @@ jQuery.fn.extend({
 	
 		//bottom of page
 		if(scroll_top > (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").css('position') == 'fixed'){
-			jQuery("#commentbox").css('height', '85%');
+			jQuery("#commentbox").css('height', '80%');
 			jQuery("#commentbox").addClass('resized');
 		}
 		else if(scroll_top < (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").hasClass('resized')){
