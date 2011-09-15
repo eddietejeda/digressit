@@ -356,9 +356,11 @@ jQuery(document).ready(function() {
 
 
 		var form_id = jQuery(form).attr('id');
+		
+//		alert(form_id);
 
 		jQuery('#' + form_id + ' .lightbox-submit').removeClass('disabled');			
-		jQuery('#' + form_id + ' .lightbox-submit').prop('disabled', true);			
+		jQuery('#' + form_id + ' .lightbox-submit').prop('disabled', false);			
 
 		jQuery('#' + form_id + ' .required').each(function(e){
 

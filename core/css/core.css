@@ -391,13 +391,14 @@ div.bubble cite.rounded {
 }
 
 .transparent-submit-button{
-    background: none repeat scroll 0 0 transparent;
-    border: 1px none;
-    color: #576F7F;
-    margin: 0;
-    padding: 0;
-    text-transform: uppercase;
+	background: none repeat scroll 0 0 transparent;
+	border: 0 none;
 	font-weight: bold;
+	margin: 0 !important;
+	padding: 0 !important;
+	text-transform: uppercase;
+	font-weight: inherit;
+	color: inherit;
 }
 
 .transparent-submit-button:hover{
