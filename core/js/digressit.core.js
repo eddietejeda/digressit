@@ -25,6 +25,8 @@ jQuery.fn.highlight = function (str, className){
 	});
 };
 	
+//http://www.onlineaspect.com/2009/06/10/reading-get-variables-with-javascript/	
+	
 
 // Figure out what browser is being used
 jQuery.browser = {
@@ -272,11 +274,13 @@ jQuery(document).ready(function() {
 
 
 
+
+
 	if (document.location.hash.length) {
 		var hashtag = document.location.hash.substr(1);
 		if(isNaN(hashtag) && hashtag.search('comment-') != 0){
 			var lightbox = 'lightbox-' + hashtag;
-			jQuery('body').openlightbox(lightbox);
+			jQuery('body').openlightbox(lightbox, {error: getQueryVariable('error')} );
 		}
 	}	
 
@@ -868,9 +872,9 @@ jQuery(document).ready(function() {
 			var pair = vars[i].split("=");
 			var_list[pair[0]] = pair[1];
 		}
-
 		return var_list;
 	}
+	
 	
 	
 	//http://www.idealog.us/2006/06/javascript_to_p.html

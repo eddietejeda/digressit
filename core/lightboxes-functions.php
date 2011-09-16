@@ -33,9 +33,9 @@ function end_lightbox($status = 1){
 	die(json_encode(array('status' => $status, "message" => $html)) );	
 }
 
-/**
- *
- */
+
+
+
 function lightbox_login_ajax(){ 
 	start_lightbox('Lightbox: Login');	
 	global $password_just_reset;
@@ -50,40 +50,41 @@ function lightbox_login_ajax(){
 				<div class="ribbon-right"></div>
 			</div>
 		
-			<?php
-	
+			<div class="status-message error">
 		
+			<?php
 			$referer_url = parse_url($_SERVER['HTTP_REFERER']);
 			?>
-			<?php if($_GET['error'] == 'empty_fields'): ?>
-				<p><?php _e('empty_fields'); ?></p>
+			<?php if($_POST['error'] == 'empty_fields'): ?>
+				<p><?php _e('<strong>ERROR</strong>: Enter a username and password.'); ?></p>
 			<?php endif; ?>
 
 
-			<?php if($_GET['error'] == 'invalid_email'): ?>
-				<p><?php _e('invalid_email'); ?></p>
+			<?php if($_POST['error'] == 'invalid_email'): ?>
+				<p><?php _e('<strong>ERROR</strong>: Not a valid account.'); ?></p>
 			<?php endif; ?>
 
 
-			<?php if($_GET['error'] == 'invalid_account'): ?>
-				<p><?php _e('invalid_acount'); ?></p>
+			<?php if($_POST['error'] == 'signin_failed'): ?>
+				<p><?php _e('<strong>ERROR</strong>: Authentication failed.'); ?></p>
 			<?php endif; ?>
+			</div>
 
 
 
 			
-			<?php if($_GET['account-enabled'] == '0'): ?>
+			<?php if($_POST['error'] == 'account_enabled'): ?>
 				<p><?php _e('Your account has not been enabled. Please check your inbox for your activation code'); ?></p>
 			<?php endif; ?>
 		
-			<?php if($_GET['password_reset_key'] && $password_just_reset): ?>
+			<?php if($_POST['password_reset_key'] && $password_just_reset): ?>
 				<p><?php _e('Your password was reset.<br>Check your email for your new password'); ?></p>
 			<?php endif; ?>
 			
 			<?php if(has_action('custom_login_header')) :?>
 				<?php do_action('custom_login_header'); ?>
 			<?php endif; ?>
-		
+			
 			<form method="post" action="<?php echo wp_login_url() ?>" id="login-form" name="loginform">
 				<p>
 					<label for="user_login"><?php _e('Username'); ?></label><br />
