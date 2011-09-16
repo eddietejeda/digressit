@@ -55,6 +55,23 @@ function lightbox_login_ajax(){
 		
 			$referer_url = parse_url($_SERVER['HTTP_REFERER']);
 			?>
+			<?php if($_GET['error'] == 'empty_fields'): ?>
+				<p><?php _e('empty_fields'); ?></p>
+			<?php endif; ?>
+
+
+			<?php if($_GET['error'] == 'invalid_email'): ?>
+				<p><?php _e('invalid_email'); ?></p>
+			<?php endif; ?>
+
+
+			<?php if($_GET['error'] == 'invalid_account'): ?>
+				<p><?php _e('invalid_acount'); ?></p>
+			<?php endif; ?>
+
+
+
+			
 			<?php if($_GET['account-enabled'] == '0'): ?>
 				<p><?php _e('Your account has not been enabled. Please check your inbox for your activation code'); ?></p>
 			<?php endif; ?>
