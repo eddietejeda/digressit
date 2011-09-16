@@ -276,9 +276,10 @@ div.bubble cite.rounded {
 
 }
 
-.error{
+.error, .error a{
 	font-size: 14px;
-	color: red;
+	color: red !important;
+	padding-bottom: 5px;
 }
 
 .absolute{

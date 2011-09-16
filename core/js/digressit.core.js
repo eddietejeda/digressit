@@ -1127,15 +1127,16 @@ jQuery(document).ready(function() {
 	grouping_digressit_commentbox_parser = function(data){
 
 		jQuery('.textblock').each(function(i){
+			
 			var paragraphnumber = (i == 0) ? '&nbsp;'  : i;
 			var commentlabel = (i == 0) ? ' general comment'  : ' comment';
 			var commentcount = jQuery('.paragraph-' + (i)).length;
 			
 			commentlabel = (commentcount == 1) ? commentlabel  : commentlabel + 's';
-			
+
 			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><div class="paragraph-block-button"><span class="paragraph-label">'+(paragraphnumber)+'</span>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></div>');
-			
 			jQuery('.paragraph-' + (i)).appendTo('#paragraph-block-'+(i));				
+			
 			
 		});
 		

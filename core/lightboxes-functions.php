@@ -82,7 +82,7 @@ function lightbox_login_ajax(){
 				<?php if(has_action('custom_register_links')) :?>
 					<?php do_action('custom_register_links'); ?>
 				<?php else: ?>
-					<p class="register-account-link"><a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Create Account'); ?>"><?php _e('Create Account'); ?></a></p>
+					<p class="register-account-link">New user? <a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Create an account'); ?>"><?php _e('Create an account'); ?></a></p>
 					<p class="lost-password-link"><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Lost Password'); ?>"><?php _e('Lost Password?'); ?></a></p>
 				<?php endif; ?>
 				</div>
