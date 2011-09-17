@@ -866,11 +866,13 @@ jQuery(document).ready(function() {
 
 	function parseGetVariables(variables) {
 		var var_list = {};
-		var vars = variables.split("&");
-		
-		for (var i=0;i<vars.length;i++) {
-			var pair = vars[i].split("=");
-			var_list[pair[0]] = pair[1];
+		if(variables.indexOf('&')){
+			var vars = variables.split("&");
+
+			for (var i=0;i<vars.length;i++) {
+				var pair = vars[i].split("=");
+				var_list[pair[0]] = pair[1];
+			}			
 		}
 		return var_list;
 	}
