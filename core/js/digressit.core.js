@@ -1,21 +1,9 @@
 //lots of legacy vars. should be cleaned up soon.
-var AjaxResult = {};
-var grouping_digressit_commentbox_parser;
-var userAgent = navigator.userAgent.toLowerCase();
-var msie=jQuery.browser.msie;
-var msie6=jQuery.browser.msie && jQuery.browser.version=="6.0";
-var msie7=jQuery.browser.msie && jQuery.browser.version=="7.0";
-var msie8=jQuery.browser.msie && jQuery.browser.version=="8.0";
-var safari=jQuery.browser.safari;
-var chrome=jQuery.browser.chrome;
-var mozilla=jQuery.browser.mozilla;
-var iOS = navigator.platform == 'iPad' || navigator.platform == 'iPhone' || navigator.platform == 'iPod';
-var zi=10000;
-var window_has_focus = true;
-var selected_comment_color = '#3d9ddd';
-var unselected_comment_color = '#DFE4E4';
-var request_time = 0;
-var request_time_delay = 500; // ms - adjust as you like
+var AjaxResult = {}, grouping_digressit_commentbox_parser, userAgent = navigator.userAgent.toLowerCase(), 
+	msie=jQuery.browser.msie, msie6=jQuery.browser.msie && jQuery.browser.version=="6.0", msie7=jQuery.browser.msie && jQuery.browser.version=="7.0", 
+	msie8=jQuery.browser.msie && jQuery.browser.version=="8.0", safari=jQuery.browser.safari, chrome=jQuery.browser.chrome, 
+	mozilla=jQuery.browser.mozilla, iOS = navigator.platform == 'iPad' || navigator.platform == 'iPhone' || navigator.platform == 'iPod', 
+	zi=10000, window_has_focus = true, selected_comment_color = '#3d9ddd', unselected_comment_color = '#DFE4E4', request_time = 0, request_time_delay = 500; 
 
 
 //highlight a block of text
@@ -1142,7 +1130,7 @@ jQuery(document).ready(function() {
 			
 			commentlabel = (commentcount == 1) ? commentlabel  : commentlabel + 's';
 
-			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><div class="paragraph-block-button"><span class="paragraph-label">'+(paragraphnumber)+'</span>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></div>');
+			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><a href="#'+paragraphnumber+'"><div class="paragraph-block-button"><span class="paragraph-label">'+(paragraphnumber)+'</span>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></a></div>');
 			jQuery('.paragraph-' + (i)).appendTo('#paragraph-block-'+(i));				
 			
 			
@@ -1400,8 +1388,8 @@ jQuery(document).ready(function() {
 			jQuery('.textblock').removeClass('selected-textblock');
 			jQuery('.paragraph-block').removeClass('selected-paragraph-block');					
 			jQuery('#selected_paragraph_number').val(0);
-			
 			jQuery('#commentbox').scrollTo(0 , 500, {easing:'easeOutBack'});
+
 			
 		}
 		else{
