@@ -1845,6 +1845,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 
 jQuery.fn.closelightbox = function (){
 	jQuery('#lightbox-content').fadeOut();
+	jQuery('#lightbox-content').html('');
 	jQuery('#lightbox-transparency').css('width', 0);
 	jQuery('#lightbox-transparency').css('height', 0);
 	jQuery('#lightbox-transparency').removeClass('enabled');
