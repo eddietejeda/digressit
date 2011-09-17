@@ -257,12 +257,11 @@ function digressit_comment_form(){
 			<?php endif;?>
 		<?php endif; ?>
 		
+		<label for='comment' id="comment-label">Enter your comment:</label>
 		<div id="textarea-wrapper">
 			<div class="left"></div>
-			<div class="right">
-			<label for='comment'>
+			<div class="right">			
 			<textarea name="comment" tabindex="1" class="comment-textarea comment-collapsed" id="comment"><?php _e('Click here to add a new comment...'); ?></textarea>
-			</label>
 			</div>
 		</div>
 	
