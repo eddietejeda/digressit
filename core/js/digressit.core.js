@@ -1228,7 +1228,7 @@ jQuery(document).ready(function() {
 
 		jQuery("#cancel-response").click(function (e) {
 			//jQuery('#comment_parent').val(0);
-			jQuery('#comment').val('Click here add a new comment...');
+			jQuery('#comment').val('Click here to add a new comment...');
 			jQuery('#submit-comment').addClass('disabled');
 			
 		});
