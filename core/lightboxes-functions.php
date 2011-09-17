@@ -56,17 +56,17 @@ function lightbox_login_ajax(){
 			$referer_url = parse_url($_SERVER['HTTP_REFERER']);
 			?>
 			<?php if($_POST['error'] == 'empty_fields'): ?>
-				<p><?php _e('<strong>ERROR</strong>: Enter a username and password.'); ?></p>
+				<p><?php _e('<strong>ERROR</strong>: <a href="#" class="clickfocus user_login">Enter a username and password. Try again.</a>'); ?></p>
 			<?php endif; ?>
 
 
 			<?php if($_POST['error'] == 'invalid_email'): ?>
-				<p><?php _e('<strong>ERROR</strong>: Not a valid account.'); ?></p>
+				<p><?php _e('<strong>ERROR</strong>: <a href="#" class="clickfocus user_login">Not a valid account. Try again.</a>'); ?></p>
 			<?php endif; ?>
 
 
 			<?php if($_POST['error'] == 'signin_failed'): ?>
-				<p><?php _e('<strong>ERROR</strong>: Authentication failed.'); ?></p>
+				<p><?php _e('<strong>ERROR</strong>: <a href="#" class="clickfocus user_login">Authentication failed. Try again.</a>'); ?></p>
 			<?php endif; ?>
 			</div>
 
