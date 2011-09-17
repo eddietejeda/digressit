@@ -51,12 +51,14 @@ if(jQuery.browser.msie){
 
 var parseGetVariables = function (variables) {
 	var var_list = {};
-	var vars = variables.split("&");
+	if(typeof variables != 'undefined' && variables.indexOf('&')){
+		var vars = variables.split("&");
 
-	for (var i=0;i<vars.length;i++) {
-		var pair = vars[i].split("=");
-		var_list[pair[0]] = pair[1];
-	}			
+		for (var i=0;i<vars.length;i++) {
+			var pair = vars[i].split("=");
+			var_list[pair[0]] = pair[1];
+		}			
+	}
 	return var_list;
 }
 
