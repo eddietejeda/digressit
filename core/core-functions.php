@@ -1325,7 +1325,7 @@ var keyboard_navigation = <?php echo $digressit_options['keyboard_navigation'] ?
 		
 	
 		//@TODO $digressit_options['debug_mode'] == 1
-		if(1){
+		if($digressit_options['debug_mode'] == 1){
 			wp_enqueue_script('digressit.core',		get_digressit_media_uri('js/digressit.core.js'), 'jquery', false, true );	
 			wp_enqueue_script('jquery.easing', 		get_digressit_media_uri('js/jquery.easing.js'), 'jquery', false, true );		
 			wp_enqueue_script('jquery.scrollto',	get_digressit_media_uri('js/jquery.scrollTo.js'), 'jquery', false, true );		
