@@ -1809,7 +1809,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					jQuery('#lightbox-content').html(data.message);
 
 					jQuery('#lightbox-content').css('left', (browser_width - jQuery('#lightbox-content').width()) /2  );
-					jQuery('#lightbox-content').css('top', '15%');
+					jQuery('#lightbox-content').css('top', '10%');
 					jQuery('#lightbox-content').fadeIn('slow');
 
 
