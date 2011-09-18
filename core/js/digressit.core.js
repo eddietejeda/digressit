@@ -389,11 +389,11 @@ jQuery(document).ready(function() {
 
 	jQuery(".lightbox-content input[type=text], .lightbox-content input[type=password]").live('keyup', function(e){
 
-		if(!jQuery('.lightbox-content .lightbox-submit').hasClass('disabled')){
+		if(!jQuery('#lightbox-content .lightbox-submit').hasClass('disabled')){
 			if (e.keyCode == '13') {
-				if(jQuery(this).hasClass('ajax')){
+				if(jQuery(this).add('.lightbox-submit').hasClass('ajax')){
 			  		/* UNDO COMMENT: */
-					//jQuery(this).add('.lightbox-submit').click();
+					jQuery(this).add('.lightbox-submit').click();
 				}
 				else{
 					jQuery(e.target).parentsUntil('form').parent().submit();		
