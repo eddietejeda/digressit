@@ -379,9 +379,13 @@ jQuery(document).ready(function() {
 				(jQuery(this).attr('type') == 'password' && jQuery(this).val().length == 0)  || 
 				((jQuery(this).attr('type') == 'radio' || jQuery(this).attr('type') == 'checkbox')  && 
 				(jQuery("input[name='"+jQuery(this).attr('name')+"']").is(':checked') == false )))){
+					
+					
+					var t = setTimeout(function() {
+						jQuery('#' + form_id + ' .lightbox-submit').prop('disabled', true);			
+						jQuery('#' + form_id + ' .lightbox-submit').addClass('disabled');
+					}, 200);
 						
-				jQuery('#' + form_id + ' .lightbox-submit').prop('disabled', true);			
-				jQuery('#' + form_id + ' .lightbox-submit').addClass('disabled');
 			}
 
 		})
