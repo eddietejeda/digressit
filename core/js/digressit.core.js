@@ -387,7 +387,7 @@ jQuery(document).ready(function() {
 		})
 	});
 
-	jQuery(".lightbox-content input[type=text], .lightbox-content input[type=password]").live('keyup', function(e){
+	jQuery(".lightbox-content input").live('keyup', function(e){
 
 		if(!jQuery('#lightbox-content .lightbox-submit').hasClass('disabled')){
 			if (e.keyCode == '13') {
@@ -783,7 +783,7 @@ jQuery(document).ready(function() {
 			}
 		}
 
-		var function_parameters = parseGetVariables( jQuery(this).attr('value'));
+		var function_parameters = parseGetVariables( jQuery(this).attr('data'));
 		jQuery(this).css('cursor', 'wait');
 		jQuery.post( siteurl + "/ajax/" + function_name +'/',	function_parameters,
 			function( data ) {					
@@ -927,7 +927,16 @@ jQuery(document).ready(function() {
 
 
 
+	jQuery('#comment').focus(function(){
+		
 
+		var focus = setTimeout(function() {
+			jQuery('#submit-comment').removeClass('disabled');
+			jQuery('#submit-comment').prop('disabled', false);
+		}, 200);
+		
+		
+	});
 	function handlePaginationClick(new_page_index, pagination_container) {
 		// This selects 20 elements from a content array
 		for(var i=new_page_index;i<7;i++) {
@@ -1822,6 +1831,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					}
 					else{
 					}
+
 
 					var focus = setTimeout(function() {
 						jQuery('#lightbox-content input:first').focus();				    
