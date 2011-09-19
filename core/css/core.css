@@ -981,6 +981,10 @@ ul{
 	color: #3D9DDD;
 }
 
+#comment-label {
+    font-size: .9em;
+}
+
 .comment-collapsed{
 	border:1px solid #E0E4E4;
 	height:100px;	
