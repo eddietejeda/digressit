@@ -257,7 +257,7 @@ function digressit_comment_form(){
 			<?php endif;?>
 		<?php endif; ?>
 		
-		<label for='comment' id="comment-label">Enter your comment:</label>
+		<label for='comment' id="comment-label" class="hidden-offscreen">Enter your comment:</label>
 		<div id="textarea-wrapper">
 			<div class="left"></div>
 			<div class="right">			
