@@ -495,9 +495,7 @@ jQuery(document).ready(function() {
 				jQuery('#'+parent_id).after(new_comment);
 				jQuery('.comment-reply').html('reply');
 
-				
-				jQuery('#'+comment_id + ' .comment-buttons').hide();
-				
+								
 				
 				
 				if(jQuery('#'+parent_id).hasClass('depth-1')){
@@ -542,6 +540,8 @@ jQuery(document).ready(function() {
 			}
 
 		}
+
+		jQuery('#'+comment_id + ' .comment-buttons').hide();
 
 		//var current_count = parseInt(jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).html());
 		jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1 ))).html(data.message.paragraph_comment_count);
