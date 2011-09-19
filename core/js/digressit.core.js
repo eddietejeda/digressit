@@ -392,14 +392,10 @@ jQuery(document).ready(function() {
 		if(!jQuery('#lightbox-content .lightbox-submit').hasClass('disabled')){
 			if (e.keyCode == '13') {
 				if(jQuery(this).add('.lightbox-submit').hasClass('ajax')){
-			  		/* UNDO COMMENT: */
 					jQuery(this).add('.lightbox-submit').click();
 				}
 				else{
 					jQuery(e.target).parentsUntil('form').parent().submit();		
-					//alert(jQuery(e.target).parentsUntil('form').parent().attr('id'));
-			  		/* UNDO COMMENT: */
-					//jQuery(this).submit();	
 				}
 			}			
 		}
