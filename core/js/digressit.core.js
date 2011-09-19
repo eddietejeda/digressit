@@ -1372,7 +1372,7 @@ jQuery(document).ready(function() {
 
 		
 
-	jQuery('.paragraph-block-button').click(function(e){
+	jQuery('.paragraph-block-button').live('click', function(e){
 		var paragraphnumber = parseInt(jQuery('.paragraph-block-button').index(this));
 		var selected_paragraphnumber = parseInt(jQuery('#selected_paragraph_number').val());
 		//jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');					
