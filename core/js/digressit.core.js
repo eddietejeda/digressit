@@ -317,32 +317,6 @@ jQuery(document).ready(function() {
 	
 
 
-/*
-	jQuery("#lightbox-content .required").live('click', function(e) {
-		jQuery("#lightbox-submit").removeClass('disabled');
-		jQuery("#lightbox-submit").prop('disabled', true);
-
-		alert('1');
-		jQuery('#lightbox-content .required').each(function(index){
-			if(!jQuery(this).val().length){
-				jQuery("#lightbox-submit").prop('disabled', false);
-				jQuery("#lightbox-submit").addClass('disabled');
-			}
-		});
-    });     
-*/
-
-
-
-	/*
-	jQuery('.lightbox').click(function(){
-		var lightbox_names = jQuery(this).attr('class').split(' ');
-
-		console.log(lightbox_names[1]);
-		jQuery('body').openlightbox(lightbox_names[1]);
-
-	});
-	*/
 
 
 
