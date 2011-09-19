@@ -522,10 +522,26 @@ jQuery(document).ready(function() {
 			//we are grouping comments
 			if(jQuery('#paragraph-block-' + selected_paragraph_number).length){
 				jQuery('#respond').appendTo('#paragraph-block-' + selected_paragraph_number + ' .toplevel-respond');			
-				jQuery('#paragraph-block-' + selected_paragraph_number).append(new_comment);
-				//jQuery('#commentbox').scrollTo('#'+comment_id , 200);
+				jQuery('#'+parent_id).after(new_comment);
 				jQuery('.comment-reply').html('reply');
-				jQuery('#'+comment_id).fadeIn("#"+comment_id);
+
+				
+				jQuery('#'+comment_id + ' .comment-buttons').hide();
+				
+				
+				
+				if(jQuery('#'+parent_id).hasClass('depth-1')){
+					jQuery('#'+comment_id).addClass('depth-2');					
+				}
+				else if(jQuery('#'+parent_id).hasClass('depth-2')){
+					jQuery('#'+comment_id).addClass('depth-3');					
+				}
+				else if(jQuery('#'+parent_id).hasClass('depth-3')){
+					jQuery('#'+comment_id).addClass('depth-4');					
+				}
+				
+
+				jQuery('#'+comment_id).fadeIn();
 				jQuery('#commentbox').scrollTo('#'+comment_id , 500, {easing:'easeOutBack'});
 
 			}
