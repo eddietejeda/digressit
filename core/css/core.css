@@ -1855,11 +1855,6 @@ img{
 	color:#EEEEEE;
 }
 
-
-
-
-
-
 .digressit-enabled #content{
 	background-color:white;
 	border-color:#BDBDBD;
@@ -1896,3 +1891,12 @@ img{
 .menu-login-list{
 	float: right;
 }
+
+.hidden-offscreen {
+    position:absolute;
+    left:-10000px;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden; 
+} 
