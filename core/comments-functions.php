@@ -257,7 +257,8 @@ function digressit_comment_form(){
 			<?php endif;?>
 		<?php endif; ?>
 		
-		<label for='comment' id="comment-label" class="hidden-offscreen">Enter your comment on the selected section here.</label>
+		<label for='comment' id="comment-label" class="hidden-offscreen">Enter your comment on the selected section here. If you have not selected a numbered section to comment on, 
+		  you must do so before commenting. If you are having trouble commenting, please <a href="mailto:regulationroom@cornell.edu">email us for technical assistance</a>.</label>
 		<div id="textarea-wrapper">
 			<div class="left"></div>
 			<div class="right">			
