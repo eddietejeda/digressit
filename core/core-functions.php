@@ -581,8 +581,11 @@ function digressit_get_stylized_title(){
  * More info at http://code.google.com/chrome/chromeframe/
  */
 function digressit_wp_head(){
+
+
+//	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+
 ?>
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
 <?php
 
 }

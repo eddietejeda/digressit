@@ -109,6 +109,7 @@ jQuery(document).ready(function() {
 	});
 	
 	jQuery('.submit, .lightbox-submit').click(function(e){
+		document.location.hash.length = '';
 		if(jQuery(e.target).hasClass('ajax')){
 			//return false;
 		}
@@ -391,6 +392,7 @@ jQuery(document).ready(function() {
 
     jQuery(".lightbox-submit").live('click', function(e){
 
+		document.location.hash.length = '';
 		if(jQuery(this).hasClass('ajax')){
 		}
 		else{

@@ -112,11 +112,9 @@ function lightbox_login_ajax(){
 	
 				<?php do_action('digressit_login_form'); ?>	
 				<span class="loading-bars"></span>
-				<input type="submit" id="login-submit" tabindex="5" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">
-
-				<span class="lightbox-close"></span>
-			
+				<input type="submit" id="login-submit" tabindex="5" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">			
 			</form>
+			<input type="button" class="lightbox-close" value="Cancel" />
 		</div>
 	<?php 
 	else: 
