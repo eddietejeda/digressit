@@ -276,8 +276,14 @@ jQuery(document).ready(function() {
 	 *		
 	 */
 
-
-
+    // Store original tabindex as element data. When a lightbox opens,
+    // tabindex of all content elements is set to -1. This allows us to
+    // restore the original tabindex value when closing the lightbox.
+    jQuery('#wrapper [tabindex]').each(function(index, element) {
+        var el = jQuery(element),
+            tabindex = el.attr('tabindex');
+        el.data('tabindex', tabindex);          
+    });
 
 
 	if (document.location.hash.length) {
@@ -475,7 +481,7 @@ jQuery(document).ready(function() {
 			return;
 		}
 
-		console.log(jQuery('#selected_paragraph_number').val());
+		//console.log(jQuery('#selected_paragraph_number').val());
 		var selected_paragraph_number = parseInt(  jQuery('#selected_paragraph_number').val()  );
 
 		var comment_parent  = data.message.comment_parent;
@@ -1795,6 +1801,8 @@ jQuery.fn.openlightbox = function (lightbox, params){
 		jQuery.post( siteurl + "/ajax/" + lightbox +'/', params, 
 			function( data ) {	
 		
+		        var wrapperElements;
+		        
 				if(data && parseInt(data.status) == 1){
 					jQuery('#lightbox-content').hide();
 					var browser_width = jQuery(window).width();
@@ -1826,7 +1834,13 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					else{
 					}
 
-
+                    // Keyboard/screenreader accessibility: prevent tabbing off the 
+                    // lightbox onto the main page by setting tabindex values to -1. 
+                    // Original values have been stored as element data, and will be 
+                    // restored when the lightbox is closed.
+                    wrapperElements = jQuery('#wrapper').find('*');
+                    jQuery(wrapperElements).attr('tabindex', -1);
+                    
 					var focus = setTimeout(function() {
 						jQuery('#lightbox-content input:first').focus();				    
 					}, 1000);
@@ -1850,12 +1864,25 @@ jQuery.fn.openlightbox = function (lightbox, params){
 
 
 jQuery.fn.closelightbox = function (){
+    
+    // Restore original tabindex value to page elements
+    jQuery('#wrapper *').each(function(index, element) {
+        var el = jQuery(element),
+            originalTabindex = el.data('tabindex');
+            
+        el.removeAttr('tabindex');
+        if (typeof originalTabindex != 'undefined') {
+            el.attr('tabindex', originalTabindex);
+        }            
+    });
+    
 	jQuery('#lightbox-content').fadeOut();
 	jQuery('#lightbox-content').html('');
 	jQuery('#lightbox-transparency').css('width', 0);
 	jQuery('#lightbox-transparency').css('height', 0);
 	jQuery('#lightbox-transparency').removeClass('enabled');
 	document.location.hash = '';
+	
 }
 
 jQuery.fn.displayerrorslightbox = function (data){
