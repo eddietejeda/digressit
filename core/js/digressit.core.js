@@ -109,7 +109,7 @@ jQuery(document).ready(function() {
 	});
 	
 	jQuery('.submit, .lightbox-submit').click(function(e){
-		document.location.hash.length = '';
+		document.location.hash = '';
 		if(jQuery(e.target).hasClass('ajax')){
 			//return false;
 		}
@@ -392,7 +392,7 @@ jQuery(document).ready(function() {
 
     jQuery(".lightbox-submit").live('click', function(e){
 
-		document.location.hash.length = '';
+		document.location.hash = '';
 		if(jQuery(this).hasClass('ajax')){
 		}
 		else{
@@ -1785,6 +1785,12 @@ jQuery.fn.extend({
 
 jQuery.fn.openlightbox = function (lightbox, params){
 	
+	if(typeof(jQuery('.' + lightbox).attr('data')) !== 'undefined'){
+		var params = {data : jQuery('.' + lightbox).attr('data')};
+	}
+
+	
+	
 	if(isNaN(lightbox)){
 		jQuery.post( siteurl + "/ajax/" + lightbox +'/', params, 
 			function( data ) {	
@@ -1827,6 +1833,8 @@ jQuery.fn.openlightbox = function (lightbox, params){
 
 					
 					if(jQuery('#lightbox-content .lightbox-delay-close').length){
+						document.location.hash = '';
+
 						var t = setTimeout(function() {
 							jQuery("body").closelightbox();
 							}, 1000);
@@ -1847,7 +1855,7 @@ jQuery.fn.closelightbox = function (){
 	jQuery('#lightbox-transparency').css('width', 0);
 	jQuery('#lightbox-transparency').css('height', 0);
 	jQuery('#lightbox-transparency').removeClass('enabled');
-	document.location.hash.length = '';
+	document.location.hash = '';
 }
 
 jQuery.fn.displayerrorslightbox = function (data){

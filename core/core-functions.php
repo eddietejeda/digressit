@@ -1306,6 +1306,8 @@ function digressit_core_print_scripts(){
 <script type='text/javascript'>	
 var siteurl = '<?php echo get_root_domain(); ?>';
 var baseurl = '<?php echo get_root_domain(); ?>';
+var siteurlpath = '<?php echo site_url(); ?>';
+
 var user_ID =  <?php echo $current_user->ID; ?>;
 var post_ID = <?php echo isset($post->ID) ? $post->ID : 0 ?>;
 var blog_ID = <?php echo $blog_id; ?>;
