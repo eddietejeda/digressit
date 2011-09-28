@@ -46,7 +46,8 @@ function lightbox_login_ajax(){
 		<div class="lightbox-content" id="lightbox-login">
 			<form method="post" action="<?php echo wp_login_url() ?>" id="login-form" name="loginform">
 				<fieldset>
-
+				    <legend><h3>Sign in</h3></legend>
+        
 				<p class="status-message error">
 
 					<?php
@@ -93,7 +94,7 @@ function lightbox_login_ajax(){
 				<?php if(has_action('custom_register_links')) :?>
 					<p><?php do_action('custom_register_links'); ?></p>
 				<?php else: ?>
-					<p class="register-account-link">New user? <a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Create an account'); ?>"><?php _e('Create an account'); ?></a></p>
+					<p class="register-account-link">New user? <a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Create an account if you are a new user'); ?>"><?php _e('Create an account'); ?></a></p>
 					<p class="lost-password-link"><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Lost Password'); ?>"><?php _e('Lost Password?'); ?></a></p>
 				<?php endif; ?>
 				</div>
