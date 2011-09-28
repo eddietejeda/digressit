@@ -271,12 +271,13 @@ function digressit_comment_form(){
 	
 		<div id="submit-wrapper">
 			<input name="cancel-response" id="cancel-response"  type="button" value="<?php _e('Cancel'); ?>">
-			<div class="loading-bars"></div><input name="submit" id="submit-comment"  class="submit ajax" type="button" value="<?php _e('Submit Comment'); ?>">
+			<div class="loading-bars"></div><input name="submit" id="submit-comment"  class="submit-comment submit ajax" type="button" value="<?php _e('Submit Comment'); ?>">
 		</div>
 		<?php comment_id_fields(); ?>
 		<?php do_action('comment_form', $post->ID); ?>
-		<?php do_action('digressit_after_comment_form'); ?>
+		<div class="lightbox lightbox-add-link add_link"><input type="button" class="transparent-submit-button" value="Add Link" /></div>
 	</form>
+	<?php do_action('digressit_after_comment_form'); ?>
 	<?php
 }
 
