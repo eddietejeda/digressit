@@ -38,7 +38,7 @@ function ajax_template() {
 	//var_dump($wp->query_vars);
 	if(isset( $wp->query_vars['inc_ajax'] ) && !empty($wp->query_vars['inc_ajax'] ) ):
 
-		$request_action = trim(str_replace('-','_',$wp->query_vars['inc_ajax'])."_ajax"); 
+		$request_action = basename(trim(str_replace('-','_',esc_attr($wp->query_vars['inc_ajax']))."_ajax")); 
 		$request_params = $_REQUEST;
 
 		$comment_id = $request_params['comment_id'];
