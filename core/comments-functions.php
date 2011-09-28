@@ -275,7 +275,7 @@ function digressit_comment_form(){
 		</div>
 		<?php comment_id_fields(); ?>
 		<?php do_action('comment_form', $post->ID); ?>
-		<div class="lightbox lightbox-add-link add_link"><input type="button" class="transparent-submit-button" value="Add Link" /></div>
+		<div class="add_link"><input type="button" class="lightbox lightbox-add-link transparent-submit-button" value="Add Link" /></div>
 	</form>
 	<?php do_action('digressit_after_comment_form'); ?>
 	<?php
