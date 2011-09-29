@@ -1312,7 +1312,7 @@ var user_ID =  <?php echo $current_user->ID; ?>;
 var post_ID = <?php echo isset($post->ID) ? $post->ID : 0 ?>;
 var blog_ID = <?php echo $blog_id; ?>;
 var current_blog_id = <?php echo $blog_id; ?>;
-var request_uri = '<?php echo  str_replace(get_option("siteurl"), '', get_permalink($post->ID)); ?>';
+var request_uri = '<?php echo  str_replace(get_option("siteurl"), '', (is_home() ? "/" : get_permalink($post->ID)) ); ?>';
 <?php 	if(is_single() && (int)$digressit_options['digressit_enabled_for_posts'] || is_page() && (int)$digressit_options['digressit_enabled_for_pages']){ ?>
 var digressit_enabled = 1;
 var post_name = '<?php echo $post->post_name; ?>';
