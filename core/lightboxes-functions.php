@@ -48,7 +48,7 @@ function lightbox_login_ajax(){
 				<fieldset>
 				    <legend><h3>Sign in</h3></legend>
         
-					<p class="status-message error">
+					<legend class="status-message error">
 
 						<?php
 						$referer_url = parse_url($_SERVER['HTTP_REFERER']);
@@ -77,7 +77,7 @@ function lightbox_login_ajax(){
 							<?php do_action('custom_login_header'); ?>
 						<?php endif; ?>
 
-					</p>
+					</legend>
 
 					<p>
 						<label for="user_login"><?php _e('Username'); ?></label><br />
