@@ -48,65 +48,64 @@ function lightbox_login_ajax(){
 				<fieldset>
 				    <legend><h3>Sign in</h3></legend>
         
-				<p class="status-message error">
+					<p class="status-message error">
 
-					<?php
-					$referer_url = parse_url($_SERVER['HTTP_REFERER']);
-					?>
-					<?php if($_POST['error'] == 'empty_fields'): ?>
-						<?php _e('<strong>ERROR</strong>: <a href="#" class="clickfocus user_login">Enter a username and password. Try again.</a>'); ?>
-					<?php endif; ?>
+						<?php
+						$referer_url = parse_url($_SERVER['HTTP_REFERER']);
+						?>
+						<?php if($_POST['error'] == 'empty_fields'): ?>
+							<?php _e('<strong>ERROR</strong>: <a href="#" class="clickfocus user_login">Enter a username and password. Try again.</a>'); ?>
+						<?php endif; ?>
 
-					<?php if($_POST['error'] == 'invalid_email'): ?>
-						<?php _e('<strong>ERROR</strong>: <a href="#" class="clickfocus user_login">Not a valid account. Try again.</a>'); ?>
-					<?php endif; ?>
+						<?php if($_POST['error'] == 'invalid_email'): ?>
+							<?php _e('<strong>ERROR</strong>: <a href="#" class="clickfocus user_login">Not a valid account. Try again.</a>'); ?>
+						<?php endif; ?>
 
-					<?php if($_POST['error'] == 'signin_failed'): ?>
-						<?php _e('<strong>ERROR</strong>: <a href="#" class="clickfocus user_login">Authentication failed. Try again.</a>'); ?>
-					<?php endif; ?>
+						<?php if($_POST['error'] == 'signin_failed'): ?>
+							<?php _e('<strong>ERROR</strong>: <a href="#" class="clickfocus user_login">Authentication failed. Try again.</a>'); ?>
+						<?php endif; ?>
 
-					<?php if($_POST['error'] == 'account_enabled'): ?>
-						<?php _e('Your account has not been enabled. Please check your inbox for your activation code'); ?>
-					<?php endif; ?>
+						<?php if($_POST['error'] == 'account_enabled'): ?>
+							<?php _e('Your account has not been enabled. Please check your inbox for your activation code'); ?>
+						<?php endif; ?>
 
-					<?php if($_POST['password_reset_key'] && $password_just_reset): ?>
-						<?php _e('Your password was reset.<br>Check your email for your new password'); ?>
-					<?php endif; ?>
+						<?php if($_POST['password_reset_key'] && $password_just_reset): ?>
+							<?php _e('Your password was reset.<br>Check your email for your new password'); ?>
+						<?php endif; ?>
 
-					<?php if(has_action('custom_login_header')) :?>
-						<?php do_action('custom_login_header'); ?>
-					<?php endif; ?>
+						<?php if(has_action('custom_login_header')) :?>
+							<?php do_action('custom_login_header'); ?>
+						<?php endif; ?>
 
-				</p>
+					</p>
 
-
-				<p>
-					<label for="user_login"><?php _e('Username'); ?></label><br />
-					<input type="text" name="log" id="user_login" class="input required" value="" size="25" tabindex="1" />
-				</p>
+					<p>
+						<label for="user_login"><?php _e('Username'); ?></label><br />
+						<input type="text" name="log" id="user_login" class="input required" value="" size="25" tabindex="1" />
+					</p>
 	
-				<p>
-					<label for="user_pass"><?php _e('Password'); ?></label><br />
-					<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" tabindex="2" />
-				</p>
+					<p>
+						<label for="user_pass"><?php _e('Password'); ?></label><br />
+						<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" tabindex="2" />
+					</p>
 				
-				<div class="custom_register_links">
-				<?php if(has_action('custom_register_links')) :?>
-					<p><?php do_action('custom_register_links'); ?></p>
-				<?php else: ?>
-					<p class="register-account-link">New user? <a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Create an account if you are a new user'); ?>"><?php _e('Create an account'); ?></a></p>
-					<p class="lost-password-link"><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Lost Password'); ?>"><?php _e('Lost Password?'); ?></a></p>
-				<?php endif; ?>
-				</div>
+					<div class="custom_register_links">
+					<?php if(has_action('custom_register_links')) :?>
+						<p><?php do_action('custom_register_links'); ?></p>
+					<?php else: ?>
+						<p class="register-account-link">New user? <a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"   title="<?php _e('Create an account if you are a new user'); ?>"><?php _e('Create an account'); ?></a></p>
+						<p class="lost-password-link"><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Lost Password'); ?>"><?php _e('Lost Password?'); ?></a></p>
+					<?php endif; ?>
+					</div>
 			
-				<input type="hidden" name="wp-submit" value="Log In" id="wp-submit">
-				<input type="hidden" name="redirect_to" value="<?php echo $_REQUEST['data']; ?>#login-success" /> 
-				<input type="hidden" name="testcookie" value="1" />
+					<input type="hidden" name="wp-submit" value="Log In" id="wp-submit">
+					<input type="hidden" name="redirect_to" value="<?php echo $_REQUEST['data']; ?>#login-success" /> 
+					<input type="hidden" name="testcookie" value="1" />
 	
-				<?php do_action('digressit_login_form'); ?>	
-				<span class="loading-bars"></span>
-				<input type="submit" id="login-submit" tabindex="5" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">			
-				<input type="button" class="lightbox-close" value="Close" />
+					<?php do_action('digressit_login_form'); ?>	
+					<span class="loading-bars"></span>
+					<input type="submit" id="login-submit" tabindex="5" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">			
+					<input type="button" class="lightbox-close" value="Close" />
 				</fieldset>
 			</form>
 		</div>

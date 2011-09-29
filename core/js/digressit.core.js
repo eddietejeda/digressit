@@ -1153,7 +1153,7 @@ jQuery(document).ready(function() {
 			
 			commentlabel = (commentcount == 1) ? commentlabel  : commentlabel + 's';
 
-			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><a href="#'+paragraphnumber+'"><div class="paragraph-block-button"><span class="paragraph-label">'+(paragraphnumber)+'</span>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></a></div>');
+			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><div class="paragraph-block-button"><a href="#'+paragraphnumber+'" class="paragraph-label">'+(paragraphnumber)+'</a>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></a></div>');
 			jQuery('.paragraph-' + (i)).appendTo('#paragraph-block-'+(i));				
 			
 			
@@ -1168,7 +1168,7 @@ jQuery(document).ready(function() {
 			
 			commentlabel = (commentcount == 1) ? commentlabel  : commentlabel + 's';
 			
-			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><div class="paragraph-block-button"><span class="paragraph-label">'+(paragraphnumber)+'</span>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></div>');
+			jQuery("#commentwindow").append('<div class="paragraph-block" id="paragraph-block-'+(i)+'"><div class="paragraph-block-button"><a href="#'+paragraphnumber+'" class="paragraph-label">'+(paragraphnumber)+'</a>&nbsp; <span class="commentcount">'+commentcount+'</span> '+commentlabel+'</div><div class="toplevel-respond"></div></div>');
 			
 			jQuery('.paragraph-' + (i)).appendTo('#paragraph-block-'+(i));				
 
@@ -1318,7 +1318,7 @@ jQuery(document).ready(function() {
 			}
 	
 			else{
-		
+				
 				/* PARAGRAPH BLOCKS - SELECTED */
 				if(jQuery('.paragraph-block').length){
 					jQuery('#respond').hide();			
@@ -1352,7 +1352,6 @@ jQuery(document).ready(function() {
 					
 					jQuery('#selected_paragraph_number').val(paragraphnumber);
 					document.location.hash = '#' + paragraphnumber;
-
 				}
 				else{
 					/* ALL COMMENTS - SELECTED */
@@ -1375,7 +1374,6 @@ jQuery(document).ready(function() {
 					jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');					
 
 					jQuery('#selected_paragraph_number').val(paragraphnumber);
-
 
 					/*
 					if(jQuery('.paragraph-' + paragraphnumber ).length){
@@ -1455,15 +1453,14 @@ jQuery(document).ready(function() {
 		else if(jQuery(e.target).parent().attr('href')){
 
 			if(jQuery(e.target).parent().attr('target') && jQuery(e.target).parent().attr('href')){
-				window.open(jQuery(e.target).parent().attr('href').toString());								
+				window.open(jQuery(e.target).parent().attr('href').toString());
 			}
-			else{
-				window.location = jQuery(e.target).parent().attr('href').toString();				
+			else {
+				window.location = jQuery(e.target).parent().attr('href').toString();
 			}
 
 			return 1;
 		}
-		
 		return 0;
 	}
 
@@ -1496,7 +1493,6 @@ jQuery(document).ready(function() {
 			var scrollto = (top > 200)  ? (top - 100) : 0;
 			jQuery(window).scrollTo(scrollto , 1000);
 		}
-
 	}
 	else if ( document.location.hash.substr(1, 13) == 'search-result') {
 		jQuery(window).scrollTo( jQuery('.search-result:first'), 1000);
@@ -1793,7 +1789,6 @@ jQuery.fn.extend({
 			jQuery("#commentbox").css('top', parseInt(jQuery('#commentbox-header').top) + parseInt(jQuery('#commentbox-header').outerHeight()) + 'px');
 			jQuery("#commentbox").css('height', jQuery(window).height() - 250 + 'px');
 		}
-
 	
 		//bottom of page
 		if(scroll_top > (content_height - ((browser_height/2)+20)) && jQuery("#commentbox").css('position') == 'fixed'){
@@ -1804,9 +1799,6 @@ jQuery.fn.extend({
 			jQuery("#commentbox").css('height', '90%');			
 			jQuery("#commentbox").removeClass('resized');
 		}
-
-		
-
 	}	
 	
 });
