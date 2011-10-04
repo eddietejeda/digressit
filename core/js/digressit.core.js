@@ -1819,6 +1819,18 @@ jQuery.fn.openlightbox = function (lightbox, params){
 		        var wrapperElements;
 		        
 				if(data && parseInt(data.status) == 1){
+				    
+				    // Keyboard/screenreader accessibility: prevent tabbing off the 
+                    // lightbox onto the main page by setting tabindex values to -1. 
+                    // Original values have been stored as element data, and will be 
+                    // restored when the lightbox is closed.
+                    wrapperElements = jQuery('#wrapper').find('*');
+                    // console.log("number of elements in #wrapper: " + wrapperElements.length);
+                    // console.log("number of elements with tabindex before setting to -1: " + jQuery('[tabindex]').length);
+                    // console.log(jQuery('[tabindex]'));
+                    jQuery(wrapperElements).attr('tabindex', -1);
+                    // console.log("number of elements with tabindex after setting to -1: " + jQuery('[tabindex]').length); 
+                    
 					jQuery('#lightbox-content').hide();
 					var browser_width = jQuery(window).width();
 					var browser_height = jQuery(window).height();
@@ -1849,13 +1861,6 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					else{
 					}
 
-                    // Keyboard/screenreader accessibility: prevent tabbing off the 
-                    // lightbox onto the main page by setting tabindex values to -1. 
-                    // Original values have been stored as element data, and will be 
-                    // restored when the lightbox is closed.
-                    wrapperElements = jQuery('#wrapper').find('*');
-                    jQuery(wrapperElements).attr('tabindex', -1);
-                    
 					var focus = setTimeout(function() {
 						jQuery('#lightbox-content input:first').focus();				    
 					}, 1000);
@@ -1875,11 +1880,15 @@ jQuery.fn.openlightbox = function (lightbox, params){
 	}
 }
 
-
-
-
 jQuery.fn.closelightbox = function (){
     
+	jQuery('#lightbox-content').fadeOut();
+	jQuery('#lightbox-content').html('');
+	jQuery('#lightbox-transparency').css('width', 0);
+	jQuery('#lightbox-transparency').css('height', 0);
+	jQuery('#lightbox-transparency').removeClass('enabled');
+	document.location.hash = '';
+	
     // Restore original tabindex value to page elements
     jQuery('#wrapper *').each(function(index, element) {
         var el = jQuery(element),
@@ -1889,15 +1898,10 @@ jQuery.fn.closelightbox = function (){
         if (typeof originalTabindex != 'undefined') {
             el.attr('tabindex', originalTabindex);
         }            
-    });
-    
-	jQuery('#lightbox-content').fadeOut();
-	jQuery('#lightbox-content').html('');
-	jQuery('#lightbox-transparency').css('width', 0);
-	jQuery('#lightbox-transparency').css('height', 0);
-	jQuery('#lightbox-transparency').removeClass('enabled');
-	document.location.hash = '';
-	
+    });	
+    // console.log("number of elements with tabindex after closing lightbox: "
+    //             + jQuery('[tabindex]').length);
+    // console.log(jQuery('[tabindex]'));
 }
 
 jQuery.fn.displayerrorslightbox = function (data){
