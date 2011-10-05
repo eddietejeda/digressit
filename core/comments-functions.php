@@ -259,7 +259,7 @@ function digressit_comment_form(){
 		
 		<label for='comment' id="comment-label" class="hidden-offscreen">Enter your comment on the selected section here. If you have not selected a numbered section to comment on, 
 		  you must do so before commenting. If you are having trouble commenting, please <a href="mailto:regulationroom@cornell.edu">email us for technical assistance</a>.</label>
-		<div id="textarea-wrapper">
+		<div id="textarea-wrapper" class="wrapper-disabled">
 			<div class="left"></div>
 			<div class="right">			
 			<textarea name="comment" tabindex="1" class="comment-textarea comment-collapsed" id="comment"><?php _e('Click here to add a new comment...'); ?></textarea>
@@ -269,13 +269,13 @@ function digressit_comment_form(){
 		<input name="blog_id" type="hidden"  value="<?php echo $blog_id; ?>" />
 		<input name="selected_paragraph_number" type="hidden" id="selected_paragraph_number"  value="0" />
 	
-		<div id="submit-wrapper">
-			<input name="cancel-response" id="cancel-response"  type="button" value="<?php _e('Cancel'); ?>">
-			<div class="loading-bars"></div><input name="submit" id="submit-comment"  class="submit-comment submit ajax" type="button" value="<?php _e('Submit Comment'); ?>">
+		<div id="submit-wrapper" class="wrapper-disabled">
+			<input name="cancel-response" class="comment-button-disabled" id="cancel-response" type="button" value="<?php _e('Cancel');  ?>" disabled="disabled" />
+			<input name="add-link" class="comment-button-disabled" id="add-link" type="button" value="<?php _e('Add Link'); ?>" disabled="disabled" />
+			<div class="loading-bars"></div><input name="submit" id="submit-comment" class="submit-comment submit ajax comment-button-disabled" type="button" value="<?php _e('Submit Comment'); ?>" disabled="disabled" />
 		</div>
 		<?php comment_id_fields(); ?>
 		<?php do_action('comment_form', $post->ID); ?>
-		<div class="add_link"><input type="button" class="lightbox lightbox-add-link transparent-submit-button" value="Add Link" /></div>
 	</form>
 	<?php do_action('digressit_after_comment_form'); ?>
 	<?php
