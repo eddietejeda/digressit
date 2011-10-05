@@ -472,15 +472,6 @@ a:hover{
 }
 
 
-.lightbox-register:hover{
-	text-decoration: underline;
-}
-.lightbox-reset-password:hover{
-	text-decoration: underline;
-}
-
-
-
 #lightbox-moderator-log {
 	display:none;
 }

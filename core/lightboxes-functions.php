@@ -25,7 +25,7 @@ function start_lightbox($lightbox_name = 'Lightbox: Generic'){
 }
 
 function end_lightbox($status = 1){
-	//This is for Accessability support
+	//This is for accessibility support
 	echo '<span class="hidden-offscreen"> End of dialog content </span>';
 	do_action('digressit_end_lightbox', $lightbox_name);
 	$html = ob_get_contents();
@@ -46,7 +46,7 @@ function lightbox_login_ajax(){
 		<div class="lightbox-content" id="lightbox-login">
 			<form method="post" action="<?php echo wp_login_url() ?>" id="login-form" name="loginform">
 				<fieldset>
-				    <legend>
+				    <legend tabindex="1">
 				        <h3>Sign in</h3>
 
                         <?php if(has_action('custom_login_header')) :?>
@@ -81,35 +81,36 @@ function lightbox_login_ajax(){
                          </div>
                  
 					</legend>
+                </fieldset>
+                
+				<p>
+					<label for="user_login"><?php _e('Username'); ?></label><br />
+					<input type="text" name="log" id="user_login" class="input required" value="" size="25" />
+				</p>
 
-					<p>
-						<label for="user_login"><?php _e('Username'); ?></label><br />
-						<input type="text" name="log" id="user_login" class="input required" value="" size="25" tabindex="1" />
-					</p>
-	
-					<p>
-						<label for="user_pass"><?php _e('Password'); ?></label><br />
-						<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" tabindex="2" />
-					</p>
-				
-					<div class="custom_register_links">
-					<?php if(has_action('custom_register_links')) :?>
-						<p><?php do_action('custom_register_links'); ?></p>
-					<?php else: ?>
-						<p class="register-account-link">New user? <a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"  title="<?php _e('Create an account if you are a new user'); ?>"><?php _e('Create an account'); ?></a></p>
-						<p class="lost-password-link"><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Reset your password if you have lost it'); ?>"><?php _e('Lost Password?'); ?></a></p>
-					<?php endif; ?>
-					</div>
+				<p>
+					<label for="user_pass"><?php _e('Password'); ?></label><br />
+					<input type="password" name="pwd" id="user_pass" class="input required" value="" size="25" />
+				</p>
 			
-					<input type="hidden" name="wp-submit" value="Log In" id="wp-submit">
-					<input type="hidden" name="redirect_to" value="<?php echo $_REQUEST['data']; ?>#login-success" /> 
-					<input type="hidden" name="testcookie" value="1" />
-	
-					<?php do_action('digressit_login_form'); ?>	
-					<span class="loading-bars"></span>
-					<input type="submit" id="login-submit" tabindex="5" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">			
-					<input type="button" class="lightbox-close" value="Close" />
-				</fieldset>
+				<div class="custom_register_links">
+				<?php if(has_action('custom_register_links')) :?>
+					<p><?php do_action('custom_register_links'); ?></p>
+				<?php else: ?>
+					<p class="register-account-link">New user? <a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"  title="<?php _e('Create an account if you are a new user'); ?>"><?php _e('Create an account'); ?></a></p>
+					<p class="lost-password-link"><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Reset your password if you have lost it'); ?>"><?php _e('Lost Password?'); ?></a></p>
+				<?php endif; ?>
+				</div>
+		
+				<input type="hidden" name="wp-submit" value="Log In" id="wp-submit">
+				<input type="hidden" name="redirect_to" value="<?php echo $_REQUEST['data']; ?>#login-success" /> 
+				<input type="hidden" name="testcookie" value="1" />
+
+				<?php do_action('digressit_login_form'); ?>	
+				<span class="loading-bars"></span>
+				<input type="submit" id="login-submit" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">			
+				<input type="button" class="lightbox-close" value="Close" />
+			
 			</form>
 		</div>
 	<?php 

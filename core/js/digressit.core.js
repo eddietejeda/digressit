@@ -1848,24 +1848,23 @@ jQuery.fn.openlightbox = function (lightbox, params){
 
 					jQuery('#lightbox-content').css('left', (browser_width - jQuery('#lightbox-content').width()) /2  );
 					jQuery('#lightbox-content').css('top', '10%');
-					jQuery('#lightbox-content').fadeIn('slow');
-
-
-					function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";
+					
+					jQuery('#lightbox-content').fadeIn('slow', function() {
+					    // This makes screenreader skip everything before the first input
+					    // jQuery('#lightbox-content input:first').focus();
+					    jQuery('#lightbox-content legend:first').focus();
+					});
+                    
+					var function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";
 
 					var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
 					
 					if(eval(dynamic_call)){
 						eval('AjaxResult.' + function_name + '(data);');
 					}
-					else{
+					else {
 					}
 
-					var focus = setTimeout(function() {
-						jQuery('#lightbox-content input:first').focus();				    
-					}, 1000);
-
-					
 					if(jQuery('#lightbox-content .lightbox-delay-close').length){
 						document.location.hash = '';
 
@@ -1877,6 +1876,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 				}
 		
 			}, 'json' );
+			return false;
 	}
 }
 
