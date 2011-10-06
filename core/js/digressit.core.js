@@ -1857,18 +1857,27 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					    
 					    var lightbox = jQuery(this),
 					        hasTabindex = lightbox.find('[tabindex]'),
-					        focus = null,
+					        focus = jQuery(),
 					        legend;
 		    
+		                // First look for a positive tabindex and assign focus to the 
+		                // first element with the smallest value.
 					    hasTabindex.each(function() {					        
 					        var el = jQuery(this), 
 					            tabindex = el.attr('tabindex');
-					        if (tabindex > 0 && (focus == null || tabindex < focus.attr('tabindex'))) {
+					            
+					        if (tabindex > 0 && (!focus.length || tabindex < focus.attr('tabindex'))) {
 					            focus = el;
 					        }
 					    });
 					    
-					    if (focus === null) {
+					    // This is the general case: the form markup should assign tabindex=0 to every element
+					    // that should be tabbed to that isn't in the tab order by default. 
+					    if (!focus.length) {
+					        focus = lightbox.find('[tabindex=0]:first');
+					    }
+					    
+					    if (!focus.length) {
 					        legend = lightbox.find('legend:first');
 					        // Assign the legend a tabindex, else it can't receive focus.
 					        legend.attr('tabindex', '1');
@@ -1893,11 +1902,11 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					}
 
 					if (lightboxContent.find('.lightbox-delay-close').length) {
-						document.location.hash = '';
+						//document.location.hash = '';
 
 						timeout = setTimeout(function() {
 							jQuery("body").closelightbox();
-							}, 1000);
+							}, 3000); // increased delay for accessibility
 						jQuery(this).data('timeout', timeout);			
 					}
 				}

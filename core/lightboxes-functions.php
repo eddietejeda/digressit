@@ -46,8 +46,8 @@ function lightbox_login_ajax(){
 		<div class="lightbox-content" id="lightbox-login">
 			<form method="post" action="<?php echo wp_login_url() ?>" id="login-form" name="loginform">
 				<fieldset>
-				    <legend >
-				        <h3>Sign in</h3>
+				    <legend>
+				        <h3 tabindex="0">Sign in</h3>
 
                         <?php if(has_action('custom_login_header')) :?>
                             <?php do_action('custom_login_header'); ?>
@@ -59,23 +59,23 @@ function lightbox_login_ajax(){
     						$referer_url = parse_url($_SERVER['HTTP_REFERER']);
     						?>
     						<?php if($_POST['error'] == 'empty_fields'): ?>
-    							<?php _e('<strong>ERROR</strong>: <a href="#user_login" class="clickfocus user_login">Enter a username and password. Try again.</a>'); ?>
+    							<?php _e('<p tabindex="1"><strong>ERROR</strong>: <a href="#user_login" class="clickfocus user_login">Enter a username and password. Try again.</a></p>'); ?>
     						<?php endif; ?>
     
     						<?php if($_POST['error'] == 'invalid_email'): ?>
-    							<?php _e('<strong>ERROR</strong>: <a href="#user_login" class="clickfocus user_login">Not a valid account. Try again.</a>'); ?>
+    							<?php _e('<p tabindex="1"><strong>ERROR</strong>: <a href="#user_login" class="clickfocus user_login">Not a valid account. Try again.</a>'); ?>
     						<?php endif; ?>
     
     						<?php if($_POST['error'] == 'signin_failed'): ?>
-    							<?php _e('<strong>ERROR</strong>: <a href="#user_login" class="clickfocus user_login">Authentication failed. Try again.</a>'); ?>
+    							<?php _e('<p tabindex="1"><strong>ERROR</strong>: <a href="#user_login" class="clickfocus user_login">Authentication failed. Try again.</a></p>'); ?>
     						<?php endif; ?>
     
     						<?php if($_POST['error'] == 'account_enabled'): ?>
-    							<?php _e('Your account has not been enabled. Please check your inbox for your activation code.'); ?>
+    							<?php _e('<p tabindex="1"><strong>ERROR</strong>: Your account has not been enabled. Please check your inbox for your activation code.</p>'); ?>
     						<?php endif; ?>
     
     						<?php if($_POST['password_reset_key'] && $password_just_reset): ?>
-    							<?php _e('Your password was reset.<br>Check your email for your new password.'); ?>
+    							<?php _e('<p tabindex="1"><strong>ERROR</strong>: Your password was reset.<br>Check your email for your new password.</p>'); ?>
     						<?php endif; ?>
     						
                          </div>
@@ -96,7 +96,7 @@ function lightbox_login_ajax(){
 				<div class="custom_register_links">
 				<?php if(has_action('custom_register_links')) :?>
 					<p><?php do_action('custom_register_links'); ?></p>
-				<?php else: /* These need to be rewritten as input type="submit", or else removed */ ?>				    
+				<?php else: /* Applies only to digressit, not regulation room, so leaving non-accessible markup for now. */ ?>				    
 				    <p class="register-account-link">New user? <a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"  title="<?php _e('Create an account if you are a new user'); ?>"><?php _e('Create an account'); ?></a></p>
 					<p class="lost-password-link"><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Reset your password if you have lost it'); ?>"><?php _e('Lost Password?'); ?></a></p>
 				<?php endif; ?>
@@ -135,8 +135,12 @@ function lightbox_login_success_ajax(){
 		$status  = 1;
 	?>
 		<div class="lightbox-content" id="lightbox-login-success">
-			<h2><?php _e('Login Successful'); ?></h2>
-			<span class="lightbox-delay-close"></span>
+			<h2 tabindex="0"><?php _e('Login Successful'); ?></h2>
+			
+			<?php /* Test the auto-close lightbox with JAWS. If it doesn't work, 
+                     use the close button as an alternative. */ ?>
+			<span class="lightbox-delay-close"></span> 		                              
+            <!--  <input type="button" class="lightbox-close" value="OK" /> -->
 		</div><?php 
 	else:
 		$status = 0;	
