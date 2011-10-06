@@ -321,12 +321,6 @@ jQuery(document).ready(function() {
 
 	});
 	
-	
-
-
-
-
-
 	jQuery('.close').live('click', function(e){
 		jQuery(this).parent().hide();		
 		jQuery('#block-access').hide();
@@ -339,8 +333,6 @@ jQuery(document).ready(function() {
 		jQuery("body").closelightbox();
 
 	});
-
-
 
     jQuery(".required").live('keyup', function(e){
 
@@ -1859,9 +1851,37 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					               .css('left', (browser_width - lightboxContent.width()) /2 )
 					               .css('top', '10%')					
 					               .fadeIn('slow', function() {
+					                   
 					    // This makes screenreader skip everything before the first input
 					    // this.find('input:first').focus();
-					    jQuery(this).find('legend:first').focus();
+					    
+					    var lightbox = jQuery(this),
+					        hasTabindex = lightbox.find('[tabindex]'),
+					        focus = null,
+					        legend;
+		    
+					    hasTabindex.each(function() {					        
+					        var el = jQuery(this), 
+					            tabindex = el.attr('tabindex');
+					        if (tabindex > 0 && (focus == null || tabindex < focus.attr('tabindex'))) {
+					            focus = el;
+					        }
+					    });
+					    
+					    if (focus === null) {
+					        legend = lightbox.find('legend:first');
+					        // Assign the legend a tabindex, else it can't receive focus.
+					        legend.attr('tabindex', '1');
+					        focus = legend;
+					    }					    
+					    
+					    if (!focus.length) {
+					        focus = input.find('input:first');
+					    }
+					    
+					    if (focus) {
+					        focus.focus();
+					    }
 					});
                     
 					function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";

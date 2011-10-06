@@ -46,7 +46,7 @@ function lightbox_login_ajax(){
 		<div class="lightbox-content" id="lightbox-login">
 			<form method="post" action="<?php echo wp_login_url() ?>" id="login-form" name="loginform">
 				<fieldset>
-				    <legend tabindex="1">
+				    <legend >
 				        <h3>Sign in</h3>
 
                         <?php if(has_action('custom_login_header')) :?>
@@ -96,8 +96,8 @@ function lightbox_login_ajax(){
 				<div class="custom_register_links">
 				<?php if(has_action('custom_register_links')) :?>
 					<p><?php do_action('custom_register_links'); ?></p>
-				<?php else: ?>
-					<p class="register-account-link">New user? <a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"  title="<?php _e('Create an account if you are a new user'); ?>"><?php _e('Create an account'); ?></a></p>
+				<?php else: /* These need to be rewritten as input type="submit", or else removed */ ?>				    
+				    <p class="register-account-link">New user? <a href="<?php echo get_bloginfo('home'); ?>/wp-signup.php"  title="<?php _e('Create an account if you are a new user'); ?>"><?php _e('Create an account'); ?></a></p>
 					<p class="lost-password-link"><a href="<?php echo wp_login_url(); ?>?action=lostpassword" title="<?php _e('Reset your password if you have lost it'); ?>"><?php _e('Lost Password?'); ?></a></p>
 				<?php endif; ?>
 				</div>
@@ -108,8 +108,11 @@ function lightbox_login_ajax(){
 
 				<?php do_action('digressit_login_form'); ?>	
 				<span class="loading-bars"></span>
-				<input type="submit" id="login-submit" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">			
-				<input type="button" class="lightbox-close" value="Close" />
+				
+				<div class="lightbox_buttons">
+				    <input type="submit" id="login-submit" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">			
+				    <input type="button" class="lightbox-close" value="Close" />
+				</div>
 			
 			</form>
 		</div>
