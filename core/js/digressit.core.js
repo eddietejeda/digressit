@@ -1810,83 +1810,93 @@ jQuery.fn.openlightbox = function (lightbox, params){
 		var params = {data : jQuery('.' + lightbox).attr('data')};
 	}
 
-	
-	
 	if(isNaN(lightbox)){
 		jQuery.post( siteurl + "/ajax/" + lightbox +'/', params, 
 			function( data ) {	
 		
-		        var wrapperElements;
+		        var wrapper, 
+		            wrapperElements,
+		            lightboxContent,
+		            browser_width,
+		            browser_height,
+		            body_width,
+		            body_height,
+		            function_name,
+		            dynamic_call,
+		            timeout;
 		        
-				if(data && parseInt(data.status) == 1){
+				if (data && parseInt(data.status) == 1) {
+				    
+				    wrapper = jQuery('#wrapper');
 				    
 				    // Keyboard/screenreader accessibility: prevent tabbing off the 
                     // lightbox onto the main page by setting tabindex values to -1. 
                     // Original values have been stored as element data, and will be 
                     // restored when the lightbox is closed.
-                    wrapperElements = jQuery('#wrapper').find('*');
+                    wrapperElements = wrapper.find('*');
                     // console.log("number of elements in #wrapper: " + wrapperElements.length);
                     // console.log("number of elements with tabindex before setting to -1: " + jQuery('[tabindex]').length);
                     // console.log(jQuery('[tabindex]'));
                     jQuery(wrapperElements).attr('tabindex', -1);
                     // console.log("number of elements with tabindex after setting to -1: " + jQuery('[tabindex]').length); 
                     
-					jQuery('#lightbox-content').hide();
-					var browser_width = jQuery(window).width();
-					var browser_height = jQuery(window).height();
-					var body_width = jQuery('#wrapper').width();
-					var body_height = jQuery('#wrapper').height();
-		
+                    lightboxContent = jQuery('#lightbox-content');
+					lightboxContent.hide();
+					
+					browser_width = jQuery(window).width();
+					browser_height = jQuery(window).height();
+					body_width = wrapper.width();
+					body_height = wrapper.height();		
 		
 					jQuery('.lightbox-submit').removeClass('disabled');
 		
-					jQuery('#lightbox-transparency').addClass('enabled');
-					jQuery('#lightbox-transparency').css('width', body_width  + 'px');
-					jQuery('#lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
-					jQuery('#lightbox-transparency').fadeTo(0, 0.70);				
-					jQuery('#lightbox-content').html(data.message);
-
-					jQuery('#lightbox-content').css('left', (browser_width - jQuery('#lightbox-content').width()) /2  );
-					jQuery('#lightbox-content').css('top', '10%');
-					
-					jQuery('#lightbox-content').fadeIn('slow', function() {
+					jQuery('#lightbox-transparency').addClass('enabled')
+					                                .css('width', body_width  + 'px')
+					                                .css('height', ( body_height + 70 )+ 'px')
+					                                .fadeTo(0, 0.70);
+					                              								                                
+					lightboxContent.html(data.message)
+					               .css('left', (browser_width - lightboxContent.width()) /2 )
+					               .css('top', '10%')					
+					               .fadeIn('slow', function() {
 					    // This makes screenreader skip everything before the first input
-					    // jQuery('#lightbox-content input:first').focus();
-					    jQuery('#lightbox-content legend:first').focus();
+					    // this.find('input:first').focus();
+					    jQuery(this).find('legend:first').focus();
 					});
                     
-					var function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";
+					function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";
 
-					var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
+					dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
 					
-					if(eval(dynamic_call)){
+					if (eval(dynamic_call)) { 
 						eval('AjaxResult.' + function_name + '(data);');
 					}
-					else {
-					}
 
-					if(jQuery('#lightbox-content .lightbox-delay-close').length){
+					if (lightboxContent.find('.lightbox-delay-close').length) {
 						document.location.hash = '';
 
-						var t = setTimeout(function() {
+						timeout = setTimeout(function() {
 							jQuery("body").closelightbox();
 							}, 1000);
-						jQuery(this).data('timeout', t);			
+						jQuery(this).data('timeout', timeout);			
 					}
 				}
 		
 			}, 'json' );
+			
 			return false;
 	}
 }
 
 jQuery.fn.closelightbox = function (){
     
-	jQuery('#lightbox-content').fadeOut();
-	jQuery('#lightbox-content').html('');
-	jQuery('#lightbox-transparency').css('width', 0);
-	jQuery('#lightbox-transparency').css('height', 0);
-	jQuery('#lightbox-transparency').removeClass('enabled');
+	jQuery('#lightbox-content').fadeOut()
+	                           .html('');
+	                           
+	jQuery('#lightbox-transparency').css('width', 0)
+	                                .css('height', 0)
+	                                .removeClass('enabled');
+	                                
 	document.location.hash = '';
 	
     // Restore original tabindex value to page elements
