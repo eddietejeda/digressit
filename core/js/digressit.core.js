@@ -1885,7 +1885,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					    }					    
 					    
 					    if (!focus.length) {
-					        focus = input.find('input:first');
+					        focus = lightbox.find('input:first');
 					    }
 					    
 					    if (focus) {
