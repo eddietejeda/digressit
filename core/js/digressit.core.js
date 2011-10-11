@@ -1803,102 +1803,15 @@ jQuery.fn.openlightbox = function (lightbox, params){
 	}
 
 	if(isNaN(lightbox)){
-		jQuery.post( siteurl + "/ajax/" + lightbox +'/', params, 
+		jQuery.post( siteurl + "/ajax/" + lightbox +'/', params,
 			function( data ) {	
 		
-		        var wrapper, 
-		            wrapperElements,
-		            lightboxContent,
-		            browser_width,
-		            browser_height,
-		            body_width,
-		            body_height,
-		            function_name,
-		            dynamic_call,
-		            timeout;
-		        
-				if (data && parseInt(data.status) == 1) {
-				    
-				    wrapper = jQuery('#wrapper');
-				    
-				    // Keyboard/screenreader accessibility: prevent tabbing off the 
-                    // lightbox onto the main page by setting tabindex values to -1. 
-                    // Original values have been stored as element data, and will be 
-                    // restored when the lightbox is closed.
-                    wrapperElements = wrapper.find('*');
-                    // console.log("number of elements in #wrapper: " + wrapperElements.length);
-                    // console.log("number of elements with tabindex before setting to -1: " + jQuery('[tabindex]').length);
-                    // console.log(jQuery('[tabindex]'));
-                    jQuery(wrapperElements).attr('tabindex', -1);
-                    // console.log("number of elements with tabindex after setting to -1: " + jQuery('[tabindex]').length); 
-                    
-                    lightboxContent = jQuery('#lightbox-content');
-					lightboxContent.hide();
-					
-					browser_width = jQuery(window).width();
-					browser_height = jQuery(window).height();
-					body_width = wrapper.width();
-					body_height = wrapper.height();
-					
-					scroll_top = jQuery(window).scrollTop();
-		
-					jQuery('.lightbox-submit').removeClass('disabled');
-		
-					jQuery('#lightbox-transparency').addClass('enabled')
-					                                .css('width', body_width  + 'px')
-					                                .css('height', ( body_height + 70 )+ 'px')
-					                                .fadeTo(0, 0.70);
-					                              								                                
-					lightboxContent.html(data.message);
+		        var function_name,
+		            dynamic_call;
 
-					//lightboxContent.css('left', (browser_width - lightboxContent.width()) /2 )
-					//               .css('top', '10%')
-					lightboxContent.css('margin', '0 auto')
-									.css('width',lightboxContent.width())
-									.css('top',(scroll_top + (browser_height*.1)))
-					               .fadeIn('slow', function() {
-					                   
-					    // This makes screenreader skip everything before the first input
-					    // this.find('input:first').focus();
-					    
-					    var lightbox = jQuery(this),
-					        hasTabindex = lightbox.find('[tabindex]'),
-					        focus = jQuery(),
-					        legend;
-		    
-		                // First look for a positive tabindex and assign focus to the 
-		                // first element with the smallest value.
-					    hasTabindex.each(function() {					        
-					        var el = jQuery(this), 
-					            tabindex = el.attr('tabindex');
-					            
-					        if (tabindex > 0 && (!focus.length || tabindex < focus.attr('tabindex'))) {
-					            focus = el;
-					        }
-					    });
-					    
-					    // This is the general case: the form markup should assign tabindex=0 to every element
-					    // that should be tabbed to that isn't in the tab order by default. 
-					    if (!focus.length) {
-					        focus = lightbox.find('[tabindex=0]:first');
-					    }
-					    
-					    if (!focus.length) {
-					        legend = lightbox.find('legend:first');
-					        // Assign the legend a tabindex, else it can't receive focus.
-					        legend.attr('tabindex', '1');
-					        focus = legend;
-					    }					    
-					    
-					    if (!focus.length) {
-					        focus = lightbox.find('input:first');
-					    }
-					    
-					    if (focus) {
-					        focus.focus();
-					    }
-					});
-                    
+				if (data && parseInt(data.status) == 1) {				    
+				    jQuery.fn.load_in_lightbox(data);
+		
 					function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";
 
 					dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
@@ -1906,17 +1819,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					if (eval(dynamic_call)) { 
 						eval('AjaxResult.' + function_name + '(data);');
 					}
-
-					if (lightboxContent.find('.lightbox-delay-close').length) {
-						//document.location.hash = '';
-
-						timeout = setTimeout(function() {
-							jQuery("body").closelightbox();
-							}, 3000); // increased delay for accessibility
-						jQuery(this).data('timeout', timeout);			
-					}
-				}
-		
+				}		
 			}, 'json' );
 			
 			return false;
@@ -1958,35 +1861,111 @@ jQuery.fn.displayerrorslightbox = function (data){
 }
 
 jQuery.fn.load_in_lightbox = function (data){
-	if(parseInt(data.status) == 1){
-		jQuery('#lightbox-content').hide();
-		var browser_width = jQuery(window).width();
-		var browser_height = jQuery(window).height();
-		var body_width = jQuery('#wrapper').width();
-		var body_height = jQuery('#wrapper').height();
+    
+    var wrapper, 
+        wrapperElements,
+        lightboxContent,
+        content,
+        browser_width,
+        browser_height,
+        body_width,
+        body_height,
+        timeout;
+                    
+    if (data && parseInt(data.status) == 1) {
+        
+        wrapper = jQuery('#wrapper');
+        
+        /* Keyboard/screenreader accessibility: prevent tabbing off the 
+         * lightbox onto the main page by setting tabindex values to -1. 
+         * Original values have been stored as element data, and will be 
+         * restored when the lightbox is closed.
+         */
+        wrapperElements = wrapper.find('*');
+        // console.log("number of elements in #wrapper: " + wrapperElements.length);
+        // console.log("number of elements with tabindex before setting to -1: " + jQuery('[tabindex]').length);
+        // console.log(jQuery('[tabindex]'));
+        jQuery(wrapperElements).attr('tabindex', -1);
+        // console.log("number of elements with tabindex after setting to -1: " + jQuery('[tabindex]').length); 
+        
+        lightboxContent = jQuery('#lightbox-content');
+        lightboxContent.hide();
+        
+        browser_width = jQuery(window).width();
+        browser_height = jQuery(window).height();
+        body_width = wrapper.width();
+        body_height = wrapper.height();
+        
+        scroll_top = jQuery(window).scrollTop();
 
+        jQuery('.lightbox-submit').removeClass('disabled');
 
-		jQuery('.lightbox-submit').removeClass('disabled');
+        jQuery('#lightbox-transparency').addClass('enabled')
+                                        .css('width', body_width  + 'px')
+                                        .css('height', ( body_height + 70 )+ 'px')
+                                        .fadeTo(0, 0.70);
+                  
+        content = data.message.content ? data.message.content : data.message;
+        lightboxContent.html(content);                                                                                  
 
-		jQuery('#lightbox-transparency').css('width', body_width  + 'px');
-		jQuery('#lightbox-transparency').css('height', ( body_height + 70 )+ 'px');
-		jQuery('#lightbox-transparency').fadeTo(0, 0.70);				
-		if(data.message.content){
-			jQuery('#lightbox-content').html(data.message.content);						
-		}
-		else{
-			jQuery('#lightbox-content').html(data.message);			
-		}
+        //lightboxContent.css('left', (browser_width - lightboxContent.width()) /2 )
+        //               .css('top', '10%')
+        lightboxContent.css('margin', '0 auto')
+                       .css('width',lightboxContent.width())
+                       .css('top',(scroll_top + (browser_height*.1)))
+                       .fadeIn('slow', function() {
+                           
+            // This makes screenreader skip everything before the first input
+            // this.find('input:first').focus();
+            
+            var lightbox = jQuery(this),
+                hasTabindex = lightbox.find('[tabindex]'),
+                focus = jQuery(),
+                legend;
 
-		jQuery('#lightbox-content').css('left', (browser_width - jQuery('#lightbox-content').width()) /2  );
-		jQuery('#lightbox-content').css('top', '20%');
-		jQuery('#lightbox-content').fadeIn('slow');
-	}
+            // First look for a positive tabindex and assign focus to the 
+            // first element with the smallest value.
+            hasTabindex.each(function() {                           
+                var el = jQuery(this), 
+                    tabindex = el.attr('tabindex');
+                    
+                if (tabindex > 0 && (!focus.length || tabindex < focus.attr('tabindex'))) {
+                    focus = el;
+                }
+            });
+            
+            // This is the general case: the form markup should assign tabindex=0 to every element
+            // that should be tabbed to that isn't in the tab order by default. 
+            if (!focus.length) {
+                focus = lightbox.find('[tabindex=0]:first');
+            }
+            
+            if (!focus.length) {
+                legend = lightbox.find('legend:first');
+                // Assign the legend a tabindex, else it can't receive focus.
+                legend.attr('tabindex', '1');
+                focus = legend;
+            }                       
+            
+            if (!focus.length) {
+                focus = lightbox.find('input:first');
+            }
+            
+            if (focus) {
+                focus.focus();
+            }
+        });
+        
+        if (lightboxContent.find('.lightbox-delay-close').length) {
+            //document.location.hash = '';
+
+            timeout = setTimeout(function() {
+                jQuery("body").closelightbox();
+                }, 3000); // increased delay for accessibility
+            jQuery(this).data('timeout', timeout);          
+        }
+    }
 }
-
-
-
-
 
 
 /*
