@@ -1838,7 +1838,9 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					browser_width = jQuery(window).width();
 					browser_height = jQuery(window).height();
 					body_width = wrapper.width();
-					body_height = wrapper.height();		
+					body_height = wrapper.height();
+					
+					scroll_top = jQuery(window).scrollTop();
 		
 					jQuery('.lightbox-submit').removeClass('disabled');
 		
@@ -1847,9 +1849,13 @@ jQuery.fn.openlightbox = function (lightbox, params){
 					                                .css('height', ( body_height + 70 )+ 'px')
 					                                .fadeTo(0, 0.70);
 					                              								                                
-					lightboxContent.html(data.message)
-					               .css('left', (browser_width - lightboxContent.width()) /2 )
-					               .css('top', '10%')					
+					lightboxContent.html(data.message);
+
+					//lightboxContent.css('left', (browser_width - lightboxContent.width()) /2 )
+					//               .css('top', '10%')
+					lightboxContent.css('margin', '0 auto')
+									.css('width',lightboxContent.width())
+									.css('top',(scroll_top + (browser_height*.1)))
 					               .fadeIn('slow', function() {
 					                   
 					    // This makes screenreader skip everything before the first input
