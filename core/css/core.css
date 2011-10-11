@@ -276,6 +276,11 @@ div.bubble cite.rounded {
 
 }
 
+/* Informational lightboxes with no form. Text should be centered. */
+#lightbox-content.inform {
+    text-align: center;
+}
+
 .error, .error a{
 	font-size: 14px;
 	color: red !important;
