@@ -139,11 +139,12 @@ function lightbox_login_success_ajax(){
             
             <?php /* Test the auto-close lightbox with JAWS. If it doesn't work, 
                      use the close button as an alternative. */ ?>
-            <!-- <span class="lightbox-delay-close"></span>     -->
-            
+            <span class="lightbox-delay-close"></span>     
+            <!-- 
             <div class="lightbox_buttons">                          
                 <input type="button" class="lightbox-close" value="OK" /> 
             </div> 
+            -->
         </div><?php 
     else:
         $status = 0;    
