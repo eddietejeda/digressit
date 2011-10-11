@@ -271,13 +271,13 @@ div.bubble cite.rounded {
 /*	padding: 25px 50px 25px 40px; */
 	background-color: #f4f8f8;
 	border: 6px solid white;
-	 -moz-box-shadow: 0 0 1em #afafaf;
+	-moz-box-shadow: 0 0 1em #afafaf;
 	-webkit-box-shadow: 0 0 1em #afafaf;	
 
 }
 
 /* Informational lightboxes with no form. Text should be centered. */
-#lightbox-content.inform {
+.lightbox-content.inform, #lightbox-content .inform {
     text-align: center;
 }
 

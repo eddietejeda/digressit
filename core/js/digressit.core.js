@@ -1914,46 +1914,7 @@ jQuery.fn.load_in_lightbox = function (data){
                        .css('width',lightboxContent.width())
                        .css('top',(scroll_top + (browser_height*.1)))
                        .fadeIn('slow', function() {
-                           
-            // This makes screenreader skip everything before the first input
-            // this.find('input:first').focus();
-            
-            var lightbox = jQuery(this),
-                hasTabindex = lightbox.find('[tabindex]'),
-                focus = jQuery(),
-                legend;
-
-            // First look for a positive tabindex and assign focus to the 
-            // first element with the smallest value.
-            hasTabindex.each(function() {                           
-                var el = jQuery(this), 
-                    tabindex = el.attr('tabindex');
-                    
-                if (tabindex > 0 && (!focus.length || tabindex < focus.attr('tabindex'))) {
-                    focus = el;
-                }
-            });
-            
-            // This is the general case: the form markup should assign tabindex=0 to every element
-            // that should be tabbed to that isn't in the tab order by default. 
-            if (!focus.length) {
-                focus = lightbox.find('[tabindex=0]:first');
-            }
-            
-            if (!focus.length) {
-                legend = lightbox.find('legend:first');
-                // Assign the legend a tabindex, else it can't receive focus.
-                legend.attr('tabindex', '1');
-                focus = legend;
-            }                       
-            
-            if (!focus.length) {
-                focus = lightbox.find('input:first');
-            }
-            
-            if (focus) {
-                focus.focus();
-            }
+              jQuery.fn.assignLightboxFocus(this);                                        
         });
         
         if (lightboxContent.find('.lightbox-delay-close').length) {
@@ -1967,7 +1928,52 @@ jQuery.fn.load_in_lightbox = function (data){
     }
 }
 
+/** 
+ * Assign focus in a lightbox.
+ */
+jQuery.fn.assignLightboxFocus = function(lightboxElement) {
+    
+    // This makes screenreader skip everything before the first input
+    // this.find('input:first').focus();
+    
+    var lightbox = jQuery(lightboxElement),
+        hasTabindex = lightbox.find('[tabindex]'),
+        focus = jQuery(),
+        legend;
+    
+    // First look for a positive tabindex and assign focus to the 
+    // first element with the smallest value.
+    hasTabindex.each(function() {                           
+        var el = jQuery(this), 
+            tabindex = el.attr('tabindex');
+            
+        if (tabindex > 0 && (!focus.length || tabindex < focus.attr('tabindex'))) {
+            focus = el;
+        }
+    });
+    
+    // This is the general case: the form markup should assign tabindex=0 to every element
+    // that should be tabbed to that isn't in the tab order by default. 
+    if (!focus.length) {
+        focus = lightbox.find('[tabindex=0]:first');
+    }
+    
+    if (!focus.length) {
+        legend = lightbox.find('legend:first');
+        // Assign the legend a tabindex, else it can't receive focus.
+        legend.attr('tabindex', '1');
+        focus = legend;
+    }                       
+    
+    if (!focus.length) {
+        focus = lightbox.find('input:first');
+    }
+    
+    if (focus) {
+        focus.focus();
+    }
 
+}
 /*
 function commentbox_closed_state(){
 	//jQuery('#respond').appendTo('#comments-toolbar');

@@ -134,16 +134,16 @@ function lightbox_login_success_ajax(){
     if(is_user_logged_in()): 
         $status  = 1;
     ?>
-        <div class="lightbox-content" id="lightbox-login-success informational">
+        <div class="lightbox-content inform" id="lightbox-login-success">
             <h3 tabindex="0"><?php _e('Login Successful'); ?></h3>
             
             <?php /* Test the auto-close lightbox with JAWS. If it doesn't work, 
                      use the close button as an alternative. */ ?>
-            <span class="lightbox-delay-close"></span>     
+            <!-- <span class="lightbox-delay-close"></span>     -->
             
-            <!-- <div class="lightbox_buttons">                          
+            <div class="lightbox_buttons">                          
                 <input type="button" class="lightbox-close" value="OK" /> 
-            </div> -->
+            </div> 
         </div><?php 
     else:
         $status = 0;    
