@@ -262,7 +262,7 @@ function digressit_comment_form(){
 		<div id="textarea-wrapper" class="wrapper-disabled">
 			<div class="left"></div>
 			<div class="right">			
-			<textarea name="comment" tabindex="1" class="comment-textarea comment-collapsed" id="comment"><?php _e('Click here to add a new comment...'); ?></textarea>
+			<textarea name="comment" class="comment-textarea comment-collapsed" id="comment"><?php _e('Click here to add a new comment...'); ?></textarea>
 			</div>
 		</div>
 	
