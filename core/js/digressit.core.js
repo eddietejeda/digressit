@@ -1307,6 +1307,8 @@ jQuery(document).ready(function() {
 					jQuery('#respond').appendTo(jQuery('#toplevel-commentbox'));						
 				}
 				jQuery('#commentbox').scrollTo(0 , 500, {easing:'easeOutBack'});				
+				document.location.hash = '#';
+
 			}
 	
 			else{
