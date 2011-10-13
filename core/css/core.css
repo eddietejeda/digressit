@@ -276,8 +276,7 @@ div.bubble cite.rounded {
 
 }
 
-/* Informational lightboxes with no form. Text should be centered. */
-.lightbox-content.inform, #lightbox-content .inform {
+.lightbox-content.center, #lightbox-content .center {
     text-align: center;
 }
 
