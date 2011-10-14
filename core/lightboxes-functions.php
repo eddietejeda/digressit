@@ -130,12 +130,12 @@ function lightbox_login_ajax(){
  *
  */
 function lightbox_login_success_ajax(){
-    start_lightbox('Lightbox: Login Success');    
+    start_lightbox('Lightbox: Sign In Success');    
     if(is_user_logged_in()): 
         $status  = 1;
     ?>
         <div class="lightbox-content center" id="lightbox-login-success">
-            <h3 tabindex="0"><?php _e('Login Successful'); ?></h3>
+            <h3 tabindex="0"><?php _e('Sign In Successful'); ?></h3>
             
             <?php /* Test the auto-close lightbox with JAWS. If it doesn't work, 
                      use the close button as an alternative. */ ?>
@@ -150,7 +150,30 @@ function lightbox_login_success_ajax(){
         $status = 0;    
     endif;
     end_lightbox($status);
-} 
+}
+
+
+/**
+ *
+ */
+function lightbox_submit_comment_success_ajax(){
+    start_lightbox('Lightbox: Comment Success');
+    ?>
+        <div class="lightbox-content center" id="lightbox-submit-comment-success">
+            <h3 tabindex="0"><?php _e('Comment saved.  Thank you for your comment.'); ?></h3>
+            
+            <?php /* Test the auto-close lightbox with JAWS. If it doesn't work, 
+                     use the close button as an alternative. */ ?>
+            <span class="lightbox-delay-close"></span>     
+            <!-- 
+            <div class="lightbox_buttons">                          
+                <input type="button" class="lightbox-close" value="OK" /> 
+            </div> 
+            -->
+        </div>
+	<?php 
+    end_lightbox(1);
+}
 
 
 ?>

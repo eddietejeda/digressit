@@ -556,6 +556,9 @@ jQuery(document).ready(function() {
 
 		jQuery('#comment').val('');		
 		jQuery('#comment_parent').val(0);
+		
+		jQuery('body').openlightbox('lightbox-submit-comment-success');
+		
 		return;
 	}
 	
