@@ -599,7 +599,6 @@ jQuery(document).ready(function() {
 
 				var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
 
-
 				if(eval(dynamic_call)){
 					eval('AjaxResult.' + function_name + '(data);');
 				}
@@ -607,10 +606,10 @@ jQuery(document).ready(function() {
 					
 				}
 
-				jQuery('input[type=button]').attr('disabled', false);
-				jQuery('input[type=submit]').attr('disabled', false);
-				jQuery('.lightbox-submit').removeClass('disabled');
-				jQuery('.submit').removeClass('disabled');
+				jQuery('input[type=button]:not(.dontEnable)').attr('disabled', false);
+				jQuery('input[type=submit]:not(.dontEnable)').attr('disabled', false);
+				jQuery('.lightbox-submit:not(.dontEnable)').removeClass('disabled');
+				jQuery('.submit:not(.dontEnable)').removeClass('disabled');
 				
 				jQuery('.loading, .loading-bars, .loading-bar, .loading-throbber').hide();
 				
