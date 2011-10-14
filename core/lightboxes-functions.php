@@ -83,6 +83,10 @@ function lightbox_login_ajax(){
                     </legend>
                 </fieldset>
                 
+                <?php if(has_action('social_functions_signin')) :?>
+                    <?php do_action('social_functions_signin'); ?>
+                <?php endif; ?>
+                
                 <p>
                     <label for="user_login"><?php _e('Username'); ?></label><br />
                     <input type="text" name="log" id="user_login" class="input required" value="" size="25" />
@@ -106,7 +110,7 @@ function lightbox_login_ajax(){
                 <input type="hidden" name="redirect_to" value="<?php echo $_REQUEST['data']; ?>#login-success" /> 
                 <input type="hidden" name="testcookie" value="1" />
 
-                <?php do_action('digressit_login_form'); ?>    
+  
                 <span class="loading-bars"></span>
                 
                 <div class="lightbox_buttons">
