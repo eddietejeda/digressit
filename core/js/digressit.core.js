@@ -1692,13 +1692,13 @@ jQuery(document).ready(function() {
 			
 			var commentbox = jQuery("#commentbox");
 
-			var scrollto = 0//(top - 100);
+			var scrollto = ((top - 100) > 0)  ? (top - 100) : 0;
 			jQuery('#respond').appendTo(current_comment_id + ' .comment-respond');		
 			jQuery(window).scrollTo(scrollto, 200);		
 			jQuery('#commentbox').scrollTo( current_comment_id , 500, {easing:'easeOutBack'});
 
 
-			document.location.hash = '#' + paragraphnumber;
+//			document.location.hash = '#' + paragraphnumber;
 
 
 			jQuery('.comment .comment-reply').val('reply');
