@@ -271,7 +271,7 @@ function digressit_comment_form(){
 	
 		<div id="submit-wrapper" class="wrapper-disabled">
 			<input name="cancel-response" class="comment-button-disabled" id="cancel-response" type="button" value="<?php _e('Cancel');  ?>" disabled="disabled" />
-			<input name="add-link" class="comment-button-disabled" id="add-link" type="button" value="<?php _e('Add Link'); ?>" disabled="disabled" />
+			<input name="add-link" class="comment-button-disabled" id="add-link" type="button" title="Add a link to another web page to your comment." value="<?php _e('Add Link'); ?>" disabled="disabled" />
 			<div class="loading-bars"></div><input name="submit" id="submit-comment" class="submit-comment submit ajax comment-button-disabled" type="button" value="<?php _e('Submit Comment'); ?>" disabled="disabled" />
 		</div>
 		<?php comment_id_fields(); ?>
