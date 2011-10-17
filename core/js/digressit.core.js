@@ -1469,7 +1469,7 @@ jQuery(document).ready(function() {
 			commentname = 'comment-' + blog_ID + '-'+ comment_info.pop(); 
 		}
 		
-		var paragraphnumber = jQuery(jQuery('#'+commentname + ' .comment-paragraph-number').get(0)).attr('value');
+		var paragraphnumber = jQuery(jQuery('#'+commentname + ' .comment-paragraph-number').get(0)).attr('data');
 		
 		jQuery('#respond').appendTo('#paragraph-block-'+(paragraphnumber) + ' .toplevel-respond');
 		jQuery('#respond').show();
@@ -1478,7 +1478,7 @@ jQuery(document).ready(function() {
 		
 		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
 		
-		jQuery('#commentbox').scrollTo('#'+commentname , 500);
+		jQuery('#commentbox').scrollTo(jQuery('#'+commentname).position().top + 'px'  , 500);
 		
 		if(paragraphnumber > 0){
 			var item = jQuery('.commenticonbox').get((paragraphnumber));

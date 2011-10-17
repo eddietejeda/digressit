@@ -205,7 +205,7 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
 					<?php endif; ?>
 					<span class="comment-id" value="<?php comment_ID(); ?>"></span>
 					<span class="comment-parent" value="<?php echo $comment->comment_parent; ?>"></span>
-					<span class="comment-paragraph-number" value="<?php echo $comment->comment_text_signature; ?>"></span>
+					<span class="comment-paragraph-number" data="<?php echo $comment->comment_text_signature; ?>"></span>
 					<span class="comment-date"><a href="<?php get_permalink($comment->comment_post_ID); ?>#comment-<?php echo $current_blog_id ?>-<?php comment_ID() ?>"><?php comment_date('n/j/Y'); ?></a></span>
 					<div class="comment-goto">
 						<a href="<?php echo get_permalink($comment->comment_post_ID); ?>#<?php echo $comment->comment_text_signature; ?>">GO TO TEXT</a>
@@ -271,9 +271,8 @@ function digressit_comment_form(){
 		<input name="selected_paragraph_number" type="hidden" id="selected_paragraph_number"  value="0" />
 	
 		<div id="submit-wrapper" class="wrapper-disabled">
-			<input name="cancel-response" class="comment-button-disabled" id="cancel-response" type="button" value="<?php _e('Cancel');  ?>" disabled="disabled" />
-			<input name="add-link" class="comment-button-disabled" id="add-link" type="button" title="Add a link to another web page to your comment." value="<?php _e('Add Link'); ?>" disabled="disabled" />
-			<div class="loading-bars"></div><input name="submit" id="submit-comment" class="submit-comment submit ajax comment-button-disabled" type="button" value="<?php _e('Submit Comment'); ?>" disabled="disabled" />
+			<?php do_action('secondary_comment_buttons'); ?>
+				<div class="loading-bars"></div><input name="submit" id="submit-comment" class="submit-comment submit ajax comment-button-disabled" type="button" value="<?php _e('Submit Comment'); ?>" disabled="disabled" />
 		</div>
 		<?php comment_id_fields(); ?>
 		<?php do_action('comment_form', $post->ID); ?>
@@ -281,6 +280,7 @@ function digressit_comment_form(){
 	<?php do_action('digressit_after_comment_form'); ?>
 	<?php
 }
+
 
 
 /* 
