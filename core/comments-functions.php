@@ -245,6 +245,7 @@ function digressit_comment_form(){
 	global $blog_id;
 
 	?>
+	<a class="hidden-offscreen" href="#commentformend">Skip over comment form.</a>
 	<form method="post" action="/" id="add-comment">
 
 		<?php if(!is_user_logged_in()): ?>
