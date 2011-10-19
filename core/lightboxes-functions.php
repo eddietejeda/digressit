@@ -141,13 +141,7 @@ function lightbox_login_success_ajax(){
         <div class="lightbox-content center" id="lightbox-login-success">
             <h3 tabindex="0"><?php _e('Sign In Successful'); ?></h3>
             
-            <?php /* Test the auto-close lightbox with JAWS. If it doesn't work, 
-                     use the close button as an alternative. */ ?>
-            <!--<span class="lightbox-delay-close"></span>     -->
-            
-            <div class="lightbox_buttons">                          
-                <input type="button" class="lightbox-close" value="OK" /> 
-            </div> 
+            <?php lightbox_close_mechanism() ?>  
             
         </div><?php 
     else:
@@ -166,18 +160,28 @@ function lightbox_submit_comment_success_ajax(){
         <div class="lightbox-content center" id="lightbox-submit-comment-success">
             <h3 tabindex="0"><?php _e('Comment saved.  Thank you for your comment.'); ?></h3>
             
-            <?php /* Test the auto-close lightbox with JAWS. If it doesn't work, 
-                     use the close button as an alternative. */ ?>
-            <!--<span class="lightbox-delay-close"></span>     -->
-            
-            <div class="lightbox_buttons">                          
-                <input type="button" class="lightbox-close" value="OK" /> 
-            </div> 
+            <?php lightbox_close_mechanism() ?> 
             
         </div>
 	<?php 
     end_lightbox(1);
 }
 
+/* Provide either a close button or auto fadeout.
+ * Auto-fade lightbox poses accessibility problems, so default to 
+ * a close button.
+ */
+function lightbox_close_mechanism($addButton = true, $buttonText = 'OK') {
+    if ($addButton) {
+        ?>
+        <div class="lightbox_buttons">                          
+            <input type="button" class="lightbox-close" value="<?php echo $buttonText; ?>" /> 
+        </div>  
+    <?php } else {
+        ?> 
+        <span class="lightbox-delay-close"></span>
+        <?php     
+    }
+}
 
 ?>
