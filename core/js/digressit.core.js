@@ -1479,6 +1479,7 @@ jQuery(document).ready(function() {
 		jQuery('#selected_paragraph_number').attr('value', paragraphnumber );
 		
 		jQuery('#commentbox').scrollTo(jQuery('#'+commentname).position().top + 'px'  , 500);
+		jQuery('#'+commentname+' div.comment-author a').focus();
 		
 		if(paragraphnumber > 0){
 			var item = jQuery('.commenticonbox').get((paragraphnumber));
