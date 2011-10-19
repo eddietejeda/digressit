@@ -20,7 +20,7 @@ function start_lightbox($lightbox_name = 'Lightbox: Generic'){
     global $blog_id;
     ob_start();
     do_action('digressit_start_lightbox', $lightbox_name);
-    //This is for Accessability support
+    //This is for accessibility support
     echo '<span class="hidden-offscreen"> Beginning of dialog content </span>';
 }
 
@@ -32,9 +32,6 @@ function end_lightbox($status = 1){
     ob_end_clean();
     die(json_encode(array('status' => $status, "message" => $html)) );    
 }
-
-
-
 
 function lightbox_login_ajax(){ 
     start_lightbox('Lightbox: Login');    
@@ -167,21 +164,21 @@ function lightbox_submit_comment_success_ajax(){
     end_lightbox(1);
 }
 
-/* Provide either a close button or auto fadeout.
- * Auto-fade lightbox poses accessibility problems, so default to 
- * a close button.
+/* Provide a mechanism for closing an informational lightbox (i.e., one that doesn't contain
+ * a form that needs to be submitted). Previous behavior was the auto fadeout, but this
+ * poses accessibility problems, so switch to a close button for now. Defining a method allows
+ * us to switch the behavior across the site.
  */
 function lightbox_close_mechanism($addButton = true, $buttonText = 'OK') {
-    if ($addButton) {
-        ?>
+    ?>
         <div class="lightbox_buttons">                          
             <input type="button" class="lightbox-close" value="<?php echo $buttonText; ?>" /> 
         </div>  
-    <?php } else {
-        ?> 
+    
+        <!--
         <span class="lightbox-delay-close"></span>
-        <?php     
-    }
+        -->
+    <?php      
 }
 
 ?>
