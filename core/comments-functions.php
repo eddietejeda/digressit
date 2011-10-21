@@ -58,7 +58,6 @@ function commentbrowser_template_redirect() {
  * This handles submission of comment form. 
  */
 function add_comment_ajax($request_params){
-	//extract($request_params);
 	global $wpdb, $current_user, $blog_id;
 
 	if(function_exists('switch_to_blog')){

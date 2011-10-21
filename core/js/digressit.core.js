@@ -473,7 +473,7 @@ jQuery(document).ready(function() {
 			return;
 		}
 
-		//console.log(jQuery('#selected_paragraph_number').val());
+//		console.log(jQuery('#selected_paragraph_number').val());
 		var selected_paragraph_number = parseInt(  jQuery('#selected_paragraph_number').val()  );
 
 		var comment_parent  = data.message.comment_parent;
