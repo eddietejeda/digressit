@@ -138,7 +138,7 @@ function lightbox_login_success_ajax(){
         <div class="lightbox-content center" id="lightbox-login-success">
             <h3 tabindex="0"><?php _e('Sign In Successful'); ?></h3>
             
-            <?php lightbox_close_mechanism() ?>  
+            <?php echo get_lightbox_close_mechanism() ?>  
             
         </div><?php 
     else:
@@ -157,7 +157,7 @@ function lightbox_submit_comment_success_ajax(){
         <div class="lightbox-content center" id="lightbox-submit-comment-success">
             <h3 tabindex="0"><?php _e('Comment saved.  Thank you for your comment.'); ?></h3>
             
-            <?php lightbox_close_mechanism() ?> 
+            <?php echo get_lightbox_close_mechanism() ?> 
             
         </div>
 	<?php 
@@ -169,16 +169,16 @@ function lightbox_submit_comment_success_ajax(){
  * poses accessibility problems, so switch to a close button for now. Defining a method allows
  * us to switch the behavior across the site.
  */
-function lightbox_close_mechanism($addButton = true, $buttonText = 'OK') {
-    ?>
+function get_lightbox_close_mechanism($buttonText = 'OK') {
+    $html = <<< EOT
         <div class="lightbox_buttons">                          
-            <input type="button" class="lightbox-close" value="<?php echo $buttonText; ?>" /> 
+            <input type="button" class="lightbox-close" value="$buttonText" /> 
         </div>  
-    
-        <!--
+EOT;
+        /*
         <span class="lightbox-delay-close"></span>
-        -->
-    <?php      
+        */
+    return $html;      
 }
 
 ?>
