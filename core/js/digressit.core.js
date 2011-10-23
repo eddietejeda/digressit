@@ -1717,21 +1717,24 @@ jQuery(document).ready(function() {
 			jQuery(window).scrollTo(scrollto, 200);		
 			jQuery('#commentbox').scrollTo( current_comment_id , 500, {easing:'easeOutBack'});
 
+			jQuery(current_comment_id + ' .comment-reply').val('cancel reply')
+			                                              .attr('title', 'Cancel your reply');
+			
+			jQuery('#submit-comment').val('submit reply');
+            jQuery('#comment-label-comment').hide();
+            jQuery('#comment-label-reply').show();
 
-//			document.location.hash = '#' + paragraphnumber;
-
-
-			jQuery('.comment .comment-reply').val('reply');
-			jQuery(current_comment_id + ' .comment-reply').val('cancel response');
-
-//			alert(jQuery(current_comment_id + ' .comment-reply').attr('value'));
-//			jQuery(this).addClass('cancel-response');
 		}
 		else{
 
-
 			jQuery('#comment_parent').val(0);
-			jQuery('.comment-reply').val('reply');
+			jQuery('.comment-reply').val('reply')
+			                        .attr('title', 'Reply to this comment');
+            jQuery('#submit-comment').val('submit comment');		
+            jQuery('#comment-label-reply').hide();
+            jQuery('#comment-label-comment').show();
+            
+            	              
 			if(jQuery('.paragraph-block').length){
 				jQuery('#respond').appendTo('#paragraph-block-'+(selected_paragraphnumber) + ' .toplevel-respond');			
 			}
