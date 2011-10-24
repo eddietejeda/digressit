@@ -560,6 +560,8 @@ jQuery(document).ready(function() {
         jQuery('#comment').val('');        
         jQuery('#comment_parent').val(0);
         
+        jQuery.fn.showCommentBoxCommentState();
+    
         jQuery('body').openlightbox('lightbox-submit-comment-success');
         
         return;
@@ -1720,9 +1722,7 @@ jQuery(document).ready(function() {
             jQuery(current_comment_id + ' .comment-reply').val('cancel reply')
                                                           .attr('title', 'Cancel your reply');
             
-            jQuery('#submit-comment').val('submit reply');
-            jQuery('#comment-label-comment').hide();
-            jQuery('#comment-label-reply').show();
+            jQuery.fn.showCommentBoxReplyState();
 
         }
         else{
@@ -1730,11 +1730,9 @@ jQuery(document).ready(function() {
             jQuery('#comment_parent').val(0);
             jQuery('.comment-reply').val('reply')
                                     .attr('title', 'Reply to this comment');
-            jQuery('#submit-comment').val('submit comment');        
-            jQuery('#comment-label-reply').hide();
-            jQuery('#comment-label-comment').show();
-            
-                              
+                                    
+            jQuery.fn.showCommentBoxCommentState();
+                                         
             if(jQuery('.paragraph-block').length){
                 jQuery('#respond').appendTo('#paragraph-block-'+(selected_paragraphnumber) + ' .toplevel-respond');            
             }
@@ -2019,6 +2017,21 @@ jQuery.fn.assignLightboxFocus = function(lightboxElement) {
         focus.focus();
     }
 
+}
+
+jQuery.fn.showCommentBoxReplyState = function() {
+    jQuery('#submit-comment').val('submit reply');
+    jQuery('#comment-label-comment').hide();
+    jQuery('#comment-label-reply').show();
+}
+
+jQuery.fn.showCommentBoxCommentState = function() {
+    jQuery('#submit-comment').val('submit comment');        
+    jQuery('#comment-label-reply').hide();
+    jQuery('#comment-label-comment').show();  
+    
+    jQuery('.comment-reply').val('reply')
+                            .attr('title', 'Reply to this comment');  
 }
 /*
 function commentbox_closed_state(){
