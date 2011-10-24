@@ -1892,6 +1892,9 @@ jQuery.fn.load_in_lightbox = function (data){
     var wrapper, 
         wrapperElements,
         lightboxContent,
+				lightboxWidth,
+				innerContent,
+				innerWidth,
         content,
         browser_width,
         browser_height,
@@ -1914,10 +1917,10 @@ jQuery.fn.load_in_lightbox = function (data){
         // console.log(jQuery('[tabindex]'));
         jQuery(wrapperElements).attr('tabindex', -1);
         // console.log("number of elements with tabindex after setting to -1: " + jQuery('[tabindex]').length); 
-        
+
         lightboxContent = jQuery('#lightbox-content');
-        lightboxContent.hide();
-        
+				lightboxContent.hide();
+				
         browser_width = jQuery(window).width();
         browser_height = jQuery(window).height();
         body_width = wrapper.width();
@@ -1933,12 +1936,27 @@ jQuery.fn.load_in_lightbox = function (data){
                                         .fadeTo(0, 0.70);
                   
         content = data.message.content ? data.message.content : data.message;
-        lightboxContent.html(content);                                                                                  
-
+        lightboxContent.html(content);
+				
+				innerContent = lightboxContent.find('.lightbox-content');
+				
+				innerWidth = 0;
+				if (innerContent.attr('id').length) {
+						if (innerContent.css('width').length) {
+								// add 80px padding
+								innerWidth = parseInt(innerContent.css('width')) + 80;
+						}
+				}
+				
+				lightboxWidth = parseInt(lightboxContent.width());
+				if (lightboxWidth < innerWidth) {
+						lightboxWidth = innerWidth;
+				}
+				
         //lightboxContent.css('left', (browser_width - lightboxContent.width()) /2 )
         //               .css('top', '10%')
         lightboxContent.css('margin', '0 auto')
-                       .css('width',lightboxContent.width())
+                       .css('width', lightboxWidth + 'px')
                        .css('top',(scroll_top + (browser_height*.1)))
                        .fadeIn('slow', function() {
               jQuery.fn.assignLightboxFocus(this);                                        
