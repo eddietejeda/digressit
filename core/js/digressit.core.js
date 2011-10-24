@@ -469,8 +469,6 @@ jQuery(document).ready(function() {
     AjaxResult.add_comment = function(data) {
         var result_id = parseInt(data.message.comment_ID);
 
-
-
         if(data.status == 0){
             jQuery('body').displayerrorslightbox(data);
             return;
@@ -498,9 +496,6 @@ jQuery(document).ready(function() {
                 jQuery('#'+parent_id).after(new_comment);
                 jQuery('.comment-reply').html('reply');
 
-                                
-                
-                
                 if(jQuery('#'+parent_id).hasClass('depth-1')){
                     jQuery('#'+comment_id).addClass('depth-2');                    
                 }
@@ -590,10 +585,14 @@ jQuery(document).ready(function() {
         var fields = {};
 
         
-        jQuery('input[type=button]').attr('disabled', true);
-        jQuery('input[type=submit]').attr('disabled', true);
+        jQuery('input[type=button]').prop('disabled', true)
+                                    .addClass('disabled');             
+        jQuery('input[type=submit]').prop('disabled', true)
+                                    .addClass('disabled');
+                                    
         jQuery('.lightbox-submit').addClass('disabled');
         jQuery('.submit').addClass('disabled');
+
         
         jQuery('form #' + form_id + ' .loading,' + '#' + form_id + ' .loading-bars, ' + '#' + form_id + ' . loading-bar , #' + form_id + ' .loading-throbber').css('display', 'inline');
         
@@ -611,8 +610,10 @@ jQuery(document).ready(function() {
                     
                 }
 
-                jQuery('input[type=button]:not(.dontEnable)').attr('disabled', false);
-                jQuery('input[type=submit]:not(.dontEnable)').attr('disabled', false);
+                jQuery('input[type=button]:not(.dontEnable)').prop('disabled', false)
+                                                             .removeClass('disabled');
+                jQuery('input[type=submit]:not(.dontEnable)').prop('disabled', false)
+                                                             .removeClass('disabled');
                 jQuery('.lightbox-submit:not(.dontEnable)').removeClass('disabled');
                 jQuery('.submit:not(.dontEnable)').removeClass('disabled');
                 
@@ -2040,48 +2041,6 @@ jQuery.fn.enableCommentFormButtons = function() {
     jQuery('#submit-wrapper input').removeClass('disabled')
                                    .prop('disabled', false);   
 }
-        
-/*
-function commentbox_closed_state(){
-    //jQuery('#respond').appendTo('#comments-toolbar');
-    jQuery('#comment_parent').val(0);
-    jQuery('#comment').val('Discuss Here...');
-    jQuery('#commentbox').css('overflow-y', 'scroll');
-    //jQuery('#submit-comment').css('display', 'none');
-
-    jQuery('#comments-toolbar').show();
-}
-
-
-function commentbox_reply_state(){
-    
-    var selected_comment_id = jQuery.cookie('selected_comment_id');                
-    var selected_blog_id = jQuery.cookie('selected_blog_id');                    
-    var reply_box = '#comment-'+ selected_blog_id + '-' +selected_comment_id + ' .comment-respond';
-
-    jQuery('#respond').appendTo(reply_box);        
-    jQuery('#respond').fadeIn();
-    jQuery('.reply_box').show();
-    jQuery('#submit-comment').show();    
-}
-
-
-function commentbox_open_state(){
-    //jQuery('#respond').appendTo('#comments-toolbar');
-    jQuery('#comment_parent').val(0);
-    jQuery('#comment').val('Discuss Here...');
-    jQuery('#commentbox').css('overflow-y', 'scroll');
-    jQuery('#comment').removeClass('comment-expanded');
-    jQuery('#comment').addClass('comment-collapsed');
-}
-
-function commentbox_expanded_state(){
-    //jQuery('#respond').appendTo('#comments-toolbar');
-    jQuery('#comment_parent').val(0);
-    jQuery('#comment').val('');
-    jQuery('#commentbox').css('overflow-y', 'scroll');
-}
-*/
 
 
 
