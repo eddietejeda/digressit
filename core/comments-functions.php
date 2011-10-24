@@ -282,7 +282,7 @@ function digressit_comment_form(){
     
         <div id="submit-wrapper" class="wrapper-disabled">
             <?php do_action('secondary_comment_buttons'); ?>
-                <div class="loading-bars"></div><input name="submit" id="submit-comment" class="submit-comment submit ajax comment-button-disabled" type="button" value="<?php _e('Submit Comment'); ?>" disabled="disabled" />
+                <div class="loading-bars"></div><input name="submit" id="submit-comment" class="submit-comment submit ajax disabled" type="button" value="<?php _e('Submit Comment'); ?>" disabled="disabled" />
         </div>
         <?php comment_id_fields(); ?>
         <?php do_action('comment_form', $post->ID); ?>

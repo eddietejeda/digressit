@@ -938,10 +938,8 @@ jQuery(document).ready(function() {
 
     jQuery('#comment').focus(function(){
         
-
         var focus = setTimeout(function() {
-            jQuery('#submit-comment').removeClass('disabled');
-            jQuery('#submit-comment').prop('disabled', false);
+            jQuery.fn.enableCommentFormButtons();
         }, 200);
         
         
@@ -1088,7 +1086,7 @@ jQuery(document).ready(function() {
     jQuery("#comment").focus(function (e) {
         if( jQuery(this).val() == 'Click here to add a new comment...'){
             jQuery(this).val('');
-            jQuery('#submit-comment').removeClass('disabled');            
+            jQuery.fn.enableCommentFormButtons();          
         }
     });
 
@@ -1241,9 +1239,9 @@ jQuery(document).ready(function() {
         }
 
         jQuery("#cancel-response").click(function (e) {
-            //jQuery('#comment_parent').val(0);
+            // jQuery('#comment_parent').val(0);
             jQuery('#comment').val('Click here to add a new comment...');
-            jQuery('#submit-comment').addClass('disabled');
+            // jQuery('#submit-comment').addClass('disabled');
             
         });
 
@@ -1372,8 +1370,7 @@ jQuery(document).ready(function() {
                     jQuery('.comment' ).hide();
                     jQuery('.paragraph-' + paragraphnumber ).show();
 
-
-                    jQuery('#submit-comment').removeClass('disabled');
+                    jQuery.fn.enableCommentFormButtons();
 
                     jQuery('.textblock').removeClass('selected-textblock')
                                         .removeAttr('tabindex');    
@@ -2033,6 +2030,17 @@ jQuery.fn.showCommentBoxCommentState = function() {
     jQuery('.comment-reply').val('reply')
                             .attr('title', 'Reply to this comment');  
 }
+
+jQuery.fn.disableCommentFormButtons = function() {
+    jQuery('#submit-wrapper input').addClass('disabled')
+                                  .prop('disabled', true);   
+}
+
+jQuery.fn.enableCommentFormButtons = function() {
+    jQuery('#submit-wrapper input').removeClass('disabled')
+                                   .prop('disabled', false);   
+}
+        
 /*
 function commentbox_closed_state(){
     //jQuery('#respond').appendTo('#comments-toolbar');
