@@ -933,7 +933,6 @@ jQuery(document).ready(function() {
 
     /* Causes incorrect behavior: buttons should be enabled only if a section is selected.
     jQuery('#comment').focus(function(){
-        
         var focus = setTimeout(function() {
            jQuery.fn.enableCommentFormButtons();
         }, 200);
@@ -1083,7 +1082,8 @@ jQuery(document).ready(function() {
     jQuery("#comment").focus(function (e) {
         if( jQuery(this).val() == 'Click here to add a new comment...'){
             jQuery(this).val('');
-            jQuery.fn.enableCommentFormButtons();          
+            /* Causes incorrect behavior: buttons should be enabled only if a section is selected.
+            jQuery.fn.enableCommentFormButtons();      */    
         }
     });
 
