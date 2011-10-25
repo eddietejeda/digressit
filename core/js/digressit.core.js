@@ -931,20 +931,16 @@ jQuery(document).ready(function() {
         jQuery("#searchform").attr('action', jQuery("#search_context option:selected").val());
     });
 
-    
-    
-
-
-
-
+    /* Causes incorrect behavior: buttons should be enabled only if a section is selected.
     jQuery('#comment').focus(function(){
         
         var focus = setTimeout(function() {
-            jQuery.fn.enableCommentFormButtons();
+           jQuery.fn.enableCommentFormButtons();
         }, 200);
-        
-        
+                
     });
+    */
+   
     function handlePaginationClick(new_page_index, pagination_container) {
         // This selects 20 elements from a content array
         for(var i=new_page_index;i<7;i++) {
