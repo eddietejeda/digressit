@@ -468,6 +468,7 @@ jQuery(document).ready(function() {
     
     AjaxResult.add_comment = function(data) {
         var result_id = parseInt(data.message.comment_ID);
+        var confirmation_lightbox = 'lightbox-submit-comment-success';
 
         if(data.status == 0){
             jQuery('body').displayerrorslightbox(data);
@@ -509,6 +510,8 @@ jQuery(document).ready(function() {
 
                 jQuery('#'+comment_id).fadeIn();
                 jQuery('#commentbox').scrollTo('#'+comment_id , 500, {easing:'easeOutBack'});
+                
+                confirmation_lightbox = 'lightbox-submit-reply-success';
 
             }
             else{
@@ -521,7 +524,6 @@ jQuery(document).ready(function() {
                     jQuery('#' + parent_id).after('<ul class="children">' + new_comment + '</ul>');                    
                     jQuery('#'+comment_id).fadeIn("#"+comment_id);
                 }
-
             }
         }
         /* new thread */
@@ -557,7 +559,7 @@ jQuery(document).ready(function() {
         
         jQuery.fn.showCommentBoxCommentState();
     
-        jQuery('body').openlightbox('lightbox-submit-comment-success');
+        jQuery('body').openlightbox(confirmation_lightbox);
         
         return;
     }

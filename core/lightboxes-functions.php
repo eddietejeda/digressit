@@ -1,9 +1,6 @@
 <?php
-
-
 add_action('public_ajax_function', 'lightbox_login_ajax');
 add_action('public_ajax_function', 'lightbox_login_success_ajax');
-
 
 /**
  *
@@ -161,6 +158,19 @@ function lightbox_submit_comment_success_ajax(){
             
         </div>
 	<?php 
+    end_lightbox(1);
+}
+
+function lightbox_submit_reply_success_ajax(){
+    start_lightbox('Lightbox: Reply Success');
+    ?>
+        <div class="lightbox-content center" id="lightbox-submit-comment-success">
+            <h3 tabindex="0"><?php _e('Reply saved.  Thank you for your reply.'); ?></h3>
+            
+            <?php echo get_lightbox_close_mechanism() ?> 
+            
+        </div>
+    <?php 
     end_lightbox(1);
 }
 
