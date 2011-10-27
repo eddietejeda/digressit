@@ -145,35 +145,6 @@ function lightbox_login_success_ajax(){
 }
 
 
-/**
- *
- */
-function lightbox_submit_comment_success_ajax(){
-    start_lightbox('Lightbox: Comment Success');
-    ?>
-        <div class="lightbox-content center" id="lightbox-submit-comment-success">
-            <h3 tabindex="0"><?php _e('Comment saved.  Thank you for your comment.'); ?></h3>
-            
-            <?php echo get_lightbox_close_mechanism() ?> 
-            
-        </div>
-	<?php 
-    end_lightbox(1);
-}
-
-function lightbox_submit_reply_success_ajax(){
-    start_lightbox('Lightbox: Reply Success');
-    ?>
-        <div class="lightbox-content center" id="lightbox-submit-comment-success">
-            <h3 tabindex="0"><?php _e('Reply saved.  Thank you for your reply.'); ?></h3>
-            
-            <?php echo get_lightbox_close_mechanism() ?> 
-            
-        </div>
-    <?php 
-    end_lightbox(1);
-}
-
 /* Provide a mechanism for closing an informational lightbox (i.e., one that doesn't contain
  * a form that needs to be submitted). Previous behavior was the auto fadeout, but this
  * poses accessibility problems, so switch to a close button for now. Defining a method allows
