@@ -15,7 +15,6 @@ jQuery.fn.highlight = function (str, className){
     
 //http://www.onlineaspect.com/2009/06/10/reading-get-variables-with-javascript/    
     
-
 // Figure out what browser is being used
 jQuery.browser = {
     version: (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
@@ -49,6 +48,12 @@ var parseGetVariables = function (variables) {
     }
     return var_list;
 }
+
+var focusElementOnLightboxClose = {
+    // id of .lightbox-content element : jQuery selector of element to focus on when lightbox closes
+    // Define here for digressit lightboxes
+    // Other plugins can extend for their own lightboxes
+};
 
 
 
@@ -1847,17 +1852,20 @@ jQuery.fn.openlightbox = function (lightbox, params){
     }
 }
 
-jQuery.fn.closelightbox = function (){
+jQuery.fn.closelightbox = function () {
     
+    // Get this before it's removed from the DOM
+    var lightboxContentId = jQuery('.lightbox-content').attr('id');
+
     jQuery('#lightbox-content').fadeOut()
                                .html('');
-                               
+                                                 
     jQuery('#lightbox-transparency').css('width', 0)
                                     .css('height', 0)
                                     .removeClass('enabled');
                                     
     document.location.hash = '';
-    
+
     // Restore original tabindex value to page elements
     jQuery('#wrapper *').each(function(index, element) {
         var el = jQuery(element),
@@ -1871,7 +1879,57 @@ jQuery.fn.closelightbox = function (){
     // console.log("number of elements with tabindex after closing lightbox: "
     //             + jQuery('[tabindex]').length);
     // console.log(jQuery('[tabindex]'));
+        
+
+    // Tried this as callback to fadeOut(), but that creates a small lag. 
+    // This is smoother.
+    jQuery.fn.assignFocusOnLightboxClose(lightboxContentId);
+    
 }
+
+jQuery.fn.assignFocusOnLightboxClose = function(lightboxContentId) {
+    
+    var focusSelector = focusElementOnLightboxClose[lightboxContentId],
+        // change this to '#startcontent' once RR-248 is fixed
+        defaultFocusSelector = 'h1',
+        focus,
+        tabIndex,
+        addedTabIndex = false;
+        
+    if (! focusSelector) {       
+        focusSelector = defaultFocusSelector; 
+    }
+    
+    focus = jQuery(focusSelector).not(':hidden').first(); 
+    
+    if (!focus.length && focusSelector != defaultFocusSelector) {
+        focus = jQuery(defaultFocusSelector).not(':hidden').first();
+    }
+
+    if (focus.length) { 
+
+        tabIndex = focus.attr('tabindex');
+        // tabindex < 0 is for IE: elements with negative tabindex can't receive focus.
+        // In Firefox and Chrome, any element with positive, negative, or 0 tabindex value
+        // can receive focus, so we wouldn't need to do it for negative values.
+        if (typeof tabIndex === 'undefined' || tabIndex < 0) {
+            addedTabIndex = true;
+            // Assign a tabindex value, else the element can't take focus
+            focus.attr('tabindex', 0);
+        }
+        focus.focus();   
+
+        // After assigning focus, remove an added tabindex value
+        if (addedTabIndex) {
+            if (typeof tabIndex === 'undefined') {
+                focus.removeAttr('tabindex');
+            // or restore a negative tabindex value
+            } else {
+                focus.attr('tabindex', tabIndex);
+            } 
+        }   
+    } 
+};
 
 jQuery.fn.displayerrorslightbox = function (data){
     if(data.status == 0){
