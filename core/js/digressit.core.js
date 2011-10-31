@@ -539,6 +539,9 @@ jQuery(document).ready(function() {
 
         // RY We want to show the buttons, so this should be removed. The buttons aren't there yet, though.
         jQuery('#'+comment_id + ' .comment-buttons').hide();
+        
+        jQuery('.new_comment').removeClass('new_comment');
+        jQuery('#'+comment_id).addClass('new_comment');
 
         //var current_count = parseInt(jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).html());
         jQuery(jQuery('#content .commentcount').get((selected_paragraph_number -1 ))).html(data.message.paragraph_comment_count);
