@@ -49,7 +49,6 @@ var parseGetVariables = function (variables) {
     return var_list;
 }
 
-
 jQuery(document).ready(function() {
 
     /*** 
@@ -2016,7 +2015,7 @@ jQuery.fn.load_in_lightbox = function (data){
 
             timeout = setTimeout(function() {
                 jQuery("body").closelightbox();
-                }, 3000); // increased delay for accessibility; was 1000
+                }, 2000); // increased delay for accessibility; was 1000
             jQuery(this).data('timeout', timeout);          
         }
     }
