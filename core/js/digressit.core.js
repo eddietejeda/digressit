@@ -537,6 +537,7 @@ jQuery(document).ready(function() {
 
         }
 
+        // RY We want to show the buttons, so this should be removed. The buttons aren't there yet, though.
         jQuery('#'+comment_id + ' .comment-buttons').hide();
 
         //var current_count = parseInt(jQuery(jQuery('#content .commentcount').get((selected_paragraph_number ))).html());
@@ -1402,14 +1403,13 @@ jQuery(document).ready(function() {
     jQuery('.paragraph-block-button').live('click', function(e){
         var paragraphnumber = parseInt(jQuery('.paragraph-block-button').index(this));
         var selected_paragraphnumber = parseInt(jQuery('#selected_paragraph_number').val());
-        //jQuery('#paragraph-block-' + paragraphnumber).addClass('selected-paragraph-block');                    
+        jQuery('.selected-paragraph-block').removeClass('selected-paragraph-block');                    
         
         if(paragraphnumber > 0 && paragraphnumber == selected_paragraphnumber){
             jQuery('.comment').hide();
             jQuery('#respond').hide();
             jQuery('.textblock').removeClass('selected-textblock')
-                                .removeAttr('tabindex');    
-            jQuery('.paragraph-block').removeClass('selected-paragraph-block');            
+                                .removeAttr('tabindex');              
             jQuery('#selected_paragraph_number').val(0);
             jQuery('#commentbox').scrollTo(0 , 500, {easing:'easeOutBack'});
 
@@ -1815,8 +1815,10 @@ jQuery.fn.extend({
 
 jQuery.fn.openlightbox = function (lightbox, params){
     
-    if(typeof(jQuery('.' + lightbox).attr('data')) !== 'undefined'){
-        var params = {data : jQuery('.' + lightbox).attr('data')};
+    var lightboxData = jQuery('.' + lightbox).attr('data');
+    
+    if (typeof lightboxData !== 'undefined') {
+        params = jQuery.extend(params, { data : lightboxData });        
     }
 
     if(isNaN(lightbox)){
@@ -1879,7 +1881,7 @@ jQuery.fn.closelightbox = function () {
 }
 
 jQuery.fn.assignFocusOnLightboxClose = function(focusSelector) {
-    
+
     // Change this behavior - see RR-103
     // default element will be the one that initiated the lightbox
     var defaultFocusSelector = 'h1',
