@@ -49,17 +49,8 @@ var parseGetVariables = function (variables) {
     return var_list;
 }
 
-var focusElementOnLightboxClose = {
-    // id of .lightbox-content element : jQuery selector of element to focus on when lightbox closes
-    // Define here for digressit lightboxes
-    // Other plugins can extend for their own lightboxes
-};
-
-
 
 jQuery(document).ready(function() {
-
-
 
     /*** 
      *        RENDERING PAGE
@@ -1855,7 +1846,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
 jQuery.fn.closelightbox = function () {
     
     // Get this before it's removed from the DOM
-    var lightboxContentId = jQuery('.lightbox-content').attr('id');
+    var focusSelector = jQuery('.lightbox-content').attr('data-focus-on-close');
 
     jQuery('#lightbox-content').fadeOut()
                                .html('');
@@ -1883,20 +1874,20 @@ jQuery.fn.closelightbox = function () {
 
     // Tried this as callback to fadeOut(), but that creates a small lag. 
     // This is smoother.
-    jQuery.fn.assignFocusOnLightboxClose(lightboxContentId);
+    jQuery.fn.assignFocusOnLightboxClose(focusSelector);
     
 }
 
-jQuery.fn.assignFocusOnLightboxClose = function(lightboxContentId) {
+jQuery.fn.assignFocusOnLightboxClose = function(focusSelector) {
     
-    var focusSelector = focusElementOnLightboxClose[lightboxContentId],
-        // change this to '#startcontent' once RR-248 is fixed
-        defaultFocusSelector = 'h1',
+    // Change this behavior - see RR-103
+    // default element will be the one that initiated the lightbox
+    var defaultFocusSelector = 'h1',
         focus,
         tabIndex,
         addedTabIndex = false;
         
-    if (! focusSelector) {       
+    if ( typeof focusSelector === 'undefined' ) {       
         focusSelector = defaultFocusSelector; 
     }
     
