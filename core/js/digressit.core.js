@@ -1890,13 +1890,21 @@ jQuery.fn.assignFocusOnLightboxClose = function(focusSelector, lightboxTrigger) 
         tabIndex,
         addedTabIndex = false;
         
+    // Use a lightbox-specific element if specified
     if ( typeof focusSelector !== 'undefined' ) {
         focus = jQuery(focusSelector).not(':hidden').first();
+    // Otherwise use the element that triggered the lightbox event
     } else if ( typeof lightboxTrigger !== 'undefined' ) {
         focus = jQuery(lightboxTrigger);
+    } 
+    
+    // Default to first h1 on the page, if none of the above are defined or exist
+    if ( typeof focus === 'undefined' || !focus.length ) {
+        focus = jQuery('h1').not(':hidden').first();
     }
     
-    if (typeof focus !== 'undefined' && focus.length) { 
+    console.log(focus);
+    if (focus.length) { 
 
         tabIndex = focus.attr('tabindex');
         // tabindex < 0 is for IE: elements with negative tabindex can't receive focus.
