@@ -315,7 +315,7 @@ jQuery(document).ready(function() {
                 break;                
             }
         }    
-        jQuery('body').openlightbox(lightbox);
+        jQuery('body').openlightbox(lightbox, null, e);
 
     });
     
@@ -1815,7 +1815,7 @@ jQuery.fn.extend({
 });
 
 
-jQuery.fn.openlightbox = function (lightbox, params){
+jQuery.fn.openlightbox = function (lightbox, params, event){
     
     var lightboxData = jQuery('.' + lightbox).attr('data');
     
@@ -1831,7 +1831,7 @@ jQuery.fn.openlightbox = function (lightbox, params){
                     dynamic_call;
 
                 if (data && parseInt(data.status) == 1) {                    
-                    jQuery.fn.load_in_lightbox(data);
+                    jQuery.fn.load_in_lightbox(data, event);
         
                     function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";
 
@@ -1850,10 +1850,12 @@ jQuery.fn.openlightbox = function (lightbox, params){
 jQuery.fn.closelightbox = function () {
     
     // Get this before it's removed from the DOM
-    var focusSelector = jQuery('.lightbox-content').attr('data-focus-on-close');
+    var focusSelector = jQuery('.lightbox-content').attr('data-focus-on-close'),
+        lightboxContent = jQuery('#lightbox-content'),
+        lightboxTrigger = lightboxContent.data('trigger');
 
-    jQuery('#lightbox-content').fadeOut()
-                               .html('');
+    lightboxContent.fadeOut()
+                   .html('');
                                                  
     jQuery('#lightbox-transparency').css('width', 0)
                                     .css('height', 0)
@@ -1878,30 +1880,23 @@ jQuery.fn.closelightbox = function () {
 
     // Tried this as callback to fadeOut(), but that creates a small lag. 
     // This is smoother.
-    jQuery.fn.assignFocusOnLightboxClose(focusSelector);
+    jQuery.fn.assignFocusOnLightboxClose(focusSelector, lightboxTrigger);
     
 }
 
-jQuery.fn.assignFocusOnLightboxClose = function(focusSelector) {
+jQuery.fn.assignFocusOnLightboxClose = function(focusSelector, lightboxTrigger) {
 
-    // Change this behavior - see RR-103
-    // default element will be the one that initiated the lightbox
-    var defaultFocusSelector = 'h1',
-        focus,
+    var focus,
         tabIndex,
         addedTabIndex = false;
         
-    if ( typeof focusSelector === 'undefined' ) {       
-        focusSelector = defaultFocusSelector; 
+    if ( typeof focusSelector !== 'undefined' ) {
+        focus = jQuery(focusSelector).not(':hidden').first();
+    } else if ( typeof lightboxTrigger !== 'undefined' ) {
+        focus = jQuery(lightboxTrigger);
     }
     
-    focus = jQuery(focusSelector).not(':hidden').first(); 
-    
-    if (!focus.length && focusSelector != defaultFocusSelector) {
-        focus = jQuery(defaultFocusSelector).not(':hidden').first();
-    }
-
-    if (focus.length) { 
+    if (typeof focus !== 'undefined' && focus.length) { 
 
         tabIndex = focus.attr('tabindex');
         // tabindex < 0 is for IE: elements with negative tabindex can't receive focus.
@@ -1934,7 +1929,7 @@ jQuery.fn.displayerrorslightbox = function (data){
     }
 }
 
-jQuery.fn.load_in_lightbox = function (data){
+jQuery.fn.load_in_lightbox = function (data, event){
     
     var wrapper, 
         wrapperElements,
@@ -1965,8 +1960,13 @@ jQuery.fn.load_in_lightbox = function (data){
         jQuery(wrapperElements).attr('tabindex', -1);
         // console.log("number of elements with tabindex after setting to -1: " + jQuery('[tabindex]').length); 
 
-        lightboxContent = jQuery('#lightbox-content');
+        lightboxContent = jQuery('#lightbox-content');        
         lightboxContent.hide();
+        
+        // Remember the event target that triggered the lightbox
+        if (typeof event !== 'undefined') {
+            lightboxContent.data('trigger', event.target);
+        }
                 
         browser_width = jQuery(window).width();
         browser_height = jQuery(window).height();
