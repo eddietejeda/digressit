@@ -605,7 +605,7 @@ jQuery(document).ready(function() {
                 var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
 
                 if(eval(dynamic_call)){
-                    eval('AjaxResult.' + function_name + '(data);');
+                    eval('AjaxResult.' + function_name + '(data, e);');
                 }
                 else{
                     
@@ -662,7 +662,7 @@ jQuery(document).ready(function() {
 
                     var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
                     if(eval(dynamic_call)){
-                        eval('AjaxResult.' + function_name + '(data);');
+                        eval('AjaxResult.' + function_name + '(data, e);');
                     }
                     else{
 
@@ -707,7 +707,7 @@ jQuery(document).ready(function() {
 
                     var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
                     if(eval(dynamic_call)){
-                        eval('AjaxResult.' + function_name + '(data);');
+                        eval('AjaxResult.' + function_name + '(data, e);');
                     }
                     else{
 
@@ -763,7 +763,7 @@ jQuery(document).ready(function() {
 
                 var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
                 if(eval(dynamic_call)){
-                    eval('AjaxResult.' + function_name + '(data);');
+                    eval('AjaxResult.' + function_name + '(data, e);');
                 }
                 else{
                     
@@ -802,7 +802,7 @@ jQuery(document).ready(function() {
 
                 var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
                 if(eval(dynamic_call)){
-                    eval('AjaxResult.' + function_name + '(data);');
+                    eval('AjaxResult.' + function_name + '(data, e);');
                 }
                 else{
                     
@@ -856,7 +856,7 @@ jQuery(document).ready(function() {
                 jQuery('.loading, .loading-bars, .loading-bar, .loading-throbber').hide();
                 var dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
                 if(eval(dynamic_call)){
-                    eval('AjaxResult.' + function_name + '(data);');
+                    eval('AjaxResult.' + function_name + '(data, e);');
                 }
                 else{
                     
@@ -1830,7 +1830,7 @@ jQuery.fn.openlightbox = function (lightbox, params, event){
                 var function_name,
                     dynamic_call;
 
-                if (data && parseInt(data.status) == 1) {                    
+                if (data && parseInt(data.status) == 1) {             
                     jQuery.fn.load_in_lightbox(data, event);
         
                     function_name = lightbox.replace(/-/g, '_');// + "_ajax_result";
@@ -1838,7 +1838,7 @@ jQuery.fn.openlightbox = function (lightbox, params, event){
                     dynamic_call = 'typeof(AjaxResult.' + function_name + ') != "undefined"';
                     
                     if (eval(dynamic_call)) { 
-                        eval('AjaxResult.' + function_name + '(data);');
+                        eval('AjaxResult.' + function_name + '(data, event);');
                     }
                 }        
             }, 'json' );
@@ -1903,7 +1903,6 @@ jQuery.fn.assignFocusOnLightboxClose = function(focusSelector, lightboxTrigger) 
         focus = jQuery('h1').not(':hidden').first();
     }
     
-    console.log(focus);
     if (focus.length) { 
 
         tabIndex = focus.attr('tabindex');
@@ -1972,8 +1971,13 @@ jQuery.fn.load_in_lightbox = function (data, event){
         lightboxContent.hide();
         
         // Remember the event target that triggered the lightbox
-        if (typeof event !== 'undefined') {
-            lightboxContent.data('trigger', event.target);
+        if (typeof event !== 'undefined' && event) { 
+            /* NB event.currentTarget is the element the event is bound to.
+             * event.target is the element that received the event - so possibly
+             * a descendant of currentTarget. We want to return focus to the
+             * element bound to the event, not one of its children.
+             */ 
+            lightboxContent.data('trigger', event.currentTarget);
         }
                 
         browser_width = jQuery(window).width();
