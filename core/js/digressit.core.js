@@ -1941,6 +1941,7 @@ jQuery.fn.load_in_lightbox = function (data, event){
     var wrapper, 
         wrapperElements,
         lightboxContent,
+        eventTarget,
         lightboxWidth,
         innerContent,
         innerWidth,
@@ -1977,7 +1978,14 @@ jQuery.fn.load_in_lightbox = function (data, event){
              * a descendant of currentTarget. We want to return focus to the
              * element bound to the event, not one of its children.
              */ 
-            lightboxContent.data('trigger', event.currentTarget);
+            eventTarget = event.currentTarget; 
+            /* Not if the target is in the lightbox (e.g., the "lost password" link
+             * on the sign in form is the trigger for the lost password lightbox).
+             * We should keep the trigger assigned when the first lightbox opened.
+             */
+            if ( ! jQuery(eventTarget).parents('#lightbox-content').length ) {
+                lightboxContent.data('trigger', event.currentTarget);
+            }
         }
                 
         browser_width = jQuery(window).width();
