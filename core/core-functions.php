@@ -696,7 +696,7 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
 				if(strstr($match, 'wp-image')){		
 					$paragraph = str_replace($match, 'lightbox lightbox-images '.$match, $paragraph);
 				}
-				$paragraph = str_replace(" class=\"$matches\" ", " class=\"lightbox lighbox-images $classes\" ", $paragraph);
+				$paragraph = str_replace(" class=\"$matches\" ", " class=\"lightbox lightbox-images $classes\" ", $paragraph);
 			}
 		}
 		$block_content = "<div id='textblock-$number' class='textblock'>

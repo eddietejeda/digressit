@@ -1924,7 +1924,7 @@ jQuery.fn.assignFocusOnLightboxClose = function(focusSelector, lightboxTrigger) 
             } else {
                 focus.attr('tabindex', tabIndex);
             } 
-        }   
+        }  
     } 
 };
 
