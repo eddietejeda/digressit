@@ -109,8 +109,8 @@ function lightbox_login_ajax(){
                 <span class="loading-bars"></span>
                 
                 <div class="lightbox_buttons">
-                    <input type="submit" id="login-submit" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">            
                     <input type="button" class="lightbox-close" value="Cancel" />
+                    <input type="submit" id="login-submit" class="lightbox-submit lightbox-button disabled" disabled='disabled' value="<?php _e('Sign in'); ?>">            
                 </div>
             
             </form>
