@@ -36,7 +36,7 @@ if(function_exists('digressit_body_class')){
 
 	</div>
 		
-
+    <a class="hidden-offscreen" href="#startcontent">Skip over header navigation</a>
 
 	<nav id="menu-primary" role="navigation">
 	<!-- this is some login stuff that should always be here -->
@@ -93,7 +93,10 @@ if(function_exists('digressit_body_class')){
 	<?php endif; ?>
 	<?php do_action('after_nav'); ?>
 	<div class="horizontal"></div>
+    
 </header> 
 <?php
 do_action('secondary_menu');
 ?>
+
+<a id="startcontent"></a>
