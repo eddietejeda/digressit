@@ -1945,7 +1945,10 @@ jQuery.fn.load_in_lightbox = function (data, event){
         jQuery(wrapperElements).attr('tabindex', -1);
         // console.log("number of elements with tabindex after setting to -1: " + jQuery('[tabindex]').length); 
 
-        lightboxContent = jQuery('#lightbox-content');        
+        lightboxContent = jQuery('#lightbox-content');
+        if (lightboxContent.attr('style')) {
+            lightboxContent.attr('style', '');
+        }
         lightboxContent.hide();
         
         // Remember the event target that triggered the lightbox
@@ -1987,25 +1990,27 @@ jQuery.fn.load_in_lightbox = function (data, event){
         
         if (innerContent.length) {
             if (innerContent.css('width').length) {
-               // add 80px padding
-               innerWidth = parseInt(innerContent.css('width')) + 80;
+            // add 80px padding
+            innerWidth = parseInt(innerContent.css('width')) + 80;
             }
         }
                
         lightboxWidth = parseInt(lightboxContent.width());
         if (lightboxWidth < innerWidth) {
-                lightboxWidth = innerWidth;
+            lightboxWidth = innerWidth;
         }
 
-                
         //lightboxContent.css('left', (browser_width - lightboxContent.width()) /2 )
         //               .css('top', '10%')
-        lightboxContent.css('margin', '0 auto')
-                       .css('width', lightboxWidth + 'px')
-                       .css('top',(scroll_top + (browser_height*.1)))
-                       .fadeIn('slow', function() {
-              jQuery.fn.assignLightboxFocus(this);                                        
-        });
+        lightboxContent
+            .css('margin', '0 auto')
+            .css('position','relative')
+            .css('width', lightboxWidth + 'px')
+            .css('top',(scroll_top + (browser_height*.1)))
+            .fadeIn('slow', function() {
+                jQuery.fn.assignLightboxFocus(this);
+            });
+        
         
         if (lightboxContent.find('.lightbox-delay-close').length) {
             //document.location.hash = '';
