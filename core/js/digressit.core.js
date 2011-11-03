@@ -1886,9 +1886,7 @@ jQuery.fn.closelightbox = function () {
 
 jQuery.fn.assignFocusOnLightboxClose = function(focusSelector, lightboxTrigger) {
 
-    var focus,
-        tabIndex,
-        addedTabIndex = false;
+    var focus;
         
     // Use a lightbox-specific element if specified
     if ( typeof focusSelector !== 'undefined' ) {
@@ -1903,29 +1901,8 @@ jQuery.fn.assignFocusOnLightboxClose = function(focusSelector, lightboxTrigger) 
         focus = jQuery('h1').not(':hidden').first();
     }
     
-    if (focus.length) { 
-
-        tabIndex = focus.attr('tabindex');
-        // tabindex < 0 is for IE: elements with negative tabindex can't receive focus.
-        // In Firefox and Chrome, any element with positive, negative, or 0 tabindex value
-        // can receive focus, so we wouldn't need to do it for negative values.
-        if (typeof tabIndex === 'undefined' || tabIndex < 0) {
-            addedTabIndex = true;
-            // Assign a tabindex value, else the element can't take focus
-            focus.attr('tabindex', 0);
-        }
-        focus.focus();   
-
-        // After assigning focus, remove an added tabindex value
-        if (addedTabIndex) {
-            if (typeof tabIndex === 'undefined') {
-                focus.removeAttr('tabindex');
-            // or restore a negative tabindex value
-            } else {
-                focus.attr('tabindex', tabIndex);
-            } 
-        }  
-    } 
+    jQuery.fn.assignFocus(focus);
+ 
 };
 
 jQuery.fn.displayerrorslightbox = function (data){
@@ -2074,7 +2051,7 @@ jQuery.fn.assignLightboxFocus = function(lightboxElement) {
     if (!focus.length) {
         legend = lightbox.find('legend:first');
         // Assign the legend a tabindex, else it can't receive focus.
-        legend.attr('tabindex', '1');
+        legend.attr('tabindex', '0');
         focus = legend;
     }                       
     
@@ -2113,5 +2090,42 @@ jQuery.fn.enableCommentFormButtons = function() {
                                    .prop('disabled', false);   
 }
 
+/*
+ * focus is a jQuery object or a jQuery selector
+ */
+jQuery.fn.assignFocus = function(focus) {
+    
+    var tabIndex, 
+        addedTabIndex;
+    
+    if (typeof focus === 'string') {
+        focus = jQuery(focus);
+    } else if (! focus instanceof jQuery) {
+        return;
+    }
+    
+    if (focus.length) {
+    
+        tabIndex = focus.attr('tabindex');
+        // tabindex < 0 is for IE: elements with negative tabindex can't receive focus.
+        // In Firefox and Chrome, any element with positive, negative, or 0 tabindex value
+        // can receive focus, so we wouldn't need to do it for negative values.
+        if (typeof tabIndex === 'undefined' || tabIndex < 0) {
+            addedTabIndex = true;
+            // Assign a tabindex value, else the element can't take focus
+            focus.attr('tabindex', 0);
+        }
+        focus.focus();   
 
+        // After assigning focus, remove an added tabindex value
+        if (addedTabIndex) {
+            if (typeof tabIndex === 'undefined') {
+                focus.removeAttr('tabindex');
+            // or restore a negative tabindex value
+            } else {
+                focus.attr('tabindex', tabIndex);
+            } 
+        } 
+    } 
+}
 
