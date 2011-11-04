@@ -1897,7 +1897,7 @@ jQuery.fn.assignFocusOnLightboxClose = function(focusSelector, lightboxTrigger) 
     } 
     
     // Default to first h1 on the page, if none of the above are defined or exist
-    if ( typeof focus === 'undefined' || !focus.length ) {
+    if ( typeof focus === 'undefined' || !focus.length || focus.is(':hidden') ) {
         focus = jQuery('h1').not(':hidden').first();
     }
     
@@ -1966,6 +1966,12 @@ jQuery.fn.load_in_lightbox = function (data, event){
             if ( ! jQuery(eventTarget).parents('#lightbox-content').length ) {
                 lightboxContent.data('trigger', event.currentTarget);
             }
+        } else {
+            // Remove any previous trigger. Leaving out for now so we can retain the
+            // trigger in chained lightboxes when current event is undefined; e.g.
+            // "Welcome" lightbox after account creation. However, it doesn't always
+            // work, and there is some risk of inappropriately carrying over a trigger.
+            //lightboxContent.removeData('trigger');
         }
                 
         browser_width = jQuery(window).width();
