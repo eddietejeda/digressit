@@ -1211,8 +1211,19 @@ jQuery(document).ready(function() {
         }
 
         jQuery("#cancel-response").click(function (e) {
+            /* There are two possible approaches here, depending on WHY the user is canceling:
+             * (1) User wants to erase the current comment and start over. In this case, keeping
+             * focus on the form and leaving the value blank makes sense.
+             * (2) User doesn't want to submit a comment at all. In this case, disabling the form
+             * and putting focus elsewhere would make sense. 
+             * In any case, the combination of the prompt text and an enabled form is bad, because
+             * it allows the prompt text to be submitted. 
+             * Going with option (1) for now, but this may need to be revisited.
+             */
             // jQuery('#comment_parent').val(0);
-            jQuery('#comment').val('Click here to add a new comment...');
+            //jQuery('#comment').val('Click here to add a new comment...');
+            jQuery('#comment').val('') 
+                              .focus();            
             // jQuery('#submit-comment').addClass('disabled');
             
         });
