@@ -270,7 +270,7 @@ h4 {
 
 
 .page{
-
+/*	padding: 10px 20px; */
 }
 
 
@@ -431,7 +431,7 @@ z-index:0;
 	background-color:white;
 	border-color:#BDBDBD;
 	border-style:solid;
-	border-width:0 1px;
+	border-width:0 0px;
 	margin:0 auto;
 	width:1000px;	
 	box-shadow: 0 25px 30px #AAAAAA;
@@ -585,6 +585,7 @@ p, li{
 .frontpage #frontpage {
 	background-color:white;
 }
+
 
 
 .frontpage #container {

@@ -40,7 +40,8 @@ h1, h2, h2 a {
 }
 
 #header{
-	border: 0
+	border: 0;
+	width: 960px;
 }
 
 a{
@@ -48,21 +49,31 @@ a{
 	font-weight: bold;
 	text-decoration: none;
 }
-
+.horizontal{
+	width: 99%;
+}
 .single #content{
 	background-color: transparent;
 }
 
+#menu-primary ul{
+	margin: 0;
+	padding: 0;
+}
 
 
 .textblock, #header, #the_title, #footer, #content, .home #content, #mainpage .preview{
 	background: transparent;
+	border: 0;
 }
 
 .textblock{
 	border: 0px;
 	margin-bottom:0;
 	background-color: white;
+}
+.previews{
+	background: white;
 }
 
 .digressit-enabled #commentbox{
@@ -98,7 +109,7 @@ a{
     padding-bottom: 25px;
     padding-top: 25px;
     position: relative;
-    width: 1000px;
+    width: 960px;
 }
 
 .single #content{
@@ -117,4 +128,43 @@ a{
 a:hover{
 	background-color: #353535;
 	color: #FF5E43;
+}
+
+
+.menu-site-container ul{
+	padding: 0!important;
+	margin: 0 !important;
+}
+
+.edit-this a{
+	letter-spacing: 1px;
+}
+
+h1, h2, h3, h4, h5, h6, h7, h8{
+	line-height: 120% !important;
+	padding: 0;
+}
+h1, h2, h2 a{
+	padding: 0 !important;
+}
+
+.sidebar .sidebar-current {
+    background-color: black;
+}
+
+.sidebar .sidebar-current a{
+ 	color: white !important;
+}
+
+.commenticonbox {
+    background: none repeat scroll 0 0 white;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
+    color: black;
+    margin: 0;
+    padding: 0 8px;
+    position: absolute;
+    right: -36px;
+    top: -1px;
 }

@@ -28,6 +28,7 @@ body	{
 	overflow-y:auto;
 	background: #E2E1DE;
 	font: 100% Georgia,serif;
+	color: black;
 	}
 h1 {
 	font: 80px/1.2em Georgia,serif;
@@ -74,6 +75,10 @@ h1 a, a h1, h2 a, a h2, h3 a, a h3 {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 	border: 0px;
 }
+#content{
+	margin: -5px auto 0;
+	box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
 #commentbox	{	
 	float: left;
 	width: 500px;
@@ -95,9 +100,9 @@ h1 a, a h1, h2 a, a h2, h3 a, a h3 {
 		
 #footer	{
 	clear: both;
-	width: 900px;
-	margin: 20px 5px 30px 30px;
-	padding: 10px 20px 0 20px;
+	width: 1000px;
+	margin: 0;
+	padding: 0;
 	text-align: left;
 	}
 
@@ -130,10 +135,15 @@ a.commentToText img {
 	}
 
 #footer	{
-	border-top: 1px solid #000000;
+	border-top: 0px solid #000000;
 	font: 8pt Arial, Helvetica, sans-serif;
+	margin: 0 auto;
+	width: 1000px;
 	}
 	
+#foot{
+	padding: 10px;
+}	
 #footer a	{}
 #footer a:hover	{}
 #footer a:visited	{}
@@ -152,6 +162,9 @@ a.commentToText img {
 #navigation a	{
 	color: #000000;
 	}
+.navigation li{
+	margin-bottom: 10px;
+}	
 .previews	{
 
 	}
@@ -180,7 +193,7 @@ a.commentToText img {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     max-height: 2024px;
     position: absolute;
-    width: 864px;
+    width: 950px;
     height: 100%;
     top: 20px;
     left: 10%;
@@ -211,10 +224,13 @@ a.commentToText img {
     background-color: #F3F3F3;
     color: #000000;
 }
-
+#comment{
+	width: 365px;
+}
 #commentbox {
-    font: 100% Georgia,Serif;
-    text-align: left;
+	font: 100% Georgia,Serif;
+	text-align: left;
+	background: white;
 }
 
 .paragraph-block {
@@ -237,7 +253,16 @@ a.commentToText img {
     top: -1px;
     width: 16px;
 }
+a{
+	color: black;
+}
+a:visited{
+	color: black;
+}
 
+.comment-browser h3{
+	padding-top: 0;
+}
 .navigation-previous {
     float: left;
     font-size: 75%;
@@ -251,4 +276,5 @@ a.commentToText img {
 #menu-primary {
     float: right;
     margin: 0 5px 10px;
+	width: 99%;
 }
