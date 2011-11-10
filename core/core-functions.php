@@ -1190,6 +1190,10 @@ function frontpage_load(){
 	if(digressit_is_frontpage()){
 		add_action('add_dynamic_widget', 'frontpage_sidebar_widgets');
 	}
+	add_action('wp_print_scripts',  'digressit_core_print_scripts', 1);
+	add_action('wp_print_styles',  'digressit_core_print_styles', 1) ; 		
+	add_action('wp_head',  'digressit_wp_head') ; 		
+	
 }
 
 

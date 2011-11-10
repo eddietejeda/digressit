@@ -436,6 +436,13 @@ z-index:0;
 	width:1000px;	
 	box-shadow: 0 25px 30px #AAAAAA;
 }
+
+.site-home #content{
+	border-color:#BDBDBD;
+	border-style:solid;
+	border-width: 0 1px;
+}
+
 .paragraph-block{
 }
 

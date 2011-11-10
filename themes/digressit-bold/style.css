@@ -1,5 +1,5 @@
 /*	
-Theme Name: Digress.it Deck of Cards
+Theme Name: Digress.it Bold
 Theme URI: http://digress.it
 Description: Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
@@ -79,6 +79,7 @@ a{
 .digressit-enabled #commentbox{
 	border: 0px;
 	top: 20px;
+	background: white ;
 }
 .selected-textblock {
     background-color: #353535;
@@ -96,9 +97,41 @@ a{
 }
 
 .paragraph-block {
-    border: 0 solid #AAAAAA;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #AAAAAA;
+    border-style: solid;
+    border-width: 1px 0 0;
     padding: 10px;
 }
+.comment-browser .commentlist{
+}
+.comment-browser .comment{
+	border-bottom: 1px solid #B4BDBD;
+	background: white;
+}
+
+#add-comment label{
+	display:none;
+}
+#add-comment .comment-field-area{
+	width: 80%;
+	border: 1px solid #E0E4E4;
+	padding: 5px;
+}
+
+#add-comment input[type=submit]{
+	border: 1px solid #E0E4E4;
+	padding: 5px;
+}
+
+#footer .foot {
+    padding: 15px;
+}
+
 #commentwindow{
 	background-color: white;
 }
@@ -138,6 +171,7 @@ a:hover{
 
 .edit-this a{
 	letter-spacing: 1px;
+	padding: 0 5px !important;
 }
 
 h1, h2, h3, h4, h5, h6, h7, h8{
@@ -160,11 +194,26 @@ h1, h2, h2 a{
     background: none repeat scroll 0 0 white;
     border-color: transparent;
     border-style: solid;
-    border-width: 1px 1px 1px 0;
+    border-width: 0;
     color: black;
     margin: 0;
-    padding: 0 8px;
+    padding: 0 0;
     position: absolute;
-    right: -36px;
-    top: -1px;
+    right: -35px;
+    top: 0;
+}
+
+.selected-textblock .commenticonbox{
+    background-color: #353535;
+    color: #FF5E43;
+}
+
+.commenticonbox {
+    border-radius: 0 6px 6px 0;
+    border-style: solid;
+    color: black;
+    text-align: center;
+}
+.site-home .the_title{
+	display: none;
 }

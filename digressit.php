@@ -10,6 +10,7 @@ License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
 
 Special thanks to:	
 The developers of JQuery @ www.jquery.com
+Cynthia Farina, Mary Newhart, Rebecca Younes and Brian Post @ Cornell University
 Joss Winn, Tony Hirst and Alex Bilbie @ University of Lincoln 
 Jesse Wilbur, Ben Vershbow, Dan Visel and Bob Stein @ futureofthebook.org
 
@@ -26,8 +27,8 @@ $digressit_options = $digressit = $options = get_option('digressit');
 $is_commentbrowser= false;
 $plugin_name = str_replace("/", "", str_replace(basename( __FILE__),"",plugin_basename(__FILE__))); 
 $plugin_dir = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/';
-$plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/themes';
 
+$plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/themes';
 
 load_plugin_textdomain('digressit', 'wp-content/plugins/'.dirname(plugin_basename(__FILE__)).'/languages');
 
@@ -60,7 +61,6 @@ $browser = digressit_current_browser();
 /* activation and deactivation */
 register_activation_hook(__FILE__,  'activate_digressit');
 register_deactivation_hook(__FILE__, 'deactivate_digressit' );
-
 
 register_theme_directory( $plugin_theme_link );
 
@@ -106,9 +106,6 @@ add_action('add_commentbrowser', 'commentbrowser_general_comments');
 
 
 /* these theme files global and are always included in sub-themes */
-add_action('wp_print_scripts',  'digressit_core_print_scripts', 1);
-add_action('wp_print_styles',  'digressit_core_print_styles', 1) ; 		
-add_action('wp_head',  'digressit_wp_head') ; 		
 
 if(esc_url($digressit_options['custom_header_image'], array('http', 'https'))){
 	add_action('add_header_image', 'custom_digressit_logo');
@@ -148,7 +145,6 @@ function digressit_auto_load_dir($path){
 	if ($handle = opendir($path)) {
 		while (false !== ($file = readdir($handle))) {
 			if (!@is_dir($file) && strstr($file, '.php')) {
-//				echo $path . '/' . $file;
 				require_once($path . '/' . $file);
 			}
 		}

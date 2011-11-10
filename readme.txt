@@ -39,6 +39,9 @@ Since its initial launch, Digress.it has been used by universities, publishers a
 Please be aware that the default theme has changed considerably. If you have made customizations to version 2.x, chances are that those changes will not migrate
 over to 3.x smoothly. Also be aware that some settings have changed and are automatically reset during the update. Depending on your settings, after updating, Digress.it might be automatically disabled. This is okay. Just re-enable it and you're good to go.
 
+== Frequently Asked Questions ==
+
+
 
 == Changelog ==
 = 3.2 = 
@@ -56,6 +59,9 @@ over to 3.x smoothly. Also be aware that some settings have changed and are auto
 
 = 3.1.1 = 
 * Fix issue where minified JS was not in released version
+
+= 3.1.2 = 
+* Security Fix: password protected posts submitted forms to wrong url
 
 = 3.1 =
 * Hide error messages when loading extensions
