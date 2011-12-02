@@ -113,6 +113,10 @@ a{
 	border-bottom: 1px solid #B4BDBD;
 	background: white;
 }
+.submit{
+	border: 0;
+	text-transform: capitalize;
+}
 
 #add-comment label{
 	display:none;

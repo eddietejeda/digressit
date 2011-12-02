@@ -194,6 +194,7 @@ h1, h2, h3, h4, h5, h6{
 	width: 55%;
 }
 
+/*
 .lightbox-close-icon{
 	background:url("images/close.png") no-repeat scroll center center #409DD7;
 	height:0;
@@ -208,6 +209,7 @@ h1, h2, h3, h4, h5, h6{
 	-webkit-box-shadow:1px 2px 3px #AAAAAA;
 	box-shadow: 1px 2px 3px #AAAAAA;
 }
+*/
 
 #live-content-search, #live-comment-search, .search-result{
 	width: 150px;
@@ -320,10 +322,20 @@ h4 {
 }
 
 .lightbox-close{
+/*
 	background-image:url("images/close-icon.png");
 	right:-20px;
 	top:-20px;
 	padding: 17px;
+*/
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	top: auto;
+}
+fieldset{
+	border: 0;
+	padding: 0;
 }
 /*
 #menu-primary{
@@ -1056,7 +1068,14 @@ div#item-header{
 	text-align:auto;
 }
 
+.submit{
+	border: 0;
+}
 
+
+#wpadminbar .ab-wp-logo{
+	margin: 0 !important;
+}
 
 /* =Menu
 -------------------------------------------------------------- */

@@ -558,7 +558,7 @@ jQuery(document).ready(function() {
         
         jQuery.fn.showCommentBoxCommentState();
     
-        jQuery('body').openlightbox(confirmation_lightbox);
+//        jQuery('body').openlightbox(confirmation_lightbox);
         
         return;
     }

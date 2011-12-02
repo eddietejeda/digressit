@@ -131,6 +131,11 @@ function digressit_theme_options_page() {
 
 		<tr valign="top">
 			<td style="width: 200px"><b><?php _e('Front Page Menu', 'digressit');  ?></b></td>
+			
+			<?php
+			$custom_type = (int)$digressit_options['digressit_enabled_for_digressit_type']===1
+			?>
+			
 			<td><?php digressit_print_dropdown('front_page_menu', array('Posts' => 'posts', 'Pages' => 'pages'), $digressit_options['front_page_menu']); ?></td>
 			<td>
 				<p></p>			
