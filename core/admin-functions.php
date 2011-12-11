@@ -10,6 +10,26 @@ function digressit_add_comment_change_notice() {
 }
 
 
+function digressit_custom_type_notice() {	
+	add_action('admin_notices', 'digressit_navigation_custom_type_notice' );	
+}
+
+
+
+
+
+/**
+ * 
+ */
+function digressit_navigation_custom_type_notice(){
+	?>
+	<div id="register-form" class="updated error" style="padding: 5px; width: 99% <?php echo $hidethis;?>" >		
+		<?php _e('Warning: These posts wont'); ?>
+	</div>
+	<?php	
+}
+
+
 /**
  * 
  */
@@ -133,10 +153,11 @@ function digressit_theme_options_page() {
 			<td style="width: 200px"><b><?php _e('Front Page Menu', 'digressit');  ?></b></td>
 			
 			<?php
-			$custom_type = (int)$digressit_options['digressit_enabled_for_digressit_type']===1
+			$front_page_menu_items = array('Posts' => 'posts', 'Pages' => 'pages', 'Digress.it Custom Type' => 'custom');
+
 			?>
 			
-			<td><?php digressit_print_dropdown('front_page_menu', array('Posts' => 'posts', 'Pages' => 'pages'), $digressit_options['front_page_menu']); ?></td>
+			<td><?php digressit_print_dropdown('front_page_menu', $front_page_menu_items , $digressit_options['front_page_menu']); ?></td>
 			<td>
 				<p></p>			
 			</td>

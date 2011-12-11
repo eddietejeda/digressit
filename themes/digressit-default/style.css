@@ -327,11 +327,13 @@ h4 {
 	right:-20px;
 	top:-20px;
 	padding: 17px;
+	
 */
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	top: auto;
+	width: 70px;
 }
 fieldset{
 	border: 0;
@@ -1071,6 +1073,8 @@ div#item-header{
 .submit{
 	border: 0;
 }
+
+
 
 
 #wpadminbar .ab-wp-logo{

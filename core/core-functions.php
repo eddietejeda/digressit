@@ -362,7 +362,7 @@ function digressit_print_dropdown($name, $digressit_options = array(), $selected
 /**
  * Checks to see if this is Wordpress MU (pre WP 3.0) or WP 3.0+
  */
-function digressit_is_mu_or_network_mode(){
+function digressit_is_multisite(){
 	$is_multiuser = false;
 	
 	if(function_exists('wpmu_create_blog') || (function_exists('is_multisite') && is_multisite()) ){
@@ -381,7 +381,7 @@ function digressit_is_frontpage(){
 		return false;
 	}
 	
-	if(is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
+	if(digressit_is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
 		if(is_home() || is_front_page()){
 			if($blog_id == 1){		
 				return true;
@@ -398,7 +398,7 @@ function digressit_is_frontpage(){
 function digressit_is_mainpage(){
 	global $is_frontpage, $is_mainpage, $blog_id;
 	
-	if(is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
+	if(digressit_is_multisite() && file_exists(get_template_directory(). '/frontpage.php')){
 		if(is_home() || is_front_page()){
 			if($blog_id == 1):			
 				return false;
@@ -1076,7 +1076,7 @@ function digressit_body_class(){
 	if(function_exists('digressit_is_commentbrowser') && digressit_is_commentbrowser()){
 		$current_page_name .= ' comment-browser '. $blog_name_unique ;
 	}
-	elseif(is_multisite() && $blog_id == 1 && digressit_is_frontpage()){
+	elseif(digressit_is_multisite() && $blog_id == 1 && digressit_is_frontpage()){
 		$current_page_name = ' frontpage '. $blog_name_unique ;
 	}
 	else{
@@ -1231,7 +1231,7 @@ function digressit_core_print_styles(){
 		if ( defined( 'BP_DISABLE_ADMIN_BAR' ) )
 			return false;
 
-		if ( is_multisite()  || is_admin() ) {
+		if ( digressit_is_multisite()  || is_admin() ) {
 			$stylesheet = get_blog_option( BP_ROOT_BLOG, 'stylesheet' );
 
 			if ( file_exists( WP_CONTENT_DIR . '/themes/' . $stylesheet . '/_inc/css/adminbar.css' ) )
@@ -1272,7 +1272,10 @@ function get_root_domain(){
 	$testing_mode = false;
 	$production_mode = false;
 
-	return "http://" . DOMAIN_CURRENT_SITE; //isset($_SERVER['HTTPS']) ? "https://". DOMAIN_CURRENT_SITE : "http://" . DOMAIN_CURRENT_SITE;
+
+ 	return digressit_is_multisite() ? network_site_url() : site_url();
+
+//	return "http://" . DOMAIN_CURRENT_SITE; //isset($_SERVER['HTTPS']) ? "https://". DOMAIN_CURRENT_SITE : "http://" . DOMAIN_CURRENT_SITE;
 }
 
 
@@ -1295,8 +1298,9 @@ function digressit_core_print_scripts(){
 	wp_deregister_script('autosave');
     if (!is_admin() && $digressit_options['debug_mode'] != 1) {
         wp_deregister_script( 'jquery' );
-        wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js');
-        //wp_register_script( 'jquery', get_digressit_media_uri('js/jquery.min.js'));
+        //wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js');
+		var_dump(get_digressit_media_uri('js/jquery.min.js'));
+        wp_register_script( 'jquery', get_digressit_media_uri('js/jquery.min.js'));
     }
     wp_enqueue_script( 'jquery' );
 
@@ -1310,8 +1314,8 @@ function digressit_core_print_scripts(){
 <script type='text/javascript'>	
 var siteurl = '<?php echo site_url(); ?>';
 var baseurl = '<?php echo get_root_domain(); ?>';
-var is_multisite = <?php echo is_multisite(); ?>;
-var siteurlpath = '<?php echo is_multisite() ? network_site_url() : site_url(); ?>';
+var is_multisite = <?php echo digressit_is_multisite() ? 1 : 0; ?>;
+var siteurlpath = '<?php echo digressit_is_multisite() ? network_site_url() : site_url(); ?>';
 
 var user_ID =  <?php echo $current_user->ID; ?>;
 var post_ID = <?php echo isset($post->ID) ? $post->ID : 0 ?>;

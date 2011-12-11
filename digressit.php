@@ -81,6 +81,7 @@ add_action('after_setup_theme', 'digressit_setup' );
 
 /* admin functions */
 add_action('admin_head-post.php', 'digressit_add_comment_change_notice');
+add_action('admin_head-edit.php', 'digressit_custom_type_notice');
 add_action('admin_menu', 'digressit_add_admin_menu');
 add_action('admin_init', 'digressit_theme_options_page_form');
 

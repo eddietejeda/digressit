@@ -459,9 +459,19 @@ jQuery(document).ready(function() {
      *        AJAX RESPONSES -
      *
      *        
-     */
+     */ 
     
+    /*
+    This allows the digressit add_comment method to be extended
+    by another plugin:
     AjaxResult.add_comment = function(data) {
+        AjaxResult.digressit_add_comment(data);
+        // plugin specific code here
+    }  
+    */     
+    AjaxResult.add_comment = AjaxResult.digressit_add_comment;
+      
+    AjaxResult.digressit_add_comment = function(data) {
         var result_id = parseInt(data.message.comment_ID);
         var confirmation_lightbox = 'lightbox-submit-comment-success';
 
@@ -933,14 +943,6 @@ jQuery(document).ready(function() {
     });
 
 
-	/* this is required in the standard digress.it install. in #RR it's not. this code should 
-	be merged and there should be a way to this functionality */
-    jQuery('#comment').focus(function(){
-        var focus = setTimeout(function() {
-           jQuery.fn.enableCommentFormButtons();
-        }, 200);
-                
-    });
 
     if(jQuery('#wpadminbar').length){
         jQuery('#header').css('margin-top', '35px');
@@ -1085,25 +1087,57 @@ jQuery(document).ready(function() {
 
     });
 
+	/* this is required in the standard digress.it install. in #RR it's not. this code should 
+	be merged and there should be a way to this functionality */
+    jQuery('#comment').focus(function(){
+        var focus = setTimeout(function() {
+           jQuery.fn.enableCommentFormButtons();
+        }, 200);
+                
+    });
+
+
+	jQuery('#comment').data('label', jQuery('#comment').val());
     jQuery("#comment").focus(function (e) {
-        if( jQuery(this).val() == 'Click here to add a new comment...'){
+        if( jQuery(this).val() == jQuery('#comment').data('label')){
             jQuery(this).val('');
             /* Causes incorrect behavior: buttons should be enabled only if a section is selected.
             jQuery.fn.enableCommentFormButtons();      */    
         }
     });
+    jQuery("#comment").blur(function (e) {
+        if( jQuery(this).val() == ''){
+            jQuery(this).val(	jQuery('#comment').data('label'));
+        }
+    });
 
+
+	jQuery('#user_email').data('label', jQuery('#user_email').val());
     jQuery("#user_email").focus(function (e) {
-        if( jQuery(this).val() == 'Email'){
+        if( jQuery(this).val() == jQuery('#user_email').data('label')){
             jQuery(this).val('');
+        }
+    });
+    jQuery("#user_email").blur(function (e) {
+        if( jQuery(this).val() == ''){
+            jQuery(this).val(	jQuery('#user_email').data('label'));
         }
     });
 
+
+
+	jQuery('#display_name').data('label', jQuery('#display_name').val());
     jQuery("#display_name").focus(function (e) {
-        if( jQuery(this).val() == 'Your Name'){
+        if( jQuery(this).val() == jQuery('#display_name').data('label')){
             jQuery(this).val('');
         }
     });
+    jQuery("#display_name").blur(function (e) {
+        if( jQuery(this).val() == ''){
+            jQuery(this).val(	jQuery('#display_name').data('label'));
+        }
+    });
+
 
 
     jQuery("#comment").keypress(function (e) {
@@ -1271,7 +1305,6 @@ jQuery(document).ready(function() {
                     jQuery.copy(jQuery(jQuery(e.target)[0]).text());
                     jQuery('.text-copied').fadeIn('slow');
                     jQuery('.text-copied').fadeOut('slow');
-
                     return;
                 }
                 else if(jQuery(e.target).hasClass('embedcode')){

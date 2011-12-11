@@ -15,7 +15,7 @@
 			else{
 				?>
 			
-				<h2><?php _e('Congratulations on installing the Multi-site edition of Digress.it','digressit'); ?></h2>
+				<h2><?php _e('Congratulations on installing the Multisite edition of Digress.it','digressit'); ?></h2>
 			
 				<p><?php _e('This is the frontpage to your Multi-site community.', 'digressit'); ?></p>
 				<p><?php _e('To edit this page you can take one of the following actions:', 'digressit'); ?><p>
