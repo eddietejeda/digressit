@@ -153,8 +153,8 @@ function digressit_theme_options_page() {
 			<td style="width: 200px"><b><?php _e('Front Page Menu', 'digressit');  ?></b></td>
 			
 			<?php
-			$front_page_menu_items = array('Posts' => 'posts', 'Pages' => 'pages', 'Digress.it Custom Type' => 'custom');
 
+			$front_page_menu_items = array('Posts' => 'posts', 'Pages' => 'pages', 'Digress.it Custom Type' => 'custom');
 			?>
 			
 			<td><?php digressit_print_dropdown('front_page_menu', $front_page_menu_items , $digressit_options['front_page_menu']); ?></td>

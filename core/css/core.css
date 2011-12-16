@@ -1915,3 +1915,8 @@ img{
     height:1px;
     overflow:hidden; 
 } 
+
+
+#wpadminbar span{
+	margin: 0 !important;
+}

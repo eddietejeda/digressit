@@ -104,7 +104,7 @@ jQuery(document).ready(function() {
     });
     
     jQuery('.submit, .lightbox-submit').click(function(e){
-        document.location.hash = '';
+//        document.location.hash = '';
         if(jQuery(e.target).hasClass('ajax')){
             //return false;
         }
