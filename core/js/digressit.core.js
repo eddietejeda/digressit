@@ -469,9 +469,9 @@ jQuery(document).ready(function() {
         // plugin specific code here
     }  
     */     
-    AjaxResult.add_comment = AjaxResult.digressit_add_comment;
       
     AjaxResult.digressit_add_comment = function(data) {
+		console.log('hello world');
         var result_id = parseInt(data.message.comment_ID);
         var confirmation_lightbox = 'lightbox-submit-comment-success';
 
@@ -573,6 +573,8 @@ jQuery(document).ready(function() {
         return;
     }
     
+    AjaxResult.add_comment = AjaxResult.digressit_add_comment;
+
 
     /*** 
      *        AJAX FUNCTIONS
