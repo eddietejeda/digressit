@@ -1917,6 +1917,6 @@ img{
 } 
 
 
-#wpadminbar span{
+#wpadminbar > span{
 	margin: 0 !important;
 }

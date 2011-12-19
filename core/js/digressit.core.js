@@ -78,6 +78,11 @@ jQuery(document).ready(function() {
         }
     });
     
+	jQuery('#comment').data('label', jQuery('#comment').val());
+	jQuery('#user_email').data('label', jQuery('#user_email').val());
+	jQuery('#display_name').data('label', jQuery('#display_name').val());
+
+
     
     
     /*** 
@@ -471,7 +476,6 @@ jQuery(document).ready(function() {
     */     
       
     AjaxResult.digressit_add_comment = function(data) {
-		console.log('hello world');
         var result_id = parseInt(data.message.comment_ID);
         var confirmation_lightbox = 'lightbox-submit-comment-success';
 
@@ -563,7 +567,9 @@ jQuery(document).ready(function() {
         jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).html(data.message.comment_count);
         jQuery(jQuery('#digress-it-list-posts .sidebar-current .commentcount').get(0)).fadeIn('slow');
 
-        jQuery('#comment').val('');        
+        jQuery('#comment').val('');  
+        jQuery('#comment').val(	jQuery('#comment').data('label'));
+      
         jQuery('#comment_parent').val(0);
         
         jQuery.fn.showCommentBoxCommentState();
@@ -596,7 +602,14 @@ jQuery(document).ready(function() {
         var function_name = form_id;
         var form_class = jQuery(form).attr('class');
         var fields = {};
+        var form_data = jQuery("#"+form_id).serialize();
 
+		/* 
+			DATA VALIDATION REQUIRED 
+			maybe call something like?
+			AjaxDataValidate.add_comment?
+		
+		*/
         
         jQuery('input[type=button]').prop('disabled', true)
                                     .addClass('disabled');             
@@ -609,7 +622,7 @@ jQuery(document).ready(function() {
         
         jQuery('form #' + form_id + ' .loading,' + '#' + form_id + ' .loading-bars, ' + '#' + form_id + ' . loading-bar , #' + form_id + ' .loading-throbber').css('display', 'inline');
         
-        jQuery.post( siteurl + "/ajax/" + form_id +'/',    jQuery("#"+form_id).serialize(),
+        jQuery.post( siteurl + "/ajax/" + form_id +'/',    form_data,
             function( data ) {    
                 
                 function_name = function_name.replace(/-/g, '_');// + "_ajax_result";
@@ -1075,46 +1088,31 @@ jQuery(document).ready(function() {
     */
 
 
-    jQuery("#comment").focus(function (e) {
-
-
-        jQuery("#submit-comment").show();
-
-        //jQuery("#cancel-response").show();
-
-        jQuery(".comment").removeClass('selected');
-        //jQuery("#comment_parent").val('0');
-
-
-
-    });
 
 	/* this is required in the standard digress.it install. in #RR it's not. this code should 
 	be merged and there should be a way to this functionality */
-    jQuery('#comment').focus(function(){
-        var focus = setTimeout(function() {
-           jQuery.fn.enableCommentFormButtons();
-        }, 200);
-                
-    });
-
-
-	jQuery('#comment').data('label', jQuery('#comment').val());
     jQuery("#comment").focus(function (e) {
         if( jQuery(this).val() == jQuery('#comment').data('label')){
             jQuery(this).val('');
             /* Causes incorrect behavior: buttons should be enabled only if a section is selected.
             jQuery.fn.enableCommentFormButtons();      */    
         }
+
+        jQuery("#submit-comment").show();
+        jQuery(".comment").removeClass('selected');
+
+        var focus = setTimeout(function() {
+           jQuery.fn.enableCommentFormButtons();
+        }, 200);
     });
     jQuery("#comment").blur(function (e) {
         if( jQuery(this).val() == ''){
-            jQuery(this).val(	jQuery('#comment').data('label'));
+            jQuery('#submit-comment').addClass('disabled');
+            jQuery(this).val(jQuery('#comment').data('label'));
         }
     });
 
 
-	jQuery('#user_email').data('label', jQuery('#user_email').val());
     jQuery("#user_email").focus(function (e) {
         if( jQuery(this).val() == jQuery('#user_email').data('label')){
             jQuery(this).val('');
@@ -1128,7 +1126,6 @@ jQuery(document).ready(function() {
 
 
 
-	jQuery('#display_name').data('label', jQuery('#display_name').val());
     jQuery("#display_name").focus(function (e) {
         if( jQuery(this).val() == jQuery('#display_name').data('label')){
             jQuery(this).val('');
@@ -1141,23 +1138,20 @@ jQuery(document).ready(function() {
     });
 
 
-
+/*
     jQuery("#comment").keypress(function (e) {
 
 
-        if(jQuery("#comment").val().length > 10){
-
-            //jQuery('#submit-comment').removeClass('disabled');
-
+        if(jQuery("#comment").val().length > 1){
+            jQuery('#submit-comment').removeClass('disabled');
         }
         else{
-
-            //jQuery('#submit-comment').addClass('disabled');
+            jQuery('#submit-comment').addClass('disabled');
         }
 
 
     });
-
+*/
     function isNumber(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
     }
@@ -1280,7 +1274,10 @@ jQuery(document).ready(function() {
 
         jQuery("#menu ul li").click(function (e) {
             jQuery('#comment_parent').val(0);
-            jQuery('#comment').val('Click here add a new comment...');
+	        jQuery('#comment').val(	jQuery('#comment').data('label'));
+
+
+//            jQuery('#comment').val('Click here add a new comment...');
 
             jQuery('#submit-comment').hide();
 //            jQuery('#cancel-response').hide();

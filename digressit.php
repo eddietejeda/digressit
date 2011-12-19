@@ -33,7 +33,7 @@ $plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/themes';
 load_plugin_textdomain('digressit', 'wp-content/plugins/'.dirname(plugin_basename(__FILE__)).'/languages');
 
 /* global variables */
-define("DIGRESSIT_VERSION", '3.2');
+define("DIGRESSIT_VERSION", '3.2-beta');
 define("DIGRESSIT_COMMUNITY", 'digress.it');
 define("DIGRESSIT_COMMUNITY_HOSTNAME", 'digress.it');
 define("DIGRESSIT_DIR", WP_PLUGIN_DIR ."/". $plugin_name);
