@@ -62,6 +62,8 @@ body{
 }
 */
 
+
+
 .search-result{
     border-color: -moz-use-text-color #AAAAAA #AAAAAA;
     border-right: 1px solid #AAAAAA;
@@ -440,9 +442,16 @@ z-index:0;
 	margin:0 auto;
 	width:1000px;
 	position: relative;
+}
 
-
-
+.error404 .the_title{
+	display: none;
+}
+.error404 #mainpage{
+	border-width: 0px 1px 0;
+	border-style: solid;
+	border-color: #BDBDBD;
+	width: 1002px;
 }
 
 .site-home #content, .frontpage #content{
