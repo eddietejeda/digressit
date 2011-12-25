@@ -1732,8 +1732,8 @@ jQuery(document).ready(function() {
                 var left = textblock.position().left;
                 top = textblock.position().top;
 
-            }            
-            
+            }
+
             var commentbox = jQuery("#commentbox");
 
             var scrollto = ((top - 100) > 0)  ? (top - 100) : 0;

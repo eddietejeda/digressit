@@ -1299,11 +1299,11 @@ function digressit_core_print_scripts(){
     wp_deregister_script('autosave');
     wp_deregister_script( 'jquery' );
 
-    if (!is_admin() && $digressit_options['debug_mode'] != 1) {
-        wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
+    if (!is_admin() && $digressit_options['debug_mode'] == 1) {
+        wp_register_script( 'jquery', get_digressit_media_uri('js/jquery.js'));
     }
 	elseif (!is_admin()){
-        wp_register_script( 'jquery', get_digressit_media_uri('js/jquery.js'));
+        wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
 	}
     wp_enqueue_script( 'jquery' );
 

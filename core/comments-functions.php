@@ -223,7 +223,8 @@ function standard_digressit_comment_parser($comment, $args, $depth) {
             
             
             <?php if(($depth < get_option('thread_comments_depth') || is_null($comment->comment_parent)) && (is_user_logged_in() || !get_option('comment_registration')) && is_single()): ?>
-                <div class="comment-reply comment-hover small-button" value="<?php comment_ID(); ?>">reply</div>
+	        <input type="button" class="comment-reply reply comment-hover small-button comment-button" title="Reply to this comment" 
+	            data="<?php comment_ID(); ?>" data-paragraph-number="<?php echo $paragraphnumber ?>" value="reply">
             <?php endif; ?>
 
             <?php do_action('digressit_custom_comment_footer'); ?>
