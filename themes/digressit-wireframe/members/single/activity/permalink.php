@@ -1,17 +1,24 @@
+<?php
+/**
+ * @package Digressit
+ * @subpackage Digressit_Wireframe
+ * This is automatically generated for BuddyPress
+ */
+?>
 <?php get_header() ?>
 
 <div class="activity no-ajax">
-	<?php if ( bp_has_activities( 'display_comments=threaded&include=' . bp_current_action() ) ) : ?>
+    <?php if ( bp_has_activities( 'display_comments=threaded&include=' . bp_current_action() ) ) : ?>
 
-		<ul id="activity-stream" class="activity-list item-list">
-		<?php while ( bp_activities() ) : bp_the_activity(); ?>
+        <ul id="activity-stream" class="activity-list item-list">
+        <?php while ( bp_activities() ) : bp_the_activity(); ?>
 
-			<?php locate_template( array( 'activity/entry.php' ), true ) ?>
+            <?php locate_template( array( 'activity/entry.php' ), true ) ?>
 
-		<?php endwhile; ?>
-		</ul>
+        <?php endwhile; ?>
+        </ul>
 
-	<?php endif; ?>
+    <?php endif; ?>
 </div>
 
 <?php get_footer() ?>

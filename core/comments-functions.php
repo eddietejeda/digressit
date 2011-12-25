@@ -54,7 +54,6 @@ function commentbrowser_template_redirect() {
 }
 
 /**
- * 
  * This handles submission of comment form. 
  */
 function add_comment_ajax($request_params){

@@ -1,3 +1,9 @@
+<?php
+/**
+ * @package Digressit
+ * @subpackage Digressit_Wireframe
+ */
+?>
 <?php get_header(); ?>
 <div id="container">
 	<?php digressit_get_dynamic_widgets(); ?>

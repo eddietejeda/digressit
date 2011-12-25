@@ -1,3 +1,9 @@
+<?php
+/**
+ * @package Digressit
+ * @subpackage Digressit_Wireframe
+ */
+?>
 <?php get_header(); ?>
 
 <?php digressit_get_single_default_widgets(); ?>

@@ -1,3 +1,10 @@
+<?php
+/**
+ * @package Digressit
+ * @subpackage Digressit_Wireframe
+ * This is automatically generated for BuddyPress
+ */
+?>
 <?php get_header() ?>
 
 	<?php do_action( 'bp_before_create_blog_content' ) ?>

@@ -1,6 +1,8 @@
 <?php
-/*
-Template Name: Search
+/**
+ * @package Digressit
+ * @subpackage Digressit_Wireframe
+ * Template Name: Search
 */
 ?>
 <?php get_header(); ?>

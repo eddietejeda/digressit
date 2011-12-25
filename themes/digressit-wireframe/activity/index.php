@@ -1,3 +1,11 @@
+<?php
+/**
+ * @package Digressit
+ * @subpackage Digressit_Wireframe
+ * This is automatically generated for BuddyPress
+ */
+?>
+
 <?php get_header() ?>
 
 	<div id="container">

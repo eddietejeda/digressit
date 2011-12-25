@@ -26,6 +26,7 @@ jQuery.browser = {
 };
 
 
+//IE does not play nice with html5 tags. use JS 
 if(jQuery.browser.msie){
     (function(){
         var html5elmeents = "address|article|aside|audio|canvas|command|datalist|details|dialog|figure|figcaption|footer|header|hgroup|keygen|mark|meter|menu|nav|progress|ruby|section|time|video".split('|');    
@@ -51,18 +52,15 @@ var parseGetVariables = function (variables) {
 
 jQuery(document).ready(function() {
 
-    /*** 
-     *        RENDERING PAGE
+    /*
+     * RENDERING PAGE
      *
-     *        
      */
-
     if(typeof digressit_enabled != 'undefined' && digressit_enabled){
         jQuery('#commentbox').position_main_elements();
     }
     
-    jQuery(window).scroll(function () { 
-    
+    jQuery(window).scroll(function () {
         //this should not fire every single time! do proper checks to help performance
         if(digressit_enabled){
             jQuery('#commentbox').position_main_elements();
@@ -85,11 +83,10 @@ jQuery(document).ready(function() {
 
     
     
-    /*** 
-     *        USER INTERACTION
+    /*
+     * BIND USER EVENTS
      *
-     *        
-     */
+     */	
     // Paragraph embeds
     jQuery('.paragraphembed a').bind('click', function(e){
         e.preventDefault();

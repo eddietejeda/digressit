@@ -1,3 +1,9 @@
+<?php
+/**
+ * @package Digressit
+ * @subpackage Digressit_Wireframe
+ */
+?>
 <footer id="footer" role="complementary">	
 	<div class="foot">
 	<?php if(has_action('custom_footer')): ?>

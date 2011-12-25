@@ -1,3 +1,10 @@
+<?php
+/**
+ * @package Digressit
+ * @subpackage Digressit_Wireframe
+ * This is automatically generated for BuddyPress
+ */
+?>
 <form action="<?php bp_activity_post_form_action() ?>" method="post" id="whats-new-form" name="whats-new-form">
 
 	<?php do_action( 'bp_before_activity_post_form' ) ?>

@@ -3,8 +3,9 @@ add_action('public_ajax_function', 'lightbox_login_ajax');
 add_action('public_ajax_function', 'lightbox_login_success_ajax');
 
 add_filter('digressit_lightbox_close_mechanism', 'digressit_lightbox_close_mechanism');
+
 /**
- *
+ * This gets called in the footer of the theme once. This 
  */
 function get_lightboxes(){
     ?>
@@ -14,6 +15,9 @@ function get_lightboxes(){
     do_action('add_lightbox');
 }
 
+/**
+ *
+ */
 function start_lightbox($lightbox_name = 'Lightbox: Generic'){
     global $blog_id;
     ob_start();
@@ -22,6 +26,9 @@ function start_lightbox($lightbox_name = 'Lightbox: Generic'){
     echo '<span class="hidden-offscreen"> Beginning of dialog content </span>';
 }
 
+/**
+ *
+ */
 function end_lightbox($status = 1){
     //This is for accessibility support
     echo '<span class="hidden-offscreen"> End of dialog content </span>';
@@ -31,6 +38,9 @@ function end_lightbox($status = 1){
     die(json_encode(array('status' => $status, "message" => $html)) );    
 }
 
+/**
+ *
+ */
 function lightbox_login_ajax(){ 
     start_lightbox('Lightbox: Login');    
     global $password_just_reset;

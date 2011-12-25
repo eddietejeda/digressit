@@ -2,8 +2,10 @@
 /**
  * RSS2 Feed Template for displaying RSS2 Comments feed.
  *
- * @package WordPress
+ * @package Digressit
+ * @subpackage Digressit_Wireframe
  */
+
 require_once(ABSPATH . WPINC . '/registration.php');	
 require_once(DIGRESSIT_CORE_DIR . '/core-functions.php');
 

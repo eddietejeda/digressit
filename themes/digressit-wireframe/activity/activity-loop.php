@@ -1,3 +1,11 @@
+<?php
+/**
+ * @package Digressit
+ * @subpackage Digressit_Wireframe
+ * This is automatically generated for BuddyPress
+ */
+?>
+
 <?php /* Querystring is set via AJAX in _inc/ajax.php - bp_dtheme_activity_loop() */ ?>
 
 <?php do_action( 'bp_before_activity_loop' ) ?>

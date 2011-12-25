@@ -4,7 +4,7 @@ Plugin Name: Digress.it
 Plugin URI: http://digress.it
 Description:  Digress.it allows readers to comment paragraph by paragraph in the margins of a text. You can use it to comment, gloss, workshop, debate and more!
 Author: Eddie A Tejeda
-Version: 3.2
+Version: 3.2-beta
 Author URI: http://eddietejeda.com
 License: GPLv2 (http://creativecommons.org/licenses/GPL/2.0/)
 
@@ -25,8 +25,8 @@ global $using_mainpage_nav_walker;
 
 $digressit_options = $digressit = $options = get_option('digressit');
 $is_commentbrowser= false;
-$plugin_name = str_replace("/", "", str_replace(basename( __FILE__),"",plugin_basename(__FILE__))); 
-$plugin_dir = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/';
+$plugin_name = str_replace('/', '', str_replace(basename( __FILE__),'',plugin_basename(__FILE__))); 
+$plugin_dir = WP_CONTENT_DIR . '/plugins/'.$plugin_name.'/';
 
 $plugin_theme_link = WP_CONTENT_DIR . '/plugins/'. $plugin_name.'/themes';
 
@@ -107,7 +107,6 @@ add_action('add_commentbrowser', 'commentbrowser_general_comments');
 
 
 /* these theme files global and are always included in sub-themes */
-
 if(esc_url($digressit_options['custom_header_image'], array('http', 'https'))){
 	add_action('add_header_image', 'custom_digressit_logo');
 }
@@ -137,8 +136,6 @@ add_action('wp', 'digressit_mainpage_load');
 
 /* widgets functions */
 add_action('widgets_init', create_function('', 'return register_widget("ListPostsWithCommentCount");'));
-
-
 
 
 //load extensions

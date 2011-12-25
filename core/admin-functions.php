@@ -15,9 +15,6 @@ function digressit_custom_type_notice() {
 }
 
 
-
-
-
 /**
  * 
  */
@@ -409,6 +406,15 @@ function digressit_theme_options_page() {
 			<td><?php digressit_print_dropdown('content_parser', $digressit_content_function, $digressit_options['content_parser']); ?></td>
 			<td></td>
 		</tr>
+
+
+		<tr>
+			<td style="width: 200px"><b><?php _e('Content Parsing Function', 'digressit');  ?></b></td>
+			<td><input type="text" name="discrete_digressit_content_parser"></td>
+			<td></td>
+		</tr>
+		
+		
 
 		<tr>
 			<td style="width: 200px"><b><?php _e('Comments Parsing Function', 'digressit');  ?></b></td>
