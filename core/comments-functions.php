@@ -90,15 +90,15 @@ function add_comment_ajax($request_params){
     
 
     if(strlen($display_name) < 2){
-        die(json_encode(array('status' => 0, "message" => 'Please enter a valid name.')));                
+        die(json_encode(array('status' => 0, "message" => 'Please enter a valid name.')));
     }
 
     if(!is_email($user_email)){
-        die(json_encode(array('status' => 0, "message" => 'Not a valid email.')));                
+        die(json_encode(array('status' => 0, "message" => 'Not a valid email.')));
     }
 
     if(strlen($request_params['comment']) < 2){
-        die(json_encode(array('status' => 0, "message" => 'Your comment is too short.')));                
+        die(json_encode(array('status' => 0, "message" => 'Your comment is too short.')));
     }
     
     /*
@@ -118,7 +118,7 @@ function add_comment_ajax($request_params){
     $request_params['comment_ID'] = $comment_ID;
     
     
-    //TODO: we are moving away from the extra column, in FUTURE VERSIONS we will just use comment meta
+    //@TODO: we are moving away from the extra column, in FUTURE VERSIONS we will just use comment meta
     $result = $wpdb->query( $wpdb->prepare("UPDATE $wpdb->comments SET comment_text_signature = %s WHERE comment_ID = %d", $request_params['selected_paragraph_number'], $comment_ID) );
     add_metadata('post', $request_params['comment_post_ID'], 'comment_text_signature', $request_params['selected_paragraph_number'], true);
     add_metadata('comment', $comment_ID, 'paragraph', $request_params['selected_paragraph_number'], true) ;
@@ -161,6 +161,7 @@ function add_comment_ajax($request_params){
     
     die(json_encode(array('status' => $status, "message" => $message)));
 }
+
 
 /**
  *  This is how the comments are displayed. Overriding the default comments function. Includes new custom hooks for adding metadata
