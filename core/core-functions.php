@@ -245,6 +245,7 @@ function digressit_init(){
     }
 
     /* upgrade to latest Digress.it 3.2 */
+//	var_dump($digressit_options['version']);
     if($digressit_options['version'] != DIGRESSIT_VERSION){        
         $digressit_options['enable_dropdown_menu'] = 0;
         $digressit_options['enable_citation_button'] = 0;
@@ -253,6 +254,7 @@ function digressit_init(){
         $digressit_options['digressit_enabled_for_posts'] = 1;
         $digressit_options['digressit_enabled_for_digressit_type'] = 0;
         $digressit_options['discrete_digressit_content_parser'] = 'separate';
+        $digressit_options['version'] = DIGRESSIT_VERSION;
 
 
 	
