@@ -301,6 +301,7 @@ h4 {
 
 #respond{
 	text-align: center;
+	
 }
 
 #comments-sort-all{
@@ -1216,23 +1217,14 @@ div#item-header{
 }
 
 .mu_register input[type=submit]{
-	width: 50% !important;
 	position: relative !important;
 }
 
 
 .mu_register .submit {
-	background: none !important;
-	color: black !important;
-	font-size: auto !important;
-	font-weight: normal !important;
-	letter-spacing: auto !important;
-	padding: auto !important;
-	position:relative !important;
-	right: auto !important;
-	left: 0 !important;
-	text-align: left !important;
-	-moz-box-shadow: none!important;
+
+
+	
 }
 
 .site-home #content, .frontpage #content{

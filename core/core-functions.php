@@ -252,7 +252,10 @@ function digressit_init(){
         $digressit_options['digressit_enabled_for_pages'] = 0;
         $digressit_options['digressit_enabled_for_posts'] = 1;
         $digressit_options['digressit_enabled_for_digressit_type'] = 0;
+        $digressit_options['discrete_digressit_content_parser'] = 'separate';
 
+
+	
         update_option('digressit', $digressit_options);
     }
 
@@ -735,10 +738,12 @@ function standard_digressit_content_parser($html, $tags = 'div|table|object|p|ul
  * 
  */
 function discrete_digressit_content_parser($content){
-    global $wpdb, $image_path, $post;
+    global $wpdb, $image_path, $post, $digressit_options;
+
+
 
     $matches = array();
-    $paragraph_blocks = explode('[break]', $content);
+    $paragraph_blocks = explode('['.$digressit_options['discrete_digressit_content_parser'].']', $content);
 
     $blocks = null;
     $text_signatures = null;

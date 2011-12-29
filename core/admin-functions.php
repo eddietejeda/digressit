@@ -352,7 +352,7 @@ function digressit_theme_options_page() {
             <td>
                 <p><?php _e('This image will override the current header and will become the logo to your site. 
                     Be sure to get copy the entire URL in this field. You can also 
-                    <a href="'.bloginfo('url').'/wp-admin/media-new.php">upload your logo</a> and get the URL from there.
+                    <a href="'.get_bloginfo('url').'/wp-admin/media-new.php">upload your logo</a> and get the URL from there.
                     <b>Note:</b> The image needs to be a maximum of 60px tall.', 'digressit'); ?></p>
             </td>
             
@@ -381,26 +381,7 @@ function digressit_theme_options_page() {
             <td style="width: 200px"><b><?php _e('Debug Mode', 'digressit');  ?></b></td>
             <td><?php digressit_print_dropdown('debug_mode', array('No' => 0, 'Yes' => '1'), $digressit_options['debug_mode']); ?></td>
             <td></td>
-        </tr>
-        
-        <tr>
-            <td style="width: 200px"><b><?php _e('Use CDN', 'digressit');  ?></b></td>
-            <td>
-            <?php digressit_print_dropdown('use_cdn', array('Yes' => '1', 'No' => 0), $digressit_options['use_cdn']); ?>                
-            </td>
-            <td>
-            <p><?php _e('This is an experimental feature. The idea is that you can host the media files on a really fast file server. Enabling this now
-                has the risk of downloading files that are out of date. Use at your own discretion.', 'digressit'); ?></p>                
-            </td>
-            
-        </tr>
-        
-        <tr>
-            <td style="width: 200px"><b><?php _e('CDN');  ?></b></td>
-            <td><?php digressit_print_input_text('cdn', $digressit_options['cdn'], 'disabled'); ?></td>
-            <td></td>
-        </tr>
-        
+        </tr>        
         <?php endif; ?>
         
         
@@ -412,8 +393,8 @@ function digressit_theme_options_page() {
 
 
         <tr>
-            <td style="width: 200px"><b><?php _e('Content Parsing Function', 'digressit');  ?></b></td>
-            <td><input type="text" name="discrete_digressit_content_parser"></td>
+            <td style="width: 200px"><b><?php _e('Separator Tag', 'digressit');  ?></b></td>
+			<td><?php digressit_print_input_text('discrete_digressit_content_parser', '['.$digressit_options['discrete_digressit_content_parser'].']'); ?></td>
             <td></td>
         </tr>
         
