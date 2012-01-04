@@ -129,20 +129,14 @@ jQuery(document).ready(function() {
         var TAB = 9; // Leave comment box
         var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
         if ( key == TAB){
-
             if(jQuery('#lightbox-transparency').hasClass('enabled')){
-//                jQuery('#lightbox-content').focus();
-//                alert(1);
+				//jQuery('#lightbox-content').focus();
             }
-            
         }
     });
-    
-    
-
+	
     //jQuery('#lightbox-transparency').hasClass('enabled');
-    
-    
+	
     if(typeof keyboard_navigation != 'undefined' && keyboard_navigation == true){
         jQuery(window).keyup(function(e){
             var UP = 38; // Prev paragraph
